@@ -1,5 +1,8 @@
-const User = require('../models/user')
+const users = require('../models/user')
 const usersRouter = require('express').Router()
+const bodyParser = require('body-parser')
+usersRouter.use(bodyParser.json())
+
 
 const formatUsers = (input) => {
     return {
