@@ -1,17 +1,14 @@
 const http = require('http')
 const express = require('express')
-const app = express()
 const cors = require('cors')
-
-
+const app = express()
 const masseussesRouter = require('./controllers/masseusses')
 const usersRouter = require('./controllers/users')
 
 app.use('/api/masseusses', masseussesRouter)
 app.use('/api/users', usersRouter)
 
-
-app.use(cors)
+app.use(cors())
 app.use(express.static('build'))
 const server = http.createServer(app)
 const PORT = 3001 // TODO -- CHANGE TO config.port
