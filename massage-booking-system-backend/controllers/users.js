@@ -14,6 +14,7 @@ const formatUser = (input) => {
         appoitments: input.appoitments
     }
 }
+
 usersRouter.get('/', async (req, res, next) => {
     try {
         const users = await User.find({})
