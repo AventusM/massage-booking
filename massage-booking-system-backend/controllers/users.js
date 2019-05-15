@@ -34,12 +34,12 @@ usersRouter.get('/:id', async (req, res, next) => {
 })
 
 
-usersRouter.post('/', async (request, response, next) => {
+usersRouter.post('/', async (req, res, next) => {
     try {
-        const body = request.body
+        const body = req.body
 
         if (body.password === undefined || body.password.length < 3) {
-            return response.status(400).json({ error: 'Password is too short or missing' })
+            return res.status(400).json({ error: 'Password is too short or missing' })
         }
 
         const saltRounds = 10
@@ -56,18 +56,23 @@ usersRouter.post('/', async (request, response, next) => {
 
         const savedUser = await user.save()
 
-        response.json(savedUser)
+        res.json(savedUser)
     } catch (exception) {
         next(exception)
     }
 })
 
-usersRouter.delete('/:id', async (request, response) => {
-    const user = await User.findById({ _id: req.params.id })
-    await user
-      .remove()
-    response.status(204).end()
-  })
-  
+usersRouter.delete('/:id', async (req, res, next) => {
+    try {
+        const user = await User.findById({ _id: req.params.id })
+        await user
+            .remove()
+        res.status(204).end()
+    } catch (exception) {
+        next(exception)
+    }
+
+})
+
 
 module.exports = usersRouter
