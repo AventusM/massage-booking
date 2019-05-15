@@ -1,0 +1,21 @@
+{
+  "name": "massage-booking-system-backend",
+  "version": "0.0.1",
+  "description": "Node.js backend for frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anton, Ville",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
