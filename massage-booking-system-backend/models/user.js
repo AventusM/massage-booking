@@ -16,6 +16,14 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    admin: {
+        type: Boolean,
+        require: true
+    },
+    passwordHash: {
+        type: String,
+        required: true
+    },
     appointments: [
         {
             type: mongoose.Schema.Types.ObjectId,
