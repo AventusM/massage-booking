@@ -7,6 +7,7 @@ const Toggleable = (props) => {
      const buttons = props.days.map(d => <button onClick={() => props.setDay(d)}>{d}</button>)
 
     return (
+        
         <div>{buttons}</div>
     )
     
