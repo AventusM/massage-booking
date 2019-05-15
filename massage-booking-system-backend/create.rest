@@ -1,4 +1,4 @@
-POST http://127.0.0.1:3001/api/users
+POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
@@ -6,5 +6,6 @@ Content-Type: application/json
     "name": "moro",
     "number": "040-53434324",
     "email": "vill@fafa.com",
-    "admin": false,
+    "password": "123123123",
+    "admin": false
 }
