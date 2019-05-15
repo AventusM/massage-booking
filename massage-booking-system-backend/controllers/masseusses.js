@@ -14,7 +14,7 @@ const formatMasseusse = (input) => {
 
 masseussesRouter.get('/', async (req, res, next) => {
   try {
-    const masseusses = Masseusse.find({})
+    const masseusses = await Masseusse.find({})
     res.json(masseusses.map(formatMasseusse))
   } catch (exception) {
     next(exception)
