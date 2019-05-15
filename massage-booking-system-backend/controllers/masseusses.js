@@ -12,12 +12,11 @@ const formatMasseusse = (input) => {
   }
 }
 
-masseussesRouter.get('/', async (req, res) => {
+masseussesRouter.get('/', async (req, res, next) => {
   try {
     res.json(masseusses.map(formatMasseusse))
   } catch (exception) {
-    console.log(exception)
-    res.status(400).json({ error: 'bad request' })
+    next(exception)
   }
 })
 

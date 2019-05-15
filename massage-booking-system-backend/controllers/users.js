@@ -3,22 +3,22 @@ const usersRouter = require('express').Router()
 const bodyParser = require('body-parser')
 usersRouter.use(bodyParser.json())
 
+
 const formatUsers = (input) => {
     return {
         id: input.id,
         name: input.name,
         number: input.number,
         email: input.email,
-        appoitments: input.appoitments
+        appoitments: input.appoitments 
     }
 }
-usersRouter.get('/', async (req, res) => {
+usersRouter.get('/', async (req, res, next) => {
     try {
-        res.json(users.map(formatUsers))
+      res.json(users.map(formatUsers))
     } catch (exception) {
-        console.log(exception)
-        res.status(400).json({ error: 'bad request' })
-    }
-})
+        next(exception)
+      }
+  })
 
 module.exports = usersRouter
