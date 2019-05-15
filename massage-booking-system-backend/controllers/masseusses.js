@@ -1,5 +1,5 @@
 const express = require('express')
-const masseusses = require('../models/masseusse')
+const Masseusse = require('../models/masseusse')
 const masseussesRouter = express.Router()
 const bodyParser = require('body-parser')
 masseussesRouter.use(bodyParser.json())
@@ -14,6 +14,7 @@ const formatMasseusse = (input) => {
 
 masseussesRouter.get('/', async (req, res, next) => {
   try {
+    const masseusses = Masseusse.find({})
     res.json(masseusses.map(formatMasseusse))
   } catch (exception) {
     next(exception)
