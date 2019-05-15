@@ -13,17 +13,3 @@ const masseusseSchema = mongoose.Schema({
 
 const Masseusse = mongoose.model('Masseusse', masseusseSchema)
 module.exports = Masseusse
-
-
-// let masseusses = [
-//   {
-//     "id": 1,
-//     "name": "Hanna Hieroja"
-//   },
-//   {
-//     "id": 2,
-//     "name": "Manne Massager"
-//   }
-// ]
-
-// module.exports = masseusses
