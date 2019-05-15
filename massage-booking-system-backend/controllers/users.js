@@ -13,6 +13,7 @@ const formatUsers = (input) => {
         appoitments: input.appoitments
     }
 }
+
 usersRouter.get('/', async (req, res, next) => {
     try {
         const users = await User.find({})
@@ -21,5 +22,18 @@ usersRouter.get('/', async (req, res, next) => {
         next(exception)
     }
 })
+
+usersRouter.get('/:id', async (req, res, next) => {
+    try {
+        const user = await User.find({ _id: req.params.id })
+        res.json(user)
+    } catch (exception) {
+        next(exception)
+    }
+})
+
+// TODO - PUT For own field updates
+// TODO - POST For resistering user
+// TODO - DELETE For deleting own user data
 
 module.exports = usersRouter
