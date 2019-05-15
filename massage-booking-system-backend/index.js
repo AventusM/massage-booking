@@ -9,6 +9,7 @@ app.use('/api/masseusses', masseussesRouter)
 
 
 app.use(cors)
+app.use(express.static('build'))
 const server = http.createServer(app)
 const PORT = 3001 // TODO -- CHANGE TO config.port
 server.listen(PORT, () => {
