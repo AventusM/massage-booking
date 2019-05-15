@@ -24,6 +24,15 @@ usersRouter.get('/', async (req, res, next) => {
     }
 })
 
+usersRouter.get('/:id', async (req, res, next) => {
+    try {
+        const users = await User.find({ _id: req.params.id })
+        res.json(user)
+    } catch (exception) {
+        next(exception)
+    }
+})
+
 
 usersRouter.post('/', async (request, response, next) => {
     try {
