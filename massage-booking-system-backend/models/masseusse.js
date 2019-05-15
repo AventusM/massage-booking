@@ -12,5 +12,4 @@ const masseusseSchema = mongoose.Schema({
 })
 
 const Masseusse = mongoose.model('Masseusse', masseusseSchema)
-
 module.exports = Masseusse
