@@ -5,7 +5,10 @@ const cors = require('cors')
 
 
 const masseussesRouter = require('./controllers/masseusses')
+const usersRouter = require('./controllers/users')
+
 app.use('/api/masseusses', masseussesRouter)
+app.use('/api/users', usersRouter)
 
 
 app.use(cors)

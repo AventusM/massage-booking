@@ -12,9 +12,11 @@ const formatUsers = (input) => {
 }
 usersRouter.get('/', async (req, res) => {
     try {
-      const user = res.map(formatUsers)
-      res.json(users)
+      res.json(users.map(formatUsers))
     } catch (exception) {
-      next(exception)
-    }
+        console.log(exception)
+        res.status(400).json({ error: 'bad request' })
+      }
   })
+
+module.exports = usersRouter
