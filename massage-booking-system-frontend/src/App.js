@@ -7,17 +7,58 @@ import Calender from "./components/Calender"
 import Toggleable from "./components/Toggleable";
 import { timingSafeEqual } from "crypto";
 
-
 const App = () => {
   const [users, setUsers] = useState([])
   const [masseusses, setMasseusses] = useState([])
   const [appointments, setAppointments] = useState([])
-  const [times, setTimes] = useState([])
-  const [weeks, setWeeks] = useState([])
+  const [times, setTimes] = useState(
+    [
+      {
+      id: 1,
+      week: 1,
+      appointment_id: 1,
+      startTime: 8.15,
+      day: 1
+    },
+    {
+      id: 5,
+      week: 1,
+      appointment_id: 1,
+      startTime: 8.30,
+      day: 1
+    },
+    {
+      id: 2,
+      week: 1,
+      appointment_id: null,
+      startTime: 9.15,
+      day: 2
+    },
+
+    {
+      id: 3,
+      week: 2,
+      appointment_id: 2,
+      startTime: 10.15,
+      day: 1
+    },
   
+    {
+      id: 4,
+      week: 2,
+      appointment_id: null,
+      startTime: 11.15,
+      day: 2
+    }
+  
+    
+]
+  )
+  const [week, setWeek] = useState(1)
+  const [day, setDay] = useState(1)
 
 
-  useEffect(() => {
+/*   useEffect(() => {
     console.log('useEfect')
     usersService.getUsers().then((response => setUsers(response.data)))
     appointmentsService.getAppointments().then((response => setAppointments(response.data)))
@@ -25,13 +66,23 @@ const App = () => {
     calenderService.getTimes().then((response => setTimes(response.data)))
     
 
-  }, [])
-  let intialDay = times[0]
-  console.log('initialday', intialDay)
-  const [day, setDay] = useState([])
+  }, []) */
   
   
+  const determineDaysForGivenWeek = (props) => {
+    console.log('week', week)
+    const days = times.map(time => time.week = week ? time.day : null)
+    
+    let unique = [...new Set(days)]
+    console.log('unique', unique)
+
+    return (
+      unique
+    )
+  }
+  //determineDaysForGivenWeek(1)
   console.log('times', times)
+  console.log('day', day)
   
  /*  console.log(users)
   console.log(masseusses)
@@ -39,11 +90,11 @@ const App = () => {
   console.log(times) */
 
   return (
-    <div>
+    <div >
       
       <p>Hello world</p>
-      <Toggleable day={day} setDays={setDay} />
-      <Calender times={day} />
+      <Toggleable day={day} setDay={setDay} days={determineDaysForGivenWeek(1)}/>
+      <Calender times={times} day={day} week={week} />
     </div>
   )
 }
