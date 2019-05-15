@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 usersRouter.use(bodyParser.json())
 
 
-const formatUsers = (input) => {
+const formatUser = (input) => {
     return {
         id: input.id,
         name: input.name,
@@ -17,7 +17,7 @@ const formatUsers = (input) => {
 usersRouter.get('/', async (req, res, next) => {
     try {
         const users = await User.find({})
-        res.json(users.map(formatUsers))
+        res.json(users.map(formatUser))
     } catch (exception) {
         next(exception)
     }
