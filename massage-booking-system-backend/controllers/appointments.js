@@ -35,25 +35,29 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
 })
 
 appointmentsRouter.post('/', async (req, res, next) => {
-
-  const body = req.body
-  const user = await user.findById(body.user_id)
-
-  const appointment = new Appointment({
-    masseusse_id: body.masseusse_id,
-    user_id: body.user_id
-  })
-
   try {
-    // Create appointment
-    const savedAppointment = await appointment.save()
-    user.appointments = user.appointments.concat(savedAppointment._id)
-    // Add previously created appointment to user as well
-    await user.save()
-    res.json(savedAppointment)
+    const body = req.body
+    const user = await User.findById(body.user_id)
+
+    const appointment = new Appointment({
+      masseusse_id: body.masseusse_id,
+      user_id: body.user_id
+    })
+
+    try {
+      // Create appointment
+      const savedAppointment = await appointment.save()
+      user.appointments = user.appointments.concat(savedAppointment._id)
+      // Add previously created appointment to user as well
+      await user.save()
+      res.json(savedAppointment)
+    } catch (exception) {
+      next(exception)
+    }
   } catch (exception) {
     next(exception)
   }
+
 })
 
 module.exports = appointmentsRouter
