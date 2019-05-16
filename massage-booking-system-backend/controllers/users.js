@@ -11,13 +11,13 @@ const formatUser = (input) => {
         name: input.name,
         number: input.number,
         email: input.email,
-        appoitments: input.appoitments
+        appointments: input.appointments
     }
 }
 
 usersRouter.get('/', async (req, res, next) => {
     try {
-        const users = await User.find({})
+        const users = await User.find({}).populate('appointments')
         res.json(users.map(formatUser))
     } catch (exception) {
         next(exception)

@@ -4,6 +4,7 @@ const appointmentsRouter = express.Router()
 const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
 const bcrypt = require('bcrypt')
+const User = require('../models/user')
 
 const formatAppointment = (input) => {
   return {
@@ -34,16 +35,21 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
 })
 
 appointmentsRouter.post('/', async (req, res, next) => {
+
+  const body = req.body
+  const user = await user.findById(body.user_id)
+
+  const appointment = new Appointment({
+    masseusse_id: body.masseusse_id,
+    user_id: body.user_id
+  })
+
   try {
-    const body = req.body
-
-    const appointment = new Appointment({
-      masseusse_id: body.masseusse_id,
-      user_id: body.user_id
-    })
-
+    // Create appointment
     const savedAppointment = await appointment.save()
-
+    user.appointments = user.appointments.concat(savedAppointment._id)
+    // Add previously created appointment to user as well
+    await user.save()
     res.json(savedAppointment)
   } catch (exception) {
     next(exception)
