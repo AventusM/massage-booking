@@ -62,12 +62,6 @@ usersRouter.post('/', async (req, res, next) => {
 })
 
 
-/*
-    TODO -- PUT / PATCH - endpoints for user profile changes?
-    TODO -- PUT / PATCH - endpoints for user profile changes?
-    TODO -- PUT / PATCH - endpoints for user profile changes?
-*/
-
 usersRouter.put('/:id', async (req, res, next) => {
     try  {
         const body = req.body
@@ -78,7 +72,7 @@ usersRouter.put('/:id', async (req, res, next) => {
             email: body.email,
         }
 
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, user)
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {new: true})
         res.json(updatedUser)
     } catch (exception) {
         next(exception)
