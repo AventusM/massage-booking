@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint .",
+    "test": "jest --verbose"
   },
   "author": "Anton, Ville",
   "license": "MIT",
@@ -16,10 +17,14 @@
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
+    "jest": "^24.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.8"
   },
   "devDependencies": {
     "nodemon": "^1.19.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
