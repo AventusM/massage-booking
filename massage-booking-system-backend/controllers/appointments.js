@@ -9,7 +9,7 @@ const formatAppointment = (input) => {
   return {
     _id: input._id,
     masseusse_id: input.masseusse_id,
-    user_id: input.user
+    user_id: input.user_id
   }
 }
 
@@ -36,13 +36,6 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
 appointmentsRouter.post('/', async (req, res, next) => {
   try {
     const body = req.body
-
-    if (body.password === undefined || body.password.length < 3) {
-      return res.status(400).json({ error: 'Password is too short or missing' })
-    }
-
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
     const appointment = new Appointment({
       masseusse_id: body.masseusse_id,
