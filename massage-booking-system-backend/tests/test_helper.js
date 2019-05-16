@@ -7,33 +7,22 @@ const initialHelperUsers = [
     email: "keijo@kayttaja.fi",
     admin: false,
     passwordHash: "hdkjashdkjsadh"
-  }
-]
-
-
-const initialHelperUsersForPost = [
+  },
   {
-    name: "Keijo Käyttäjä",
+    name: "Kalle Keittäjä",
     number: "050-1231231",
-    email: "keijo@kayttaja.fi",
+    email: "kalle@keittäjä.fi",
     admin: false,
-    password: "hdkjashdkjsadh"
-  },
-  {
-    name: "Ville Veiko",
-    number: "052-1231231",
-    email: "ville@kayttaja.fi",
-    admin: false,
-    password: "hdkjashdkjsadh"
-  },
-  {
-    name: "Maija Mehiläinen",
-    number: "054-1231231",
-    email: "maija@kayttaja.fi",
-    admin: false,
-    password: "hdkjashdkjsadh"
+    passwordHash: "jsadjhsa"
   }
 ]
+
+const fakeId = async () => {
+  const fakeUser = new User(initialHelperUsers[1])
+  await fakeUser.save()
+  await fakeUser.remove()
+  return fakeUser._id.toString()
+}
 
 const usersFromDb = async () => {
   const users = await User.find({})
@@ -41,5 +30,5 @@ const usersFromDb = async () => {
 }
 
 module.exports = {
-  usersFromDb, initialHelperUsers, initialHelperUsersForPost
+  usersFromDb, initialHelperUsers, fakeId
 }
