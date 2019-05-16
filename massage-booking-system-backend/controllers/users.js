@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 const formatUser = (input) => {
     return {
-        id: input.id,
+        _id: input._id,
         name: input.name,
         number: input.number,
         email: input.email,
@@ -46,7 +46,6 @@ usersRouter.post('/', async (req, res, next) => {
         const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
         const user = new User({
-            username: body.username,
             name: body.name,
             number: body.number,
             email: body.email,
