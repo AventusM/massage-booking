@@ -4,10 +4,10 @@
   "description": "Node.js backend for frontend",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
-    "lint": "eslint .",
-    "test": "jest --verbose"
+    "start": "NODE_ENV=production node index.js",
+    "watch": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
+    "lint": "eslint ."
   },
   "author": "Anton, Ville",
   "license": "MIT",
@@ -17,12 +17,12 @@
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
-    "jest": "^24.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.8"
   },
   "devDependencies": {
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "jest": "^24.8.0"
   },
   "jest": {
     "testEnvironment": "node"
