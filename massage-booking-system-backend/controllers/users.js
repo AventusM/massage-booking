@@ -68,6 +68,24 @@ usersRouter.post('/', async (req, res, next) => {
     TODO -- PUT / PATCH - endpoints for user profile changes?
 */
 
+usersRouter.put('/:id', async (req, res, next) => {
+    try  {
+        const body = req.body
+
+        const user = {
+            name: body.name,
+            number: body.number,
+            email: body.email,
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, user)
+        res.json(updatedUser)
+    } catch (exception) {
+        next(exception)
+    }
+
+})
+
 usersRouter.delete('/:id', async (req, res, next) => {
     try {
         const user = await User.findById({ _id: req.params.id })
