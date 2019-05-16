@@ -6,15 +6,19 @@ const loginRouter = express.Router()
 loginRouter.use(bodyParser.json())
 const User = require('../models/user')
 
+/*
+ TODO -- LOGIN ENDPOINT FOR MASSEUSSE
+ TODO -- LOGIN ENDPOINT FOR MASSEUSSE
+ TODO -- LOGIN ENDPOINT FOR MASSEUSSE
+ TODO -- LOGIN ENDPOINT FOR MASSEUSSE
+ TODO -- LOGIN ENDPOINT FOR MASSEUSSE
+*/
+
 loginRouter.post('/', async (req, res) => {
-  const body = req.body
-  console.log('request body', body)
 
   /*
   Data from email and password fields
   */
-
-
   const foundUser = await User.findOne({ email: body.email })
   const pwMatch = foundUser === null
     ? false
