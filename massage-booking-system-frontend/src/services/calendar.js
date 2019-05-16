@@ -1,5 +1,5 @@
 import axios from "axios"
-const baseUrl = "http://localhost:3001/calender"
+const baseUrl = "http://localhost:3001/calendar"
 
 const getTimes = () => {
   return axios.get(baseUrl)

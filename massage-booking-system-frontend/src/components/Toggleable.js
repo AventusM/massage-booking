@@ -2,13 +2,16 @@ import React from 'react'
 
 const Toggleable = (props) => {
 
-     console.log('toggleable props', props)
+     //console.log('toggleable props', props)
     
-     const buttons = props.days.map(d => <button onClick={() => props.setDay(d)}>{d}</button>)
-
+     // const buttons = props.days.map(d => <button onClick={() => props.setDay(d.day)}>{d.day}</button>)
+     const asd = () => {
+        props.toDo(props.target)
+     }
+     
     return (
-        
-        <div>{buttons}</div>
+
+        <button onClick={asd}>{props.label}</button>
     )
     
     }

@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react"
 import usersService from "./services/users"
 import masseussesService from "./services/masseusses"
 import appointmentsService from "./services/appointments"
-import calenderService from "./services/calender"
-import Calender from "./components/Calender"
-import Toggleable from "./components/Toggleable";
-import { timingSafeEqual } from "crypto";
+import calenderService from "./services/calendar"
+import Calendar from "./components/Calendar"
+import Toggleable from "./components/Toggleable"
+import { timingSafeEqual } from "crypto"
+import Timelist from './components/Timelist'
 
 const App = () => {
   const [users, setUsers] = useState([])
   const [masseusses, setMasseusses] = useState([])
   const [appointments, setAppointments] = useState([])
+  const [week, setWeek] = useState(1)
+  const [day, setDay] = useState(1)
+  const [timesToShow, setTimesToShow] = useState([])
   const [times, setTimes] = useState(
     [
       {
@@ -30,7 +34,7 @@ const App = () => {
     {
       id: 2,
       week: 1,
-      appointment_id: null,
+      appointment_id: 1,
       startTime: 9.15,
       day: 2
     },
@@ -54,8 +58,23 @@ const App = () => {
     
 ]
   )
-  const [week, setWeek] = useState(1)
-  const [day, setDay] = useState(1)
+
+  useEffect(()=> {
+    console.log('AAAAAAAAAA day:', day)
+    console.log('AAAAAAAAAA times:', times)
+    filterTimesToShow()
+  }, [day])
+  const filterTimesToShow = () => {
+    console.log('timesToShow before', timesToShow)
+    console.log('times in filterTimes to Show', times)
+    console.log(times[0].day === day)
+    console.log('timesFiltered', times.filter(time => time.day == day))
+    const filteredTimes = times.filter(time => time.day == day)
+    console.log('filteredTimes', filteredTimes)
+    setTimesToShow(filteredTimes)
+    console.log('timesToShow after', timesToShow)
+  }
+  console.log('timestoShow', timesToShow)
 
 
 /*   useEffect(() => {
@@ -69,32 +88,17 @@ const App = () => {
   }, []) */
   
   
-  const determineDaysForGivenWeek = (props) => {
-    console.log('week', week)
-    const days = times.map(time => time.week = week ? time.day : null)
-    
-    let unique = [...new Set(days)]
-    console.log('unique', unique)
-
-    return (
-      unique
-    )
-  }
-  //determineDaysForGivenWeek(1)
-  console.log('times', times)
-  console.log('day', day)
-  
  /*  console.log(users)
   console.log(masseusses)
   console.log(appointments)
   console.log(times) */
 
+ 
+
   return (
     <div >
-      
-      <p>Hello world</p>
-      <Toggleable day={day} setDay={setDay} days={determineDaysForGivenWeek(1)}/>
-      <Calender times={times} day={day} week={week} />
+      <Calendar setDay={setDay}/>
+      <Timelist list={timesToShow}/>
     </div>
   )
 }
