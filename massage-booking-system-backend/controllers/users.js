@@ -7,17 +7,17 @@ const bcrypt = require('bcrypt')
 
 const formatUser = (input) => {
     return {
-        id: input.id,
+        _id: input._id,
         name: input.name,
         number: input.number,
         email: input.email,
-        appoitments: input.appoitments
+        appointments: input.appointments
     }
 }
 
 usersRouter.get('/', async (req, res, next) => {
     try {
-        const users = await User.find({})
+        const users = await User.find({}).populate('appointments')
         res.json(users.map(formatUser))
     } catch (exception) {
         next(exception)
@@ -46,7 +46,6 @@ usersRouter.post('/', async (req, res, next) => {
         const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
         const user = new User({
-            username: body.username,
             name: body.name,
             number: body.number,
             email: body.email,
@@ -60,6 +59,25 @@ usersRouter.post('/', async (req, res, next) => {
     } catch (exception) {
         next(exception)
     }
+})
+
+
+usersRouter.put('/:id', async (req, res, next) => {
+    try  {
+        const body = req.body
+
+        const user = {
+            name: body.name,
+            number: body.number,
+            email: body.email,
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {new: true})
+        res.json(updatedUser)
+    } catch (exception) {
+        next(exception)
+    }
+
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {

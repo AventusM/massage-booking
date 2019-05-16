@@ -5,16 +5,42 @@ const bodyParser = require('body-parser')
 const loginRouter = express.Router()
 loginRouter.use(bodyParser.json())
 const User = require('../models/user')
+const Masseusse = require('../models/masseusse')
+
+
+loginRouter.post('/masseusse', async (req, res) => {
+
+  const foundMasseusse = await Masseusse.findOne({ email: body.email })
+  const pwMatch = foundMasseusse === null
+    ? false
+    : await bcrypt.compare(body.password, foundMasseusse.passwordHash)
+
+  const invalidMasseusseOrPw = !(foundMasseusse && pwMatch)
+  if (invalidMasseusseOrPw) {
+    return res.status(401).json({
+      error: 'invalid email or password'
+    })
+  }
+
+  const MasseusseCheckForTokenObject = {
+    email: foundMasseusse.email,
+    name: foundMasseusse.name,
+    id: foundMasseusse._id
+  }
+
+  const token = jsonWebToken.sign(foundMasseusse, process.env.SECRET)
+  res
+    .status(200)
+    .send({ token, email: foundMasseusse.email, name: foundMasseusse.name })
+
+})
+
 
 loginRouter.post('/', async (req, res) => {
-  const body = req.body
-  console.log('request body', body)
 
   /*
   Data from email and password fields
   */
-
-
   const foundUser = await User.findOne({ email: body.email })
   const pwMatch = foundUser === null
     ? false
@@ -23,7 +49,7 @@ loginRouter.post('/', async (req, res) => {
   const invalidUserOrPw = !(foundUser && pwMatch)
   if (invalidUserOrPw) {
     return res.status(401).json({
-      error: 'invalid username or password'
+      error: 'invalid email or password'
     })
   }
 
