@@ -1,8 +1,9 @@
 import React from 'react'
+import AppointmentForm from './AppointmentForm'
 
 const Timelist = ({list}) => {
 
-    const l = list.map(item => <li key={item.id}>{item.startTime}</li>)
+    const l = list.map(item => <li key={item.id}><AppointmentForm startTime={item.startTime}/> </li>)
     console.log('TimeList list', list)
 
     return (
