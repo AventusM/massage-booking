@@ -22,7 +22,7 @@ describe('with existing USERS', () => {
   it('displays correct data from FETCHED DATA to INITIAL DATA', async () => {
     const response = await api.get('/api/users')
     const body = response.body
-    
+
     const names = body.map(item => item.name)
     const emails = body.map(item => item.email)
     const numbers = body.map(item => item.number)
