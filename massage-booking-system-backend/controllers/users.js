@@ -26,12 +26,13 @@ usersRouter.get('/', async (req, res, next) => {
 
 usersRouter.get('/:id', async (req, res, next) => {
     try {
-        const users = await User.find({ _id: req.params.id })
+        const user = await User.find({ _id: req.params.id })
         res.json(user)
     } catch (exception) {
         next(exception)
     }
 })
+
 
 
 usersRouter.post('/', async (req, res, next) => {
@@ -61,9 +62,35 @@ usersRouter.post('/', async (req, res, next) => {
     }
 })
 
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
 
+usersRouter.put('/:id/toggleadmin', async (req, res, next) => {
+    try {
+
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+
+        const foundUser = await User.findByIdAndUpdate(req.params.id)
+        foundUser.admin = !foundUser.admin
+        await foundUser.save()
+    } catch (exception) {
+        next(exception)
+    }
+})
+
+
+// Basic user data changes here. Visible for normal user
 usersRouter.put('/:id', async (req, res, next) => {
-    try  {
+    try {
         const body = req.body
 
         const user = {
@@ -72,7 +99,7 @@ usersRouter.put('/:id', async (req, res, next) => {
             email: body.email,
         }
 
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {new: true})
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, user, { new: true })
         res.json(updatedUser)
     } catch (exception) {
         next(exception)
@@ -83,8 +110,7 @@ usersRouter.put('/:id', async (req, res, next) => {
 usersRouter.delete('/:id', async (req, res, next) => {
     try {
         const user = await User.findById({ _id: req.params.id })
-        await user
-            .remove()
+        await user.remove()
         res.status(204).end()
     } catch (exception) {
         next(exception)
