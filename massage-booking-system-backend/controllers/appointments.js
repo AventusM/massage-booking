@@ -17,8 +17,8 @@ const formatAppointment = (input) => {
 }
 
 const getToken = req => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.toLowerCase().starsWith('bearer')) {
+  const authorization = req.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     return authorization.substring(7)
   } 
   return null
@@ -46,7 +46,7 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
 
 appointmentsRouter.post('/', async (req, res, next) => {
   try {
-    const token = getToken(res)
+    const token = getToken(req)
     const decodedToken = jsonWebToken.verify(token, process.env.SECRET)
 
     if (!token || !decodedToken.id) {      
