@@ -1,0 +1,8 @@
+PUT http://localhost:3001/api/users/5cdd1eb83f24971965ed126a
+Content-Type: application/json 
+
+{
+  "name": "AKAJSDLKAJSD",
+  "email": "ajsdjakdasd@hekajshdkjadmo.hes",
+  "number": "123-123-123"
+}
