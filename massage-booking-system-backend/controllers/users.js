@@ -26,7 +26,7 @@ usersRouter.get('/', async (req, res, next) => {
 
 usersRouter.get('/:id', async (req, res, next) => {
     try {
-        const users = await User.find({ _id: req.params.id })
+        const user = await User.find({ _id: req.params.id })
         res.json(user)
     } catch (exception) {
         next(exception)
@@ -68,6 +68,24 @@ usersRouter.post('/', async (req, res, next) => {
 // TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
 // TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
 // TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+
+usersRouter.put('/:id/toggleadmin', async (req, res, next) => {
+    try {
+
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
+
+        const foundUser = await User.findByIdAndUpdate(req.params.id)
+        foundUser.admin = !foundUser.admin
+        await foundUser.save()
+    } catch (exception) {
+        next(exception)
+    }
+})
 
 
 // Basic user data changes here. Visible for normal user

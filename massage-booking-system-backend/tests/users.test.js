@@ -14,6 +14,17 @@ describe('with existing USERS', () => {
     await Promise.all(promiseArray)
   })
 
+  it('succeeds fetching individual user', async () => {
+    const response = await api.get('/api/users')
+    const idFromALL = response.body[0]._id
+
+    const individualResponse =
+      await api.get(`/api/users/${idFromALL}`)
+    const fetchedId = individualResponse.body[0]._id
+
+    expect(idFromALL).toBe(fetchedId)
+  })
+
   it('displays correct user amount', async () => {
     const response = await api.get('/api/users')
     expect(response.body.length).toBe(helper.initialHelperUsers.length)
@@ -36,13 +47,6 @@ describe('with existing USERS', () => {
     expect(numbers).toContain(helper.initialHelperUsers[0].number)
     expect(numbers).toContain(helper.initialHelperUsers[1].number)
 
-  })
-
-  it('returns 500 status code if a non-existing user is fetched', async () => {
-    const removedId = await helper.fakeId()
-    // console.log('removed id', removedId)
-    const response = await api.get(`/api/users/${removedId}`)
-    expect(response.status).toBe(500)
   })
 
   it('fails to fetch a user with INVALID id', async () => {
