@@ -29,14 +29,10 @@ describe('With an existing user and a masseusse', () => {
     const masseusse_response = await api.get('/api/masseusses')
     const masseusse_id = masseusse_response.body[0]._id
 
-    const DateNow = Date.now()
-    console.log('date now', DateNow)
 
     const new_appointment = {
       user_id,
       masseusse_id,
-      start_date: DateNow,
-      end_date: DateNow,
       type_of_reservation: 1
     }
 
@@ -82,7 +78,8 @@ describe('With an invalid masseusse', () => {
 
     const new_appointment = {
       user_id,
-      masseusse_id
+      masseusse_id,
+      type_of_reservation: 1
     }
 
     // DELETING MASSEUSSE
@@ -113,7 +110,8 @@ describe('With an invalid masseusse', () => {
 
     const new_appointment = {
       user_id,
-      masseusse_id
+      masseusse_id,
+      type_of_reservation: 1
     }
 
     // DELETING MASSEUSSE

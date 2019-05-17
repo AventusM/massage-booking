@@ -71,8 +71,6 @@ appointmentsRouter.post('/', async (req, res, next) => {
     const appointment = new Appointment({
       masseusse_id: body.masseusse_id,
       user_id: body.user_id,
-      start_time: body.start_time,
-      end_time: body.end_time,
       type_of_reservation: body.type_of_reservation
     })
 
