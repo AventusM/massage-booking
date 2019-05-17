@@ -8,6 +8,7 @@ import Toggleable from "./components/Toggleable"
 import { timingSafeEqual } from "crypto"
 import Timelist from './components/Timelist'
 import Calendar from 'react-calendar';
+import './css/style.css'
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -55,6 +56,13 @@ const App = () => {
       appointment_id: null,
       startTime: 11.15,
       day: 2
+    },
+    {
+      id: 4,
+      week: 3,
+      appointment_id: null,
+      startTime: 11.15,
+      day: 17
     }
   
     

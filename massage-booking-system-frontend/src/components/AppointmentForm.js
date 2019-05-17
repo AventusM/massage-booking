@@ -1,17 +1,17 @@
 import React from 'react'
 
-const AppointmentForm = ({startTime}) => {
+const AppointmentForm = ({timeSlot}) => {
     const makeAppointment = () => {
        //event.preventDefault()
         //todo
-        return window.confirm(`Ar ye sure matey? Reserve massage at ${startTime}?`)
+        return window.confirm(`Ar ye sure matey? Reserve massage at ${timeSlot.startTime}?`)
     }
     
     return (
         <form onSubmit= {makeAppointment}>
-            {startTime}
+            {timeSlot.startTime}
 
-            <button type='submit'>Reserve</button>
+            <button type='submit' className='timelist_button'>Reserve</button>
         </form>
     )
 }
