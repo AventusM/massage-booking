@@ -8,6 +8,7 @@ import Toggleable from "./components/Toggleable"
 import { timingSafeEqual } from "crypto"
 import Timelist from './components/Timelist'
 import Calendar from 'react-calendar';
+import LoginForm from './components/LoginForm'
 import './css/style.css'
 
 const App = () => {
@@ -105,6 +106,10 @@ const App = () => {
 
   return (
     <div >
+      <div>
+      <LoginForm />
+      </div>
+      <div>
       <Calendar
           onChange={(value) => {
             console.log('value ',value, 'value type', typeof value) 
@@ -112,7 +117,12 @@ const App = () => {
           }}
           value={new Date()}
         />
-      <Timelist list={timesToShow}/>
+      </div>
+      
+      <div>
+        <Timelist list={timesToShow}/>
+      </div>
+      
     </div>
   )
 }
