@@ -1,5 +1,6 @@
 const supertest = require('supertest')
 const mongoose = require('mongoose')
+const helpers = require('./test_helper')
 const app = require('../../app')
 const api = supertest(app)
 const User = require('../../models/user')
@@ -7,40 +8,21 @@ const Masseusse = require('../../models/masseusse')
 const Appointment = require('../../models/appointment')
 
 
-describe('With an existing logged in user and a masseusse', () => {
+describe('With an existing user and a masseusse', () => {
   beforeEach(async () => {
     await Appointment.deleteMany({})
     await User.deleteMany({})
     await Masseusse.deleteMany({})
-    const validUser = {
-      name: "AntonM",
-      number: "050-3528695",
-      email: "family@guy.foq",
-      admin: true,
-      password: "secretPass"
-    }
-    const validMasseusse = {
-      name: "Hanna Hieroja",
-      number: "90210",
-      email: "jes@jes.hemohes",
-      password: "testing"
-    }
-
     await api
       .post(`/api/users`)
-      .send(validUser)
-
-    // Get user logged in to fix auth problems with testing
-    await api
-      .post(`/api/login`)
-      .send(validUser)
+      .send(helpers.validUser)
 
     await api
       .post(`/api/masseusses`)
-      .send(validMasseusse)
+      .send(helpers.validMasseusse)
   })
 
-  it('should create a valid appointment', async () => {
+  it('should create a valid appointment when user IS logged in', async () => {
     const user_response = await api.get('/api/users')
     const user_id = user_response.body[0]._id
 
@@ -52,47 +34,38 @@ describe('With an existing logged in user and a masseusse', () => {
       masseusse_id
     }
 
+    // Get user logged in to fix auth problems with testing
+    const login_response =
+      await api
+        .post(`/api/login`)
+        .send(helpers.loginObject)
+
     const appointment_response =
       await api
         .post('/api/appointments')
+        .set('Authorization', `bearer ${login_response.body.token}`)
         .send(new_appointment)
-
-    console.log('app response', appointment_response.body)
 
     expect(appointment_response.body.masseusse_id).toBe(masseusse_id)
     expect(appointment_response.body.user_id).toBe(user_id)
   })
 })
 
-describe('With an invalid masseusse or user', () => {
+describe('With an invalid masseusse', () => {
   beforeEach(async () => {
     await Appointment.deleteMany({})
     await User.deleteMany({})
     await Masseusse.deleteMany({})
-    const validUser = {
-      name: "AntonM",
-      number: "050-3528695",
-      email: "family@guy.foq",
-      admin: true,
-      password: "secretPass"
-    }
-    const validMasseusse = {
-      name: "Hanna Hieroja",
-      number: "90210",
-      email: "jes@jes.hemohes",
-      password: "testing"
-    }
-
     await api
       .post(`/api/users`)
-      .send(validUser)
+      .send(helpers.validUser)
 
     await api
       .post(`/api/masseusses`)
-      .send(validMasseusse)
+      .send(helpers.validMasseusse)
   })
 
-  it('should NOT create a valid appointment', async () => {
+  it('should return 400 when user IS logged in', async () => {
     const user_response = await api.get('/api/users')
     const user_id = user_response.body[0]._id
 
@@ -109,11 +82,43 @@ describe('With an invalid masseusse or user', () => {
       .delete(`/api/masseusses/${masseusse_id}`)
       .expect(204)
 
-    // THIS SHOULD RETURN 400 OR 500?
+    const login_response =
+      await api
+        .post(`/api/login`)
+        .send(helpers.loginObject)
+
+    // LOGIN BUT NO MASSEUSSE -- RETURNS 400
+    const appointment_response =
+      await api
+        .post('/api/appointments')
+        .set('Authorization', `bearer ${login_response.body.token}`)
+        .send(new_appointment)
+        .expect(400)
+  })
+
+  it('should return 401 when user IS NOT logged in', async () => {
+    const user_response = await api.get('/api/users')
+    const user_id = user_response.body[0]._id
+
+    const masseusse_response = await api.get('/api/masseusses')
+    const masseusse_id = masseusse_response.body[0]._id
+
+    const new_appointment = {
+      user_id,
+      masseusse_id
+    }
+
+    // DELETING MASSEUSSE
+    await api
+      .delete(`/api/masseusses/${masseusse_id}`)
+      .expect(204)
+
+    // NO LOGIN -- RETURNS 401
     const appointment_response =
       await api
         .post('/api/appointments')
         .send(new_appointment)
-        .expect(400)
+        .expect(401)
+
   })
 })

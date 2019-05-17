@@ -29,6 +29,28 @@ const usersFromDb = async () => {
   return users.map(user => user.toJSON())
 }
 
+// FOR APPOINTMENTS
+// FOR APPOINTMENTS
+// FOR APPOINTMENTS
+let loginEmail = "anton@anton.anton"
+let loginPassword = "secretPass"
+
+const validUser = {
+  name: "AntonM",
+  number: "050-3528695",
+  email: loginEmail,
+  admin: true,
+  password: loginPassword
+}
+
+const validMasseusse = {
+  name: "Hanna Hieroja",
+  number: "90210",
+  email: "jes@jes.hemohes",
+  password: "testing"
+}
+
+const loginObject = { email: loginEmail, password: loginPassword }
 module.exports = {
-  usersFromDb, initialHelperUsers, fakeId
+  usersFromDb, initialHelperUsers, fakeId, validUser, validMasseusse, loginObject
 }
