@@ -60,4 +60,15 @@ masseussesRouter.post('/', async (req, res, next) => {
   }
 })
 
+masseussesRouter.delete('/:id', async (req, res, next) => {
+  try {
+    const masseusses = await Masseusse.findById({ _id: req.params.id })
+    await masseusses.remove()
+    res.status(204).end()
+  } catch (exception) {
+    next(exception)
+  }
+
+})
+
 module.exports = masseussesRouter
