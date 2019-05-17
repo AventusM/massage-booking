@@ -29,9 +29,15 @@ describe('With an existing user and a masseusse', () => {
     const masseusse_response = await api.get('/api/masseusses')
     const masseusse_id = masseusse_response.body[0]._id
 
+    const DateNow = Date.now()
+    console.log('date now', DateNow)
+
     const new_appointment = {
       user_id,
-      masseusse_id
+      masseusse_id,
+      start_date: DateNow,
+      end_date: DateNow,
+      type_of_reservation: 1
     }
 
     // Get user logged in to fix auth problems with testing
@@ -45,6 +51,8 @@ describe('With an existing user and a masseusse', () => {
         .post('/api/appointments')
         .set('Authorization', `bearer ${login_response.body.token}`)
         .send(new_appointment)
+
+    console.log('appointment response', appointment_response.body)
 
     expect(appointment_response.body.masseusse_id).toBe(masseusse_id)
     expect(appointment_response.body.user_id).toBe(user_id)

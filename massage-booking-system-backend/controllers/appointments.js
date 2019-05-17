@@ -20,7 +20,7 @@ const getToken = req => {
   const authorization = req.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     return authorization.substring(7)
-  } 
+  }
   return null
 }
 
@@ -49,10 +49,10 @@ appointmentsRouter.post('/', async (req, res, next) => {
     const token = getToken(req)
     const decodedToken = jsonWebToken.verify(token, process.env.SECRET)
 
-    if (!token || !decodedToken.id) {      
-      return response.status(401).json({ error: 'token missing or invalid' })    
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
     }
-    
+
     const body = req.body
     const user = await User.findById(body.user_id)
 
@@ -70,7 +70,10 @@ appointmentsRouter.post('/', async (req, res, next) => {
 
     const appointment = new Appointment({
       masseusse_id: body.masseusse_id,
-      user_id: body.user_id
+      user_id: body.user_id,
+      start_time: body.start_time,
+      end_time: body.end_time,
+      type_of_reservation: body.type_of_reservation
     })
 
     try {
