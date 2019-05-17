@@ -3,12 +3,14 @@ import usersService from "./services/users"
 import masseussesService from "./services/masseusses"
 import appointmentsService from "./services/appointments"
 import calenderService from "./services/calendar"
-import Calendar from "./components/Calendar"
+//import Calendar from "./components/Calendar"
 import Toggleable from "./components/Toggleable"
 import { timingSafeEqual } from "crypto"
 import Timelist from './components/Timelist'
+import Calendar from 'react-calendar';
 
 const App = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const [users, setUsers] = useState([])
   const [masseusses, setMasseusses] = useState([])
   const [appointments, setAppointments] = useState([])
@@ -60,19 +62,18 @@ const App = () => {
   )
 
   useEffect(()=> {
-    console.log('AAAAAAAAAA day:', day)
-    console.log('AAAAAAAAAA times:', times)
+    console.log('AAAAAAAAAA selectedDate:', selectedDate)
+    
     filterTimesToShow()
-  }, [day])
+  }, [selectedDate])
   const filterTimesToShow = () => {
-    console.log('timesToShow before', timesToShow)
-    console.log('times in filterTimes to Show', times)
-    console.log(times[0].day === day)
-    console.log('timesFiltered', times.filter(time => time.day == day))
-    const filteredTimes = times.filter(time => time.day == day)
-    console.log('filteredTimes', filteredTimes)
+      console.log('selectedDate date', selectedDate.getDate())
+    
+    const filteredTimes = times.filter(time => time.day == selectedDate.getDate())
+    
     setTimesToShow(filteredTimes)
-    console.log('timesToShow after', timesToShow)
+    console.log('QQQQQQq')
+    
   }
   console.log('timestoShow', timesToShow)
 
@@ -93,11 +94,16 @@ const App = () => {
   console.log(appointments)
   console.log(times) */
 
- 
 
   return (
     <div >
-      <Calendar setDay={setDay}/>
+      <Calendar
+          onChange={(value) => {
+            console.log('value ',value, 'value type', typeof value) 
+            setSelectedDate(value)
+          }}
+          value={new Date()}
+        />
       <Timelist list={timesToShow}/>
     </div>
   )

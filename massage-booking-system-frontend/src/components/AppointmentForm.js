@@ -4,8 +4,9 @@ const AppointmentForm = ({startTime}) => {
     const makeAppointment = () => {
        //event.preventDefault()
         //todo
+        return window.confirm(`Ar ye sure matey? Reserve massage at ${startTime}?`)
     }
-
+    
     return (
         <form onSubmit= {makeAppointment}>
             {startTime}
