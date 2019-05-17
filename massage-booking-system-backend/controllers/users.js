@@ -34,6 +34,7 @@ usersRouter.get('/:id', async (req, res, next) => {
 })
 
 
+
 usersRouter.post('/', async (req, res, next) => {
     try {
         const body = req.body
@@ -61,9 +62,17 @@ usersRouter.post('/', async (req, res, next) => {
     }
 })
 
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
+// TODO -- CREATE PUT etc. endpoint so ADMIN CAN i.e create OTHER ADMINS
 
+
+// Basic user data changes here. Visible for normal user
 usersRouter.put('/:id', async (req, res, next) => {
-    try  {
+    try {
         const body = req.body
 
         const user = {
@@ -72,7 +81,7 @@ usersRouter.put('/:id', async (req, res, next) => {
             email: body.email,
         }
 
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {new: true})
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, user, { new: true })
         res.json(updatedUser)
     } catch (exception) {
         next(exception)
@@ -83,8 +92,7 @@ usersRouter.put('/:id', async (req, res, next) => {
 usersRouter.delete('/:id', async (req, res, next) => {
     try {
         const user = await User.findById({ _id: req.params.id })
-        await user
-            .remove()
+        await user.remove()
         res.status(204).end()
     } catch (exception) {
         next(exception)

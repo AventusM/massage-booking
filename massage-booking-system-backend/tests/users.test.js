@@ -62,9 +62,14 @@ describe('addition of a new user', () => {
 
   beforeEach(async () => {
     await User.deleteMany({})
-
-
   })
+
+  // TODO -- create ADMIN USER?
+  // TODO -- create ADMIN USER?
+  // TODO -- create ADMIN USER?
+  // TODO -- create ADMIN USER?
+  // TODO -- create ADMIN USER?
+  // TODO -- create ADMIN USER?
 
   it('succeeds with valid data', async () => {
     const user = {
@@ -125,33 +130,109 @@ describe('addition of a new user', () => {
       .expect(200)
 
     const response = await api.get('/api/users')
-
     expect(response.body.length).toBe(2)
   })
 
 })
 
-describe('editing basic user data', () => {
+describe('editing user data', () => {
+
+  const newUser = {
+    name: "HAUSFRAU msaa",
+    number: "696969-696969",
+    email: "ebin@ebön.ebån",
+    admin: false,
+    password: "draavilohi"
+  }
+
   beforeEach(async () => {
-    // TODO -- ADD User to be EDITED?
+    await User.deleteMany({})
+    await api
+      .post('/api/users')
+      .send(newUser)
   })
 
-  it('succeeds when valid input is given', async () => {
+  it('succeeds when valid input is given to change name', async () => {
+    const currentUsers = await helper.usersFromDb()
+    const firstUser = currentUsers[0]
 
+    // Verify that same user. Cannot use straight up toEqual 
+    // because of POST endpoint creating passwordHash which 
+    // cannot be compared straight up with password parameter from original object
+    expect(firstUser.name).toEqual(newUser.name)
+    expect(firstUser.email).toEqual(newUser.email)
+
+    // Updating data of fetched user
+    const editableUser = { ...firstUser, name: "H2k msaa" }
+    const userId = editableUser._id
+
+    // PUT endpoint to update user
+    const response = await api
+      .put(`/api/users/${userId}`)
+      .send(editableUser)
+
+    expect(response.body.name).toBe(editableUser.name)
+  })
+
+  it('doesnt succeed when trying to make SELF admin', async () => {
+    const currentUsers = await helper.usersFromDb()
+    const firstUser = currentUsers[0]
+
+    expect(firstUser.admin).toBe(false)
+    const wannabeAdmin = { ...firstUser, admin: true }
+    const userId = wannabeAdmin._id
+
+    const response = await api
+      .put(`/api/users/${userId}`)
+      .send(wannabeAdmin)
+
+    expect(response.body.admin).not.toBe(true)
+  })
+
+  it('succeeds when create ADMIN creates ANOTHER create ADMIN', async () => {
+    console.log('TODO -- Create PUT endpoint so create ADMIN USER can create other admins')
+    expect(true).toBe(false)
   })
 
 })
 
 describe('removing user', () => {
+  const newUser = {
+    name: "Kakkapasi",
+    number: "696969-696969",
+    email: "ebin@ebön.ebån",
+    admin: false,
+    password: "sokeatMalphitenUltitLantrek2012"
+  }
+
   beforeEach(async () => {
-    // TODO -- ADD User to be DELETED?
+    await User.deleteMany({})
+    await api
+      .post('/api/users')
+      .send(newUser)
   })
 
   it('succeeds with valid user _id', async () => {
+    const currentUsersBeforeDelete = await helper.usersFromDb()
+    const firstUser = currentUsersBeforeDelete[0]
+    expect(currentUsersBeforeDelete.length).toBe(1)
 
+    await api
+      .delete(`/api/users/${firstUser._id}`)
+
+    const currentUsersAfterDelete = await helper.usersFromDb()
+    expect(currentUsersAfterDelete.length).toBe(0)
   })
 
   it('fails with invalid user _id', async () => {
+    const currentUsersBeforeDelete = await helper.usersFromDb()
+    let badIdvalue = "5a3d5da59070081a82a3445"
+
+    await api
+      .delete(`/api/users/${badIdvalue}`)
+
+    const currentUsersAfterDelete = await helper.usersFromDb()
+    expect(currentUsersBeforeDelete.length).toBe(currentUsersAfterDelete.length)
 
   })
 })
