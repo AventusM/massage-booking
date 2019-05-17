@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
+const Masseusse = require('../models/masseusse')
 
 const formatAppointment = (input) => {
   return {
@@ -38,6 +39,18 @@ appointmentsRouter.post('/', async (req, res, next) => {
   try {
     const body = req.body
     const user = await User.findById(body.user_id)
+
+    // TODO -- ADD Own appointments for Masseusse as well??
+    // TODO -- ADD Own appointments for Masseusse as well??
+    // TODO -- ADD Own appointments for Masseusse as well??
+    const masseusse = await Masseusse.findById(body.masseusse_id)
+
+    // No error is given if either of searched items is null. 
+    // Have to create an explicit if-statement
+    if (!(user && masseusse)) {
+      res.status(400).end()
+      return
+    }
 
     const appointment = new Appointment({
       masseusse_id: body.masseusse_id,
