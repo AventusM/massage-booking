@@ -1,13 +1,13 @@
 const supertest = require('supertest')
 const mongoose = require('mongoose')
-const app = require('../app')
+const app = require('../../app')
 const api = supertest(app)
-const User = require('../models/user')
-const Masseusse = require('../models/masseusse')
-const Appointment = require('../models/appointment')
+const User = require('../../models/user')
+const Masseusse = require('../../models/masseusse')
+const Appointment = require('../../models/appointment')
 
 
-describe('With an existing user a masseusse', () => {
+describe('With an existing logged in user and a masseusse', () => {
   beforeEach(async () => {
     await Appointment.deleteMany({})
     await User.deleteMany({})
@@ -28,6 +28,11 @@ describe('With an existing user a masseusse', () => {
 
     await api
       .post(`/api/users`)
+      .send(validUser)
+
+    // Get user logged in to fix auth problems with testing
+    await api
+      .post(`/api/login`)
       .send(validUser)
 
     await api
@@ -51,6 +56,8 @@ describe('With an existing user a masseusse', () => {
       await api
         .post('/api/appointments')
         .send(new_appointment)
+
+    console.log('app response', appointment_response.body)
 
     expect(appointment_response.body.masseusse_id).toBe(masseusse_id)
     expect(appointment_response.body.user_id).toBe(user_id)

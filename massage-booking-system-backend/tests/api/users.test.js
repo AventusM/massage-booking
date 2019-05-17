@@ -1,9 +1,9 @@
 const supertest = require('supertest')
 const mongoose = require('mongoose')
 const helper = require('./test_helper')
-const app = require('../app')
+const app = require('../../app')
 const api = supertest(app)
-const User = require('../models/user')
+const User = require('../../models/user')
 
 describe('with existing USERS', () => {
 
