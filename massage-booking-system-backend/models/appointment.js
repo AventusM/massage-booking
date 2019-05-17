@@ -8,6 +8,18 @@ const appointmentSchema = mongoose.Schema({
     user_id: {
         type: String,
         required: true
+    },
+    start_time: {
+        type: Date,
+        required: true
+    },
+    end_time: {
+        type: Date,
+        required: true
+    },
+    type_of_reservation: {
+        type: Number,
+        required: true
     }
 })
 
