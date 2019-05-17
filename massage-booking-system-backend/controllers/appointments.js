@@ -4,6 +4,7 @@ const appointmentsRouter = express.Router()
 const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
 const bcrypt = require('bcrypt')
+const jsonWebToken = require('jsonwebtoken')
 const User = require('../models/user')
 
 const formatAppointment = (input) => {
@@ -12,6 +13,14 @@ const formatAppointment = (input) => {
     masseusse_id: input.masseusse_id,
     user_id: input.user_id
   }
+}
+
+const getToken = req => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().starsWith('bearer')) {
+    return authorization.substring(7)
+  } 
+  return null
 }
 
 appointmentsRouter.get('/', async (req, res, next) => {
@@ -36,6 +45,13 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
 
 appointmentsRouter.post('/', async (req, res, next) => {
   try {
+    const token = getToken(res)
+    const decodedToken = jsonWebToken.verify(token, process.env.SECRET)
+
+    if (!token || !decodedToken.id) {      
+      return response.status(401).json({ error: 'token missing or invalid' })    
+    }
+    
     const body = req.body
     const user = await User.findById(body.user_id)
 
