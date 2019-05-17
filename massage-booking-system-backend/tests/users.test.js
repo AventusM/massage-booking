@@ -19,7 +19,7 @@ describe('with existing USERS', () => {
     expect(response.body.length).toBe(helper.initialHelperUsers.length)
   })
 
-  it('displays correct data from FETCHED DATA to INITIAL DATA', async () => {
+  it('displays correct data when comparing FETCHED DATA to INITIAL DATA', async () => {
     const response = await api.get('/api/users')
     const body = response.body
 
@@ -66,7 +66,7 @@ describe('addition of a new user', () => {
 
   })
 
-  test('succeeds with valid data', async () => {
+  it('succeeds with valid data', async () => {
     const user = {
       name: "Ville Veiko",
       number: "052-1231231",
@@ -83,7 +83,7 @@ describe('addition of a new user', () => {
 
   })
 
-  test('fails with invalid data', async () => {
+  it('fails with invalid data', async () => {
     const newUser = {
       email: "email@email.com",
       admin: false,
@@ -97,7 +97,7 @@ describe('addition of a new user', () => {
 
   })
 
-  test('if multiple valid users are added, all are returned', async () => {
+  it('if multiple valid users are added, all are returned', async () => {
     let newUser = {
       name: "Ville Veiko",
       number: "052-1231231",
@@ -120,15 +120,40 @@ describe('addition of a new user', () => {
     }
 
     await api
-    .post('/api/users')
-    .send(newUser)
-    .expect(200)
+      .post('/api/users')
+      .send(newUser)
+      .expect(200)
 
     const response = await api.get('/api/users')
 
     expect(response.body.length).toBe(2)
   })
 
+})
+
+describe('editing basic user data', () => {
+  beforeEach(async () => {
+    // TODO -- ADD User to be EDITED?
+  })
+
+  it('succeeds when valid input is given', async () => {
+
+  })
+
+})
+
+describe('removing user', () => {
+  beforeEach(async () => {
+    // TODO -- ADD User to be DELETED?
+  })
+
+  it('succeeds with valid user _id', async () => {
+
+  })
+
+  it('fails with invalid user _id', async () => {
+
+  })
 })
 
 
