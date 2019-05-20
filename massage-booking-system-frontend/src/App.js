@@ -27,14 +27,16 @@ const App = () => {
       week: 1,
       appointment_id: 1,
       startTime: 8.15,
-      day: 1
+      day: 1,
+      reserved: 1
     },
     {
       id: 5,
       week: 1,
       appointment_id: 1,
       startTime: 8.30,
-      day: 1
+      day: 1,
+      reserved: 1
     },
     {
       id: 2,
@@ -42,6 +44,8 @@ const App = () => {
       appointment_id: 1,
       startTime: 9.15,
       day: 2
+      ,
+      reserved: 1
     },
 
     {
@@ -49,7 +53,8 @@ const App = () => {
       week: 2,
       appointment_id: 2,
       startTime: 10.15,
-      day: 1
+      day: 1,
+      reserved: 1
     },
   
     {
@@ -57,17 +62,17 @@ const App = () => {
       week: 2,
       appointment_id: null,
       startTime: 11.15,
-      day: 2
+      day: 2,
+      reserved: 1
     },
     {
       id: 4,
       week: 3,
       appointment_id: null,
       startTime: 11.15,
-      day: 17
+      day: 17,
+      reserved: 1
     }
-  
-    
 ]
   )
   const [user, setUser] = useState(null)
@@ -146,7 +151,7 @@ const App = () => {
       </div>
       
       <div>
-        <Timelist list={timesToShow}/>
+        <Timelist list={timesToShow} user={user} setUser={setUser}/>
       </div>
       
     </div>

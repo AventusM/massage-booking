@@ -4,5 +4,7 @@ const baseUrl = "/api/users"
 const getUsers = () => {
   return axios.get(baseUrl)
 }
-
-export default { getUsers }
+const updateUser = (id, user) =>{
+  return axios.put(`${baseUrl}/${id}`, user)
+}
+export default { getUsers, updateUser }
