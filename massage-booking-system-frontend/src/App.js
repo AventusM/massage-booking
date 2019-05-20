@@ -69,6 +69,7 @@ const App = () => {
     
 ]
   )
+  const [user, setUser] = useState(null)
 
   useEffect(()=> {
     console.log('AAAAAAAAAA selectedDate:', selectedDate)
@@ -107,7 +108,7 @@ const App = () => {
   return (
     <div >
       <div>
-      <LoginForm />
+      <LoginForm user/>
       </div>
       <div>
       <Calendar
