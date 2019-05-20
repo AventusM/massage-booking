@@ -1,28 +1,20 @@
 import React from 'react'
 import { tsPropertySignature } from '@babel/types';
 
-const LoginForm = (props) => {
-    let email = ''
-    let password = ''
-    const handleLogin = async (event) => {
-        event.preventDefault()
-        console.log('username', email, 'password', password)
-        try {
-
-        } catch (exception) {
-            
-        }
-      }
+const LoginForm = ({
+    handleLogin, handleUsernameChange, handlePasswordChange
+  }) => {
+    
 
     return (
         <form onSubmit={handleLogin}>
             Email:
             <br />
-            <input type="text" name="email" onChange={({ target }) => email=target.value}/>
+            <input type="email" name="username" onChange={handleUsernameChange}/>
             <br />
             Password:
             <br />
-            <input type="password" name="password" onChange={({ target }) => password=target.value}/>
+            <input type="password" name="password" onChange={handlePasswordChange}/>
             <br />
             <button type='submit' >Login</button>
         </form>

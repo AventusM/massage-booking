@@ -10,6 +10,7 @@ import Timelist from './components/Timelist'
 import Calendar from 'react-calendar';
 import LoginForm from './components/LoginForm'
 import './css/style.css'
+import loginService from './services/login'
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -70,6 +71,9 @@ const App = () => {
 ]
   )
   const [user, setUser] = useState(null)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
 
   useEffect(()=> {
     console.log('AAAAAAAAAA selectedDate:', selectedDate)
@@ -104,11 +108,32 @@ const App = () => {
   console.log(appointments)
   console.log(times) */
 
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+      const user = await loginService.login({
+        username, password,
+      })
+      window.localStorage.setItem('user', JSON.stringify(user))
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      setUsername('')
+      setPassword('')
+      console.log('login failed')
+    }
+  }
+
 
   return (
     <div >
       <div>
-      <LoginForm user/>
+      <LoginForm
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+        />
       </div>
       <div>
       <Calendar
