@@ -1,24 +1,28 @@
 import React from 'react'
-import { tsPropertySignature } from '@babel/types';
 
-const LoginForm = ({
-    handleLogin, handleUsernameChange, handlePasswordChange
-  }) => {
-    
-
+const LoginForm = (props) => {
+    const { handleLoginFunction, email, password, setEmail, setPassword } = props
     return (
-        <form onSubmit={handleLogin}>
-            Email:
-            <br />
-            <input type="email" name="username" onChange={handleUsernameChange}/>
-            <br />
-            Password:
-            <br />
-            <input type="password" name="password" onChange={handlePasswordChange}/>
-            <br />
-            <button type='submit' >Login</button>
-        </form>
+      <form onSubmit={handleLoginFunction}>
+        <div>Käyttäjätunnus
+        <input
+            type="text"
+            value={email}
+            name="email"
+            onChange={({ target }) => setEmail(target.value)}
+          />
+        </div>
+        <div>Salasana
+        <input
+            type="password"
+            value={password}
+            name="password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">kirjaudu</button>
+      </form>
     )
-}
+  }
 
-export default LoginForm
+  export default LoginForm

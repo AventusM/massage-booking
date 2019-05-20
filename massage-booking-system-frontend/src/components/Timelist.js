@@ -7,7 +7,7 @@ const Timelist = ({list}) => {
     }
 
     const l = list.map(item => <li key={item.id} className='timelist'><AppointmentForm timeSlot={item}/> </li>)
-    console.log('TimeList list', list)
+    //console.log('TimeList list', list)
 
     return (
         <ul>

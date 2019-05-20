@@ -3,7 +3,6 @@ import usersService from "./services/users"
 import masseussesService from "./services/masseusses"
 import appointmentsService from "./services/appointments"
 import calenderService from "./services/calendar"
-//import Calendar from "./components/Calendar"
 import Toggleable from "./components/Toggleable"
 import { timingSafeEqual } from "crypto"
 import Timelist from './components/Timelist'
@@ -17,8 +16,6 @@ const App = () => {
   const [users, setUsers] = useState([])
   const [masseusses, setMasseusses] = useState([])
   const [appointments, setAppointments] = useState([])
-  const [week, setWeek] = useState(1)
-  const [day, setDay] = useState(1)
   const [timesToShow, setTimesToShow] = useState([])
   const [times, setTimes] = useState(
     [
@@ -71,25 +68,37 @@ const App = () => {
 ]
   )
   const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  console.log('user ', user)
 
+  useEffect(() => {
+    const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedInUserJSON) {
+      const user = JSON.parse(loggedInUserJSON)
+      setUser(user)
+
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+    }
+  }, [])
 
   useEffect(()=> {
-    console.log('AAAAAAAAAA selectedDate:', selectedDate)
+    //console.log('AAAAAAAAAA selectedDate:', selectedDate)
     
     filterTimesToShow()
   }, [selectedDate])
   const filterTimesToShow = () => {
-      console.log('selectedDate date', selectedDate.getDate())
+      //console.log('selectedDate date', selectedDate.getDate())
     
     const filteredTimes = times.filter(time => time.day == selectedDate.getDate())
     
     setTimesToShow(filteredTimes)
-    console.log('QQQQQQq')
+    //console.log('QQQQQQq')
     
   }
-  console.log('timestoShow', timesToShow)
+  //console.log('timestoShow', timesToShow)
 
 
 /*   useEffect(() => {
@@ -111,34 +120,44 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const user = await loginService.login({
-        username, password,
-      })
-      window.localStorage.setItem('user', JSON.stringify(user))
-      setUser(user)
-      setUsername('')
+      const loggedInUser = await loginService.login({ email, password })
+      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+
+      setUser(loggedInUser)
+      setEmail('')
       setPassword('')
+
+      // console.log('kirjautunut käyttäjä', loggedInUser)
     } catch (exception) {
-      setUsername('')
-      setPassword('')
-      console.log('login failed')
+      console.log('virhe kirjautumisessa', exception)
     }
+  }
+
+  const handleLogoff = () => {
+    window.localStorage.removeItem('loggedInUser')
+    setUser(null)
   }
 
 
   return (
     <div >
       <div>
-      <LoginForm
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
-        />
+        {user === null && 
+          <LoginForm 
+          handleLoginFunction={handleLogin}
+          email={email} setEmail={setEmail}
+          password={password}
+          setPassword={setPassword} />}
+        {user !== null && <p>Welcome {user.name}</p>}
       </div>
       <div>
       <Calendar
           onChange={(value) => {
-            console.log('value ',value, 'value type', typeof value) 
+            console.log('value ', value) 
             setSelectedDate(value)
           }}
           value={new Date()}
