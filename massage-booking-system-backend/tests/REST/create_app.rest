@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFqc2RqYWtkYXNkQGhla2Fqc2hka2phZG1vLmhlcyIsIm5hbWUiOiJBS0FKU0RMS0FKU0QiLCJpZCI6IjVjZGQxZWI4M2YyNDk3MTk2NWVkMTI2YSIsImlhdCI6MTU1ODA4ODkzN30.uVogt-DJWr3uA5mdFjLrSyvllSD4Sh-JEONsxcxA_tY
+
+
+{
+  "masseusse_id":"5cde7fa4011a6a288584abca",
+  "user_id": "5cdd1eb83f24971965ed126a"
+}

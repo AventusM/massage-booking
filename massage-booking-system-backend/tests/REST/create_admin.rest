@@ -1,0 +1,5 @@
+PUT http://localhost:3001/api/users/5cdd1eb83f24971965ed126a/toggleadmin
+Content-Type: application/json
+
+{
+}
