@@ -3,7 +3,7 @@ node_js:
 - '9'
 
 install:
-- cd massage-booking-frontend
+- cd massage-booking-system-frontend
 - npm install
 - npm run build
 - mv build ../massage-booking-system-backend 
