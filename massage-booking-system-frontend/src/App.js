@@ -3,6 +3,8 @@ import './css/style.css'
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import loginService from './services/login'
+import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -38,6 +40,11 @@ const App = () => {
     } catch (exception) {
       console.log('virhe kirjautumisessa', exception)
     }
+  }
+
+  const handeRegistration = async (event) =>  {
+    event.preventDefault()
+    
   }
 
   // TODO -- REACT ROUTER
