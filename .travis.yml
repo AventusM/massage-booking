@@ -5,10 +5,9 @@ before_script: cd massage-booking-frontend
 script:
 - npm install
 - npm run build
-- mv build ../massage-booking-system-backend
-before_install: 
-- cd ../massage-booking-system-backend
+- mv build ../massage-booking-system-backend 
 install:
+- cd ../massage-booking-system-backend
 - npm install
 - npm test
 
