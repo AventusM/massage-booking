@@ -4,7 +4,7 @@ const Index = (props) => {
   const { user } = props
   return (
     <Fragment>
-      Tervetuloa {user.name}!
+      Welcome {user.name}!
     </Fragment>
   )
 }

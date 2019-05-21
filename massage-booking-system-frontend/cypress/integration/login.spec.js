@@ -4,9 +4,12 @@ describe('Login ', function () {
     cy.visit('http://localhost:3000')
   })
 
+  it('register link can be displayed', function() {
+    cy.contains('Create a new user')
+  })
   it('page can be displayed', function () {
     cy.contains('Unity massage booking system')
-    cy.contains('Kirjaudu')
+    cy.contains('Log in')
   })
 
   it('is possible to login with valid user', function () {
@@ -18,12 +21,12 @@ describe('Login ', function () {
 
     cy.get('#email').type(validUser.email)
     cy.get('#password').type(validUser.password)
-    cy.contains('kirjaudu').click()
-    cy.contains('Tervetuloa')
+    cy.contains('log in').click()
+    cy.contains('Welcome')
   })
 
   it('is NOT possible to login with empty input', function () {
-    cy.contains('kirjaudu').click()
+    cy.contains('log in').click()
     cy.contains('Unity massage booking system')
   })
   it('is NOT possible to login with a non-existing user', function () {
@@ -35,7 +38,7 @@ describe('Login ', function () {
 
     cy.get('#email').type(invalidUser.email)
     cy.get('#password').type(invalidUser.password)
-    cy.contains('kirjaudu').click()
+    cy.contains('log in').click()
     cy.contains('Unity massage booking system')
   })
 })
