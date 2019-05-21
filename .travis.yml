@@ -1,13 +1,13 @@
 language: node_js
 node_js:
 - '7'
-before_script: cd massage-booking-frontend
-script:
+before_install: 
+- cd massage-booking-frontend
 - npm install
 - npm run build
 - mv build ../massage-booking-system-backend 
-install:
 - cd ../massage-booking-system-backend
+install:
 - npm install
 - npm test
 
