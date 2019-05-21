@@ -1,4 +1,4 @@
-POST http://localhost:3001/api/users
+POST https://limitless-wildwood-82265.herokuapp.com/api/users
 Content-Type: application/json
 
 {

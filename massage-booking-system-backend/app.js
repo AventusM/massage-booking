@@ -2,6 +2,7 @@ const http = require('http')
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const morgan = require('morgan')
 const mongoose = require('mongoose')
 
 const config = require('./utils/config')
@@ -23,17 +24,15 @@ const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 
+app.use(morgan('dev'))
 app.use('/api/masseusses', masseussesRouter)
 app.use('/api/appointments', appointmentsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
-
+app.use('/', express.static('build'))
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
-
 app.use(cors())
-app.use(express.static('build'))
-
 
 module.exports = app

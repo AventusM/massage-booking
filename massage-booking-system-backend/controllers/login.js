@@ -18,9 +18,9 @@ loginRouter.post('/masseusse', async (req, res, next) => {
       ? false
       : await bcrypt.compare(body.password, foundMasseusse.passwordHash)
 
-      const invalidMasseusseOrPw = !(foundMasseusse && pwMatch)
+    const invalidMasseusseOrPw = !(foundMasseusse && pwMatch)
 
-      if (invalidMasseusseOrPw) {
+    if (invalidMasseusseOrPw) {
       return res.status(401).json({
         error: 'invalid email or password'
       })
@@ -70,7 +70,7 @@ loginRouter.post('/', async (req, res, next) => {
     }
 
     const token = jsonWebToken.sign(userCheckForTokenObject, process.env.SECRET)
-    
+
     res
       .status(200)
       .send({ token, email: foundUser.email, name: foundUser.name })
