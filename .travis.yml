@@ -1,23 +1,19 @@
 language: node_js
 node_js:
 - '9'
-
 before_install:
 - cd massage-booking-system-frontend
 - npm install
 - CI=false npm run build
-
-
 install:
-- mv build ../massage-booking-system-backend 
+- mv build ../massage-booking-system-backend
 - cd ../massage-booking-system-backend
 - npm install
 - npm test
-
 deploy:
   provider: heroku
   api_key:
-    secure: V8ByJMLJMYkjNS5umZsxbXyq+NFU1iFZP83QZIl5/dEdOoyy5E58m8492ZYigq3/aXt1S/owRWkwJsibSqUYAc+rD+s8WKyj43YBJrA0j9d6gmQt5v0AOfxoYGjGN3RgVF4z3QiL0l9xkn1miDvJFrQFEwKHOaueKzo3R+rL9jXoFtEpxba+z01ehEG3/fmkD2652DrDl4T7iUq/Uceio3w7qoUBjxX9KpzFURf9kJQ6VPuHz5UG5ZcfZIpxp1IIrzqNy/Z2i2sE+3GEQOulyDT+5FnuWI7JkhwVydbDWRf9ZyhCOgutIbvHpTFuFTBy+31j54ytpKRpuJ1FnaSw+Nl2U0xNot1TFoJAoWvxd1oC0nrbXPUdMud5qILGtttoNEsAKXO4gami3ljosITmCNiVNG6LkhQSX9MvJdwbLA33wEzbshWhySz91btz3eQ+zeYVQGjETcISWmQOzp+7T9RK1qe5iOymHSF45tkzpNnTolrOcb5/1dm31bDx+RJDfA9G+4d9DbGzZ5+BMccW7BR3pjjNf4A8Jfdk9uKOuEDL0Vv8YMQJ/PKkzXUE0M7zyldpH/omhVvwes/sDaW2i52AxbVIESuBDQofVMGmwwbN/qIhQtVQxbX2m1c57YhnQS5iPhwFW6Rs24uGSomkeh8dSem5/r/9mYoL8AHvbak=
-  app: limitless-wildwood-82265
+    secure: yAqCKDokAYx5ycpnIQaJpLPbTAA2A3sAlFJEcvtYuC2XTFA5H6zMBae4vzA+SI5jpFTGCG8C8pu6SE8O/piS4eTgcM9Ke3te5MR4sTgBqWpsqnwnJ/C+wkOziHnR62BBGgOUG/jDJVLTD7WM3STHn6qBYUJ8Gs4XIIeRA9AVFIjg181URjDxuayT+ccQR047VtN9X75Ad0Qu1Ct8ErDRUXs4SEyHJVi9CRqJ7A1hTIQsZOc5Is1Vvcw1ATsY/H/FODveegkstnI7lB4G8acw+0FYJxcUe1OtKOtB/BVFkicq/ajQDznNdVkYnr41f6RX8VRYiJz3QrDDuTDoxm1q3QfNuGdUX3zLKlGkXCGh/VhO5d3zUTZbRt8BswuCv+7uvOA8ki9nHtYtBESismb3DrKVwB80zeutpauLCW09HPhF22aVFAlUWVP6dqqzGyHd4wqR1Rzd72dFwrxR6Z96B2unPlky+3Ho/QvT7xs4bQ4iJiSEq+58sotsrGoMqF/RlL9ziJik5v5Edy1jnACQG8fURGwN659QijD7DoynrgJNxYtZ0Q7A9HLIapeVYKxRxmLSwPnkrh6XMWxqa9YRwroe9m0X1L5TqzgKncFr+no7XYWizaRxIhiAn9cCYYD2HU68ItVvLwZpMnR/VQJocp5WYHrKK2B6GCuApXFJLqg=
+  app: massage-booking-system
   on:
     repo: karoliinaemilia/massage-booking-system
