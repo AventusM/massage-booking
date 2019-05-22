@@ -7,4 +7,11 @@ const getUsers = () => {
 const updateUser = (id, user) =>{
   return axios.put(`${baseUrl}/${id}`, user)
 }
-export default { getUsers, updateUser }
+
+const addUser = async newObject => {
+  const response = await axios.post(baseUrl, newObject)
+  return response.data
+}
+
+export default { getUsers, updateUser, addUser }
+

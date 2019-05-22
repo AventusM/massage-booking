@@ -48,6 +48,29 @@ const App = () => {
     
   }
 
+
+  const handleRegistration = async (event) => {
+    event.preventDefault()
+    try {
+      const loggedInUser = await loginService.login({ email, password })
+      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+
+
+      setUser(loggedInUser)
+      setEmail('')
+      setPassword('')
+
+    } catch (exception) {
+      console.log('virhe kirjautumisessa', exception)
+    }
+  }
+
+  const handeRegistration = async (event) =>  {
+    event.preventDefault()
+    
+  }
+
+
   // TODO -- REACT ROUTER
   // TODO -- REACT ROUTER
   // TODO -- REACT ROUTER
