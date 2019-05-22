@@ -1,28 +1,35 @@
 import React from 'react'
+import Notification from './Notification'
 
+
+// ID selector RESERVED FOR CYPRESS
 const LoginForm = (props) => {
-    const { handleLoginFunction, email, password, setEmail, setPassword } = props
-    return (
-      <form onSubmit={handleLoginFunction}>
-        <div>Käyttäjätunnus
+  // console.log('props within loginform', props)
+  const { handleLoginFunction, email, password, errorMessage } = props
+  return (
+    <form onSubmit={handleLoginFunction}>
+      <div>Username
         <input
-            type="text"
-            value={email}
-            name="email"
-            onChange={({ target }) => setEmail(target.value)}
-          />
-        </div>
-        <div>Salasana
+          type={email.type}
+          id="email"
+          value={email.value}
+          name="email"
+          onChange={email.handleFieldChange}
+        />
+      </div>
+      <div>Password
         <input
-            type="password"
-            value={password}
-            name="password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">kirjaudu</button>
-      </form>
-    )
-  }
+          type={password.type}
+          id="password"
+          value={password.value}
+          name="password"
+          onChange={password.handleFieldChange}
+        />
+      </div>
+      <button type="submit">log in</button>
+      <Notification message={errorMessage} />
+    </form>
+  )
+}
 
-  export default LoginForm
+export default LoginForm

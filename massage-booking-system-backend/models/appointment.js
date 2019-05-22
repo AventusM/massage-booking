@@ -8,25 +8,28 @@ const mongoose = require('mongoose')
 const appointmentSchema = mongoose.Schema({
     masseusse_id: {
         type: String,
-        required: true
     },
     user_id: {
         type: String,
+    },
+    date: {
+        type: Date,
+        required: true
+    },
+    status: {
+        type: Number,
         required: true
     },
     start_time: {
         type: Date,
-        required: true,
         default: () => Date.now()
     },
     end_time: {
         type: Date,
-        required: true,
         default: () => Date.now()
     },
     type_of_reservation: {
         type: Number,
-        required: true
     }
 })
 

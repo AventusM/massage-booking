@@ -1,76 +1,34 @@
-import React, { useState, useEffect } from "react"
-import usersService from "./services/users"
-import masseussesService from "./services/masseusses"
-import appointmentsService from "./services/appointments"
-import calenderService from "./services/calendar"
-import Toggleable from "./components/Toggleable"
-import { timingSafeEqual } from "crypto"
-import Timelist from './components/Timelist'
-import Calendar from 'react-calendar';
-import LoginForm from './components/LoginForm'
-import './css/style.css'
+import React, { useState, useEffect, Fragment, createContext } from "react"
+import LoginIndex from './components/Login_index'
+import Index from './components/logged_in/Index'
+import RegistrationFormFragment from './components/logged_in/registrationForm'
 import loginService from './services/login'
+import useResource from './hooks/useResource'
+import useField from './hooks/useField'
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import UserHomepage from "./components/logged_in/UserHomepage";
+import DashBoard from './components/logged_in/Dashboard'
+
+
+// CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
+const UserContext = createContext(null)
 
 const App = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  const [users, setUsers] = useState([])
-  const [masseusses, setMasseusses] = useState([])
-  const [appointments, setAppointments] = useState([])
-  const [timesToShow, setTimesToShow] = useState([])
-  const [times, setTimes] = useState(
-    [
-      {
-      id: 1,
-      week: 1,
-      appointment_id: 1,
-      startTime: 8.15,
-      day: 1
-    },
-    {
-      id: 5,
-      week: 1,
-      appointment_id: 1,
-      startTime: 8.30,
-      day: 1
-    },
-    {
-      id: 2,
-      week: 1,
-      appointment_id: 1,
-      startTime: 9.15,
-      day: 2
-    },
-
-    {
-      id: 3,
-      week: 2,
-      appointment_id: 2,
-      startTime: 10.15,
-      day: 1
-    },
-  
-    {
-      id: 4,
-      week: 2,
-      appointment_id: null,
-      startTime: 11.15,
-      day: 2
-    },
-    {
-      id: 4,
-      week: 3,
-      appointment_id: null,
-      startTime: 11.15,
-      day: 17
-    }
-  
-    
-]
-  )
+  const [users, userService] = useResource('/api/users')
+  const [errorMessage, setErrorMessage] = useState('')
   const [user, setUser] = useState(null)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  console.log('user ', user)
+  const email = useField('text')
+  const password = useField('password')
+  const registrationName = useField('text')
+  const registrationEmail = useField('text')
+  const registrationNumber = useField('text')
+  const registrationPassword = useField('password')
+  const registrationPasswordCheck = useField('password')
+
+
+  useEffect(() => {
+    userService.getAll()
+  }, [])
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
@@ -84,43 +42,11 @@ const App = () => {
     }
   }, [])
 
-  useEffect(()=> {
-    //console.log('AAAAAAAAAA selectedDate:', selectedDate)
-    
-    filterTimesToShow()
-  }, [selectedDate])
-  const filterTimesToShow = () => {
-      //console.log('selectedDate date', selectedDate.getDate())
-    
-    const filteredTimes = times.filter(time => time.day == selectedDate.getDate())
-    
-    setTimesToShow(filteredTimes)
-    //console.log('QQQQQQq')
-    
-  }
-  //console.log('timestoShow', timesToShow)
-
-
-/*   useEffect(() => {
-    console.log('useEfect')
-    usersService.getUsers().then((response => setUsers(response.data)))
-    appointmentsService.getAppointments().then((response => setAppointments(response.data)))
-    masseussesService.getMasseusses().then((response => setMasseusses(response.data)))
-    calenderService.getTimes().then((response => setTimes(response.data)))
-    
-
-  }, []) */
-  
-  
- /*  console.log(users)
-  console.log(masseusses)
-  console.log(appointments)
-  console.log(times) */
-
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const loggedInUser = await loginService.login({ email, password })
+      // CUSTOM HOOKS --> const email and password no longer contain values straight up. 
+      const loggedInUser = await loginService.login({ email: email.value, password: password.value })
       window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
 
       // Appointmentservice.setToken tms tänne
@@ -128,48 +54,72 @@ const App = () => {
       // Appointmentservice.setToken tms tänne
 
       setUser(loggedInUser)
-      setEmail('')
-      setPassword('')
-
-      // console.log('kirjautunut käyttäjä', loggedInUser)
+      email.reset()
+      password.reset()
     } catch (exception) {
-      console.log('virhe kirjautumisessa', exception)
+      setErrorMessage('Wrong username or password')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     }
   }
 
-  const handleLogoff = () => {
-    window.localStorage.removeItem('loggedInUser')
-    setUser(null)
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    try {
+      window.localStorage.removeItem('loggedInUser')
+      setUser(null)
+    } catch (exception) {
+      setErrorMessage("Couldn't logout")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
+    }
   }
+
+  const handleRegistration = async (event) => {
+    event.preventDefault()
+    try {
+      const userObject = {
+        name: registrationName.value,
+        number: registrationNumber.value,
+        email: registrationEmail.value,
+        admin: false,
+        password: registrationPassword.value
+      }
+      userService.create(userObject)
+    } catch (exception) {
+      setErrorMessage("Registration failed")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
+    }
+  } 
 
 
   return (
-    <div >
-      <div>
-        {user === null && 
-          <LoginForm 
-          handleLoginFunction={handleLogin}
-          email={email} setEmail={setEmail}
-          password={password}
-          setPassword={setPassword} />}
-        {user !== null && <p>Welcome {user.name}</p>}
-      </div>
-      <div>
-      <Calendar
-          onChange={(value) => {
-            console.log('value ', value) 
-            setSelectedDate(value)
-          }}
-          value={new Date()}
-        />
-      </div>
-      
-      <div>
-        <Timelist list={timesToShow}/>
-      </div>
-      
-    </div>
+    <Fragment>
+      <Router>
+        <div>
+          <div>
+            <Link to="/">Login</Link>
+            <Link to="/registration">Registration</Link>
+            {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>}
+            <Link to="/dashboard">Admin dashboard</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
+          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
+          <Route path="/calendar" render={() => <Index user={user} />} />
+          <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
+          <UserContext.Provider value={[user, users, userService]}>
+            <Route path="/dashboard" render={() => <DashBoard />} />
+          </UserContext.Provider>
+        </div>
+      </Router>
+    </Fragment>
   )
 }
 
+export { UserContext }
 export default App

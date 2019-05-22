@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
+    "start:test": "cross-env NODE_ENV=test node index.js",
     "watch": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "lint": "eslint ."
