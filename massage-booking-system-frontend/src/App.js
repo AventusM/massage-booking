@@ -14,6 +14,7 @@ const UserContext = createContext(null)
 
 const App = () => {
   const [users, userService] = useResource('/api/users')
+  const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
@@ -55,7 +56,23 @@ const App = () => {
       email.reset()
       password.reset()
     } catch (exception) {
-      console.log('virhe kirjautumisessa', exception)
+      setErrorMessage('Wrong username or password')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
+    }
+  }
+
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    try {
+      window.localStorage.removeItem('loggedBlogAppUser')
+      setUser(null)
+    } catch (exception) {
+      setErrorMessage("Couldn't logout")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     }
   }
 
@@ -71,7 +88,10 @@ const App = () => {
       }
       userService.create(userObject)
     } catch (exception) {
-      console.log('Error happened during registration', exception)
+      setErrorMessage("Registration failed")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     }
   }
 
@@ -86,6 +106,7 @@ const App = () => {
           </div>
           <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
           <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
+          <Route path="/calendar" render={() => <Index user={user} />} />
           <UserContext.Provider value={[user, users, userService]}>
             <Route path="/dashboard" render={() => <DashBoard />} />
           </UserContext.Provider>

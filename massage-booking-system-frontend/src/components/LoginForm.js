@@ -1,4 +1,5 @@
 import React from 'react'
+import Notification from './Notification'
 
 
 // ID selector RESERVED FOR CYPRESS
@@ -26,6 +27,7 @@ const LoginForm = (props) => {
         />
       </div>
       <button type="submit">log in</button>
+      <Notification message={errorMessage} />
     </form>
   )
 }
