@@ -10,10 +10,6 @@ const App = () => {
   const [appointments, setAppointments] = useState([])
   const [user, setUser] = useState([])
 
-  
-
-  
-
   useEffect(() => {
     usersService.getUsers().then((response => setUsers(response.data)))
     appointmentsService.getAppointments().then((response => setAppointments(response.data)))

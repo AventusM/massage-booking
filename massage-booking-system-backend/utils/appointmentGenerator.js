@@ -4,12 +4,12 @@ const createEmptyAppointment =(date)=>{
         status = 0
       })
       try {
-        // Create appointment
-        const savedAppointment = await appointment.save()
+    // Create appointment
+    const saveAppointment = await appointment.save()
       } catch (exception) {
         next(exception)
-      }
     }
+}
     // create several 
 
     const generateAppoinmentsForDay =(date)=>{
@@ -29,7 +29,7 @@ const createEmptyAppointment =(date)=>{
         currentMinutes += minutes
         if(currentMinutes > 59){
             currentTime.setHours(currentTime + 1)
-            currentMinutes = currentMinutes -60
+            currentMinutes = currentMinutes - 60
         }
         currentTime.setMinutes(currentMinutes)
         
