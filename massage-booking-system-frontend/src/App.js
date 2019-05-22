@@ -1,46 +1,121 @@
-import React, { useState, useEffect } from "react"
-import usersService from "./services/users"
-import masseussesService from "./services/masseusses"
-import appointmentsService from "./services/appointments"
+import React, { useState, useEffect, Fragment } from "react"
+import LoginIndex from './components/Login_index'
+import Index from './components/logged_in/Index'
+import loginService from './services/login'
+import Calendar from 'react-calendar';
+import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
 
-const App = () => {
-  const [users, setUsers] = useState([])
-  const [masseusses, setMasseusses] = useState([])
-  const [appointments, setAppointments] = useState([])
-  const [user, setUser] = useState([])
-
-  useEffect(() => {
-    usersService.getUsers().then((response => setUsers(response.data)))
-    appointmentsService.getAppointments().then((response => setAppointments(response.data)))
-    masseussesService.getMasseusses().then((response => setMasseusses(response.data)))
-
-  }, [])
-
-  const login = () =>{
-
+const useField = (type) => {
+  const [value, setValue] = useState('')
+  const handleFieldChange = (event) => {
+    setValue(event.target.value)
   }
 
-  const showAppointments = () =>{
-    const appointmentList = appointments.map(appoint =>
-      <button onClick={chooseAppointment(appoint)}>{appoint.id}</button>
-    )
-    return appointmentList
-}
-const chooseAppointment = (appoint) =>{
-    appoint.user_id = user.id
-    user.appointments.concat[appoint.id]
+<<<<<<< HEAD
+=======
+  const reset = () => {
+    setValue('')
+  }
+
+  return { type, value, handleFieldChange, reset }
 }
 
-  console.log(users)
-  console.log(masseusses)
-  console.log(appointments)
+const App = () => {
+  const [user, setUser] = useState(null)
+  const email = useField('text')
+  const password = useField('password')
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  // const [email, setEmail] = useField('')
+  // const [password, setPassword] = useState('')
 
+>>>>>>> d5714390972b7a546ca006069d327641ed1a2833
+  useEffect(() => {
+    const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedInUserJSON) {
+      const user = JSON.parse(loggedInUserJSON)
+      setUser(user)
+
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+    }
+  }, [])
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+      // CUSTOM HOOKS --> const email and password no longer contain values straight up. 
+      const loggedInUser = await loginService.login({ email: email.value, password: password.value })
+      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+      // Appointmentservice.setToken tms tänne
+
+      setUser(loggedInUser)
+      email.reset()
+      password.reset()
+      // setEmail('')
+      // setPassword('')
+
+    } catch (exception) {
+      console.log('virhe kirjautumisessa', exception)
+    }
+  }
+
+  const handeRegistration = async (event) =>  {
+    event.preventDefault()
+    
+  }
+
+
+  const handleRegistration = async (event) => {
+    event.preventDefault()
+    try {
+      const loggedInUser = await loginService.login({ email, password })
+      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+
+
+      setUser(loggedInUser)
+      setEmail('')
+      setPassword('')
+
+    } catch (exception) {
+      console.log('virhe kirjautumisessa', exception)
+    }
+  }
+
+  const handeRegistration = async (event) =>  {
+    event.preventDefault()
+    
+  }
+
+
+  // TODO -- REACT ROUTER
+  // TODO -- REACT ROUTER
+  // TODO -- REACT ROUTER
   return (
+    <div >
+      
+      
+      
+      <Fragment>
+      {user === null && <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />}
+      {user !== null && <Index user={user} />}
+      </Fragment>
+
     <div>
-    <button>{login()}</button>
-      {showAppointments()}
+      <Calendar
+          onChange={(value) => {
+            console.log('value ', value) 
+            setSelectedDate(value)
+          }}
+          value={new Date()}
+        />
+      </div>
     </div>
+    
   )
 }
 

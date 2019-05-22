@@ -4,5 +4,14 @@ const baseUrl = "/api/users"
 const getUsers = () => {
   return axios.get(baseUrl)
 }
+const updateUser = (id, user) =>{
+  return axios.put(`${baseUrl}/${id}`, user)
+}
 
-export default { getUsers }
+const addUser = async newObject => {
+  const response = await axios.post(baseUrl, newObject)
+  return response.data
+}
+
+export default { getUsers, updateUser, addUser }
+

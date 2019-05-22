@@ -57,5 +57,32 @@
       "user_id": 3,
       "masseusse_id": 1
     }
+  ],
+  "calendar": [
+    {
+      "id": 1,
+      "week": 1,
+      "appointment_id": 1,
+      "startTime": 8.15
+    },
+    {
+      "id": 2,
+      "week": 1,
+      "appointment_id": null,
+      "startTime": 9.15
+    },
+    {
+      "id": 3,
+      "week": 1,
+      "appointment_id": 2,
+      "startTime": 10.15
+    },
+    {
+      "id": 4,
+      "week": 1,
+      "appointment_id": null,
+      "startTime": 11.15
+    }
   ]
+  
 }

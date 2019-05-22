@@ -4,16 +4,24 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "cors": "^2.8.5",
+    "less": "^3.9.0",
+    "moment": "^2.24.0",
+    "npm": "^6.9.0",
     "react": "^16.8.6",
+    "react-calendar": "^2.19.0",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.1",
+    "tail.datetime": "^0.4.10"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server -p3001 db.json"
+    "server": "json-server -p3001 db.json",
+    "cypress:open": "cypress open"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
@@ -32,8 +40,11 @@
     ]
   },
   "devDependencies": {
-    "json-server": "^0.14.2",
+    "cypress": "^3.3.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.13.0"
+    "eslint-plugin-react": "^7.13.0",
+    "jest-dom": "^3.2.2",
+    "json-server": "^0.14.2",
+    "react-testing-library": "^7.0.0"
   }
 }
