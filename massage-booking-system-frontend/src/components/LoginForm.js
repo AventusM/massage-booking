@@ -5,8 +5,9 @@ const LoginForm = (props) => {
   // console.log('props within loginform', props)
   const { handleLoginFunction, email, password, setEmail, setPassword } = props
   return (
-    <form onSubmit={handleLoginFunction}>
-      <div>Username
+    <div>
+    <form className="login_form" onSubmit={handleLoginFunction}>
+    <label>Username</label>
         <input
           type="text"
           id="email"
@@ -14,8 +15,7 @@ const LoginForm = (props) => {
           name="email"
           onChange={({ target }) => setEmail(target.value)}
         />
-      </div>
-      <div>Password
+      <label>Password</label>
         <input
           type="password"
           id="password"
@@ -23,9 +23,9 @@ const LoginForm = (props) => {
           name="password"
           onChange={({ target }) => setPassword(target.value)}
         />
-      </div>
-      <button type="submit">log in</button>
+      <button type="submit">LOGIN</button>
     </form>
+    </div>
   )
 }
 
