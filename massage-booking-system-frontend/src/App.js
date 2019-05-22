@@ -93,17 +93,12 @@ const App = () => {
   // TODO -- REACT ROUTER
   // TODO -- REACT ROUTER
   return (
-<<<<<<< HEAD
     <div >
       
       
       
       <Fragment>
       {user === null && <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />}
-=======
-    <Fragment>
-      {user === null && <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />}
->>>>>>> 963f3989cdb4f9e7c30c8550d162b00f018ad7d1
       {user !== null && <Index user={user} />}
       </Fragment>
 
