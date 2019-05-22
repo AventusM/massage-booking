@@ -6,7 +6,7 @@ const LoginIndex = (props) => {
   return (
     <Fragment>
       <h1>Unity massage booking system</h1>
-      <h3>Kirjaudu</h3>
+      <h3>Log in</h3>
       <LoginForm {...props} />
     </Fragment>
   )

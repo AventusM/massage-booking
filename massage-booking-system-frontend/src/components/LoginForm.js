@@ -1,30 +1,31 @@
 import React from 'react'
 
+
 // ID selector RESERVED FOR CYPRESS
 const LoginForm = (props) => {
-  // console.log('props within loginform', props)
-  const { handleLoginFunction, email, password, setEmail, setPassword } = props
+  console.log('props within loginform', props)
+  const { handleLoginFunction, email, password } = props
   return (
     <form onSubmit={handleLoginFunction}>
-      <div>Käyttäjätunnus
+      <div>Username
         <input
-          type="text"
+          type={email.type}
           id="email"
-          value={email}
+          value={email.value}
           name="email"
-          onChange={({ target }) => setEmail(target.value)}
+          onChange={email.handleFieldChange}
         />
       </div>
-      <div>Salasana
+      <div>Password
         <input
-          type="password"
+          type={password.type}
           id="password"
-          value={password}
+          value={password.value}
           name="password"
-          onChange={({ target }) => setPassword(target.value)}
+          onChange={password.handleFieldChange}
         />
       </div>
-      <button type="submit">kirjaudu</button>
+      <button type="submit">log in</button>
     </form>
   )
 }
