@@ -6,7 +6,7 @@ const LoginForm = (props) => {
   const { handleLoginFunction, email, password, setEmail, setPassword } = props
   return (
     <form onSubmit={handleLoginFunction}>
-      <div>Käyttäjätunnus
+      <div>Username
         <input
           type="text"
           id="email"
@@ -15,7 +15,7 @@ const LoginForm = (props) => {
           onChange={({ target }) => setEmail(target.value)}
         />
       </div>
-      <div>Salasana
+      <div>Password
         <input
           type="password"
           id="password"
@@ -24,7 +24,7 @@ const LoginForm = (props) => {
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">kirjaudu</button>
+      <button type="submit">log in</button>
     </form>
   )
 }
