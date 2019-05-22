@@ -3,10 +3,30 @@ import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import RegistrationFormFragment from './components/logged_in/registrationForm'
 import loginService from './services/login'
-import usersService from './services/users'
+import axios from 'axios'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
 
+const useResource = (baseUrl) => {
+  const [resources, setResources] = useState([])
+
+  const getAll = async () => {
+    const response = await axios.get(baseUrl)
+    setResources(response.data)
+  }
+
+  const create = async (credentials) => {
+    const newResource = await axios.post(baseUrl, credentials)
+    const updatedResources = resources.concat(newResource.data)
+    setResources(updatedResources)
+  }
+
+  const service = {
+    getAll, create
+  }
+
+  return [resources, service]
+}
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -24,6 +44,7 @@ const useField = (type) => {
 const padding = { padding: 5 }
 
 const App = () => {
+  const [users, userService] = useResource('/api/users')
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
@@ -33,8 +54,10 @@ const App = () => {
   const registrationPassword = useField('password')
   const registrationPasswordCheck = useField('password')
 
-  // const [email, setEmail] = useField('')
-  // const [password, setPassword] = useState('')
+
+  useEffect(() => {
+    userService.getAll()
+  }, [])
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
@@ -62,9 +85,6 @@ const App = () => {
       setUser(loggedInUser)
       email.reset()
       password.reset()
-      // setEmail('')
-      // setPassword('')
-
     } catch (exception) {
       console.log('virhe kirjautumisessa', exception)
     }
@@ -80,16 +100,7 @@ const App = () => {
         admin: false,
         password: registrationPassword.value
       }
-
-
-      const response = usersService.addUser(userObject).then(user => {
-        registrationName.reset()
-        registrationEmail.reset()
-        registrationNumber.reset()
-        registrationPassword.reset()
-        registrationPasswordCheck.reset()
-      })
-
+      userService.create(userObject)
     } catch (exception) {
       console.log('Error happened during registration', exception)
     }
@@ -108,6 +119,17 @@ const App = () => {
         </div>
       </Router>
     </Fragment>
+  )
+}
+
+const UserList = (props) => {
+  const { users } = props
+  return (
+    <ul>
+      {users.map(user => (
+        <li key={user._id}>Name: {user.name}</li>
+      ))}
+    </ul>
   )
 }
 
