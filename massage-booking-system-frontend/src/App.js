@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'reac
 
 const App = () => {
   const [users, userService] = useResource('/api/users')
+  const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
@@ -50,7 +51,10 @@ const App = () => {
       email.reset()
       password.reset()
     } catch (exception) {
-      console.log('virhe kirjautumisessa', exception)
+      setErrorMessage('Wrong username or password')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     }
   }
 
@@ -60,7 +64,10 @@ const App = () => {
       window.localStorage.removeItem('loggedBlogAppUser')
       setUser(null)
     } catch (exception) {
-      console.log('virhe ulos kirjautumisessa', exception)
+      setErrorMessage("Couldn't logout")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     }
   }
 
@@ -76,7 +83,10 @@ const App = () => {
       }
       userService.create(userObject)
     } catch (exception) {
-      console.log('Error happened during registration', exception)
+      setErrorMessage("Registration failed")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     }
   }
 
@@ -90,9 +100,9 @@ const App = () => {
             <Link to="/calendar">Calendar</Link>
             <button onClick={handleLogout}> Logout</button>
           </div>
-          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
+          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
           <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
-          <Route path="/calendar" render={() => <Index user={user}/>} />
+          <Route path="/calendar" render={() => <Index user={user} />} />
         </div>
       </Router>
     </Fragment>

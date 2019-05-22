@@ -1,10 +1,11 @@
 import React from 'react'
+import Notification from './Notification'
 
 
 // ID selector RESERVED FOR CYPRESS
 const LoginForm = (props) => {
   console.log('props within loginform', props)
-  const { handleLoginFunction, email, password } = props
+  const { handleLoginFunction, email, password, errorMessage} = props
   return (
     <form onSubmit={handleLoginFunction}>
       <div>Username
@@ -26,6 +27,7 @@ const LoginForm = (props) => {
         />
       </div>
       <button type="submit">log in</button>
+      <Notification message={errorMessage} />
     </form>
   )
 }
