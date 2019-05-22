@@ -11,6 +11,7 @@ const formatUser = (input) => {
         name: input.name,
         number: input.number,
         email: input.email,
+        admin: input.admin,
         appointments: input.appointments
     }
 }

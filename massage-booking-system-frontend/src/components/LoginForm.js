@@ -4,8 +4,8 @@ import Notification from './Notification'
 
 // ID selector RESERVED FOR CYPRESS
 const LoginForm = (props) => {
-  console.log('props within loginform', props)
-  const { handleLoginFunction, email, password, errorMessage} = props
+  // console.log('props within loginform', props)
+  const { handleLoginFunction, email, password, errorMessage } = props
   return (
     <form onSubmit={handleLoginFunction}>
       <div>Username
