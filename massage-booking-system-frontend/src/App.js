@@ -75,8 +75,8 @@ const App = () => {
       <Router>
         <div>
           <div>
-            <Link style={padding} to="/">Login</Link>
-            <Link style={padding} to="/registration">Registration</Link>
+            <Link to="/">Login</Link>
+            <Link to="/registration">Registration</Link>
           </div>
           <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
           <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
