@@ -3,43 +3,9 @@ import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import RegistrationFormFragment from './components/logged_in/registrationForm'
 import loginService from './services/login'
-import axios from 'axios'
+import useResource from './hooks/useResource'
+import useField from './hooks/useField'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
-
-
-const useResource = (baseUrl) => {
-  const [resources, setResources] = useState([])
-
-  const getAll = async () => {
-    const response = await axios.get(baseUrl)
-    setResources(response.data)
-  }
-
-  const create = async (credentials) => {
-    const newResource = await axios.post(baseUrl, credentials)
-    const updatedResources = resources.concat(newResource.data)
-    setResources(updatedResources)
-  }
-
-  const service = {
-    getAll, create
-  }
-
-  return [resources, service]
-}
-
-const useField = (type) => {
-  const [value, setValue] = useState('')
-  const handleFieldChange = (event) => {
-    setValue(event.target.value)
-  }
-
-  const reset = () => {
-    setValue('')
-  }
-
-  return { type, value, handleFieldChange, reset }
-}
 
 const App = () => {
   const [users, userService] = useResource('/api/users')
