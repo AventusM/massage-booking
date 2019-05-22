@@ -35,6 +35,6 @@ const createEmptyAppointment =(date)=>{
         
         return currentTime
     } 
-
+module.exports = generateAppoinmentsForDay
 
 
