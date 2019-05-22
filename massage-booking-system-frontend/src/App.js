@@ -4,7 +4,7 @@ import Index from './components/logged_in/Index'
 import loginService from './services/login'
 import Calendar from 'react-calendar';
 import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
-
+import UserHomepage from './components/logged_in/UserHomepage'
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -67,7 +67,7 @@ const App = () => {
   }
 
 
-  const handleRegistration = async (event) => {
+  /* const handleRegistration = async (event) => {
     event.preventDefault()
     try {
       const loggedInUser = await loginService.login({ email, password })
@@ -81,12 +81,9 @@ const App = () => {
     } catch (exception) {
       console.log('virhe kirjautumisessa', exception)
     }
-  }
+  } */
 
-  const handeRegistration = async (event) =>  {
-    event.preventDefault()
-    
-  }
+  
 
 
   // TODO -- REACT ROUTER
@@ -98,8 +95,7 @@ const App = () => {
       
       
       <Fragment>
-      {user === null && <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />}
-      {user !== null && <Index user={user} />}
+      {user !== null && <UserHomepage user={user}></UserHomepage>}
       </Fragment>
 
     <div>
