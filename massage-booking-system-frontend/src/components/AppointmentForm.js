@@ -1,10 +1,12 @@
 import React from 'react'
 import userService from '../services/users'
-import { jsxClosingElement } from '@babel/types';
+
 const AppointmentForm = ({timeSlot, user, setUser}) => {
     const makeAppointment = () => {
         if (window.confirm(`Reserve massage at ${timeSlot.startTime}?`)){
-        user.appointments.push(timeSlot.appointment_id)
+            console.log('timeslot ', timeSlot)
+
+        /* user.appointments.concat(timeSlot.appointment_id)
         // const appointmentObject = appointments.map(app => app.id).find(timeSlot.appointment_id)
         // appointmentObject.userId = user.id
         //applicationService
@@ -17,9 +19,8 @@ const AppointmentForm = ({timeSlot, user, setUser}) => {
         .updateUser(user.id, user)
         .then(response => {
         setUser(response.data)
-        })
-        timeSlot.reserved = 2
-        console.log("g", timeSlot.reserved)
+        }) */
+        
     }
     }
     if(timeSlot.reserved = 1){
