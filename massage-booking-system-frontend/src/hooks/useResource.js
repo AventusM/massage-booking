@@ -15,8 +15,14 @@ const useResource = (baseUrl) => {
     setResources(updatedResources)
   }
 
+  const remove = async (id) => {
+    const deletedResource = await axios.delete(`${baseUrl}/${id}`)
+    const updatedResources = resources.filter(resource => resource._id !== id)
+    setResources(updatedResources)
+  }
+
   const service = {
-    getAll, create
+    getAll, create, remove
   }
 
   return [resources, service]

@@ -66,14 +66,15 @@ loginRouter.post('/', async (req, res, next) => {
     const userCheckForTokenObject = {
       email: foundUser.email,
       name: foundUser.name,
-      id: foundUser._id
+      id: foundUser._id,
+      admin: foundUser.admin
     }
 
     const token = jsonWebToken.sign(userCheckForTokenObject, process.env.SECRET)
     
     res
       .status(200)
-      .send({ token, email: foundUser.email, name: foundUser.name })
+      .send({ token, email: foundUser.email, name: foundUser.name, admin: foundUser.admin })
 
   } catch (exception) {
     next(exception)

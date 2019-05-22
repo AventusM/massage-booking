@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react"
+import React, { useState, useEffect, Fragment, createContext } from "react"
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import RegistrationFormFragment from './components/logged_in/registrationForm'
@@ -6,6 +6,11 @@ import loginService from './services/login'
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import DashBoard from './components/logged_in/Dashboard'
+
+
+// CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
+const UserContext = createContext(null)
 
 const App = () => {
   const [users, userService] = useResource('/api/users')
@@ -75,26 +80,20 @@ const App = () => {
       <Router>
         <div>
           <div>
-            <Link style={padding} to="/">Login</Link>
-            <Link style={padding} to="/registration">Registration</Link>
+            <Link to="/">Login</Link>
+            <Link to="/registration">Registration</Link>
+            <Link to="/dashboard">Admin dashboard</Link>
           </div>
           <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
-          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
+          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
+          <UserContext.Provider value={[user, users, userService]}>
+            <Route path="/dashboard" render={() => <DashBoard />} />
+          </UserContext.Provider>
         </div>
       </Router>
     </Fragment>
   )
 }
 
-const UserList = (props) => {
-  const { users } = props
-  return (
-    <ul>
-      {users.map(user => (
-        <li key={user._id}>Name: {user.name}</li>
-      ))}
-    </ul>
-  )
-}
-
+export { UserContext }
 export default App

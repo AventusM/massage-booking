@@ -3,7 +3,7 @@ import React from 'react'
 
 // ID selector RESERVED FOR CYPRESS
 const LoginForm = (props) => {
-  console.log('props within loginform', props)
+  // console.log('props within loginform', props)
   const { handleLoginFunction, email, password } = props
   return (
     <form onSubmit={handleLoginFunction}>
