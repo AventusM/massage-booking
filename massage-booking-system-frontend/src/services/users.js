@@ -1,9 +1,11 @@
 import axios from "axios"
 const baseUrl = "/api/users"
 
-const getUsers = () => {
-  return axios.get(baseUrl)
+const getUsers = async () => {
+  const response = await axios.get(baseUrl)
+  return response
 }
+
 const updateUser = (id, user) =>{
   return axios.put(`${baseUrl}/${id}`, user)
 }

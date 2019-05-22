@@ -1,31 +1,27 @@
 import React, { useState, useEffect, Fragment } from "react"
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
+import RegistrationFormFragment from './components/logged_in/registrationForm'
 import loginService from './services/login'
-import Calendar from 'react-calendar';
-import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
-import UserHomepage from './components/logged_in/UserHomepage'
-
-const useField = (type) => {
-  const [value, setValue] = useState('')
-  const handleFieldChange = (event) => {
-    setValue(event.target.value)
-  }
-
-  const reset = () => {
-    setValue('')
-  }
-
-  return { type, value, handleFieldChange, reset }
-}
+import useResource from './hooks/useResource'
+import useField from './hooks/useField'
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
 const App = () => {
+  const [users, userService] = useResource('/api/users')
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  // const [email, setEmail] = useField('')
-  // const [password, setPassword] = useState('')
+  const registrationName = useField('text')
+  const registrationEmail = useField('text')
+  const registrationNumber = useField('text')
+  const registrationPassword = useField('password')
+  const registrationPasswordCheck = useField('password')
+
+
+  useEffect(() => {
+    userService.getAll()
+  }, [])
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
@@ -53,62 +49,51 @@ const App = () => {
       setUser(loggedInUser)
       email.reset()
       password.reset()
-      // setEmail('')
-      // setPassword('')
-
     } catch (exception) {
       console.log('virhe kirjautumisessa', exception)
     }
   }
 
-  const handeRegistration = async (event) =>  {
-    event.preventDefault()
-    
-  }
-
-
-  /* const handleRegistration = async (event) => {
+  const handleRegistration = async (event) => {
     event.preventDefault()
     try {
-      const loggedInUser = await loginService.login({ email, password })
-      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-
-
-      setUser(loggedInUser)
-      setEmail('')
-      setPassword('')
-
+      const userObject = {
+        name: registrationName.value,
+        number: registrationNumber.value,
+        email: registrationEmail.value,
+        admin: false,
+        password: registrationPassword.value
+      }
+      userService.create(userObject)
     } catch (exception) {
-      console.log('virhe kirjautumisessa', exception)
+      console.log('Error happened during registration', exception)
     }
-  } */
+  } 
 
-  
-
-
-  // TODO -- REACT ROUTER
-  // TODO -- REACT ROUTER
-  // TODO -- REACT ROUTER
   return (
-    <div >
-      
-      
-      
-      <Fragment>
-      {user !== null && <UserHomepage user={user}></UserHomepage>}
-      </Fragment>
+    <Fragment>
+      <Router>
+        <div>
+          <div>
+            <Link to="/">Login</Link>
+            <Link to="/registration">Registration</Link>
+          </div>
+          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
+          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
+        </div>
+      </Router>
+    </Fragment>
+  )
+}
 
-    <div>
-      <Calendar
-          onChange={(value) => {
-            console.log('value ', value) 
-            setSelectedDate(value)
-          }}
-          value={new Date()}
-        />
-      </div>
-    </div>
-    
+const UserList = (props) => {
+  const { users } = props
+  return (
+    <ul>
+      {users.map(user => (
+        <li key={user._id}>Name: {user.name}</li>
+      ))}
+    </ul>
   )
 }
 
