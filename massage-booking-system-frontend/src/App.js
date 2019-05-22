@@ -6,6 +6,7 @@ import loginService from './services/login'
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import UserHomepage from "./components/logged_in/UserHomepage";
 
 const App = () => {
   const [users, userService] = useResource('/api/users')
@@ -70,6 +71,7 @@ const App = () => {
     }
   } 
 
+
   return (
     <Fragment>
       <Router>
@@ -77,9 +79,11 @@ const App = () => {
           <div>
             <Link to="/">Login</Link>
             <Link to="/registration">Registration</Link>
+            {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>}
           </div>
-          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
-          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
+            <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
+            <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
+            <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
         </div>
       </Router>
     </Fragment>
