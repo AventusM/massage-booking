@@ -15,4 +15,4 @@ const updateUser = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-export default { getUsers }
+export default { getUsers, addUser }

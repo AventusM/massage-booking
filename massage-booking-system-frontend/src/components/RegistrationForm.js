@@ -1,52 +1,52 @@
 import React from 'react'
 
 const RegistrationForm = (props) => {
-  const { handleRegistrationFunction, name, email, setEmail, password, setPassword, setPasswordCheck } = props
+  const { handleRegistrationFunction, name, email, number, password, passwordCheck} = props
   return (
     <form onSubmit={handleRegistrationFunction}>
       <div>Name
         <input
-          type="text"
+          type={name.type}
           id="name"
-          value={name}
+          value={name.value}
           name="name"
-          onChange={({ target }) => setName(target.value)}
+          onChange={name.handleFieldChange}
         />
       </div>
       <div>Email
         <input
-          type="text"
+          type={email.type}
           id="email"
-          value={email}
+          value={email.value}
           name="email"
-          onChange={({ target }) => setEmail(target.value)}
+          onChange={email.handleFieldChange}
         />
       </div>
       <div>Phone Number
         <input
-          type="text"
+          type={number.type}
           id="number"
-          value={number}
+          value={number.value}
           name="number"
-          onChange={({ target }) => setNumber(target.value)}
+          onChange={number.handleFieldChange}
         />
       </div>
       <div>Password
         <input
-          type="password"
+          type={password.type}
           id="password"
-          value={password}
+          value={password.value}
           name="password"
-          onChange={({ target }) => setPassword(target.value)}
+          onChange={password.handleFieldChange}
         />
         </div>
         <div>Retype Password
         <input
-          type="passwordCheck"
+          type={passwordCheck.type}
           id="passwordCheck"
-          value={passwordCheck}
+          value={passwordCheck.value}
           name="passwordCheck"
-          onChange={({ target }) => setPasswordCheck(target.value)}
+          onChange={passwordCheck.handleFieldChange}
         />
       </div>
       <button type="submit">Register</button>

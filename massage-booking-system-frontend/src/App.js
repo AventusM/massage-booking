@@ -1,8 +1,10 @@
 import React, { useState, useEffect, Fragment } from "react"
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
+import RegistrationFormFragment from './components/logged_in/registrationForm'
 import loginService from './services/login'
-import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import usersService from './services/users'
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
 
 
@@ -23,6 +25,12 @@ const App = () => {
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
+  const registrationName = useField('text')
+  const registrationEmail = useField('text')
+  const registrationNumber = useField('text')
+  const registrationPassword = useField('password')
+  const registrationPasswordCheck = useField('password')
+
   // const [email, setEmail] = useField('')
   // const [password, setPassword] = useState('')
 
@@ -60,21 +68,28 @@ const App = () => {
     }
   }
 
-
-
   const handleRegistration = async (event) => {
     event.preventDefault()
     try {
-      const loggedInUser = await loginService.login({ email, password })
-      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+      const userObject = {
+        name: registrationName.value,
+        number: registrationNumber.value,
+        email: registrationEmail.value,
+        admin: false,
+        password: registrationPassword.value
+      }
 
 
-      setUser(loggedInUser)
-      setEmail('')
-      setPassword('')
+      const response = usersService.addUser(userObject).then(user => {
+        registrationName.reset()
+        registrationEmail.reset()
+        registrationNumber.reset()
+        registrationPassword.reset()
+        registrationPasswordCheck.reset()
+      })
 
     } catch (exception) {
-      console.log('virhe kirjautumisessa', exception)
+      console.log('Error happened during registration', exception)
     }
   }
 
@@ -84,7 +99,9 @@ const App = () => {
   return (
     <Fragment>
       {user === null && <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />}
-      {user !== null && <Index user={user} />}
+      {user !== null && <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />}
+      {/* {user !== null && <Index user={user} />} */}
+
     </Fragment>
   )
 }
