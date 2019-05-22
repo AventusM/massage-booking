@@ -12,7 +12,9 @@ const formatAppointment = (input) => {
   return {
     _id: input._id,
     masseusse_id: input.masseusse_id,
-    user_id: input.user_id
+    user_id: input.user_id,
+    date: input.date,
+    status: input.status
   }
 }
 
