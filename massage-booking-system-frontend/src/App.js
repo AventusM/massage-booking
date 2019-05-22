@@ -54,6 +54,16 @@ const App = () => {
     }
   }
 
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    try {
+      window.localStorage.removeItem('loggedBlogAppUser')
+      setUser(null)
+    } catch (exception) {
+      console.log('virhe ulos kirjautumisessa', exception)
+    }
+  }
+
   const handleRegistration = async (event) => {
     event.preventDefault()
     try {
@@ -77,9 +87,12 @@ const App = () => {
           <div>
             <Link to="/">Login</Link>
             <Link to="/registration">Registration</Link>
+            <Link to="/calendar">Calendar</Link>
+            <button onClick={handleLogout}> Logout</button>
           </div>
           <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
-          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
+          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
+          <Route path="/calendar" render={() => <Index user={user}/>} />
         </div>
       </Router>
     </Fragment>
@@ -94,6 +107,7 @@ const UserList = (props) => {
         <li key={user._id}>Name: {user.name}</li>
       ))}
     </ul>
+
   )
 }
 
