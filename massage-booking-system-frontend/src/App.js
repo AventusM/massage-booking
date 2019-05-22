@@ -104,7 +104,7 @@ const App = () => {
             {user && <button onClick={handleLogout}> Logout</button>}
             
           </div>
-            <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
+            <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
             <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
             <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
             <Route path="/calendar" render={() => <Index user={user} />} />                       
