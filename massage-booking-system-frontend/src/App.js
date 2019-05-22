@@ -42,10 +42,6 @@ const App = () => {
     }
   }
 
-  const handeRegistration = async (event) =>  {
-    event.preventDefault()
-    
-  }
 
 
   const handleRegistration = async (event) => {
@@ -63,12 +59,6 @@ const App = () => {
       console.log('virhe kirjautumisessa', exception)
     }
   }
-
-  const handeRegistration = async (event) =>  {
-    event.preventDefault()
-    
-  }
-
 
   // TODO -- REACT ROUTER
   // TODO -- REACT ROUTER
