@@ -124,6 +124,7 @@ const App = () => {
       <Router>
         <Link to="/index">Index</Link>
         <Link to="/dashboard">Admin dashboard</Link>
+        <Link to="/myAppointments">User Homepage</Link>
         <button onClick={handleLogout}>Logout</button>
         <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
           <Route path="/index" render={() => <Index />} />
