@@ -63,9 +63,7 @@ const Appointment = (props) => {
   return (
     <li className="appointmentItem">
       <h3>12:00</h3>
-      <div>
-        Additional data goes here...
-      </div>
+      <div>id: {id}</div>
       {type_of_reservation === 1
         ? <CancelAppointment id={id} />
         : <CreateAppointment id={id} />}
