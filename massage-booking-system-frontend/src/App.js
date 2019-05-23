@@ -7,8 +7,9 @@ import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import UserHomepage from "./components/logged_in/UserHomepage";
 import DashBoard from './components/logged_in/Dashboard'
+import NotFoundPage from './components/NotFoundPage'
 import ReservationView from './components/logged_in/ ReservationView'
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
 const UserContext = createContext(null)
@@ -107,14 +108,14 @@ const App = () => {
   }
 
 
+
+
+
   if (user === null) {
     return (
       <Fragment>
         <Router>
-          <Link to="/registration">Registration</Link>
-          <Link to="/">Login</Link>
-          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
-          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
+          <Route path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
         </Router>
       </Fragment>
     )
@@ -122,17 +123,31 @@ const App = () => {
   return (
     <Fragment>
       <Router>
-        <Link to="/index">Index</Link>
+        <Link to="/">Index</Link>
         <Link to="/dashboard">Admin dashboard</Link>
         <Link to="/myAppointments">User Homepage</Link>
         <button onClick={handleLogout}>Logout</button>
-        <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
-          <Route path="/index" render={() => <Index />} />
-        </AppointmentContext.Provider>
-        <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
-        <UserContext.Provider value={[user, users, userService]}>
-          <Route path="/dashboard" render={() => <DashBoard />} />
-        </UserContext.Provider>
+
+        <Switch>
+
+          <Route exact path="/">
+            <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
+              <Index />
+            </AppointmentContext.Provider>
+          </Route>
+
+          <Route exact path="/profile" component={() => <UserHomepage user={user} />} />
+
+          <Route exact path="/dashboard">
+            <UserContext.Provider value={[user, users, userService]}>
+              <DashBoard />
+            </UserContext.Provider>
+          </Route>
+
+          <Route render={() => <NotFoundPage/>} />
+          
+        </Switch>
+
       </Router>
     </Fragment>
   )
