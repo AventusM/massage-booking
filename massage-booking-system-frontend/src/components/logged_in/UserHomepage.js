@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import userService from '../../services/users'
+import {Redirect} from 'react-router-dom'
+import { render } from 'react-testing-library';
 
 const UserHomepage = ({ user }) => {
+    console.log('userhome got user as ', user)
     const [name, setName] = useState(user.name || '')
     const [number, setNumber] = useState(user.number || '')
     const [password, setPassword] = useState('')
@@ -10,9 +13,13 @@ const UserHomepage = ({ user }) => {
     const handleUserUpdate = () => {
         console.log('handleUserUpdate Called')
         console.log('User', user)
-        const updatedUser = {name, number, ...user}
+        console.log('number ', number)
+        const updatedUser = {...user, name, number}
         console.log('Updated user ', updatedUser)
-        //userService.updateUser(user.id, updatedUser)
+        userService.updateUser(user.id, updatedUser) 
+        return(
+            <Redirect to="/" />
+        )
     }
 
     

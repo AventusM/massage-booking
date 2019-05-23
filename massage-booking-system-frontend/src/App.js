@@ -5,13 +5,14 @@ import RegistrationFormFragment from './components/logged_in/registrationForm'
 import loginService from './services/login'
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 import UserHomepage from "./components/logged_in/UserHomepage";
 import DashBoard from './components/logged_in/Dashboard'
-
+import ReservationView from './components/logged_in/ ReservationView'
+import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
 const UserContext = createContext(null)
+
 
 const App = () => {
   const [users, userService] = useResource('/api/users')
@@ -33,9 +34,9 @@ const App = () => {
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedInUserJSON) {
-      const user = JSON.parse(loggedInUserJSON)
-      setUser(user)
-
+      const userInCache = JSON.parse(loggedInUserJSON)
+      setUser(userInCache)
+      console.log('you are logged in as ', user)
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
@@ -52,10 +53,11 @@ const App = () => {
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
-
+      console.log('loggedInUser ', loggedInUser)
       setUser(loggedInUser)
       email.reset()
       password.reset()
+      console.log('logged in as ', user)
     } catch (exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
@@ -66,6 +68,7 @@ const App = () => {
 
   const handleLogout = async (event) => {
     event.preventDefault()
+    console.log('logging out')
     try {
       window.localStorage.removeItem('loggedInUser')
       setUser(null)
@@ -79,6 +82,7 @@ const App = () => {
 
   const handleRegistration = async (event) => {
     event.preventDefault()
+    console.log('handleRegistration called')
     try {
       const userObject = {
         name: registrationName.value,
@@ -102,7 +106,6 @@ const App = () => {
       <Router>
         <div>
           <div>
-            <Link to="/">Login</Link>
             <Link to="/registration">Registration</Link>
             {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>}
             <Link to="/dashboard">Admin dashboard</Link>
