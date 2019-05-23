@@ -1,6 +1,23 @@
 language: node_js
 node_js:
-  - "7"
-before_script: cd massage-booking-system-frontend
-script:
+- '9'
+
+before_install:
+- cd massage-booking-system-frontend
 - npm install
+- CI=false npm run build
+
+
+install:
+- mv build ../massage-booking-system-backend 
+- cd ../massage-booking-system-backend
+- npm install
+- npm test
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: V8ByJMLJMYkjNS5umZsxbXyq+NFU1iFZP83QZIl5/dEdOoyy5E58m8492ZYigq3/aXt1S/owRWkwJsibSqUYAc+rD+s8WKyj43YBJrA0j9d6gmQt5v0AOfxoYGjGN3RgVF4z3QiL0l9xkn1miDvJFrQFEwKHOaueKzo3R+rL9jXoFtEpxba+z01ehEG3/fmkD2652DrDl4T7iUq/Uceio3w7qoUBjxX9KpzFURf9kJQ6VPuHz5UG5ZcfZIpxp1IIrzqNy/Z2i2sE+3GEQOulyDT+5FnuWI7JkhwVydbDWRf9ZyhCOgutIbvHpTFuFTBy+31j54ytpKRpuJ1FnaSw+Nl2U0xNot1TFoJAoWvxd1oC0nrbXPUdMud5qILGtttoNEsAKXO4gami3ljosITmCNiVNG6LkhQSX9MvJdwbLA33wEzbshWhySz91btz3eQ+zeYVQGjETcISWmQOzp+7T9RK1qe5iOymHSF45tkzpNnTolrOcb5/1dm31bDx+RJDfA9G+4d9DbGzZ5+BMccW7BR3pjjNf4A8Jfdk9uKOuEDL0Vv8YMQJ/PKkzXUE0M7zyldpH/omhVvwes/sDaW2i52AxbVIESuBDQofVMGmwwbN/qIhQtVQxbX2m1c57YhnQS5iPhwFW6Rs24uGSomkeh8dSem5/r/9mYoL8AHvbak=
+  app: limitless-wildwood-82265
+  on:
+    repo: karoliinaemilia/massage-booking-system

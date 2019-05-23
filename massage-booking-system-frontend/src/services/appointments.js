@@ -4,5 +4,8 @@ const baseUrl = "/api/appointments"
 const getAppointments = () => {
   return axios.get(baseUrl)
 }
+const updateAppointment = (id, appointment) =>{
+  return axios.put(`${baseUrl}/${id}`, appointment)
+}
 
-export default { getAppointments }
+export default { getAppointments , updateAppointment}

@@ -3,11 +3,19 @@ const mongoose = require('mongoose')
 const appointmentSchema = mongoose.Schema({
     masseusse_id: {
         type: String,
-        required: true
     },
     user_id: {
         type: String,
-        required: true
+    },
+    start_date: {
+        type: Date,
+    },
+    end_date: {
+        type: Date
+    },
+    type_of_reservation: {
+        type: Number,
+        default: 1
     }
 })
 

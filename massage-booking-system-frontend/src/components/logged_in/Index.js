@@ -1,10 +1,17 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
+import { AppointmentContext } from '../../App'
+import { AppointmentsList, FreeAppointments } from './Appointment'
 
 const Index = (props) => {
-  const { user } = props
+  const appointmentContext = useContext(AppointmentContext)
+  const currentUser = appointmentContext[0]
   return (
     <Fragment>
-      Welcome {user.name}!
+      Welcome {currentUser.name}!
+      <h1>TODO -- GET GENERAL APPOINTMENTS LIST VISIBLE SOMEHOW</h1>
+      <FreeAppointments />
+      <h1>OWN APPOINTMENTS LISTED BELOW</h1>
+      <AppointmentsList />
     </Fragment>
   )
 }

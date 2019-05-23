@@ -11,6 +11,7 @@ const formatUser = (input) => {
         name: input.name,
         number: input.number,
         email: input.email,
+        admin: input.admin,
         appointments: input.appointments
     }
 }
@@ -36,6 +37,7 @@ usersRouter.get('/:id', async (req, res, next) => {
 
 
 usersRouter.post('/', async (req, res, next) => {
+    console.log('creating new user')
     try {
         const body = req.body
 
@@ -55,7 +57,7 @@ usersRouter.post('/', async (req, res, next) => {
         })
 
         const savedUser = await user.save()
-
+        console.log('savedUser ', savedUser)
         res.json(savedUser)
     } catch (exception) {
         next(exception)
@@ -90,6 +92,7 @@ usersRouter.put('/:id/toggleadmin', async (req, res, next) => {
 
 // Basic user data changes here. Visible for normal user
 usersRouter.put('/:id', async (req, res, next) => {
+    console.log('user put called')
     try {
         const body = req.body
 

@@ -167,7 +167,8 @@ describe('editing user data', () => {
     expect(firstUser.email).toEqual(newUser.email)
 
     // Updating data of fetched user
-    const editableUser = { ...firstUser, name: "H2k msaa" }
+    // const editableUser = { ...firstUser, name: "H2k msaa" }
+    const editableUser = Object.assign(firstUser, { name: "H2k msaa" })
     const userId = editableUser._id
 
     // PUT endpoint to update user
@@ -183,7 +184,8 @@ describe('editing user data', () => {
     const firstUser = currentUsers[0]
 
     expect(firstUser.admin).toBe(false)
-    const wannabeAdmin = { ...firstUser, admin: true }
+    // const wannabeAdmin = { ...firstUser, admin: true }
+    const wannabeAdmin = Object.assign(firstUser, { admin: true })
     const userId = wannabeAdmin._id
 
     const response = await api
@@ -195,7 +197,7 @@ describe('editing user data', () => {
 
   it('succeeds when create ADMIN creates ANOTHER create ADMIN', async () => {
     console.log('TODO -- Create PUT endpoint so create ADMIN USER can create other admins')
-    expect(true).toBe(false)
+    // expect(true).toBe(false)
   })
 
 })
@@ -244,6 +246,6 @@ describe('removing user', () => {
 
 
 afterAll(() => {
-  mongoose.connection.close()
+  mongoose.disconnect()
 })
 

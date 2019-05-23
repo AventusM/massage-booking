@@ -1,7 +1,7 @@
-POST  http://localhost:3001/api/login/
+POST  https://limitless-wildwood-82265.herokuapp.com/api/login
 Content-Type: application/json
     
-    {
-    "email": "ajsdjakdasd@hekajshdkjadmo.hes",
+{
+    "email": "nou@jea.nou",
     "password": "testing"
 }
