@@ -74,7 +74,7 @@ loginRouter.post('/', async (req, res, next) => {
 
     res
       .status(200)
-      .send({ token, _id: foundUser._id, email: foundUser.email, name: foundUser.name, admin: foundUser.admin, appointments: foundUser.appointments })
+      .send({ token, _id: foundUser._id, email: foundUser.email, name: foundUser.name, admin: foundUser.admin, appointments: foundUser.appointments, number: foundUser.number })
 
   } catch (exception) {
     next(exception)
