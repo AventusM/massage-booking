@@ -24,7 +24,6 @@ const FreeAppointments = () => {
   const appointmentContext = useContext(AppointmentContext)
   const appointments = appointmentContext[1]
   const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
-  console.log('free appointments', freeAppointments)
   return (
     <ul>
       {freeAppointments.map(app => {
@@ -45,9 +44,8 @@ const AppointmentsList = () => {
   const currentUser = appointmentContext[0]
   const appointments = appointmentContext[1]
   const ownAppointments = appointments.filter(app => app.user_id === currentUser._id)
-  console.log('own appointments', ownAppointments)
   return (
-    <ul>
+    <ul className="appointmentList">
       {ownAppointments.map(app => {
         return (
           <Appointment key={app._id}
@@ -63,10 +61,11 @@ const AppointmentsList = () => {
 const Appointment = (props) => {
   const { id, start_time, type_of_reservation } = props
   return (
-    <li>
-      <div>ID: {id}</div>
-      <div>Appointment made: {start_time}</div>
-      <div>Type of reservation: {type_of_reservation}</div>
+    <li className="appointmentItem">
+      <h3>12:00</h3>
+      <div>
+        Additional data goes here...
+      </div>
       {type_of_reservation === 1
         ? <CancelAppointment id={id} />
         : <CreateAppointment id={id} />}

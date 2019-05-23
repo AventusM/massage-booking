@@ -8,9 +8,9 @@ const Index = (props) => {
   return (
     <Fragment>
       Welcome {currentUser.name}!
-      <h1>TODO -- GET GENERAL APPOINTMENTS LIST VISIBLE SOMEHOW</h1>
+      <h1>Available appointments</h1>
       <FreeAppointments />
-      <h1>OWN APPOINTMENTS LISTED BELOW</h1>
+      <h1>Own appointments</h1>
       <AppointmentsList />
     </Fragment>
   )

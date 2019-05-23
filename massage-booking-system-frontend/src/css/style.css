@@ -1,6 +1,24 @@
-.userList {
+body {
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.appointmentList {
   display: flex;
   flex-direction: column;
+}
+
+.appointmentItem {
+  padding: 5px;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 75px 1fr 100px;
+  margin-bottom: 20px;
+}
+
+.appointmentItem button {
+  border: none;
+  background-color: black;
+  color: white;
 }
 
 
