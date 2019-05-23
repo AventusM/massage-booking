@@ -3,31 +3,11 @@ import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import RegistrationFormFragment from './components/logged_in/registrationForm'
 import loginService from './services/login'
-<<<<<<< HEAD
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 import UserHomepage from "./components/logged_in/UserHomepage";
-=======
 import Calendar from 'react-calendar';
 import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
-
-
-const useField = (type) => {
-  const [value, setValue] = useState('')
-  const handleFieldChange = (event) => {
-    setValue(event.target.value)
-  }
-
-<<<<<<< HEAD
-=======
-  const reset = () => {
-    setValue('')
-  }
-
-  return { type, value, handleFieldChange, reset }
-}
->>>>>>> dfb89cd9b524b47243392524f76152277a006444
 
 const App = () => {
   const [users, userService] = useResource('/api/users')
@@ -46,7 +26,6 @@ const App = () => {
     userService.getAll()
   }, [])
 
->>>>>>> d5714390972b7a546ca006069d327641ed1a2833
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedInUserJSON) {
