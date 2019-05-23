@@ -36,11 +36,13 @@ const UserHomepage = ({ user }) => {
 
     return (
         <>
-        <h2>Welcome {user.name}!</h2>
+        <div className = 'userHomepageWrapper_desktop'>
+        <h2>Welcome {user.name}</h2>
         <div>
+
         <h3>Update your info</h3>
         <form onSubmit={() => handleUserUpdate()}>
-            <div>Name
+            <div><label>Name</label>
                 <input
                     type="text"
                     id="name"
@@ -49,7 +51,7 @@ const UserHomepage = ({ user }) => {
                     onChange={({ target }) => setName(target.value)}
                 />
             </div>
-            <div>Phone Number
+            <div><label>Phone Number</label>
                 <input
                     type="text"
                     id="number"
@@ -66,7 +68,7 @@ const UserHomepage = ({ user }) => {
         <div>
         <h3>Change password</h3>
         <form onSubmit={() => handlePasswodChange()}>
-            <div>Password
+            <div><label>Password</label>
                 <input
                 type="password"
                 id="password"
@@ -75,7 +77,7 @@ const UserHomepage = ({ user }) => {
                 onChange={({ target }) => setPassword(target.value)}
                 />
             </div>
-            <div>Retype Password
+            <div><label>Confirm Password</label>
                 <input
                     type="passwordCheck"
                     id="passwordCheck"
@@ -87,7 +89,7 @@ const UserHomepage = ({ user }) => {
             <button type="submit">Change password</button>
         </form>
         </div>
-        
+        </div>
         
         </>
         
