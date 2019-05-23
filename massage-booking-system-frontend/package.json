@@ -2,6 +2,9 @@
   "name": "massage-booking-system-frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "cors": "^2.8.5",
