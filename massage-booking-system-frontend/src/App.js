@@ -7,6 +7,7 @@ import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import UserHomepage from "./components/logged_in/UserHomepage";
 import DashBoard from './components/logged_in/Dashboard'
+import { Navbar, Nav } from 'react-bootstrap'
 import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
@@ -120,11 +121,25 @@ const App = () => {
     )
   }
   return (
-    <Fragment>
+    <Fragment className="main.">
       <Router>
+
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+         <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+          <Nav.Link href="#" as="span">
         <Link to="/index">Index</Link>
-        <Link to="/dashboard">Admin dashboard</Link>
-        <button onClick={handleLogout}>Logout</button>
+      </Nav.Link>
+      <Nav.Link href="#" as="span">
+      <Link to="/dashboard">Admin dashboard</Link>
+      </Nav.Link>
+      <Nav.Link href="#" as="span">
+      <button onClick={handleLogout}>Logout</button>
+    </Nav.Link>
+    </Nav>
+  </Navbar.Collapse>
+</Navbar>
         <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
           <Route path="/index" render={() => <Index />} />
         </AppointmentContext.Provider>
