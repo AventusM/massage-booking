@@ -110,6 +110,31 @@ usersRouter.put('/:id', async (req, res, next) => {
 
 })
 
+usersRouter.put('/:id/passwordChange', async (req, res, next) => {
+    console.log('user password change attempted')
+    try {
+        console.log('request', req)
+        const body = req.body
+        console.log('changepassword body', body)
+        if (body.password === undefined || body.password.length < 3) {
+            return res.status(400).json({ error: 'Password is too short or missing' })
+        }
+
+        const saltRounds = 10
+        const passwordHash = await bcrypt.hash(body.password, saltRounds)
+
+        const user = {
+            passwordHash
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, user, { new: true })
+        console.log('updatedUser', updatedUser)
+        res.json(updatedUser)
+    } catch (exception) {
+        next(exception)
+    }
+})
+
 usersRouter.delete('/:id', async (req, res, next) => {
     try {
         const user = await User.findById({ _id: req.params.id })

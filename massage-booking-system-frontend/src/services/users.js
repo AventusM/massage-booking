@@ -6,9 +6,14 @@ const getUsers = async () => {
   return response
 }
 
-const updateUser = (id, user) =>{
+const updateUser = async (id, user) =>{
   console.log('updateUser called with id', id, ' user ', user)
-  return axios.put(`${baseUrl}/${id}`, user)
+  return await axios.put(`${baseUrl}/${id}`, user)
+}
+
+const changePassword = async (id, password) => {
+  console.log('changePasswordcalled with id', id)
+  return await axios.put(`${baseUrl}/${id}/passwordChange`, {password})
 }
 
 const addUser = async newObject => {
@@ -16,5 +21,5 @@ const addUser = async newObject => {
   return response.data
 }
 
-export default { getUsers, updateUser, addUser }
+export default { getUsers, updateUser, addUser, changePassword }
 
