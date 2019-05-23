@@ -1,3 +1,9 @@
+.userList {
+  display: flex;
+  flex-direction: column;
+}
+
+
 .timelist {
     padding: 5px;
     list-style-type: none;

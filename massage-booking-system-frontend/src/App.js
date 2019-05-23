@@ -12,9 +12,14 @@ import DashBoard from './components/logged_in/Dashboard'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
 const UserContext = createContext(null)
+const AppointmentContext = createContext(null)
 
 const App = () => {
+  // userService CONTAINS APPOINTMENT ID
   const [users, userService] = useResource('/api/users')
+  // appointmentService FETCHES ALL apps AND also all users apps by ID
+  const [appointments, appointmentService] = useResource('/api/appointments')
+
   const [errorMessage, setErrorMessage] = useState('')
   const [user, setUser] = useState(null)
   const email = useField('text')
@@ -28,6 +33,7 @@ const App = () => {
 
   useEffect(() => {
     userService.getAll()
+    appointmentService.getAll()
   }, [])
 
   useEffect(() => {
@@ -94,7 +100,7 @@ const App = () => {
         setErrorMessage(null)
       }, 3000)
     }
-  } 
+  }
 
 
   return (
@@ -102,16 +108,25 @@ const App = () => {
       <Router>
         <div>
           <div>
-            <Link to="/">Login</Link>
-            <Link to="/registration">Registration</Link>
+            {user ? <Link to="/index">Index</Link> : <Link to="/registration">Registration</Link>}
             {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>}
             <Link to="/dashboard">Admin dashboard</Link>
             <button onClick={handleLogout}>Logout</button>
           </div>
+
+
           <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
+
+
           <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
-          <Route path="/calendar" render={() => <Index user={user} />} />
+
+          <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
+            <Route path="/index" render={() => <Index />} />
+          </AppointmentContext.Provider>
+
           <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
+
+
           <UserContext.Provider value={[user, users, userService]}>
             <Route path="/dashboard" render={() => <DashBoard />} />
           </UserContext.Provider>
@@ -121,5 +136,5 @@ const App = () => {
   )
 }
 
-export { UserContext }
+export { UserContext, AppointmentContext }
 export default App

@@ -12,24 +12,9 @@ const appointmentSchema = mongoose.Schema({
     user_id: {
         type: String,
     },
-    date: {
-        type: Date,
-        required: true
-    },
-    status: {
-        type: Number,
-        required: true
-    },
     start_time: {
         type: Date,
         default: () => Date.now()
-    },
-    end_time: {
-        type: Date,
-        default: () => Date.now()
-    },
-    type_of_reservation: {
-        type: Number,
     }
 })
 
