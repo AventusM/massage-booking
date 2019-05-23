@@ -8,7 +8,7 @@
   }
   
   .login_wrapper_mobile img {
-      width: 45%;
+      width: 170px;
      display: block;
      margin-left: auto;
      margin-right: auto;
@@ -21,19 +21,49 @@
   .login_wrapper_desktop img{
      width: 30%;
      display: block;
-     padding-top: 2%;
-     padding-left: 2%;   
+     float: right;
+     margin-right: 2%;
+     margin-top: 20%;
+     margin-bottom: 2%; 
+     position: fixed;
+     bottom: 0;
+     right: 0;
+
+    
 
 } 
 
 .login_wrapper_desktop{
-    background-image: url("../pics/unity2.jpeg");
-    height: 100vh;
+   /* background-image: url("../pics/unity2.jpeg");*/
+   background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+   min-height: 100%;
+   min-width: 1024px;
+   width: 100%;
+   height: auto;
+   position: fixed;
+   top: 0;
+   left: 0;
 
+
+}
+
+.login_wrapper_mobile{
+    /* background-image: url("../pics/unity2.jpeg");*/
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+    min-height: 100%;
+    min-width: 100%;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
   .login_wrapper_mobile h1, h3 {
     text-align: center;
+    font-family: Sans-serif, "Roboto";
+    color: white;
+    
   }
   
   .login_wrapper_mobile form {
@@ -46,20 +76,24 @@
   
   .login_wrapper_mobile label{
     margin-bottom: 5px;
+    color: white;
+    opacity: 0.9;
   }
   
   .login_wrapper_mobile input {
     text-align: center;
     display: inline-block;
     width: 100%;
-    border: 3px solid #1d9ad6;
+    background: white;
+    opacity: 0.2;
     border-radius: 15px;
     padding: 10px 5px;
     margin-bottom: 15px;
+    border: 0px;
   }
   
   .login_wrapper_mobile button{
-    background: #1d9ad6;
+    background: #09203f;
     border-radius: 15px;
     color: white;
     padding: 10px 5px;
@@ -67,7 +101,11 @@
   
   .login_wrapper_desktop h1, h3 {
     text-align: center;
+    margin-top: 10%;
+    font-family: Roboto, sans-serif;
     font-size: 500%;
+    color: white;
+    
   }
   
   .login_wrapper_desktop form {
@@ -80,21 +118,39 @@
   
   .login_wrapper_desktop label{
     margin-bottom: 5px;
+    font-size: 120%;
+    color: white;
+
+    
   }
   
   .login_wrapper_desktop input {
     text-align: center;
-    border: 3px solid #1d9ad6;
+    border: 0px;
+    background: white;
+    opacity: 0.2;
     border-radius: 15px;
-    padding: 10px 5px;
     margin-bottom: 15px;
+    height: 50px;
+    width: 110%;
   }
   
   .login_wrapper_desktop button{
-    background: #1d9ad6;
+    border: 3px solid #09203f;
+    background: #09203f;
+    font-size: 120%;
     border-radius: 15px;
     color: white;
     padding: 10px 5px;
+    height: 50px;
+    width: 110%;
+    
+  }
+
+  .form-div{
+
+    
+    
   }
 
   

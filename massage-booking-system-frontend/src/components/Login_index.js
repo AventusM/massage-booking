@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import LoginForm from './LoginForm'
-import unity from '../pics/unity1.png'
-import unityBackground from '../pics/unity3.png'
+import unity5 from '../pics/unity5.png'
+import unity4 from '../pics/unity4.png'
 
 
 const LoginIndex = (props) => {
@@ -14,11 +14,11 @@ const LoginIndex = (props) => {
   }, [])
 
 
-  const isMobile = width <= 500
+  const isMobile = width <= 700
   if (isMobile) {
     return (
       <div className="login_wrapper_mobile">
-       <img id= "unity" src = {unity}></img>
+       <img id= "unity" src = {unity5}></img>
         <h1>Massage booking <br/>system</h1>
         <LoginForm {...props} />
       </div>
@@ -29,10 +29,10 @@ const LoginIndex = (props) => {
         
          
          <div className="form-div">
-         <h1>Massage booking <br/>system</h1>
+         <h1>Massage booking</h1>
           <LoginForm {...props} />
           </div>
-          <img id= "unityBackground" src = {unityBackground}></img>
+          <img id= "unity4" src = {unity4}></img>
         </div>
       )
     }    
