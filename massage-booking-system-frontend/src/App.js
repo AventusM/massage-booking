@@ -6,7 +6,7 @@ import loginService from './services/login'
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import UserHomepage from "./components/logged_in/UserHomepage";
-import Calendar from 'react-calendar';
+import ReservationView from './components/logged_in/ ReservationView'
 import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
 const App = () => {
@@ -29,9 +29,9 @@ const App = () => {
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedInUserJSON) {
-      const user = JSON.parse(loggedInUserJSON)
-      setUser(user)
-
+      const userInCache = JSON.parse(loggedInUserJSON)
+      setUser(userInCache)
+      console.log('you are logged in as ', user)
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
@@ -48,10 +48,11 @@ const App = () => {
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
-
+      console.log('loggedInUser ', loggedInUser)
       setUser(loggedInUser)
       email.reset()
       password.reset()
+      console.log('logged in as ', user)
     } catch (exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
@@ -62,6 +63,7 @@ const App = () => {
 
   const handleLogout = async (event) => {
     event.preventDefault()
+    console.log('logging out')
     try {
       window.localStorage.removeItem('loggedInUser')
       setUser(null)
@@ -75,6 +77,7 @@ const App = () => {
 
   const handleRegistration = async (event) => {
     event.preventDefault()
+    console.log('handleRegistration called')
     try {
       const userObject = {
         name: registrationName.value,
@@ -99,15 +102,15 @@ const App = () => {
         <div>
           <div>
             <Link to="/registration">Registration</Link>
-            {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>}
-            <Link to="/calendar">Calendar</Link>
+            {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>} 
+            {user && <Link to="/calendar">Make a Reservation</Link>}
             {user && <button onClick={handleLogout}> Logout</button>}
             
           </div>
             <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} />} />
             <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} /> 
             <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
-            <Route path="/calendar" render={() => <Index user={user} />} />                       
+            <Route path="/calendar" render={() => <ReservationView user={user}/>} />                       
         </div>
       </Router>
     </Fragment>

@@ -7,6 +7,7 @@ const getUsers = async () => {
 }
 
 const updateUser = (id, user) =>{
+  console.log('updateUser called with id', id, ' user ', user)
   return axios.put(`${baseUrl}/${id}`, user)
 }
 
