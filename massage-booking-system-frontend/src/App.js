@@ -97,7 +97,6 @@ const App = () => {
       <Router>
         <div>
           <div>
-            <Link to="/">Login</Link>
             <Link to="/registration">Registration</Link>
             {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>}
             <Link to="/calendar">Calendar</Link>
