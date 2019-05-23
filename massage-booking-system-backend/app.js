@@ -19,10 +19,16 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
     logger.error('error connection to MongoDB:', error.message)
   })
 
+
 const masseussesRouter = require('./controllers/masseusses')
 const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'))
+}
+
 
 app.use(morgan('dev'))
 app.use('/api/masseusses', masseussesRouter)
