@@ -96,6 +96,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
     const appointment = {
+      user_id: body.user_id || null,
       type_of_reservation: body.type_of_reservation
     }
     const updatedAppointment = await Appointment.findByIdAndUpdate(req.params.id, appointment, { new: true })

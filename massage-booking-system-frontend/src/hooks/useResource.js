@@ -17,7 +17,8 @@ const useResource = (baseUrl) => {
 
   const update = async (id, data) => {
     const updatedResource = await axios.put(`${baseUrl}/${id}`, data)
-    setResources(resources.map(resource => resource.id !== id ? resource : updatedResource.data))
+    console.log('updated resource', updatedResource)
+    setResources(resources.map(resource => resource._id !== id ? resource : updatedResource.data))
   }
 
   const remove = async (id) => {

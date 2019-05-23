@@ -7,7 +7,6 @@ const User = (props) => {
   const currentUser = currentUserContext[0]
   const userService = currentUserContext[2]
   const { id, name, email, number } = props
-  console.log('user id', id)
   // console.log('logged in user', currentUser)
   return (
     <li>
