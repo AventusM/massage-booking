@@ -107,13 +107,13 @@ const App = () => {
   }
 
 
-  if (user === null) {
-    return (
-      <Fragment>
-        Loading...
-      </Fragment>
-    )
-  }
+  // if (user === null) {
+  //   return (
+  //     <Fragment>
+  //       Loading...
+  //     </Fragment>
+  //   )
+  // }
   return (
     <Fragment>
       <Router>
