@@ -13,7 +13,8 @@ const formatAppointment = (input) => {
     _id: input._id,
     masseusse_id: input.masseusse_id,
     user_id: input.user_id,
-    start_time: input.start_time
+    start_time: input.start_time,
+    type_of_reservation: input.type_of_reservation
   }
 }
 
@@ -84,6 +85,20 @@ appointmentsRouter.post('/', async (req, res, next) => {
     } catch (exception) {
       next(exception)
     }
+  } catch (exception) {
+    next(exception)
+  }
+
+})
+
+appointmentsRouter.put('/:id', async (req, res, next) => {
+  try {
+    const body = req.body
+    const appointment = {
+      type_of_reservation: body.type_of_reservation
+    }
+    const updatedAppointment = await Appointment.findByIdAndUpdate(req.params.id, appointment, { new: true })
+    res.json(updatedAppointment)
   } catch (exception) {
     next(exception)
   }
