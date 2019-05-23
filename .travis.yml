@@ -9,7 +9,6 @@ install:
 - mv build ../massage-booking-system-backend
 - cd ../massage-booking-system-backend
 - npm install
-- npm test
 deploy:
   provider: heroku
   api_key:
