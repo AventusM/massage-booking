@@ -13,7 +13,8 @@ const formatAppointment = (input) => {
     _id: input._id,
     masseusse_id: input.masseusse_id,
     user_id: input.user_id,
-    start_time: input.start_time,
+    start_date: input.start_date,
+    end_date: input.end_date,
     type_of_reservation: input.type_of_reservation
   }
 }
