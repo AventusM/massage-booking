@@ -1,3 +1,33 @@
+body {
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.appointmentItem {
+  padding: 5px;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 75px auto 100px;
+  margin-bottom: 20px;
+}
+
+.appointmentItem div {
+  word-break: break-all;
+  margin-right: 10px;
+}
+
+.appointmentItem button {
+  border: none;
+  background-color: black;
+  color: white;
+}
+
+
 .timelist {
     padding: 5px;
     list-style-type: none;
@@ -17,9 +47,3 @@
     display: inline-block;
     font-size: 16px;
   }
-
-  .ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
