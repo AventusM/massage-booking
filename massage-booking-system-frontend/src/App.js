@@ -8,7 +8,7 @@ import useField from './hooks/useField'
 import UserHomepage from "./components/logged_in/UserHomepage";
 import DashBoard from './components/logged_in/Dashboard'
 import ReservationView from './components/logged_in/ ReservationView'
-import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
 const UserContext = createContext(null)
@@ -107,6 +107,13 @@ const App = () => {
   }
 
 
+  if (user === null) {
+    return (
+      <Fragment>
+        Loading...
+      </Fragment>
+    )
+  }
   return (
     <Fragment>
       <Router>
