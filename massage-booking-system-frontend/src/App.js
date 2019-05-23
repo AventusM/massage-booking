@@ -125,7 +125,7 @@ const App = () => {
       <Router>
         <Link to="/">Index</Link>
         <Link to="/dashboard">Admin dashboard</Link>
-        <Link to="/myAppointments">User Homepage</Link>
+        <Link to="/profile">Profile</Link>
         <button onClick={handleLogout}>Logout</button>
 
         <Switch>
