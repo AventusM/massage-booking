@@ -107,41 +107,31 @@ const App = () => {
   }
 
 
-  // if (user === null) {
-  //   return (
-  //     <Fragment>
-  //       Loading...
-  //     </Fragment>
-  //   )
-  // }
+  if (user === null) {
+    return (
+      <Fragment>
+        <Router>
+          <Link to="/registration">Registration</Link>
+          <Link to="/">Login</Link>
+          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
+          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
+        </Router>
+      </Fragment>
+    )
+  }
   return (
     <Fragment>
       <Router>
-        <div>
-          <div>
-            {user ? <Link to="/index">Index</Link> : <Link to="/registration">Registration</Link>}
-            {user ? <Link to="/myAppointments">{user.name}</Link> : <Link to="/">Login</Link>}
-            <Link to="/dashboard">Admin dashboard</Link>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-
-
-          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
-
-
-          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
-
-          <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
-            <Route path="/index" render={() => <Index />} />
-          </AppointmentContext.Provider>
-
-          <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
-
-
-          <UserContext.Provider value={[user, users, userService]}>
-            <Route path="/dashboard" render={() => <DashBoard />} />
-          </UserContext.Provider>
-        </div>
+        <Link to="/index">Index</Link>
+        <Link to="/dashboard">Admin dashboard</Link>
+        <button onClick={handleLogout}>Logout</button>
+        <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
+          <Route path="/index" render={() => <Index />} />
+        </AppointmentContext.Provider>
+        <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
+        <UserContext.Provider value={[user, users, userService]}>
+          <Route path="/dashboard" render={() => <DashBoard />} />
+        </UserContext.Provider>
       </Router>
     </Fragment>
   )
