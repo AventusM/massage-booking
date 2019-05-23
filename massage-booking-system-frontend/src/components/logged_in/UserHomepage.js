@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import userService from '../../services/users'
-import {Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 import { render } from 'react-testing-library';
 
 const UserHomepage = ({ user }) => {
@@ -10,25 +10,22 @@ const UserHomepage = ({ user }) => {
     const [password, setPassword] = useState('')
     const [passwordCheck, setPasswordCheck] = useState('') 
 
-    const handleUserUpdate = () => {
+    const handleUserUpdate = async () => {
         console.log('handleUserUpdate Called')
         console.log('User', user)
         console.log('number ', number)
         const updatedUser = {...user, name, number}
         console.log('Updated user ', updatedUser)
-        userService.updateUser(user.id, updatedUser) 
-        return(
-            <Redirect to="/" />
-        )
+        const userFromServer = await userService.updateUser(user.id, updatedUser)
+        console.log('userFromServer', userFromServer) 
+        // todo update user in app state to mat 
     }
-
     
     const handlePasswodChange = () => {
-        console.log('handleUserUpdate Called')
+        console.log('handlePasswordChange Called')
         console.log('User', user)
         if (password === passwordCheck) {
-            //todo change password
-
+            userService.changePassword(user.id, password)
         } else {
             window.alert('password missmatch')
         }
@@ -77,7 +74,7 @@ const UserHomepage = ({ user }) => {
             </div>
             <div>Retype Password
                 <input
-                    type="passwordCheck"
+                    type="password"
                     id="passwordCheck"
                     value={passwordCheck}
                     name="passwordCheck"
