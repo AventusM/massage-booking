@@ -18,7 +18,7 @@ const UserHomepage = ({ user }) => {
         console.log('Updated user ', updatedUser)
         const userFromServer = await userService.updateUser(user.id, updatedUser)
         console.log('userFromServer', userFromServer) 
-        // todo update user in app state to mat 
+        // todo update user in app state to match new user 
     }
     
     const handlePasswodChange = () => {
