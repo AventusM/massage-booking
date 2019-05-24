@@ -14,8 +14,8 @@ import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } fr
 import history from './history';
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext({ user: null, setUser: () => console.log('if you are seeing this you did not pass setUser To Usercontext'), user: null })
-const AppointmentContext = createContext(null)
+const UserContext = createContext({})
+const AppointmentContext = createContext({})
 
 
 const App = () => {
@@ -126,31 +126,12 @@ const App = () => {
     <Fragment>
       <Router history={history}>
 
-        {/* <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto mt-2 mt-lg-0">
-              <div className="nav-item"> */}
-        <Link className="nav-link" to="/">Index</Link>
-        {/* </div> */}
-        {/* <div className="nav-item"> */}
-        <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
-        {/* </div> */}
-        {/* <div className="nav-item"> */}
-        <Link className="nav-link" to="/profile">Profile</Link>
-        {/* </div> */}
-        {/* </Nav> */}
-        {/* <div class="nav-item"> */}
-        <button class="btn btn-dark my-2 my-sm-0" onClick={handleLogout}>Logout</button>
-        {/* </div> */}
-
-        {/* </Navbar.Collapse> */}
-        {/* </Navbar> */}
-
-
+        <Link to="/">Index</Link>
+        <Link to="/dashboard">Admin dashboard</Link>
+        <Link to="/profile">Profile</Link>
+        <button onClick={handleLogout}>Logout</button>
 
         <Switch>
-
           <Route exact path="/">
             <AppointmentContext.Provider value={{ user, appointments, appointmentService }}>
               <Index />
@@ -172,7 +153,6 @@ const App = () => {
           <Route render={() => <NotFoundPage />} />
 
         </Switch>
-
       </Router>
     </Fragment>
   )

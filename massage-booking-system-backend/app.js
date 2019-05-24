@@ -50,10 +50,10 @@ ProtectedRoutes.use((req, res, next) => {
   } else {
 
     let token = null
-    let authorization = req.get('authorization')
-    console.log('authorization', authorization)
+    let authorization = req.headers.authorization
 
     if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+      console.log('ollaan täällä!!!')
       token = authorization.substring(7)
     }
 

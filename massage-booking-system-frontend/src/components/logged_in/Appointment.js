@@ -25,7 +25,7 @@ const FreeAppointments = () => {
   const appointments = appointmentContext.appointments
   const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
   return (
-    <ul className="appointmentList">
+    <ul>
       {freeAppointments.map(app => {
         return (
           <Appointment key={app._id}
