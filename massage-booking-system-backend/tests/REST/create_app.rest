@@ -1,12 +1,8 @@
 POST http://localhost:3001/api/appointments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFqc2RqYWtkYXNkQGhla2Fqc2hka2phZG1vLmhlcyIsIm5hbWUiOiJBS0FKU0RMS0FKU0QiLCJpZCI6IjVjZGQxZWI4M2YyNDk3MTk2NWVkMTI2YSIsImlhdCI6MTU1ODA4ODkzN30.uVogt-DJWr3uA5mdFjLrSyvllSD4Sh-JEONsxcxA_tY
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjhhbnRvbjEyMzEyMzFtQGdtYWlsLmNvbSIsIm5hbWUiOiJBbnRvbiIsImlkIjoiNWNlNjY2Mjg3YjllOTUyNzMyM2ViYWFlIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg2MDMzMTh9.O0AXV5GHvI0JzjQCTMmYKXDbtXScNJ_yn4HVhbsRGus
 
 {
   "masseusse_id":"5cde7fa4011a6a288584abca",
-  "user_id": "5cdd1eb83f24971965ed126a",
-  "start_date": "2016-05-18",
-  "end_date": "2018-05-18",
-  "type_of_reservation": 1
+  "user_id": "5ce666287b9e9527323ebaae"
 }

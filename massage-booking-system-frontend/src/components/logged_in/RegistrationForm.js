@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
-import RegistrationForm from './RegistrationForm'
+import RegistrationForm from '../RegistrationForm'
 
-const RegistrationForm = (props) => {
+const RegistrationFormFragment = (props) => {
   return (
     <Fragment>
       <h1>Unity massage booking system</h1>
@@ -11,4 +11,4 @@ const RegistrationForm = (props) => {
   )
 }
 
-export default RegistrationForm
+export default RegistrationFormFragment
