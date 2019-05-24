@@ -22,7 +22,7 @@ const App = () => {
   // appointmentService FETCHES ALL apps AND also all users apps by ID
   const [appointments, appointmentService] = useResource('/api/appointments')
 
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
@@ -121,25 +121,27 @@ const App = () => {
     )
   }
   return (
-    <Fragment className="main.">
+    <Fragment>
       <Router>
 
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-          <Nav.Link href="#" as="span">
-        <Link to="/index">Index</Link>
-      </Nav.Link>
-      <Nav.Link href="#" as="span">
-      <Link to="/dashboard">Admin dashboard</Link>
-      </Nav.Link>
-      <Nav.Link href="#" as="span">
-      <button onClick={handleLogout}>Logout</button>
-    </Nav.Link>
-    </Nav>
-  </Navbar.Collapse>
-</Navbar>
+        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto mt-2 mt-lg-0">
+            <div className="nav-item">
+              <Link className="nav-link" to="/index">Index</Link>
+            </div>
+            <div className="nav-item">
+              <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
+            </div>
+            </Nav>
+            <div class="nav-item">
+              <button class="btn btn-dark my-2 my-sm-0" onClick={handleLogout}>Logout</button>  
+            </div>
+           
+          </Navbar.Collapse>
+        </Navbar>
+
         <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
           <Route path="/index" render={() => <Index />} />
         </AppointmentContext.Provider>

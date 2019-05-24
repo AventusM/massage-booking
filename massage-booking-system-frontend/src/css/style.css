@@ -6,6 +6,17 @@
     font-family: Arial;
   
   }
+
+  .main_wrapper {
+    background-color: #E4E4E1;
+    background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
+ 	  background-blend-mode: normal, multiply;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    position: fixed;
+    left: 0;
+  }
   
   .login_wrapper_mobile img {
       width: 170px;
@@ -168,25 +179,31 @@
   .userHomepageWrapper_desktop{
     background-color: #E4E4E1;
     background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
- 	background-blend-mode: normal, multiply;
+ 	  background-blend-mode: normal, multiply;
     min-height: 100%;
-    min-width: 1024px;
-    width: 100%;
+    min-width: 100%;
     height: auto;
     position: fixed;
     top: 0;
     left: 0;
     
   }
+
+
   .userHomepageWrapper_desktop form {
     display: flex;
     flex-direction: column;
-    width: 250px;
+    width: 270px;
     margin-right: auto;
     margin-left: auto;
-
-
   }
+
+  @media screen
+    and (max-width: 700px) {
+      .userHomepageWrapper_desktop form {
+        width: 220px;
+      }
+    }
 
   .userHomepageWrapper_desktop input {
     text-align: center;
@@ -196,37 +213,43 @@
     border-radius: 15px;
     margin-bottom: 15px;
     height: 50px;
-    width: 110%;
+    width: 100%;
   }
 
   .userHomepageWrapper_desktop h3 {
     text-align: center;
     font-family: Roboto, sans-serif;
     font-size: 200%;
-    margin-top: 190px;
+    margin-top: 10%;
     margin-bottom: 20px;
     color: white;
   }
 
     
-  .error {
-    padding: 20px;
-    background-color: #f44336; /* Red */
-    color: white;
-    padding: 10px 5px;
-    margin-bottom: 15px;
-    border: 0px;
-    width: 100%;
-  }
+
   .userHomepageWrapper_desktop h2 {
     text-align: center;
     font-family: Roboto, sans-serif;
     font-size: 350%;
     color: #334e63;
-    margin-top: 100px;
-
-
+    margin-top: 2%;
   }
+
+  @media screen
+    and (max-width: 700px) {
+      .userHomepageWrapper_desktop h3 {
+        margin-top: 5%;
+        font-size: 120%;
+      }
+    }
+
+    @media screen
+    and (max-width: 700px) {
+      .userHomepageWrapper_desktop h2 {
+        margin-top: 5%;
+        font-size: 200%;
+      }
+    }
 
   .userHomepageWrapper_desktop button{
     border: 3px solid #537895;
@@ -236,7 +259,7 @@
     color: white;
     padding: 10px 5px;
     height: 50px;
-    width: 110%;
+    width: 100%;
     
   }
 
@@ -247,10 +270,43 @@
 
     
   }
+  .alert {
+    background-color: #aa7572; /* Red */
+    color: rgb(51, 48, 48);
+    margin-bottom: 15px;
+    text-align: center;
+    border: 0px;
+    height: 50px;
+    width: 100%;
+  }
+
+
+
+  /* NavBar */
+
+  .navbar {
+    background-color: #333;
+    overflow: hidden;
+  }
+
+  .navbar_link {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .navbar_link:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
 
 /*Tästä alkaa Homepage Mobile*/
 
-  .userHomepageWrapper_mobile{
+  /*.userHomepageWrapper_mobile{
     background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
     min-height: 100%;
     min-width: 100%;
@@ -287,7 +343,7 @@
         color: white;
         
       }
-
+*/
 
   /**/
 
