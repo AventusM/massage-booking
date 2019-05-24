@@ -1,16 +1,22 @@
 import React, { Fragment, useState, useContext } from 'react'
 import userService from '../../services/users'
 import { UserContext } from '../../App'
+import useField from '../../hooks/useField';
 
 const UserHomepage = () => {
     const currentUserContext = useContext(UserContext)
     const user = currentUserContext.user
     console.log('currentUserContext ', currentUserContext)
 
-    const [name, setName] = useState(user.name || '')
-    const [number, setNumber] = useState(user.number || '')
-    const [password, setPassword] = useState('')
-    const [passwordCheck, setPasswordCheck] = useState('')
+    const name = useField('text', user.name)
+    const number = useField('text', user.number)
+    const password = useField('password')
+    const passwordCheck = useField('password')
+
+    // const [name, setName] = useState(user.name || '')
+    // const [number, setNumber] = useState(user.number || '')
+    // const [password, setPassword] = useState('')
+    // const [passwordCheck, setPasswordCheck] = useState('')
 
     const handleUserUpdate = async () => {
         console.log('handleUserUpdate Called')
@@ -42,20 +48,20 @@ const UserHomepage = () => {
                 <form onSubmit={() => handleUserUpdate()}>
                     <label>Name</label>
                     <input
-                        type="text"
+                        type={name.type}
                         id="name"
-                        value={name}
+                        value={name.value}
                         name="name"
-                        onChange={({ target }) => setName(target.value)}
+                        onChange={name.handleFieldChange}
                     />
 
                     <label>Phone number</label>
                     <input
-                        type="text"
+                        type={number.type}
                         id="number"
-                        value={number}
+                        value={number.value}
                         name="number"
-                        onChange={({ target }) => setNumber(target.value)}
+                        onChange={number.handleFieldChange}
                     />
 
                     <button type="submit">Update</button>
@@ -67,20 +73,20 @@ const UserHomepage = () => {
                 <form onSubmit={() => handlePasswordChange()}>
                     <label>Password</label>
                     <input
-                        type="password"
+                        type={password.type}
                         id="password"
-                        value={password}
+                        value={password.value}
                         name="password"
-                        onChange={({ target }) => setPassword(target.value)}
+                        onChange={password.handleFieldChange}
                     />
 
                     <label>Retype password</label>
                     <input
-                        type="password"
+                        type={passwordCheck.type}
                         id="passwordCheck"
-                        value={passwordCheck}
+                        value={passwordCheck.value}
                         name="passwordCheck"
-                        onChange={({ target }) => setPasswordCheck(target.value)}
+                        onChange={passwordCheck.handleFieldChange}
                     />
                     <button type="submit">Change password</button>
                 </form>
