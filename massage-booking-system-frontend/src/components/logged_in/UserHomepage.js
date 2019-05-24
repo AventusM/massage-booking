@@ -5,7 +5,6 @@ import { UserContext } from '../../App'
 const UserHomepage = () => {
     const currentUserContext = useContext(UserContext)
     const user = currentUserContext.user
-    console.log('currentUserContext ', currentUserContext)
 
     const [name, setName] = useState(user.name || '')
     const [number, setNumber] = useState(user.number || '')
