@@ -4,7 +4,7 @@ import { AppointmentsList, FreeAppointments } from './Appointment'
 
 const Index = (props) => {
   const appointmentContext = useContext(AppointmentContext)
-  const currentUser = appointmentContext[0]
+  const currentUser = appointmentContext.user
   return (
     <Fragment>
       Welcome {currentUser.name}!
