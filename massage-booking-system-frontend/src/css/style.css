@@ -1,11 +1,10 @@
 * {
     box-sizing: border-box;
   }
-  
+
   body {
-    font-family: Arial;
-  
-  }
+    font-family: "Helvetica", "Arial", sans-serif;
+  }  
 
   .main_wrapper {
     background-color: #E4E4E1;
@@ -44,6 +43,31 @@
 .userList {
   display: flex;
   flex-direction: column;
+}
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.appointmentItem {
+  padding: 5px;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 75px auto 100px;
+  margin-bottom: 20px;
+}
+
+.appointmentItem div {
+  word-break: break-all;
+  margin-right: 10px;
+}
+
+.appointmentItem button {
+  border: none;
+  background-color: black;
+  color: white;
 }
 
 
@@ -184,7 +208,6 @@
     min-width: 100%;
     height: auto;
     position: fixed;
-    top: 0;
     left: 0;
     
   }
@@ -305,7 +328,7 @@
 
 
 /*Tästä alkaa Homepage Mobile*/
-
+/*
   .userHomepageWrapper_mobile{
     background-color: #E4E4E1;
     background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
@@ -378,7 +401,7 @@
         width: 110%;
 
       }
-
+*/
 
   /**/
 

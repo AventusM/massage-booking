@@ -1,97 +1,95 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import userService from '../../services/users'
-import {Redirect} from 'react-router-dom'
-import { render } from 'react-testing-library';
+import { UserContext } from '../../App'
+import useField from '../../hooks/useField';
 
-const UserHomepage = ({ user }) => {
-    console.log('userhome got user as ', user)
-    const [name, setName] = useState(user.name || '')
-    const [number, setNumber] = useState(user.number || '')
-    const [password, setPassword] = useState('')
-    const [passwordCheck, setPasswordCheck] = useState('') 
+const UserHomepage = () => {
+    const currentUserContext = useContext(UserContext)
+    const user = currentUserContext.user
 
-   
+    const name = useField('text', user.name)
+    const number = useField('text', user.number)
+    const password = useField('password')
+    const passwordCheck = useField('password')
 
-    const handleUserUpdate = () => {
-        console.log('handleUserUpdate Called')
-        console.log('User', user)
-        console.log('number ', number)
-        const updatedUser = {...user, name, number}
-        console.log('Updated user ', updatedUser)
-        userService.updateUser(user.id, updatedUser) 
-        return(
-            <Redirect to="/" />
-        )
+    const handleUserUpdate = async () => {
+        // console.log('handleUserUpdate Called')
+        const updatedUser = { ...user, name, number }
+
+        // todo use data from this to update local userdata
+        const userFromServer = await userService.updateUser(user._id, updatedUser)
+
+        // refactor this to user gboal update user, todo create update user
+        window.localStorage.setItem('loggedInUser', JSON.stringify(updatedUser))
+
     }
 
-    
-    const handlePasswodChange = () => {
-        console.log('handleUserUpdate Called')
-        console.log('User', user)
-        if (password === passwordCheck) {
-            //todo change password
+    const handlePasswordChange = () => {
+        // console.log('handlePasswordChange Called')
 
+        if (password === passwordCheck) {
+            userService.changePassword(user._id, password)
         } else {
             window.alert('password missmatch')
         }
     }
     return (
-    
-        <div className = 'userHomepageWrapper_desktop'>
-        <h2>Welcome {user.name}</h2>
-        <div>
 
-        <h3>Update your info</h3>
-        <form onSubmit={() => handleUserUpdate()}>
-            <div><label>Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    name="name"
-                    onChange={({ target }) => setName(target.value)}
-                />
-            </div>
-            <div><label>Phone Number</label>
-                <input
-                    type="text"
-                    id="number"
-                    value={number}
-                    name="number"
-                    onChange={({ target }) => setNumber(target.value)}
-                />
-            </div>
+        <Fragment>
+            <div className = 'userHomepageWrapper_desktop'>
+            <h2>Welcome {user.name}!</h2>
+            <section>
+                <h3>Update your info</h3>
+                <form onSubmit={() => handleUserUpdate()}>
+                    <label>Name</label>
+                    <input
+                        type={name.type}
+                        id="name"
+                        value={name.value}
+                        name="name"
+                        onChange={name.handleFieldChange}
+                    />
 
-            <button type="submit">Update</button>
-        </form>
-        </div>
-        
+                    <label>Phone number</label>
+                    <input
+                        type={number.type}
+                        id="number"
+                        value={number.value}
+                        name="number"
+                        onChange={number.handleFieldChange}
+                    />
 
-        <div>
-        <h3>Change password</h3>
-        <form onSubmit={() => handlePasswodChange()}>
-            <div><label>Password</label>
-                <input
-                type="password"
-                id="password"
-                value={password}
-                name="password"
-                onChange={({ target }) => setPassword(target.value)}
-                />
+                    <button type="submit">Update</button>
+                </form>
+            </section>
+
+            <section>
+                <h3>Change password</h3>
+                <form onSubmit={() => handlePasswordChange()}>
+                    <label>Password</label>
+                    <input
+                        type={password.type}
+                        id="password"
+                        value={password.value}
+                        name="password"
+                        onChange={password.handleFieldChange}
+                    />
+
+                    <label>Confirm password</label>
+                    <input
+                        type={passwordCheck.type}
+                        id="passwordCheck"
+                        value={passwordCheck.value}
+                        name="passwordCheck"
+                        onChange={passwordCheck.handleFieldChange}
+                    />
+                    <button type="submit">Change password</button>
+                </form>
+            </section>
             </div>
-            <div><label>Confirm Password</label>
-                <input
-                    type="passwordCheck"
-                    id="passwordCheck"
-                    value={passwordCheck}
-                    name="passwordCheck"
-                    onChange={({ target }) => setPasswordCheck(target.value)}
-                />
-            </div>
-            <button type="submit">Change password</button>
-        </form>
-        </div>
-        </div>
+        </Fragment>
+
+
     )
 }
 

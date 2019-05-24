@@ -1,18 +1,19 @@
 import React, { useState, useEffect, Fragment, createContext } from "react"
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
-import RegistrationFormFragment from './components/logged_in/registrationForm'
+import RegistrationFormFragment from './components/logged_in/RegistrationForm'
 import loginService from './services/login'
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import UserHomepage from "./components/logged_in/UserHomepage";
 import DashBoard from './components/logged_in/Dashboard'
 import { Navbar, Nav } from 'react-bootstrap'
+import NotFoundPage from './components/NotFoundPage'
 import ReservationView from './components/logged_in/ ReservationView'
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext(null)
+const UserContext = createContext({user: null, setUser: ()=>console.log('if you are seeing this you did not pass setUser To Usercontext'), user: null}) 
 const AppointmentContext = createContext(null)
 
 
@@ -108,13 +109,14 @@ const App = () => {
   }
 
 
+
+
+
   if (user === null) {
     return (
       <Fragment>
         <Router>
-          <Link to="/registration">Registration</Link>
-          <Link to="/">Login</Link>
-          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
+          <Route path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
           <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
         </Router>
       </Fragment>
@@ -129,10 +131,13 @@ const App = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto mt-2 mt-lg-0">
             <div className="nav-item">
-              <Link className="nav-link" to="/index">Index</Link>
+              <Link className="nav-link" to="/">Index</Link>
             </div>
             <div className="nav-item">
               <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
+            </div>
+            <div className="nav-item">
+              <Link className="nav-link" to="/profile">Profile</Link>
             </div>
             </Nav>
             <div class="nav-item">
@@ -142,17 +147,36 @@ const App = () => {
           </Navbar.Collapse>
         </Navbar>
 
-        <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
-          <Route path="/index" render={() => <Index />} />
-        </AppointmentContext.Provider>
-        <Route path="/myAppointments" render={() => <UserHomepage user={user} />} />
-        <UserContext.Provider value={[user, users, userService]}>
-          <Route path="/dashboard" render={() => <DashBoard />} />
-        </UserContext.Provider>
+        
+
+        <Switch>
+
+          <Route exact path="/">
+            <AppointmentContext.Provider value={{user, appointments, appointmentService}}>
+              <Index />
+            </AppointmentContext.Provider>
+          </Route>
+          
+          <Route exact path="/profile">
+            <UserContext.Provider value={{user, setUser, users, userService}}>
+              <UserHomepage />
+            </UserContext.Provider>
+          </Route>
+
+          <Route exact path="/dashboard">
+            <UserContext.Provider value={{user, setUser, users, userService}}>
+              <DashBoard />
+            </UserContext.Provider>
+          </Route>
+
+          <Route render={() => <NotFoundPage/>} />
+          
+        </Switch>
+
       </Router>
     </Fragment>
   )
 }
 
-export { UserContext, AppointmentContext }
+export { AppointmentContext, UserContext }
 export default App
