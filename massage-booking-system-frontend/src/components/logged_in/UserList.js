@@ -4,8 +4,8 @@ import { UserContext } from '../../App'
 const User = (props) => {
   // Order depends on value prop in original provider (this one in App.js)
   const currentUserContext = useContext(UserContext)
-  const currentUser = currentUserContext[0]
-  const userService = currentUserContext[2]
+  const currentUser = currentUserContext.user
+  const userService = currentUserContext.userService
   const { id, name, email, number } = props
   // console.log('logged in user', currentUser)
   return (
@@ -22,7 +22,7 @@ const User = (props) => {
 
 const UserList = (props) => {
   const currentUserContext = useContext(UserContext)
-  const users = currentUserContext[1]
+  const users = currentUserContext.users
   return (
     <ul>
       {users.map(user => {

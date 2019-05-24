@@ -1,31 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import userService from '../../services/users'
-import {BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
-import { render } from 'react-testing-library';
+import { UserContext } from '../../App'
 
-const UserHomepage = ({ user }) => {
-    console.log('userhome got user as ', user)
+const UserHomepage = () => {
+    const currentUserContext = useContext(UserContext)
+    const user = currentUserContext.user
+    console.log('currentUserContext ', currentUserContext)
+
     const [name, setName] = useState(user.name || '')
     const [number, setNumber] = useState(user.number || '')
     const [password, setPassword] = useState('')
     const [passwordCheck, setPasswordCheck] = useState('') 
 
     const handleUserUpdate = async () => {
-        console.log('handleUserUpdate Called')
-        console.log('User', user)
-        console.log('number ', number)
+        console.log('handleUserUpdate Called')        
         const updatedUser = {...user, name, number}
-        console.log('Updated user ', updatedUser)
-        const userFromServer = await userService.updateUser(user.id, updatedUser)
-        console.log('userFromServer', userFromServer) 
-        // todo update user in app state to match new user 
+
+        // refactor this to user gboal update user, todo create update user
+        window.localStorage.setItem('loggedInUser', JSON.stringify(updatedUser))
+        
+        // todo use data from this to update local userdata
+        const userFromServer = await userService.updateUser(user._id, updatedUser)
+         
     }
     
     const handlePasswodChange = () => {
         console.log('handlePasswordChange Called')
-        console.log('User', user)
+
         if (password === passwordCheck) {
-            userService.changePassword(user.id, password)
+            userService.changePassword(user._id, password)
         } else {
             window.alert('password missmatch')
         }
