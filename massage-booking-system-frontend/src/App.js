@@ -1,18 +1,19 @@
 import React, { useState, useEffect, Fragment, createContext } from "react"
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
-import RegistrationFormFragment from './components/logged_in/registrationForm'
+import RegistrationFormFragment from './components/logged_in/RegistrationForm'
 import loginService from './services/login'
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import UserHomepage from "./components/logged_in/UserHomepage";
 import DashBoard from './components/logged_in/Dashboard'
+import { Navbar, Nav } from 'react-bootstrap'
 import NotFoundPage from './components/NotFoundPage'
 import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext(null)
+const UserContext = createContext({user: null, setUser: ()=>console.log('if you are seeing this you did not pass setUser To Usercontext'), user: null}) 
 const AppointmentContext = createContext(null)
 
 
@@ -22,7 +23,7 @@ const App = () => {
   // appointmentService FETCHES ALL apps AND also all users apps by ID
   const [appointments, appointmentService] = useResource('/api/appointments')
 
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
@@ -124,23 +125,46 @@ const App = () => {
   return (
     <Fragment>
       <Router>
-        <Link to="/">Index</Link>
-        <Link to="/dashboard">Admin dashboard</Link>
-        <Link to="/profile">Profile</Link>
-        <button onClick={handleLogout}>Logout</button>
+
+        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto mt-2 mt-lg-0">
+            <div className="nav-item">
+              <Link className="nav-link" to="/">Index</Link>
+            </div>
+            <div className="nav-item">
+              <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
+            </div>
+            <div className="nav-item">
+              <Link className="nav-link" to="/profile">Profile</Link>
+            </div>
+            </Nav>
+            <div class="nav-item">
+              <button class="btn btn-dark my-2 my-sm-0" onClick={handleLogout}>Logout</button>  
+            </div>
+           
+          </Navbar.Collapse>
+        </Navbar>
+
+        
 
         <Switch>
 
           <Route exact path="/">
-            <AppointmentContext.Provider value={[user, appointments, appointmentService]}>
+            <AppointmentContext.Provider value={{user, appointments, appointmentService}}>
               <Index />
             </AppointmentContext.Provider>
           </Route>
-
-          <Route exact path="/profile" component={() => <UserHomepage user={user} />} />
+          
+          <Route exact path="/profile">
+            <UserContext.Provider value={{user, setUser, users, userService}}>
+              <UserHomepage />
+            </UserContext.Provider>
+          </Route>
 
           <Route exact path="/dashboard">
-            <UserContext.Provider value={[user, users, userService]}>
+            <UserContext.Provider value={{user, setUser, users, userService}}>
               <DashBoard />
             </UserContext.Provider>
           </Route>
@@ -154,5 +178,5 @@ const App = () => {
   )
 }
 
-export { UserContext, AppointmentContext }
+export { AppointmentContext, UserContext }
 export default App

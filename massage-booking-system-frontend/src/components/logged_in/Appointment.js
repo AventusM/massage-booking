@@ -3,8 +3,8 @@ import { AppointmentContext } from '../../App'
 
 const CreateAppointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
-  const currentUser = appointmentContext[0]
-  const appointmentService = appointmentContext[2]
+  const currentUser = appointmentContext.user
+  const appointmentService = appointmentContext.appointmentService
   const { id } = props
   return (
     <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}>CREATE</button>
@@ -13,7 +13,7 @@ const CreateAppointment = (props) => {
 
 const CancelAppointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
-  const appointmentService = appointmentContext[2]
+  const appointmentService = appointmentContext.appointmentService
   const { id } = props
   return (
     <button onClick={() => appointmentService.update(id, { type_of_reservation: 0 })}> CANCEL</button >
@@ -22,10 +22,10 @@ const CancelAppointment = (props) => {
 
 const FreeAppointments = () => {
   const appointmentContext = useContext(AppointmentContext)
-  const appointments = appointmentContext[1]
+  const appointments = appointmentContext.appointments
   const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
   return (
-    <ul>
+    <ul className="appointmentList">
       {freeAppointments.map(app => {
         return (
           <Appointment key={app._id}
@@ -41,8 +41,8 @@ const FreeAppointments = () => {
 
 const AppointmentsList = () => {
   const appointmentContext = useContext(AppointmentContext)
-  const currentUser = appointmentContext[0]
-  const appointments = appointmentContext[1]
+  const currentUser = appointmentContext.user
+  const appointments = appointmentContext.appointments
   const ownAppointments = appointments.filter(app => app.user_id === currentUser._id)
   return (
     <ul className="appointmentList">
