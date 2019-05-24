@@ -7,6 +7,7 @@ import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import UserHomepage from "./components/logged_in/UserHomepage";
 import DashBoard from './components/logged_in/Dashboard'
+// import { Navbar, Nav } from 'react-bootstrap'
 import NotFoundPage from './components/NotFoundPage'
 import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
@@ -23,7 +24,7 @@ const App = () => {
   // appointmentService FETCHES ALL apps AND also all users apps by ID
   const [appointments, appointmentService] = useResource('/api/appointments')
 
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
   const email = useField('text')
   const password = useField('password')
@@ -33,22 +34,19 @@ const App = () => {
   const registrationPassword = useField('password')
   const registrationPasswordCheck = useField('password')
 
+  useEffect(() => {
+    const loggedInUser = window.localStorage.getItem('loggedInUser')
+    if (loggedInUser) {
+      const userInCache = JSON.parse(loggedInUser)
+      setUser(userInCache)
+      userService.setToken(userInCache.token)
+      appointmentService.setToken(userInCache.token)
+    }
+  }, [])
 
   useEffect(() => {
     userService.getAll()
     appointmentService.getAll()
-  }, [])
-
-  useEffect(() => {
-    const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
-    if (loggedInUserJSON) {
-      const userInCache = JSON.parse(loggedInUserJSON)
-      setUser(userInCache)
-      console.log('you are logged in as ', user)
-      // Appointmentservice.setToken tms tänne
-      // Appointmentservice.setToken tms tänne
-      // Appointmentservice.setToken tms tänne
-    }
   }, [])
 
   const handleLogin = async (event) => {
@@ -57,16 +55,13 @@ const App = () => {
       // CUSTOM HOOKS --> const email and password no longer contain values straight up. 
       const loggedInUser = await loginService.login({ email: email.value, password: password.value })
       window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+      userService.setToken(loggedInUser.token)
+      appointmentService.setToken(loggedInUser.token)
 
-      // Appointmentservice.setToken tms tänne
-      // Appointmentservice.setToken tms tänne
-      // Appointmentservice.setToken tms tänne
-      // console.log('loggedInUser ', loggedInUser)
       setUser(loggedInUser)
       email.reset()
       password.reset()
       history.push('/')
-      // console.log('logged in as ', user)
     } catch (exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
@@ -130,10 +125,29 @@ const App = () => {
   return (
     <Fragment>
       <Router history={history}>
-        <Link to="/">Index</Link>
-        <Link to="/dashboard">Admin dashboard</Link>
-        <Link to="/profile">Profile</Link>
-        <button onClick={handleLogout}>Logout</button>
+
+        {/* <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto mt-2 mt-lg-0">
+              <div className="nav-item"> */}
+        <Link className="nav-link" to="/">Index</Link>
+        {/* </div> */}
+        {/* <div className="nav-item"> */}
+        <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
+        {/* </div> */}
+        {/* <div className="nav-item"> */}
+        <Link className="nav-link" to="/profile">Profile</Link>
+        {/* </div> */}
+        {/* </Nav> */}
+        {/* <div class="nav-item"> */}
+        <button class="btn btn-dark my-2 my-sm-0" onClick={handleLogout}>Logout</button>
+        {/* </div> */}
+
+        {/* </Navbar.Collapse> */}
+        {/* </Navbar> */}
+
+
 
         <Switch>
 

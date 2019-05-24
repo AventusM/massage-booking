@@ -7,11 +7,13 @@ const Index = (props) => {
   const currentUser = appointmentContext.user
   return (
     <Fragment>
+      <div className="main_wrapper">
       Welcome {currentUser.name}!
       <h1>Available appointments</h1>
       <FreeAppointments />
       <h1>Own appointments</h1>
       <AppointmentsList />
+      </div>
     </Fragment>
   )
 }

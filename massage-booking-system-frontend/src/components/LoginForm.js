@@ -25,9 +25,11 @@ const LoginForm = (props) => {
         value={password.value}
         name="password"
         onChange={password.handleFieldChange}
-      />
-      <button id="login_button" type="submit">Log in</button>
+      /> 
+      
       <Notification message={errorMessage} />
+      <button id="login_button" type="submit">Log in</button>
+      
     </form>
   )
 }

@@ -51,15 +51,18 @@ ProtectedRoutes.use((req, res, next) => {
 
     let token = null
     let authorization = req.get('authorization')
+    console.log('authorization', authorization)
 
     if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
       token = authorization.substring(7)
     }
 
+    console.log('token', token)
     const decodedToken = jsonWebToken.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
+    next()
   }
 })
 

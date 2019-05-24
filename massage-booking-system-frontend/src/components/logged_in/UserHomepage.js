@@ -33,9 +33,10 @@ const UserHomepage = () => {
             window.alert('password missmatch')
         }
     }
-
     return (
+
         <Fragment>
+            <div className = 'userHomepageWrapper_desktop'>
             <h2>Welcome {user.name}!</h2>
             <section>
                 <h3>Update your info</h3>
@@ -74,7 +75,7 @@ const UserHomepage = () => {
                         onChange={password.handleFieldChange}
                     />
 
-                    <label>Retype password</label>
+                    <label>Confirm password</label>
                     <input
                         type={passwordCheck.type}
                         id="passwordCheck"
@@ -85,6 +86,7 @@ const UserHomepage = () => {
                     <button type="submit">Change password</button>
                 </form>
             </section>
+            </div>
         </Fragment>
 
 
