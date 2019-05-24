@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment, createContext } from "react"
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
-import RegistrationFormFragment from './components/logged_in/registrationForm'
+import RegistrationFormFragment from './components/logged_in/RegistrationForm'
 import loginService from './services/login'
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
