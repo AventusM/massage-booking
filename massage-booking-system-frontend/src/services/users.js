@@ -1,11 +1,19 @@
 import axios from "axios"
 const baseUrl = "/api/users"
 
-const getUsers = () => {
-  return axios.get(baseUrl)
+const getUsers = async () => {
+  const response = await axios.get(baseUrl)
+  return response
 }
-const updateUser = (id, user) =>{
-  return axios.put(`${baseUrl}/${id}`, user)
+
+const updateUser = async (id, user) =>{
+  console.log('updateUser called with id', id, ' user ', user)
+  return await axios.put(`${baseUrl}/${id}`, user)
+}
+
+const changePassword = async (id, password) => {
+  console.log('changePasswordcalled with id', id)
+  return await axios.put(`${baseUrl}/${id}/passwordChange`, {password})
 }
 
 const addUser = async newObject => {
@@ -13,5 +21,5 @@ const addUser = async newObject => {
   return response.data
 }
 
-export default { getUsers, updateUser, addUser }
+export default { getUsers, updateUser, addUser, changePassword }
 

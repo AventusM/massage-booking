@@ -1,10 +1,8 @@
-POST https://limitless-wildwood-82265.herokuapp.com/api/users
+POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-  "name": "THIRD_USER",
-  "number": "9012930213",
-  "email": "nou@jea.nou",
-  "admin": false,
+  "name": "Anton_test_2",
+  "email": "nou_2@jea.nou",
   "password": "testing"
 }

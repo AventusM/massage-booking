@@ -36,7 +36,6 @@ loginRouter.post('/masseusse', async (req, res, next) => {
     res
       .status(200)
       .send({ token, email: foundMasseusse.email, name: foundMasseusse.name })
-
   } catch (exception) {
     next(exception)
   }
@@ -45,13 +44,14 @@ loginRouter.post('/masseusse', async (req, res, next) => {
 
 loginRouter.post('/', async (req, res, next) => {
   try {
+    console.log('login called')
     /*
     Data from email and password fields
     */
     const body = req.body
 
     const foundUser = await User.findOne({ email: body.email })
-
+    console.log('found user', foundUser)
     const pwMatch = foundUser === null
       ? false
       : await bcrypt.compare(body.password, foundUser.passwordHash)
@@ -66,14 +66,15 @@ loginRouter.post('/', async (req, res, next) => {
     const userCheckForTokenObject = {
       email: foundUser.email,
       name: foundUser.name,
-      id: foundUser._id
+      id: foundUser._id,
+      admin: foundUser.admin
     }
 
     const token = jsonWebToken.sign(userCheckForTokenObject, process.env.SECRET)
 
     res
       .status(200)
-      .send({ token, email: foundUser.email, name: foundUser.name })
+      .send({ token, _id: foundUser._id, email: foundUser.email, name: foundUser.name, admin: foundUser.admin, appointments: foundUser.appointments, number: foundUser.number })
 
   } catch (exception) {
     next(exception)

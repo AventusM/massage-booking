@@ -1,10 +1,5 @@
 const mongoose = require('mongoose')
 
-
-// MODIFY end_time LATER OMAIGAWD
-// MODIFY end_time LATER OMAIGAWD
-// MODIFY end_time LATER OMAIGAWD
-// MODIFY end_time LATER OMAIGAWD
 const appointmentSchema = mongoose.Schema({
     masseusse_id: {
         type: String,
@@ -12,14 +7,18 @@ const appointmentSchema = mongoose.Schema({
     user_id: {
         type: String,
     },
-    date: {
+    start_date: {
         type: Date,
         required: true
     },
-    status: {
-        type: Number,
+    end_date: {
+        type: Date,
         required: true
-        }
+    },
+    type_of_reservation: {
+        type: Number,
+        default: 1
+    }
 })
 
 const Appointment = mongoose.model('Appointment', appointmentSchema)
