@@ -6,7 +6,6 @@ import useField from '../../hooks/useField';
 const UserHomepage = () => {
     const currentUserContext = useContext(UserContext)
     const user = currentUserContext.user
-    console.log('currentUserContext ', currentUserContext)
 
     const name = useField('text', user.name)
     const number = useField('text', user.number)
