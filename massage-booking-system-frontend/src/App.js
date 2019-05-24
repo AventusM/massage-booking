@@ -12,7 +12,7 @@ import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext(null)
+const UserContext = createContext({user: null, setUser: ()=>console.log('if you are seeing this you did not pass setUser To Usercontext'), user: null}) 
 const AppointmentContext = createContext(null)
 
 
@@ -136,11 +136,15 @@ const App = () => {
               <Index />
             </AppointmentContext.Provider>
           </Route>
-
-          <Route exact path="/profile" component={() => <UserHomepage user={user} />} />
+          
+          <Route exact path="/profile">
+            <UserContext.Provider value={{user, setUser, users, userService}}>
+              <UserHomepage />
+            </UserContext.Provider>
+          </Route>
 
           <Route exact path="/dashboard">
-            <UserContext.Provider value={[user, users, userService]}>
+            <UserContext.Provider value={{user, setUser, users, userService}}>
               <DashBoard />
             </UserContext.Provider>
           </Route>
@@ -154,5 +158,5 @@ const App = () => {
   )
 }
 
-export { UserContext, AppointmentContext }
+export { AppointmentContext, UserContext }
 export default App
