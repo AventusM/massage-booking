@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import userService from '../../services/users'
 import { UserContext } from '../../App'
 
@@ -10,21 +10,21 @@ const UserHomepage = () => {
     const [name, setName] = useState(user.name || '')
     const [number, setNumber] = useState(user.number || '')
     const [password, setPassword] = useState('')
-    const [passwordCheck, setPasswordCheck] = useState('') 
+    const [passwordCheck, setPasswordCheck] = useState('')
 
     const handleUserUpdate = async () => {
-        console.log('handleUserUpdate Called')        
-        const updatedUser = {...user, name, number}
+        console.log('handleUserUpdate Called')
+        const updatedUser = { ...user, name, number }
 
         // refactor this to user gboal update user, todo create update user
         window.localStorage.setItem('loggedInUser', JSON.stringify(updatedUser))
-        
+
         // todo use data from this to update local userdata
         const userFromServer = await userService.updateUser(user._id, updatedUser)
-         
+
     }
-    
-    const handlePasswodChange = () => {
+
+    const handlePasswordChange = () => {
         console.log('handlePasswordChange Called')
 
         if (password === passwordCheck) {
@@ -35,63 +35,59 @@ const UserHomepage = () => {
     }
 
     return (
-        <>
-        <h2>Welcome {user.name}!</h2>
-        <div>
-        <h3>Update your info</h3>
-        <form onSubmit={() => handleUserUpdate()}>
-            <div>Name
-                <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    name="name"
-                    onChange={({ target }) => setName(target.value)}
-                />
-            </div>
-            <div>Phone Number
-                <input
-                    type="text"
-                    id="number"
-                    value={number}
-                    name="number"
-                    onChange={({ target }) => setNumber(target.value)}
-                />
-            </div>
+        <Fragment>
+            <h2>Welcome {user.name}!</h2>
+            <section>
+                <h3>Update your info</h3>
+                <form onSubmit={() => handleUserUpdate()}>
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={name}
+                        name="name"
+                        onChange={({ target }) => setName(target.value)}
+                    />
 
-            <button type="submit">Update</button>
-        </form>
-        </div>
+                    <label>Phone number</label>
+                    <input
+                        type="text"
+                        id="number"
+                        value={number}
+                        name="number"
+                        onChange={({ target }) => setNumber(target.value)}
+                    />
 
-        <div>
-        <h3>Change password</h3>
-        <form onSubmit={() => handlePasswodChange()}>
-            <div>Password
-                <input
-                type="password"
-                id="password"
-                value={password}
-                name="password"
-                onChange={({ target }) => setPassword(target.value)}
-                />
-            </div>
-            <div>Retype Password
-                <input
-                    type="password"
-                    id="passwordCheck"
-                    value={passwordCheck}
-                    name="passwordCheck"
-                    onChange={({ target }) => setPasswordCheck(target.value)}
-                />
-            </div>
-            <button type="submit">Change password</button>
-        </form>
-        </div>
-        
-        
-        </>
-        
-        
+                    <button type="submit">Update</button>
+                </form>
+            </section>
+
+            <section>
+                <h3>Change password</h3>
+                <form onSubmit={() => handlePasswordChange()}>
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        name="password"
+                        onChange={({ target }) => setPassword(target.value)}
+                    />
+
+                    <label>Retype password</label>
+                    <input
+                        type="password"
+                        id="passwordCheck"
+                        value={passwordCheck}
+                        name="passwordCheck"
+                        onChange={({ target }) => setPasswordCheck(target.value)}
+                    />
+                    <button type="submit">Change password</button>
+                </form>
+            </section>
+        </Fragment>
+
+
     )
 }
 
