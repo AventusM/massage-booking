@@ -1,6 +1,6 @@
 const schedule = require('node-schedule')
-const generator = require('./utils/appointmentGenerator')
-const appoint = require('./models/appointment') 
+const generator = require('./appointmentGenerator')
+const appoint = require('../models/appointment') 
  
  //scheduling rule for every thursday
   //nextSixMonths = starting from the week of the date given as a parameter (any day of the week will do).
