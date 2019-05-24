@@ -220,6 +220,7 @@ ul, li {
     margin-right: auto;
     margin-left: auto;
   }
+  
 
   @media screen
     and (max-width: 700px) {
@@ -227,6 +228,7 @@ ul, li {
         width: 220px;
       }
     }
+    
 
   .userHomepageWrapper_desktop input {
     text-align: center;
@@ -258,6 +260,7 @@ ul, li {
     margin-top: 2%;
   }
 
+  
   @media screen
     and (max-width: 700px) {
       .userHomepageWrapper_desktop h3 {
@@ -273,6 +276,7 @@ ul, li {
         font-size: 200%;
       }
     }
+    
 
   .userHomepageWrapper_desktop button{
     border: 3px solid #537895;
@@ -328,7 +332,10 @@ ul, li {
 
 
 /*Tästä alkaa Homepage Mobile*/
+
 /*
+  @media screen
+    and (max-width: 700px) {
   .userHomepageWrapper_mobile{
     background-color: #E4E4E1;
     background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
@@ -401,8 +408,9 @@ ul, li {
         width: 110%;
 
       }
-*/
+    }
 
+*/
   /**/
 
 
