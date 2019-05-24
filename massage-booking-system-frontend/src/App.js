@@ -10,9 +10,10 @@ import DashBoard from './components/logged_in/Dashboard'
 import NotFoundPage from './components/NotFoundPage'
 import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
+import history from './history';
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext({user: null, setUser: ()=>console.log('if you are seeing this you did not pass setUser To Usercontext'), user: null}) 
+const UserContext = createContext({ user: null, setUser: () => console.log('if you are seeing this you did not pass setUser To Usercontext'), user: null })
 const AppointmentContext = createContext(null)
 
 
@@ -60,11 +61,12 @@ const App = () => {
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
       // Appointmentservice.setToken tms tänne
-      console.log('loggedInUser ', loggedInUser)
+      // console.log('loggedInUser ', loggedInUser)
       setUser(loggedInUser)
       email.reset()
       password.reset()
-      console.log('logged in as ', user)
+      history.push('/')
+      // console.log('logged in as ', user)
     } catch (exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
@@ -79,6 +81,7 @@ const App = () => {
     try {
       window.localStorage.removeItem('loggedInUser')
       setUser(null)
+      history.push('/')
     } catch (exception) {
       setErrorMessage("Couldn't logout")
       setTimeout(() => {
@@ -112,6 +115,9 @@ const App = () => {
 
 
   if (user === null) {
+    // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
+    // /api routes are protected in the backend, so it currently seems that this solution is sufficient...
+    history.replace('/')
     return (
       <Fragment>
         <Router>
@@ -123,7 +129,7 @@ const App = () => {
   }
   return (
     <Fragment>
-      <Router>
+      <Router history={history}>
         <Link to="/">Index</Link>
         <Link to="/dashboard">Admin dashboard</Link>
         <Link to="/profile">Profile</Link>
@@ -132,25 +138,25 @@ const App = () => {
         <Switch>
 
           <Route exact path="/">
-            <AppointmentContext.Provider value={{user, appointments, appointmentService}}>
+            <AppointmentContext.Provider value={{ user, appointments, appointmentService }}>
               <Index />
             </AppointmentContext.Provider>
           </Route>
-          
+
           <Route exact path="/profile">
-            <UserContext.Provider value={{user, setUser, users, userService}}>
+            <UserContext.Provider value={{ user, setUser, users, userService }}>
               <UserHomepage />
             </UserContext.Provider>
           </Route>
 
           <Route exact path="/dashboard">
-            <UserContext.Provider value={{user, setUser, users, userService}}>
+            <UserContext.Provider value={{ user, setUser, users, userService }}>
               <DashBoard />
             </UserContext.Provider>
           </Route>
 
-          <Route render={() => <NotFoundPage/>} />
-          
+          <Route render={() => <NotFoundPage />} />
+
         </Switch>
 
       </Router>
