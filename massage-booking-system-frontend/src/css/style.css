@@ -6,7 +6,7 @@
     font-family: "Helvetica", "Arial", sans-serif;
   }  
 
-  .main_wrapper {
+  /* .main_wrapper {
     background-color: #E4E4E1;
     background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
  	  background-blend-mode: normal, multiply;
@@ -15,9 +15,9 @@
     height: auto;
     position: fixed;
     left: 0;
-  }
+  } */
   
-  .login_wrapper_mobile img {
+  /* .login_wrapper_mobile img {
       width: 170px;
      display: block;
      margin-left: auto;
@@ -43,7 +43,7 @@
 .userList {
   display: flex;
   flex-direction: column;
-}
+} */
 
 ul, li {
   list-style-type: none;
@@ -71,7 +71,7 @@ ul, li {
 }
 
 
-.timelist {
+/* .timelist {
     padding: 5px;
     list-style-type: none;
     border-style: solid;
@@ -133,11 +133,11 @@ ul, li {
 
    
 
-} 
+}  */
 
-.login_wrapper_desktop{
+/* .login_wrapper_desktop{
   /* background-image: url("../pics/unity2.jpeg");*/
-  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+  /* background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
   min-height: 100%;
   min-width: 700px;
   width: 100%;
@@ -147,9 +147,9 @@ ul, li {
   left: 0;
   align-content: center;
 
-}
+} */
   
-  .login_wrapper_desktop h1, h3 {
+ /* .login_wrapper_desktop h1, h3 {
     text-align: center;
     margin-top: 300px;
     font-family: Roboto, sans-serif;
@@ -195,11 +195,11 @@ ul, li {
     height: 50px;
     width: 100%;
     
-  }
+  } */
 
 /* Tästä alkaa Homepage Desktop*/
 
-
+/* 
   .userHomepageWrapper_desktop{
     background-color: #E4E4E1;
     background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
@@ -299,19 +299,19 @@ ul, li {
   }
   .alert {
     background-color: #aa7572; /* Red */
-    color: rgb(51, 48, 48);
+   /* color: rgb(51, 48, 48);
     margin-bottom: 15px;
     text-align: center;
     border: 0px;
     height: 50px;
     width: 100%;
-  }
+  } */
 
 
 
   /* NavBar */
 
-  .navbar {
+  /* .navbar {
     background-color: #333;
     overflow: hidden;
   }
@@ -328,7 +328,7 @@ ul, li {
   .navbar_link:hover {
     background-color: #ddd;
     color: black;
-  }
+  } */
 
 
 /*Tästä alkaa Homepage Mobile*/
@@ -413,7 +413,7 @@ ul, li {
 */
   /**/
 
-
+/* 
   .timelist {
       padding: 5px;
       list-style-type: none;
@@ -425,8 +425,8 @@ ul, li {
   
   .timelist_button {
       background-color: #4CAF50; /* Green */
-      border: none;
-      color: white;
+  /*    border: none;
+    color: white;
       padding: 2px 5px;
       text-align: center;
       text-decoration: none;
@@ -438,4 +438,4 @@ ul, li {
       list-style-type: none;
       padding: 0;
     }
-    
+     */
