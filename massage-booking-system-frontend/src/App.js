@@ -26,6 +26,7 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(null)
   const email = useField('text')
   const password = useField('password')
   const registrationName = useField('text')
@@ -130,7 +131,7 @@ const App = () => {
 
         <Switch>
           <Route exact path="/">
-            <AppointmentContext.Provider value={{ user, appointments, appointmentService }}>
+            <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate }}>
               <Index />
             </AppointmentContext.Provider>
           </Route>
