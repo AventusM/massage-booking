@@ -10,7 +10,7 @@
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "lint": "eslint ."
   },
-  "author": "Anton, Ville",
+  "author": "Massage Booking System",
   "license": "MIT",
   "engines": {
     "node": "10.15.3"

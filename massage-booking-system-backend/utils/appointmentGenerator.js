@@ -4,11 +4,13 @@ const appointmentsRouter = express.Router()
 const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
 
-// var start and end have to be turned into milliseconds by getTime()
+/**
+ * var start and end have to be turned into milliseconds by getTime().
+ */ 
 const createEmptyAppointment = async (start_date, end_date) =>{
     console.log('start date', start_date)
     console.log('end date  ', end_date)
-    /*var start = start_date.getTime()
+    var start = start_date.getTime()
     var end = end_date.getTime()
     const appointment = new Appointment({
         start_date: start,
@@ -19,24 +21,28 @@ const createEmptyAppointment = async (start_date, end_date) =>{
     await appointment.save()
       } catch (exception) {
           console.log(exception)
-      }*/
+      }
 }
-    // Create appointments for the day given, starting from 8:55 
-    // NOTE!! setHours(11) because of timezone? this will result in 8:55:00
-    // firstShiftEnd = after the first 5 appointments in a row there is a break
-    // secondShiftStart = the 30 min intermission which marks the start of the next row of 8 appointments
+    /**
+     * Create appointments for the day given, starting from 8:55:00 .
+     * firstShiftEnd = after the first 5 appointments in a row there is a break.
+     * secondShiftStart = the 30 min intermission which marks the start of the next row of 8 appointments.
+     * @param {*} date 
+     */
     const generateAppoinmentsForDay =(date)=>{
-       date.setHours(11,55,0,0)
         var firstShiftEnd = createAppointmentsInRow(new Date(date), 5)
         var secondShiftStart = increaseTime(30, new Date(firstShiftEnd))
         console.log('BREAK')
         createAppointmentsInRow(secondShiftStart, 8)
         
     }
-    // Creates 30min appointments in a row adding a 5 minute break between each appointment
-    // start = time at the beginning of the appointment
-    // end = when the appointment will end
-    // appointmentsInRow = how many appointments in a row
+
+    /**
+     * Creates 30min appointments in a row adding a 5 minute break between each appointment.
+     * end = when the appointment will end.
+     * @param {*} start time at the beginning of the appointment.
+     * @param {*} appointmentsInRow how many appointments in a row
+     */
     const createAppointmentsInRow = (start,appointmentsInRow) => {
         var end = new Date(start)
         for (i = 0; i < appointmentsInRow;i++){ 
@@ -46,8 +52,12 @@ const createEmptyAppointment = async (start_date, end_date) =>{
         }
         return end
   }
-    //Logic for minute increase
-    //minutes = the amount of minutes you want the current time to increase
+
+    /**
+     * Logic for minute increase.
+     * @param {*} minutes the amount of minutes you want the current time to increase.
+     * @param {*} currentTime 
+     */
     const increaseTime = (minutes, currentTime) => {
         let currentMinutes = currentTime.getMinutes() + minutes
         if(currentMinutes > 59){

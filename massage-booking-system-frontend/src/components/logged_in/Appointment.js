@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { AppointmentContext } from '../../App'
+import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const CreateAppointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
@@ -20,17 +21,60 @@ const CancelAppointment = (props) => {
   )
 }
 
+
+const Appointments = (props) => {
+  const { type } = props
+  console.log('type', type)
+  if (type === OWN_APPOINTMENTS) {
+    return <AppointmentsList />
+  }
+  return <FreeAppointments />
+
+}
+
 const FreeAppointments = () => {
   const appointmentContext = useContext(AppointmentContext)
   const appointments = appointmentContext.appointments
+
+  const selectedDate = new Date(appointmentContext.selectedDate)
+  let selectedDay = selectedDate.getDay()
+  let selectedMonth = selectedDate.getMonth()
+  let selectedYear = selectedDate.getFullYear()
+
   const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
+
+  // compares appointment time to selected date on calendar, filtering to only include selected days appointments
+  const todaysFreeAppointments = freeAppointments.filter((appointment) => {
+    let appointmentsDate = new Date (appointment.start_date)
+    let appointmentsDay = appointmentsDate.getDay()
+    let appointmentsMonth = appointmentsDate.getMonth()
+    let appointmentsYear = appointmentsDate.getFullYear()
+    
+    return appointmentsMonth === selectedMonth && appointmentsDay === selectedDay && appointmentsYear === selectedYear
+  })
+
+  todaysFreeAppointments.sort((a, b ) => {
+    let dateA = new Date(a.start_date)
+    let dateB  = new Date(b.start_date)
+
+    if ( dateA < dateB) {
+      return -1
+    }
+
+    if (dateA > dateB) {
+      return 1
+    }
+
+    return 0
+  })
+
   return (
     <ul className="appointmentList">
-      {freeAppointments.map(app => {
+      {todaysFreeAppointments.map(app => {
         return (
           <Appointment key={app._id}
             id={app._id}
-            start_time={app.start_time}
+            start_date={app.start_date}
             type_of_reservation={app.type_of_reservation} />
         )
       })}
@@ -50,7 +94,7 @@ const AppointmentsList = () => {
         return (
           <Appointment key={app._id}
             id={app._id}
-            start_time={app.start_time}
+            start_date={app.start_date}
             type_of_reservation={app.type_of_reservation} />
         )
       })}
@@ -58,11 +102,25 @@ const AppointmentsList = () => {
   )
 }
 
+const ClockDisplay = ({dateobject}) => {
+  let date = new Date(dateobject)
+
+  if (date.getMinutes() < 10) {
+    return (
+      <h4>{`${date.getHours()}:0${date.getMinutes()}`}</h4>
+    )
+  }
+  return (
+    <h4>{`${date.getHours()}:${date.getMinutes()}`}</h4>
+  )
+}
+
 const Appointment = (props) => {
-  const { id, start_time, type_of_reservation } = props
+  const { id, start_date, type_of_reservation } = props
+  let dateToDisplay = new Date(start_date)
   return (
     <li className="appointmentItem">
-      <h3>12:00</h3>
+      <ClockDisplay dateobject={start_date}/>
       <div>id: {id}</div>
       {type_of_reservation === 1
         ? <CancelAppointment id={id} />
@@ -71,5 +129,5 @@ const Appointment = (props) => {
   )
 }
 
-export { AppointmentsList, FreeAppointments }
+export { Appointments }
 
