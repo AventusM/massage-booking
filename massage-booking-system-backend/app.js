@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const ProtectedRoutes = express.Router()
 const jsonWebToken = require('jsonwebtoken')
 
-
+const protectedRoute = require('./utils/protectedRoute')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
@@ -35,36 +35,7 @@ app.use('/api/appointments', appointmentsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
-
-// 1. CAN REGISTER NEW USER WITHOUT TOKEN
-// 2.CAN LOGIN WITHOUT TOKEN
-const no_token_api_white_list = [
-  { url: '/users', method: 'POST' },
-  { url: '/login', method: 'POST' }
-]
-
-ProtectedRoutes.use((req, res, next) => {
-  const found_white_list_match = no_token_api_white_list.find(entry => entry.url === req.url)
-  if (found_white_list_match) {
-    next()
-  } else {
-
-    let token = null
-    let authorization = req.headers.authorization
-
-    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-      console.log('ollaan täällä!!!')
-      token = authorization.substring(7)
-    }
-
-    console.log('token', token)
-    const decodedToken = jsonWebToken.verify(token, process.env.SECRET)
-    if (!token || !decodedToken.id) {
-      return response.status(401).json({ error: 'token missing or invalid' })
-    }
-    next()
-  }
-})
+ProtectedRoutes.use(protectedRoute.protected)
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static('build'))
