@@ -4,13 +4,12 @@ const jsonWebToken = require('jsonwebtoken')
 // 1. CAN REGISTER NEW USER WITHOUT TOKEN
 // 2.CAN LOGIN WITHOUT TOKEN
 
+const no_token_api_white_list = [
+    { url: '/users', method: 'POST' },
+    { url: '/login', method: 'POST' }
+]
 
 const protected = (req, res, next) => {
-    const no_token_api_white_list = [
-        { url: '/users', method: 'POST' },
-        { url: '/login', method: 'POST' }
-    ]
-
     const found_white_list_match = no_token_api_white_list.find(entry => entry.url === req.url)
     if (found_white_list_match) {
         next()
