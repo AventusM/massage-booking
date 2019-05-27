@@ -34,21 +34,6 @@ const App = () => {
   const registrationPassword = useField('password')
   const registrationPasswordCheck = useField('password')
 
-  useEffect(() => {
-    const loggedInUser = window.localStorage.getItem('loggedInUser')
-    if (loggedInUser) {
-      const userInCache = JSON.parse(loggedInUser)
-      setUser(userInCache)
-      userService.setToken(userInCache.token)
-      appointmentService.setToken(userInCache.token)
-    }
-  }, [])
-
-  useEffect(() => {
-    userService.getAll()
-    appointmentService.getAll()
-  }, [])
-
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -61,7 +46,7 @@ const App = () => {
       setUser(loggedInUser)
       email.reset()
       password.reset()
-      history.push('/')
+      // history.push('/')
     } catch (exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
@@ -76,7 +61,7 @@ const App = () => {
     try {
       window.localStorage.removeItem('loggedInUser')
       setUser(null)
-      history.push('/')
+      // history.push('/')
     } catch (exception) {
       setErrorMessage("Couldn't logout")
       setTimeout(() => {
@@ -105,8 +90,20 @@ const App = () => {
     }
   }
 
+  useEffect(() => {
+    const loggedInUser = window.localStorage.getItem('loggedInUser')
+    if (loggedInUser) {
+      const userInCache = JSON.parse(loggedInUser)
+      setUser(userInCache)
+      userService.setToken(userInCache.token)
+      appointmentService.setToken(userInCache.token)
+    }
+  }, [])
 
-
+  useEffect(() => {
+    userService.getAll()
+    appointmentService.getAll()
+  }, [user])
 
 
   if (user === null) {
