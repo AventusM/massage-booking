@@ -9,7 +9,7 @@ const no_token_api_white_list = [
     { url: '/login', method: 'POST' }
 ]
 
-const protected = (req, res, next) => {
+const routeProtector = (req, res, next) => {
     const found_white_list_match = no_token_api_white_list.find(entry => entry.url === req.url)
     if (found_white_list_match) {
         next()
@@ -31,4 +31,4 @@ const protected = (req, res, next) => {
     }
 }
 
-module.exports = { protected }
+module.exports = { routeProtector }
