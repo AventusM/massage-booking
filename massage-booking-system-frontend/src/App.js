@@ -35,6 +35,10 @@ const App = () => {
   const registrationPassword = useField('password')
   const registrationPasswordCheck = useField('password')
 
+  const redirectToIndex = () => {
+    history.push('/')
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -47,7 +51,7 @@ const App = () => {
       setUser(loggedInUser)
       email.reset()
       password.reset()
-      // history.push('/')
+      redirectToIndex()
     } catch (exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
@@ -62,7 +66,7 @@ const App = () => {
     try {
       window.localStorage.removeItem('loggedInUser')
       setUser(null)
-      // history.push('/')
+      redirectToIndex()
     } catch (exception) {
       setErrorMessage("Couldn't logout")
       setTimeout(() => {
@@ -83,6 +87,7 @@ const App = () => {
         password: registrationPassword.value
       }
       userService.create(userObject)
+      redirectToIndex()
     } catch (exception) {
       setErrorMessage("Registration failed")
       setTimeout(() => {

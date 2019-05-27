@@ -1,7 +1,8 @@
 import React, { Fragment, useContext } from 'react'
 import Calendar from 'react-calendar';
 import { AppointmentContext } from '../../App'
-import { AppointmentsList, FreeAppointments } from './Appointment'
+import { Appointments } from './Appointment'
+import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const Index = (props) => {
   const appointmentContext = useContext(AppointmentContext)
@@ -18,9 +19,9 @@ const Index = (props) => {
           }}
       />
       <h1>Available appointments</h1>
-      <FreeAppointments />
+      <Appointments />
       <h1>Own appointments</h1>
-      <AppointmentsList />
+      <Appointments type={OWN_APPOINTMENTS} />
     </Fragment>
   )
 }

@@ -1,6 +1,8 @@
 {
   "name": "massage-booking-system-frontend",
   "version": "0.1.0",
+  "author": "Massage Booking System",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
