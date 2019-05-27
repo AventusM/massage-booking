@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -9,7 +11,7 @@ body {
 .main_wrapper {
   background-color: #E4E4E1;
   background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
-   background-blend-mode: normal, multiply;
+  background-blend-mode: normal, multiply;
   min-height: 100%;
   min-width: 100%;
   height: auto;
@@ -45,11 +47,6 @@ display: flex;
 flex-direction: column;
 }
 
-ul, li {
-list-style-type: none;
-padding: 0;
-margin: 0;
-}
 
 .appointmentItem {
 padding: 5px;
@@ -267,10 +264,6 @@ align-content: center;
       margin-top: 5%;
       font-size: 120%;
     }
-  }
-
-  @media screen
-  and (max-width: 700px) {
     .userHomepageWrapper_desktop h2 {
       margin-top: 5%;
       font-size: 200%;
@@ -297,6 +290,7 @@ align-content: center;
 
   
 }
+
 .alert {
   background-color: #aa7572; /* Red */
   color: rgb(51, 48, 48);
@@ -312,26 +306,106 @@ align-content: center;
 /* NavBar */
 
 .navbar {
-  background-color: #333;
-  overflow: hidden;
+  font-size: 18px;
+  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf   100%);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 5px;
+}
+.navbar-toggle {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer; 
+  color: rgba(255,255,255,0.8);
+  font-size: 24px;
 }
 
-.navbar_link {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
+.main-nav {
+  list-style-type: none;
+  display: none;
+}
+
+.nav-link {
   text-decoration: none;
-  font-size: 17px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.navbar_link:hover {
-  background-color: #ddd;
-  color: black;
+.main-nav li {
+  text-align: center;
+  margin: 15px auto;
+}
+
+#logout {
+  cursor: pointer;
+  position: relative;
+  top: 6px;
+  color: rgba(255,255,255,0.7);
+}
+
+.logo {
+  display: inline-block;
+  width: 40px;
+  margin-bottom: 5px;
+}
+
+.active {
+  display: block;
+}
+
+@media screen and (min-width: 700px) {
+  .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 0;
+      height: 60px;
+      align-items: center;
+  }
+  .main-nav {
+      display: flex;
+      margin-right: 30px;
+      flex-direction: row;
+      justify-content: flex-end;
+  }
+  .main-nav li {
+      margin: 0;
+  }
+  .nav-link {
+      margin-left: 40px;
+  }
+
+  #logout {
+    cursor: pointer; 
+    color: rgba(255,255,255,0.8);
+    font-size: 24px;
+    margin-top: 9px;
+    margin-left: 50px;
+    position: relative;
+    top: 1px;
+  }
+
+  .logo {
+    position: relative;
+    top: -6px;
+    width: 50px;
+}
+
+ .navbar-toggle {
+     display: none;
+  }
+
+  .navbar button {
+    margin-left: 40px;
+  }
+  
+  .nav-link:hover {
+      color: rgba(255, 255, 255, 1);
+  }
+
 }
 
 
 /*Tästä alkaa Homepage Mobile*/
+
 
 /*
 @media screen
@@ -524,9 +598,4 @@ align-content: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-  }
-
-  .ul {
-    list-style-type: none;
-    padding: 0;
   }
