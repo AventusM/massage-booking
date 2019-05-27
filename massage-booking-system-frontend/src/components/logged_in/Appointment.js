@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { AppointmentContext } from '../../App'
+import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const CreateAppointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
@@ -18,6 +19,17 @@ const CancelAppointment = (props) => {
   return (
     <button onClick={() => appointmentService.update(id, { type_of_reservation: 0 })}> CANCEL</button >
   )
+}
+
+
+const Appointments = (props) => {
+  const { type } = props
+  console.log('type', type)
+  if (type === OWN_APPOINTMENTS) {
+    return <AppointmentsList />
+  }
+  return <FreeAppointments />
+
 }
 
 const FreeAppointments = () => {
@@ -71,5 +83,5 @@ const Appointment = (props) => {
   )
 }
 
-export { AppointmentsList, FreeAppointments }
+export { Appointments }
 
