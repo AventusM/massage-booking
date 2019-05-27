@@ -12,6 +12,7 @@ import NotFoundPage from './components/NotFoundPage'
 import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
 import history from './history';
+import logo from "./pics/unity5.png"
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
 const UserContext = createContext({})
@@ -42,6 +43,7 @@ const App = () => {
       userService.setToken(userInCache.token)
       appointmentService.setToken(userInCache.token)
     }
+    
   }, [])
 
   useEffect(() => {
@@ -126,10 +128,27 @@ const App = () => {
     <Fragment>
       <Router history={history}>
 
-        <Link to="/">Index</Link>
-        <Link to="/dashboard">Admin dashboard</Link>
-        <Link to="/profile">Profile</Link>
-        <button onClick={handleLogout}>Logout</button>
+
+        <nav class="navbar">
+            <span class="navbar-toggle" id="js-navbar-toggle">
+              <i onClick={() => document.getElementById("js-menu").classList.toggle('active')} class="fas fa-bars"></i>
+            </span>
+            <img src={logo} class="logo"/>
+            <ul class="main-nav" id="js-menu">
+              <li>
+                <Link className="nav-link" to="/">Index</Link>
+              </li>
+              <li>
+                 <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
+              </li>
+              <li>
+                <Link className="nav-link" to="/profile">Profile</Link>
+              </li>
+              <li>
+                <i onClick={handleLogout} id="logout" class="fas fa-sign-out-alt"></i>
+              </li>
+            </ul>
+        </nav>
 
         <Switch>
           <Route exact path="/">
