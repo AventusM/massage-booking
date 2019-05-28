@@ -14,10 +14,11 @@ const CreateAppointment = (props) => {
 
 const CancelAppointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
+  const currentUser = appointmentContext.user
   const appointmentService = appointmentContext.appointmentService
   const { id } = props
   return (
-    <button onClick={() => appointmentService.update(id, { type_of_reservation: 0 })}> CANCEL</button >
+    <button onClick={() => appointmentService.update(id, { type_of_reservation: 0, user_id: currentUser._id })}> CANCEL</button >
   )
 }
 

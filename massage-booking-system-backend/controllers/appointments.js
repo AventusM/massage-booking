@@ -7,6 +7,8 @@ const bcrypt = require('bcrypt')
 const jsonWebToken = require('jsonwebtoken')
 const User = require('../models/user')
 const Masseusse = require('../models/masseusse')
+const ruleChecker = require('../utils/bookingRuleChecker')
+
 
 const formatAppointment = (input) => {
   return {
@@ -78,14 +80,44 @@ appointmentsRouter.post('/', async (req, res, next) => {
 
 })
 
-appointmentsRouter.put('/:id', async (req, res, next) => {
+appointmentsRouter.put('/:id', async (req, res, next) => {   
   try {
     const body = req.body
-    const appointment = {
-      user_id: body.user_id || null,
-      type_of_reservation: body.type_of_reservation
+    //console.log('appointmentRouter put called with req body ', body)
+
+    let user = await User.findById(body.user_id).populate('appointments')
+    if (!(user)) {
+      res.status(400).end()
+      return
     }
-    const updatedAppointment = await Appointment.findByIdAndUpdate(req.params.id, appointment, { new: true })
+
+    let updatedAppointment = {}
+
+    if(body.type_of_reservation === 0) { // user wishes to cancel his/her appointment
+      const appointment = {
+        user_id: null,
+        type_of_reservation: body.type_of_reservation
+      }
+
+      updatedAppointment = await Appointment.findByIdAndUpdate(req.params.id, appointment, { new: true })
+
+      //remove appointment from users appointments
+      user.appointments = user.appointments.filter(appointment => appointment._id !== updatedAppointment._id)
+      user = await User.findByIdAndUpdate(user._id, user)
+
+    } else { // user wishes to make an appointment
+      const appointment = {
+        user_id: body.user_id || null,
+        type_of_reservation: body.type_of_reservation
+      }
+
+      updatedAppointment = await Appointment.findByIdAndUpdate(req.params.id, appointment, { new: true })
+
+      //adds appointment to users ppointments
+      user.appointments = user.appointments.concat(updatedAppointment._id)
+      user = await User.findByIdAndUpdate(user._id, user)
+    }
+    
     res.json(updatedAppointment)
   } catch (exception) {
     next(exception)
