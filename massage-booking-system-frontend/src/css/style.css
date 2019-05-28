@@ -201,19 +201,17 @@ align-content: center;
 /* Tästä alkaa Homepage Desktop*/
 
 
+/*Background*/
 .userHomepageWrapper_desktop{
-  background-color: #E4E4E1;
-  background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
-  background-blend-mode: normal, multiply;
+  background-color: #2b5876;
   min-height: 100%;
   min-width: 100%;
   height: auto;
   position: fixed;
-  left: 0;
+
   
 }
-
-
+/*Form*/
 .userHomepageWrapper_desktop form {
   display: flex;
   flex-direction: column;
@@ -230,7 +228,7 @@ align-content: center;
     }
   }
   
-
+/*Input*/
 .userHomepageWrapper_desktop input {
   text-align: center;
   border: 0px;
@@ -246,18 +244,16 @@ align-content: center;
   text-align: center;
   font-family: Roboto, sans-serif;
   font-size: 200%;
-  margin-top: 10%;
+  margin-top: 3%;
   margin-bottom: 20px;
   color: white;
-}
-
-  
+} 
 
 .userHomepageWrapper_desktop h2 {
   text-align: center;
   font-family: Roboto, sans-serif;
-  font-size: 350%;
-  color: #334e63;
+  font-size: 200%;
+  color: white;
   margin-top: 2%;
 }
 
@@ -290,7 +286,7 @@ align-content: center;
 .userHomepageWrapper_desktop label{
   margin-bottom: 5px;
   font-size: 120%;
-  color: #334e63
+  color: white;
 
   
 }
@@ -311,9 +307,10 @@ align-content: center;
 
 .navbar {
   font-size: 18px;
-  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf   100%);
+  background-color:#2b5876;
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 5px;
+
 }
 .navbar-toggle {
   position: absolute;
@@ -322,6 +319,7 @@ align-content: center;
   cursor: pointer; 
   color: rgba(255,255,255,0.8);
   font-size: 24px;
+  
 }
 
 .main-nav {
@@ -331,25 +329,27 @@ align-content: center;
 
 .nav-link {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.7);
+  color: white;
 }
 
 .main-nav li {
   text-align: center;
   margin: 15px auto;
+ 
 }
 
 #logout {
   cursor: pointer;
   position: relative;
   top: 6px;
-  color: rgba(255,255,255,0.7);
+  color: white;
 }
 
 .logo {
   display: inline-block;
   width: 40px;
-  margin-bottom: 5px;
+  position: relative;
+  margin-bottom: -3px;
 }
 
 .active {
@@ -379,7 +379,7 @@ align-content: center;
 
   #logout {
     cursor: pointer; 
-    color: rgba(255,255,255,0.8);
+    color: white;
     font-size: 24px;
     margin-top: 9px;
     margin-left: 50px;
@@ -486,21 +486,51 @@ align-content: center;
 
 /*Appointment List desktop*/
 
+/*Background*/
+.appointmentListWrapperMain { 
+    background-color: #2b5876;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    position: fixed;
+  
+}
 
-.indexWrapper {
+/*Calendar*/
+.appointmentListWrapperCalendar {
+  margin-top: 2%;
   display: flex;
-  align-items: flex-start;
-  flex-direction: column; 
+  flex-direction: auto;
+  justify-content: center;
+  width: 100%;
+
 
 }
 
-.indexWrapper h1{
-  margin: 0 auto;
-  margin-top: 5%;
-  margin-bottom: 2%;
+/*Logo*/
+.appointmentListWrapperMain img{
+  width: 30%;
+  display: block;
+  float: right;
+  margin-right: 2%;
+  margin-top: 20%;
+  margin-bottom: 2%; 
+  position: fixed;
+  bottom: 0;
+  right: 0;
+} 
+
+/*Headers*/
+.appointmentListWrapperMain h1{
+  text-align: center;
+  font-family: Roboto, sans-serif;
+  font-size: 350%;
   color: white;
+  margin-top: 2%;
+
 }
 
+/*List*/
 .appointmentListWrapper{
 
   display: flex;
@@ -509,12 +539,13 @@ align-content: center;
   width: 100%;
 
 }
-
 .appointmentListWrapper div{
   margin: 0 auto;
   margin-bottom: 20px;
+
 }
 
+/*Button*/
 .appointmentListWrapper button:hover{
   background: #47bb77;
   border: #47bb77;
@@ -530,17 +561,6 @@ align-content: center;
   width: 500px;
 }
 
-.indexWrapper img{
-  width: 30%;
-  display: block;
-  float: right;
-  margin-right: 2%;
-  margin-top: 20%;
-  margin-bottom: 2%; 
-  position: fixed;
-  bottom: 0;
-  right: 0;
-} 
 
 /* Appointment List mobile */
 
@@ -556,22 +576,23 @@ align-content: center;
   .appointmentListWrapper button{
 
     background: #dddddd;
-    font-size: 170%;
     border-radius: 15px;
-    padding: 10px 5px;
-    height: 70px;
+    height: 50px;
     width: 250px;
     border:white;
     border-style: solid;
     border-width: 2px;
     
   }
+
+  /*Buttons*/
   .appointmentListWrapper button:hover{
     background: #47bb77;
     border: #47bb77;
   }
   
-.indexWrapper h1{
+  /*Header*/
+.appointmentListWrapperMain h1{
   margin: 0 auto;
   margin-top: 5%;
   margin-bottom: 3%;

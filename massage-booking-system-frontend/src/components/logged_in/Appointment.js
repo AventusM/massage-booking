@@ -69,22 +69,23 @@ const FreeAppointments = () => {
   })
 
   return (
-    <ul className="appointmentList">
+    <ul className="appointmentListWrapper">
       {todaysFreeAppointments.map(app => {
         return (
-          /*
+          
           <div>
           <button>{app.start_date}</button>
           </div>
-        )*/
+        
     
-     
+     /*
           <Appointment key={app._id}
             id={app._id}
             start_date={app.start_date}
-            type_of_reservation={app.type_of_reservation} />
+            type_of_reservation={app.type_of_reservation} /> */
         )})
-    }
+      }
+  
     </ul>
   )
 
@@ -96,18 +97,18 @@ const AppointmentsList = () => {
   const appointments = appointmentContext.appointments
   const ownAppointments = appointments.filter(app => app.user_id === currentUser._id)
   return (
-    <ul className="appointmentList">
+    <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {
         return (
-          /*
+          
           <div>
-          <button>{app.start_date}</button>
+          <button>12:00</button>
           </div>
-          */
-          <Appointment key={app._id}
+          
+         /* <Appointment key={app._id}
             id={app._id}
             start_date={app.start_date}
-            type_of_reservation={app.type_of_reservation} />
+            type_of_reservation={app.type_of_reservation} /> */
         )
       })}
     </ul>
