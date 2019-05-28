@@ -119,11 +119,11 @@ const ClockDisplay = ({dateobject}) => {
 
   if (date.getMinutes() < 10) {
     return (
-      <h3>{`${date.getHours()}:0${date.getMinutes()}`}</h3>
+      <h4>{`${date.getHours()}:0${date.getMinutes()}`}</h4>
     )
   }
   return (
-    <h3>{`${date.getHours()}:${date.getMinutes()}`}</h3>
+    <h4>{`${date.getHours()}:${date.getMinutes()}`}</h4>
   )
 }
 
