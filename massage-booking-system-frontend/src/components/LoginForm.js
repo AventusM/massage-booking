@@ -28,6 +28,7 @@ const LoginForm = (props) => {
       /> 
       
       <Notification message={errorMessage} />
+      <a href="/auth/google">Sign In with Google</a>
       <button id="login_button" type="submit">Log in</button>
       
     </form>
