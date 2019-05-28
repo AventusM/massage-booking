@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { AppointmentContext } from '../../App'
+import { AppointmentContext, UserContext } from '../../App'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const CreateAppointment = (props) => {
@@ -8,7 +8,7 @@ const CreateAppointment = (props) => {
   const appointmentService = appointmentContext.appointmentService
   const { id } = props
   return (
-    <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}>CREATE</button>
+    <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}>BOOK</button>
   )
 }
 
@@ -35,7 +35,7 @@ const Appointments = (props) => {
 const FreeAppointments = () => {
   const appointmentContext = useContext(AppointmentContext)
   const appointments = appointmentContext.appointments
-
+  const users = appointmentContext.users
   const selectedDate = new Date(appointmentContext.selectedDate)
   let selectedDay = selectedDate.getDay()
   let selectedMonth = selectedDate.getMonth()
@@ -44,7 +44,7 @@ const FreeAppointments = () => {
   const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
 
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
-  const todaysFreeAppointments = freeAppointments.filter((appointment) => {
+  const todaysFreeAppointments = appointments.filter((appointment) => {
     let appointmentsDate = new Date (appointment.start_date)
     let appointmentsDay = appointmentsDate.getDay()
     let appointmentsMonth = appointmentsDate.getMonth()
@@ -82,10 +82,13 @@ const FreeAppointments = () => {
           <Appointment key={app._id}
             id={app._id}
             start_date={app.start_date}
-            type_of_reservation={app.type_of_reservation} /> */
+            type_of_reservation={app.type_of_reservation} 
+            user = {users.find(u => u._id === app.user_id)}/>/> */
         )})
       }
   
+            
+   
     </ul>
   )
 
@@ -93,6 +96,7 @@ const FreeAppointments = () => {
 
 const AppointmentsList = () => {
   const appointmentContext = useContext(AppointmentContext)
+  const users = appointmentContext.users
   const currentUser = appointmentContext.user
   const appointments = appointmentContext.appointments
   const ownAppointments = appointments.filter(app => app.user_id === currentUser._id)
@@ -108,7 +112,8 @@ const AppointmentsList = () => {
          /* <Appointment key={app._id}
             id={app._id}
             start_date={app.start_date}
-            type_of_reservation={app.type_of_reservation} /> */
+            type_of_reservation={app.type_of_reservation} /> 
+            user = {users.find(u => u._id === app.user_id)} /> */
         )
       })}
     </ul>
@@ -129,14 +134,20 @@ const ClockDisplay = ({dateobject}) => {
 }
 
 const Appointment = (props) => {
-  const { id, start_date, type_of_reservation } = props
+  const appointmentContext = useContext(AppointmentContext)
+  const currentUser = appointmentContext.user
+  const { id, start_date, type_of_reservation, user } = props
   let dateToDisplay = new Date(start_date)
+
   return (
     <li className="appointmentItem">
       <ClockDisplay dateobject={start_date}/>
       <div>id: {id}</div>
+      {user ? (
+        <div>{user.name}</div>
+      ): null}
       {type_of_reservation === 1
-        ? <CancelAppointment id={id} />
+        ? (user._id === currentUser._id ? <CancelAppointment id={id} /> : null )
         : <CreateAppointment id={id} />}
     </li>
     

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import Calendar from 'react-calendar';
 import { AppointmentContext } from '../../App'
 import { AppointmentsList, FreeAppointments } from './Appointment'
@@ -10,6 +10,7 @@ import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const Index = (props) => {
   const appointmentContext = useContext(AppointmentContext)
+  const [tab, setTab] = useState(true)
   const currentUser = appointmentContext.user
   const setSelectedDate = appointmentContext.setSelectedDate
   return (
@@ -25,16 +26,23 @@ const Index = (props) => {
             setSelectedDate(value)
           }}
       />
+      
       </div>
-      <h1>Available appointments</h1>
-      <Appointments />
-      <h1>Own appointments</h1>
-      <Appointments type={OWN_APPOINTMENTS} />
+      {tab ? (
+        <div>
+        <h1>All appointments</h1>
+        <button onClick = {() => setTab(!tab)}>Own appointments</button>
+        <Appointments />
+        </div>
+      ) : (
+        <div>
+        <h1>Own appointments</h1>
+        <button onClick = {() => setTab(!tab)}>All appointments</button>
+        <Appointments type={OWN_APPOINTMENTS} />
+        </div>
+      )}
       <img id= "unity4" src = {unity4}></img>
       </div>
-     
-    
-      
     </Fragment>
   )
 }
