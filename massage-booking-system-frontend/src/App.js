@@ -154,7 +154,7 @@ const App = () => {
 
         <Switch>
           <Route exact path="/">
-            <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate }}>
+            <AppointmentContext.Provider value={{ user, users, appointments, appointmentService, selectedDate, setSelectedDate }}>
               <Index />
             </AppointmentContext.Provider>
           </Route>
