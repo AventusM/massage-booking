@@ -89,7 +89,7 @@ color: white;
 }
 
 .login_wrapper_mobile form {
-margin: auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
   width: 250px;
@@ -527,7 +527,6 @@ align-content: center;
   font-size: 350%;
   color: white;
   margin-top: 2%;
-
 }
 
 /*List*/
@@ -545,7 +544,7 @@ align-content: center;
 
 }
 
-/*Button*/
+/*Buttons*/
 .appointmentListWrapper button:hover{
   background: #47bb77;
   border: #47bb77;
@@ -559,7 +558,27 @@ align-content: center;
   padding: 10px 5px;
   height: 50px;
   width: 500px;
+  margin-top: 20px;
 }
+.buttonList{
+  background: #2b5876;
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  height: 50px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+  justify-content: center;
+  
+
+}
+
+
+
+
 
 
 /* Appointment List mobile */

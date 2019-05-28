@@ -31,13 +31,13 @@ const Index = (props) => {
       {tab ? (
         <div>
         <h1>All appointments</h1>
-        <button onClick = {() => setTab(!tab)}>Own appointments</button>
+        <button className="buttonList" onClick = {() => setTab(!tab)}>Own appointments</button>
         <Appointments />
         </div>
       ) : (
         <div>
         <h1>Own appointments</h1>
-        <button onClick = {() => setTab(!tab)}>All appointments</button>
+        <button className="buttonList" onClick = {() => setTab(!tab)}>All appointments</button>
         <Appointments type={OWN_APPOINTMENTS} />
         </div>
       )}
