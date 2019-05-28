@@ -42,9 +42,15 @@ body {
   left: 0;
 }
 
-.userList {
+/*.userList {
 display: flex;
 flex-direction: column;
+}*/
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 
@@ -68,14 +74,14 @@ color: white;
 }
 
 
-.timelist {
+/*.timelist {
   padding: 5px;
   list-style-type: none;
   border-style: solid;
   border-width: 1px;
   align-content: center;
   margin: 2px;
-}
+}*/
 
 .login_wrapper_mobile h1, h3 {
   text-align: center;
@@ -482,6 +488,7 @@ align-content: center;
 
 /*Appointment List desktop*/
 
+
 .indexWrapper {
   display: flex;
   align-items: flex-start;
@@ -505,7 +512,7 @@ align-content: center;
 
 }
 
-.appointmentListWrapper li{
+.appointmentListWrapper div{
   margin: 0 auto;
   margin-bottom: 20px;
 }

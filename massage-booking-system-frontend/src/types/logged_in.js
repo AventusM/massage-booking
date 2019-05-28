@@ -1,0 +1,1 @@
+export const OWN_APPOINTMENTS = 'OWN_APPOINTMENTS'
