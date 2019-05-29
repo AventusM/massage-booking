@@ -88,11 +88,13 @@ const App = () => {
     let token = params.get('token');
     let id = params.get('id');
     if (token) {
-      const user = userService.getOne(id)
+     userService.getOne(id).then(user => {
       setUser(user)
       window.localStorage.setItem('loggedInUser', JSON.stringify({ ...user, token }))
       userService.setToken(token)
       appointmentService.setToken(token)
+     }) 
+
       redirectToIndex()
     } else if (window.localStorage.getItem('loggedInUser')) {
       const loggedInUser = window.localStorage.getItem('loggedInUser')

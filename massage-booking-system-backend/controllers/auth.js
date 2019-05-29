@@ -27,7 +27,6 @@ authRouter.get('/google/callback',
       id: user._id,
       googleId: user.googleId,
       name: user.name
-
     }
     const token = jsonWebToken.sign(payload, process.env.SECRET)
     res.redirect(307, `http://127.0.0.1:3000/?token=${token}&id=${user._id}`)
