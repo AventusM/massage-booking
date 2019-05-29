@@ -36,13 +36,15 @@ const AllAppointments = () => {
   const appointmentContext = useContext(AppointmentContext)
   const appointments = appointmentContext.appointments
   const users = appointmentContext.users
+  const currentUser = appointmentContext.user
   const selectedDate = new Date(appointmentContext.selectedDate)
   let selectedDay = selectedDate.getDay()
   let selectedMonth = selectedDate.getMonth()
   let selectedYear = selectedDate.getFullYear()
 
+  const allButOwnAppointments = appointments.filter(app => app.user_id !== currentUser._id)
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
-  const todaysAppointments = appointments.filter((appointment) => {
+  const todaysAppointments = allButOwnAppointments.filter((appointment) => {
     let appointmentsDate = new Date (appointment.start_date)
     let appointmentsDay = appointmentsDate.getDay()
     let appointmentsMonth = appointmentsDate.getMonth()
@@ -132,7 +134,7 @@ const Appointment = (props) => {
     <div>
     {type_of_reservation === 1 ? 
       (user._id === currentUser._id ? 
-        <button id="reservedOwn" onClick={()=>appointmentService.update(id, { type_of_reservation: 0 })}><Display dateobject={start_date} user={user} /></button> 
+        <button id="reservedOwn" onClick={()=>appointmentService.update(id, { type_of_reservation: 0 })}><Display dateobject={start_date}/></button> 
         : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={user} /></button>
         ) : 
       <button id="available" onClick={()=>appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}><Display dateobject={start_date} user={user} /></button>}

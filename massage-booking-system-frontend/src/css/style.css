@@ -512,7 +512,7 @@ align-content: center;
 /*Calendar*/
 .appointmentListWrapperCalendar {
   margin-top: 10%;
-  margin-left: 490px;
+  margin-left: 290px;
   display: flex;
   flex-direction: auto;
   align-items: flex-start;
@@ -522,20 +522,20 @@ align-content: center;
 }
 
 .react-calendar {
-  height: 500px;
-  width: 700px;
+  height: 700px;
+  width: 900px;
   max-width: 100%;
   background: white;
   border-radius: 15px;
   border: 1px solid #a0a096;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.900em;
-  font-size: 20px;
+  font-size: 30px;
 
 }
 .List{
   margin-right: 590px;
-  margin-top: 8.5%;
+  margin-top: 3%;
 
 }
 
@@ -576,10 +576,6 @@ align-content: center;
 }
 
 /*Buttons*/
-.appointmentListWrapper button:hover{
-  background: #47bb77;
-  border: #47bb77;
-}
 
 .appointmentListWrapper button{
 
@@ -588,8 +584,9 @@ align-content: center;
   border-radius: 15px;
   padding: 10px 5px;
   height: 50px;
-  width: 500px;
+  width: 400px;
   margin-top: 20px;
+  
 }
 .buttonList{
   background: #2b5876;
@@ -604,8 +601,31 @@ align-content: center;
   margin-left: auto;
   justify-content: center;
   
-
+  
 }
+
+/*Colors for buttons*/
+
+#reserved {
+  color: white;
+  background: #313131a6;
+  border: #313131a6;
+}
+#available {
+  color: black;
+  background: white;
+  border: white;
+}
+#reservedOwn{
+  background: #3b9962;
+  color: white;
+  border: #3b9962;
+}
+#available:hover{
+  background: #3b9962;
+  border: #3b9962;
+}
+
 
 
 /* Appointment List mobile */
