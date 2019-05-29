@@ -15,6 +15,7 @@ const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 
 logger.info('connecting to', config.MONGODB_URI)
+app.use(cors())
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
@@ -25,6 +26,8 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
   })
 
 app.use(passport.initialize());
+app.use(passport.session());
+
 
 const masseussesRouter = require('./controllers/masseusses')
 const appointmentsRouter = require('./controllers/appointments')
@@ -32,8 +35,8 @@ const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const authRouter = require('./controllers/auth')
 
-app.use(cors())
-app.use('/', authRouter)
+
+app.use('/auth', authRouter)
 app.use('/api', router)
 app.use('/api/masseusses', masseussesRouter)
 app.use('/api/appointments', appointmentsRouter)

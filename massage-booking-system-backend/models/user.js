@@ -14,10 +14,10 @@ const userSchema = mongoose.Schema({
         required: true
     },
     admin: {
-        type: Boolean,
+        type: Boolean
     },
     passwordHash: {
-        type: String,
+        type: String
     },
     appointments: [
         {
