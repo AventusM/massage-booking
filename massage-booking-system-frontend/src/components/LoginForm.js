@@ -9,26 +9,6 @@ const LoginForm = (props) => {
   return (
     <form onSubmit={handleLoginFunction}>
 
-      <label>Email</label>
-      <input
-        type={email.type}
-        id="email"
-        value={email.value}
-        name="email"
-        onChange={email.handleFieldChange}
-      />
-
-      <label>Password</label>
-      <input
-        type={password.type}
-        id="password"
-        value={password.value}
-        name="password"
-        onChange={password.handleFieldChange}
-      /> 
-      
-      <Notification message={errorMessage} />
-      <a href="/auth/google">Sign In with Google</a>
       <button id="login_button" type="submit">Log in</button>
       
     </form>
