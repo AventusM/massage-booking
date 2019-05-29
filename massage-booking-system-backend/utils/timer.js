@@ -67,7 +67,7 @@ const appoint = require('../models/appointment')
     await generator(new Date(date))
    // console.log('date has been saved into database', date)
   }else{
-    console.log('day has appointments in database or time is formatted wrong', date)
+    //console.log('day has appointments in database or time is formatted wrong', date)
   }
 }
 

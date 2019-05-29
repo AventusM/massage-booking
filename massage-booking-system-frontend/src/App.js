@@ -154,9 +154,11 @@ const App = () => {
 
         <Switch>
           <Route exact path="/">
+          <UserContext.Provider value={{ user, setUser, users, userService }}>
             <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate }}>
               <Index />
             </AppointmentContext.Provider>
+          </UserContext.Provider>  
           </Route>
 
           <Route exact path="/profile">
