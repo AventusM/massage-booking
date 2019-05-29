@@ -20,6 +20,7 @@ const Index = (props) => {
       <div className="appointmentListWrapperCalendar">
       <Calendar
         showWeekNumbers={true}
+        tileClassName="calendarItem"
         locale={"en-UK"}
         onChange={(value) => {
             console.log('value ',value, 'value type', typeof value) 
