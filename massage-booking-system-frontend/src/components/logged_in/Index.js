@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
-import Calendar from 'react-calendar';
+//import Calendar from 'react-calendar';
+import Calendar from 'react-calendar/dist/entry.nostyle'
 import { AppointmentContext } from '../../App'
 import { AppointmentsList, FreeAppointments } from './Appointment'
 import unity4 from '../../pics/unity4.png'

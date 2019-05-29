@@ -19,7 +19,7 @@ const LoginIndex = (props) => {
     return (
       <div className="login_wrapper_mobile">
         <img id= "unity" src = {unity5}></img>
-        <h1>Massage booking</h1>
+        <h1>Massage Booking</h1>
         <LoginForm {...props} />
       </div>
     )
@@ -29,7 +29,7 @@ const LoginIndex = (props) => {
         
          
          <div className="form-div">
-         <h1>Massage booking</h1>
+         <h1>Massage Booking</h1>
           <LoginForm {...props} />
           </div>
           <img id= "unity4" src = {unity4}></img>
