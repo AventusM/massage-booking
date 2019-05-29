@@ -492,12 +492,15 @@ align-content: center;
 
 /*Background*/
 .appointmentListWrapperMain { 
-    background-color: #2b5876;
+  display: grid;
+  
+}
+
+.appointmentListBackground {
+  background-color: #2b5876;
     min-height: 100%;
     min-width: 100%;
     height: auto;
-    position: fixed;
-  
 }
 
 /*Calendar*/

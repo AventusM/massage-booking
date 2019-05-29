@@ -36,20 +36,24 @@ const AllAppointments = () => {
   const appointmentContext = useContext(AppointmentContext)
   const appointments = appointmentContext.appointments
   const users = appointmentContext.users
+  const currentUser = appointmentContext.user
   const selectedDate = new Date(appointmentContext.selectedDate)
-  let selectedDay = selectedDate.getDay()
-  let selectedMonth = selectedDate.getMonth()
+  let selectedDay = selectedDate.getDate()
+  let selectedMonth = selectedDate.getMonth() + 1
   let selectedYear = selectedDate.getFullYear()
 
+  const allButOwnAppointments = appointments.filter(app => app.user_id !== currentUser._id)
+
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
-  const todaysAppointments = appointments.filter((appointment) => {
+  const todaysAppointments = allButOwnAppointments.filter((appointment) => {
     let appointmentsDate = new Date (appointment.start_date)
-    let appointmentsDay = appointmentsDate.getDay()
-    let appointmentsMonth = appointmentsDate.getMonth()
+    let appointmentsDay = appointmentsDate.getDate()
+    let appointmentsMonth = appointmentsDate.getMonth() + 1
     let appointmentsYear = appointmentsDate.getFullYear()
     
     return appointmentsMonth === selectedMonth && appointmentsDay === selectedDay && appointmentsYear === selectedYear
   })
+  
 
   todaysAppointments.sort((a, b ) => {
     let dateA = new Date(a.start_date)
@@ -65,12 +69,11 @@ const AllAppointments = () => {
 
     return 0
   })
-
+  
   return (
     <ul className="appointmentListWrapper">
       {todaysAppointments.map(app => {
         return (
-          
           <Appointment key={app._id}
             id={app._id}
             start_date={app.start_date}
@@ -100,25 +103,40 @@ const AppointmentsList = () => {
             id={app._id}
             start_date={app.start_date}
             type_of_reservation={app.type_of_reservation} 
-            user = {users.find(u => u._id === app.user_id)} /> 
+            user = {users.find(u => u._id === app.user_id)} 
+            /> 
         )
       })}
     </ul>
   )
 }
 
-const Display = ({dateobject, user}) => {
+const Display = ({dateobject, user, own}) => {
   let date = new Date(dateobject)
+
+  let dateDisplay
+  let day = date.getDate()
+  let month = date.getMonth() + 1
+  if (date.getDate() < 10) {
+    day = `0${date.getDate()}`
+  }
+  if (date.getMonth() + 1 < 10) {
+    month = `0${date.getMonth() + 1}`
+  }
+
+  if (own) {
+    dateDisplay = `${day}.${month}.${date.getFullYear()}`
+  }  
 
   const userDisplay = user ? user.name : null
 
   if (date.getMinutes() < 10) {
     return (
-      <h4>{`${date.getHours()}:0${date.getMinutes()}`} {userDisplay}</h4>
+      <h4>{dateDisplay} {`${date.getHours()}:0${date.getMinutes()}`} {userDisplay} </h4>
     )
   }
   return (
-    <h4>{`${date.getHours()}:${date.getMinutes()}`} {userDisplay}</h4>
+    <h4>{dateDisplay} {`${date.getHours()}:${date.getMinutes()}`} {userDisplay}</h4>
   )
 }
 
@@ -132,10 +150,10 @@ const Appointment = (props) => {
     <div>
     {type_of_reservation === 1 ? 
       (user._id === currentUser._id ? 
-        <button id="reservedOwn" onClick={()=>appointmentService.update(id, { type_of_reservation: 0 })}><Display dateobject={start_date} user={user} /></button> 
-        : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={user} /></button>
+        <button id="reservedOwn" onClick={()=>appointmentService.update(id, { type_of_reservation: 0 })}><Display dateobject={start_date} own={true}/></button> 
+        : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={user} own={true}/></button>
         ) : 
-      <button id="available" onClick={()=>appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}><Display dateobject={start_date} user={user} /></button>}
+      <button id="available" onClick={()=>appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}><Display dateobject={start_date} user={user} own={true}/></button>}
     </div>
   )
 }
