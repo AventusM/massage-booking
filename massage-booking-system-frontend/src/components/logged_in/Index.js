@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
-import Calendar from 'react-calendar';
+//import Calendar from 'react-calendar';
+import Calendar from 'react-calendar/dist/entry.nostyle'
 import { AppointmentContext } from '../../App'
 import { AppointmentsList, FreeAppointments } from './Appointment'
 import unity4 from '../../pics/unity4.png'
@@ -29,21 +30,25 @@ const Index = (props) => {
       />
       
       </div>
+      <div className='List'>
       {tab ? (
         <div>
         <h1>All appointments</h1>
-        <button onClick = {() => setTab(!tab)}>Own appointments</button>
+        <button className="buttonList" onClick = {() => setTab(!tab)}>Own appointments</button>
         <Appointments />
         </div>
       ) : (
         <div>
         <h1>Own appointments</h1>
-        <button onClick = {() => setTab(!tab)}>All appointments</button>
+        <button className="buttonList" onClick = {() => setTab(!tab)}>All appointments</button>
         <Appointments type={OWN_APPOINTMENTS} />
         </div>
-      )}
+      )} 
       <img id= "unity4" src = {unity4}></img>
-      </div>
+      </div> 
+      
+   
+    </div>
     </Fragment>
   )
 }

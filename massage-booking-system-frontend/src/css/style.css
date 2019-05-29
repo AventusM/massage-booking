@@ -89,7 +89,7 @@ color: white;
 }
 
 .login_wrapper_mobile form {
-margin: auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
   width: 250px;
@@ -240,6 +240,8 @@ align-content: center;
   width: 100%;
 }
 
+/*Headers*/
+
 .userHomepageWrapper_desktop h3 {
   text-align: center;
   font-family: Roboto, sans-serif;
@@ -270,6 +272,7 @@ align-content: center;
     }
   }
   
+/*Buttons*/
 
 .userHomepageWrapper_desktop button{
   border: 3px solid #537895;
@@ -283,6 +286,8 @@ align-content: center;
   
 }
 
+/*Label*/
+
 .userHomepageWrapper_desktop label{
   margin-bottom: 5px;
   font-size: 120%;
@@ -290,6 +295,8 @@ align-content: center;
 
   
 }
+
+/*Alert*/
 
 .alert {
   background-color: #aa7572; /* Red */
@@ -493,23 +500,44 @@ align-content: center;
     min-width: 100%;
     height: auto;
     position: fixed;
-  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
 }
 
 /*Calendar*/
 .appointmentListWrapperCalendar {
-  margin-top: 2%;
+  margin-top: 10%;
+  margin-left: 290px;
   display: flex;
   flex-direction: auto;
-  justify-content: center;
-  width: 100%;
+  align-items: flex-start;
 
+ 
+
+}
+
+.react-calendar {
+  height: 700px;
+  width: 900px;
+  max-width: 100%;
+  background: white;
+  border-radius: 15px;
+  border: 1px solid #a0a096;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.900em;
+  font-size: 30px;
+
+}
+.List{
+  margin-right: 590px;
+  margin-top: 3%;
 
 }
 
 /*Logo*/
 .appointmentListWrapperMain img{
-  width: 30%;
+  width: 20%;
   display: block;
   float: right;
   margin-right: 2%;
@@ -526,13 +554,11 @@ align-content: center;
   font-family: Roboto, sans-serif;
   font-size: 350%;
   color: white;
-  margin-top: 2%;
-
+  margin-top: 15px;
 }
 
 /*List*/
 .appointmentListWrapper{
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -545,21 +571,57 @@ align-content: center;
 
 }
 
-/*Button*/
-.appointmentListWrapper button:hover{
-  background: #47bb77;
-  border: #47bb77;
-}
+/*Buttons*/
 
 .appointmentListWrapper button{
 
-  background: #dddddd;
+  background: white;
   font-size: 120%;
   border-radius: 15px;
   padding: 10px 5px;
   height: 50px;
-  width: 500px;
+  width: 400px;
+  margin-top: 20px;
+  
 }
+.buttonList{
+  background: #2b5876;
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  height: 50px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+  justify-content: center;
+  
+  
+}
+
+/*Colors for buttons*/
+
+#reserved {
+  color: white;
+  background: #313131a6;
+  border: #313131a6;
+}
+#available {
+  color: black;
+  background: white;
+  border: white;
+}
+#reservedOwn{
+  background: #3b9962;
+  color: white;
+  border: #3b9962;
+}
+#available:hover{
+  background: #3b9962;
+  border: #3b9962;
+}
+
 
 
 /* Appointment List mobile */

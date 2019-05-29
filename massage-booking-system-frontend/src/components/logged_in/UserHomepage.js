@@ -37,7 +37,6 @@ const UserHomepage = () => {
 
         <Fragment>
             <div className = 'userHomepageWrapper_desktop'>
-            <h2>Welcome {user.name}!</h2>
             <section>
                 <h3>Update your info</h3>
                 <form onSubmit={() => handleUserUpdate()}>

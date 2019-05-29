@@ -43,7 +43,6 @@ const AllAppointments = () => {
   let selectedYear = selectedDate.getFullYear()
 
   const allButOwnAppointments = appointments.filter(app => app.user_id !== currentUser._id)
-
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
   const todaysAppointments = allButOwnAppointments.filter((appointment) => {
     let appointmentsDate = new Date (appointment.start_date)
