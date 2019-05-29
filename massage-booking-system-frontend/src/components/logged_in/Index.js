@@ -20,11 +20,12 @@ const Index = (props) => {
       <div className="appointmentListWrapperCalendar">
       <Calendar
         showWeekNumbers={true}
-        locale={"en-US"}
+        locale={"en-UK"}
         onChange={(value) => {
             console.log('value ',value, 'value type', typeof value) 
             //console.log('setselecteddate', setSelectedDate)
             setSelectedDate(value)
+            setTab(true)
           }}
       />
       
