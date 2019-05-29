@@ -6,11 +6,15 @@ const useField = (type, defaultValue) => {
     setValue(event.target.value)
   }
 
+  const changeValue = (value) => {
+    setValue(value)
+  }
+
   const reset = () => {
     setValue('')
   }
 
-  return { type, value, handleFieldChange, reset }
+  return { type, value, handleFieldChange, reset, changeValue }
 }
 
 export default useField 

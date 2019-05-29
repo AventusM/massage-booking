@@ -6,9 +6,8 @@ import loginService from './services/login'
 
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
-import UserHomepage from "./components/logged_in/UserHomepage";
+import Stats from "./components/logged_in/Stats";
 import DashBoard from './components/logged_in/Dashboard'
-// import { Navbar, Nav } from 'react-bootstrap'
 import NotFoundPage from './components/NotFoundPage'
 import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
@@ -16,8 +15,8 @@ import history from './history';
 import logo from "./pics/unity5.png"
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext({})
-const AppointmentContext = createContext({})
+const UserContext = createContext(null)
+const AppointmentContext = createContext(null)
 
 
 const App = () => {
@@ -127,12 +126,14 @@ const App = () => {
       <Router history={history}>
 
 
-        <nav class="navbar">
-          <span class="navbar-toggle" id="js-navbar-toggle">
-            <i onClick={() => document.getElementById("js-menu").classList.toggle('active')} class="fas fa-bars"></i>
+
+        <nav className="navbar">
+          <span className="navbar-toggle" id="js-navbar-toggle">
+            <i onClick={() => document.getElementById("js-menu").classList.toggle('active')} className="fas fa-bars"></i>
           </span>
-          <img src={logo} class="logo" />
-          <ul class="main-nav" id="js-menu">
+          <img src={logo} className="logo" />
+          <ul className="main-nav" id="js-menu">
+
             <li>
               <Link className="nav-link" to="/">Index</Link>
             </li>
@@ -140,25 +141,31 @@ const App = () => {
               <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
             </li>
             <li>
-              <Link className="nav-link" to="/profile">Profile</Link>
+
+              <Link className="nav-link" to="/stats">Stats</Link>
             </li>
             <li>
-              <i onClick={handleLogout} id="logout" class="fas fa-sign-out-alt"></i>
+              <i onClick={handleLogout} id="logout" className="fas fa-sign-out-alt"></i>
+
             </li>
           </ul>
         </nav>
 
         <Switch>
           <Route exact path="/">
+          <UserContext.Provider value={{ user, setUser, users, userService }}>
             <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate }}>
               <Index />
             </AppointmentContext.Provider>
+          </UserContext.Provider>  
           </Route>
 
-          <Route exact path="/profile">
-            <UserContext.Provider value={{ user, setUser, users, userService }}>
-              <UserHomepage />
-            </UserContext.Provider>
+          {/* ADD PROPER CONTEXT / STRAIGHT UP PROPS TO ACCESS APPOINTMENT STATS ETC.. */}
+          {/* CURRENTLY ONLY DIRECT PROPS GIVEN TO STATS PAGE */}
+          <Route exact path="/stats">
+            <AppointmentContext.Provider value={{ appointments, appointmentService }}>
+              <Stats appointments={appointments} />
+            </AppointmentContext.Provider>
           </Route>
 
           <Route exact path="/dashboard">

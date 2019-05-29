@@ -12,11 +12,12 @@ const Index = (props) => {
     <Fragment>
       Welcome {currentUser.name}!
       <Calendar
-          onChange={(value) => {
-            console.log('value ',value, 'value type', typeof value) 
-            //console.log('setselecteddate', setSelectedDate)
-            setSelectedDate(value)
-          }}
+        tileClassName="calendarItem"
+        onChange={(value) => {
+          console.log('value ', value, 'value type', typeof value)
+          //console.log('setselecteddate', setSelectedDate)
+          setSelectedDate(value)
+        }}
       />
       <h1>Available appointments</h1>
       <Appointments />
