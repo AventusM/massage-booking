@@ -4,7 +4,11 @@
 
 body {
   font-family: "Helvetica", "Arial", sans-serif;
-}  
+}
+
+#reserved {
+  color: red;
+}
 
 .main_wrapper {
   background-color: #E4E4E1;
