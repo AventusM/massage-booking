@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import moment from 'moment'
 import { AppointmentContext } from '../../App'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
@@ -7,9 +8,15 @@ const CreateAppointment = (props) => {
   const currentUser = appointmentContext.user
   const appointmentService = appointmentContext.appointmentService
   const { id } = props
-  return (
-    <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}>CREATE</button>
-  )
+  let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
+  console.log('reservation rule check result ', reservationRuleCheck(currentUser.appointments, appointmentStartDate)) 
+  if (reservationRuleCheck(currentUser.appointments, appointmentStartDate)) {
+    return (
+      <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}>CREATE</button>
+    )
+  }
+  return null
+  
 }
 
 const CancelAppointment = (props) => {
@@ -118,7 +125,6 @@ const ClockDisplay = ({dateobject}) => {
 
 const Appointment = (props) => {
   const { id, start_date, type_of_reservation } = props
-  let dateToDisplay = new Date(start_date)
   return (
     <li className="appointmentItem">
       <ClockDisplay dateobject={start_date}/>
@@ -128,6 +134,21 @@ const Appointment = (props) => {
         : <CreateAppointment id={id} />}
     </li>
   )
+}
+
+const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
+  console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
+  let requestedTimeMoment = moment(requestedAppointmentStartDate)
+  let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter((usersPreviousTime) => {
+    let prevTimeMoment = moment(usersPreviousTime.start_date)
+    let dayDifference = requestedTimeMoment.diff(prevTimeMoment, 'days')
+    console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
+    console.log('day diff', dayDifference)
+    return Math.abs(dayDifference) <14
+  })
+  console.log('usersAppointmentsWithinTheLastTwoWeeks after filter', usersAppointmentsWithinTheLastTwoWeeks)
+  console.log('usersAppointmentsWithinTheLastTwoWeeks.lenght', usersAppointmentsWithinTheLastTwoWeeks.length)
+  return usersAppointmentsWithinTheLastTwoWeeks.length === 0
 }
 
 export { Appointments }
