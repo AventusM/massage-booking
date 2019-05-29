@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
 import moment from 'moment'
 import { AppointmentContext } from '../../App'
+import { UserContext } from '../../App'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const CreateAppointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
-  const currentUser = appointmentContext.user
+  const userContext = useContext(UserContext)
+  const currentUser = userContext.user
   const appointmentService = appointmentContext.appointmentService
   const { id } = props
   let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
@@ -21,7 +23,8 @@ const CreateAppointment = (props) => {
 
 const CancelAppointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
-  const currentUser = appointmentContext.user
+  const userContext = useContext(UserContext)
+  const currentUser = userContext.user
   const appointmentService = appointmentContext.appointmentService
   const { id } = props
   return (
@@ -93,7 +96,8 @@ const FreeAppointments = () => {
 
 const AppointmentsList = () => {
   const appointmentContext = useContext(AppointmentContext)
-  const currentUser = appointmentContext.user
+  const userContext = useContext(UserContext)
+  const currentUser = userContext.user
   const appointments = appointmentContext.appointments
   const ownAppointments = appointments.filter(app => app.user_id === currentUser._id)
   return (
