@@ -11,18 +11,6 @@ const CreateAppointment = (currentUser, appointmentStartDate, appointmentService
   }
 }
 
-const CancelAppointment = (props) => {
-  const appointmentContext = useContext(AppointmentContext)
-  const userContext = useContext(UserContext)
-  const currentUser = userContext.user
-  const appointmentService = appointmentContext.appointmentService
-  const { id } = props
-  return (
-    <button onClick={() => appointmentService.update(id, { type_of_reservation: 0, user_id: currentUser._id })}> CANCEL</button >
-  )
-}
-
-
 const Appointments = (props) => {
   const { type } = props
   // console.log('type', type)
