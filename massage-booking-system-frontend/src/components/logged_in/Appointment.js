@@ -24,7 +24,7 @@ const CancelAppointment = (props) => {
 
 const Appointments = (props) => {
   const { type } = props
-  console.log('type', type)
+  // console.log('type', type)
   if (type === OWN_APPOINTMENTS) {
     return <AppointmentsList />
   }
