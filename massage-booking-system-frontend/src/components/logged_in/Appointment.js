@@ -4,21 +4,11 @@ import { AppointmentContext } from '../../App'
 import { UserContext } from '../../App'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
-const CreateAppointment = (props) => {
-  const appointmentContext = useContext(AppointmentContext)
-  const userContext = useContext(UserContext)
-  const currentUser = userContext.user
-  const appointmentService = appointmentContext.appointmentService
-  const { id } = props
-  let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
+const CreateAppointment = (currentUser, appointmentStartDate, appointmentService, id)  => {
   console.log('reservation rule check result ', reservationRuleCheck(currentUser.appointments, appointmentStartDate)) 
   if (reservationRuleCheck(currentUser.appointments, appointmentStartDate)) {
-    return (
-      <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}>CREATE</button>
-    )
+    appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })
   }
-  return null
-  
 }
 
 const CancelAppointment = (props) => {
@@ -46,8 +36,9 @@ const Appointments = (props) => {
 const AllAppointments = () => {
   const appointmentContext = useContext(AppointmentContext)
   const appointments = appointmentContext.appointments
-  const users = appointmentContext.users
-  const currentUser = appointmentContext.user
+  const userContext = useContext(UserContext)
+  const users = userContext.users
+  const currentUser = userContext.user
   const selectedDate = new Date(appointmentContext.selectedDate)
   let selectedDay = selectedDate.getDate()
   let selectedMonth = selectedDate.getMonth() + 1
@@ -101,10 +92,14 @@ const AllAppointments = () => {
 
 const AppointmentsList = () => {
   const appointmentContext = useContext(AppointmentContext)
-  const users = appointmentContext.users
-  const currentUser = appointmentContext.user
+  const appointmentService =  appointmentContext.appointmentService
+  const userContext = useContext(UserContext)
+  const users = userContext.users
+  const currentUser = userContext.user
+  console.log(currentUser.appointments[0])
   const appointments = appointmentContext.appointments
-  const ownAppointments = appointments.filter(app => app.user_id === currentUser._id)
+  const ownAppointments = appointments.filter(app => app._id === currentUser.appointments[1])
+  appointmentService.update(currentUser.appointments[0], { type_of_reservation: 0, user_id: currentUser._id})
   return (
     <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {
@@ -153,17 +148,21 @@ const Display = ({dateobject, user, own}) => {
 const Appointment = (props) => {
   const appointmentContext = useContext(AppointmentContext)
   const appointmentService = appointmentContext.appointmentService
-  const currentUser = appointmentContext.user
+  const userContext = useContext(UserContext)
+  const currentUser = userContext.user
   const { id, start_date, type_of_reservation, user } = props
+  let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
 
   return (
     <div>
     {type_of_reservation === 1 ? 
       (user._id === currentUser._id ? 
-        <button id="reservedOwn" onClick={()=>appointmentService.update(id, { type_of_reservation: 0 })}><Display dateobject={start_date} own={true}/></button> 
+        <button id="reservedOwn" onClick={() => appointmentService.update(id, { type_of_reservation: 0, user_id: currentUser._id })}><Display dateobject={start_date} own={true}/></button> 
         : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={user}/></button>
         ) : 
-      <button id="available" onClick={()=>appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}><Display dateobject={start_date} user={user}/></button>}
+      <button id="available" onClick={() => CreateAppointment(currentUser, appointmentStartDate, appointmentService, id)}>
+      
+      <Display dateobject={start_date} user={user}/></button>}
     </div>
   )
 }
