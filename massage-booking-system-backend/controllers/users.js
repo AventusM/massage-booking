@@ -27,7 +27,8 @@ usersRouter.get('/', async (req, res, next) => {
 
 usersRouter.get('/:id', async (req, res, next) => {
     try {
-        const user = await User.find({ _id: req.params.id })
+        const user = await User.findById({ _id: req.params.id })
+        console.log("userriii: ", user)
         res.json(user)
     } catch (exception) {
         next(exception)
@@ -83,6 +84,8 @@ usersRouter.delete('/:id', async (req, res, next) => {
     }
 
 })
+
+
 
 
 module.exports = usersRouter
