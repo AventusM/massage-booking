@@ -504,16 +504,20 @@ align-content: center;
     min-width: 100%;
     height: auto;
     position: fixed;
-  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
 }
 
 /*Calendar*/
 .appointmentListWrapperCalendar {
-  margin-top: 2%;
-  margin-left: 160px;
+  margin-top: 10%;
+  margin-left: 490px;
   display: flex;
   flex-direction: auto;
   align-items: flex-start;
+
+ 
 
 }
 
@@ -527,6 +531,11 @@ align-content: center;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.900em;
   font-size: 20px;
+
+}
+.List{
+  margin-right: 590px;
+  margin-top: 8.5%;
 
 }
 
@@ -549,7 +558,7 @@ align-content: center;
   font-family: Roboto, sans-serif;
   font-size: 350%;
   color: white;
-  margin-top: -20%;
+  margin-top: 15px;
 }
 
 /*List*/

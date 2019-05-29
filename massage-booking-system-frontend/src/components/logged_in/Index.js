@@ -30,6 +30,7 @@ const Index = (props) => {
       />
       
       </div>
+      <div className='List'>
       {tab ? (
         <div>
         <h1>All appointments</h1>
@@ -42,9 +43,12 @@ const Index = (props) => {
         <button className="buttonList" onClick = {() => setTab(!tab)}>All appointments</button>
         <Appointments type={OWN_APPOINTMENTS} />
         </div>
-      )}
+      )} 
       <img id= "unity4" src = {unity4}></img>
-      </div>
+      </div> 
+      
+   
+    </div>
     </Fragment>
   )
 }
