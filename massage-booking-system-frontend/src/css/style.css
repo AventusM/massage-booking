@@ -4,11 +4,7 @@
 
 body {
   font-family: "Helvetica", "Arial", sans-serif;
-}
-
-#reserved {
-  color: red;
-}
+}  
 
 .main_wrapper {
   background-color: #E4E4E1;
@@ -492,15 +488,12 @@ align-content: center;
 
 /*Background*/
 .appointmentListWrapperMain { 
-  display: grid;
-  
-}
-
-.appointmentListBackground {
-  background-color: #2b5876;
+    background-color: #2b5876;
     min-height: 100%;
     min-width: 100%;
     height: auto;
+    position: fixed;
+  
 }
 
 /*Calendar*/

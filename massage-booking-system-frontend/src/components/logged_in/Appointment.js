@@ -151,9 +151,9 @@ const Appointment = (props) => {
     {type_of_reservation === 1 ? 
       (user._id === currentUser._id ? 
         <button id="reservedOwn" onClick={()=>appointmentService.update(id, { type_of_reservation: 0 })}><Display dateobject={start_date} own={true}/></button> 
-        : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={user} own={true}/></button>
+        : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={user}/></button>
         ) : 
-      <button id="available" onClick={()=>appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}><Display dateobject={start_date} user={user} own={true}/></button>}
+      <button id="available" onClick={()=>appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}><Display dateobject={start_date} user={user}/></button>}
     </div>
   )
 }

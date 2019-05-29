@@ -15,7 +15,6 @@ const Index = (props) => {
   const setSelectedDate = appointmentContext.setSelectedDate
   return (
     <Fragment>
-    <div className="appointmentListBackground">
     <div className="appointmentListWrapperMain">
       <div className="appointmentListWrapperCalendar">
       <Calendar
@@ -44,7 +43,6 @@ const Index = (props) => {
         </div>
       )}
       <img id= "unity4" src = {unity4}></img>
-      </div>
       </div>
     </Fragment>
   )
