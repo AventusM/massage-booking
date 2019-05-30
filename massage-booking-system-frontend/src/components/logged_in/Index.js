@@ -12,7 +12,6 @@ import { OWN_APPOINTMENTS } from '../../types/logged_in'
 const Index = (props) => {
   const appointmentContext = useContext(AppointmentContext)
   const [tab, setTab] = useState(true)
-  const currentUser = appointmentContext.user
   const setSelectedDate = appointmentContext.setSelectedDate
   return (
     <Fragment>
