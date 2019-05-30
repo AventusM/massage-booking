@@ -12,6 +12,7 @@ import ReservationView from './components/logged_in/ ReservationView'
 import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom'
 import history from './history';
 import logo from "./pics/unity5.png"
+import Notification from './components/Notification'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
 const UserContext = createContext(null)
@@ -154,7 +155,8 @@ const App = () => {
         <Switch>
           <Route exact path="/">
           <UserContext.Provider value={{ user, setUser, users, userService }}>
-            <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate }}>
+            <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
+              <Notification message={errorMessage}/>
               <Index />
             </AppointmentContext.Provider>
           </UserContext.Provider>  

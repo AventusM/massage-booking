@@ -4,11 +4,30 @@ import { AppointmentContext } from '../../App'
 import { UserContext } from '../../App'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
-const CreateAppointment = (currentUser, appointmentStartDate, appointmentService, id)  => {
+
+const CreateAppointment = (props) => {
+  const appointmentContext = useContext(AppointmentContext)
+  const userContext = useContext(UserContext)
+  const currentUser = userContext.user
+  const appointmentService = appointmentContext.appointmentService
+  const { id, start_date, user } = props
+  let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
   console.log('reservation rule check result ', reservationRuleCheck(currentUser.appointments, appointmentStartDate)) 
-  if (reservationRuleCheck(currentUser.appointments, appointmentStartDate)) {
-    appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })
+
+  const handleAppointmentCreation = () => {
+    if (reservationRuleCheck(currentUser.appointments, appointmentStartDate)) {
+      let setMessage=appointmentContext.setErrorMessage
+      appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })
+      setMessage('Appointment reserved successfully')
+      setTimeout(() => {
+        setMessage(null)
+      }, 8000)
+    }
   }
+  return (
+    <button onClick={() => handleAppointmentCreation()}><Display dateobject={start_date} user={user}/></button>
+  )
+  
 }
 
 const Appointments = (props) => {
@@ -139,8 +158,7 @@ const Appointment = (props) => {
   const userContext = useContext(UserContext)
   const currentUser = userContext.user
   const { id, start_date, type_of_reservation, user } = props
-  let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
-
+ 
   return (
     <div>
     {type_of_reservation === 1 ? 
@@ -148,25 +166,24 @@ const Appointment = (props) => {
         <button id="reservedOwn" onClick={() => appointmentService.update(id, { type_of_reservation: 0, user_id: currentUser._id })}><Display dateobject={start_date} own={true}/></button> 
         : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={user}/></button>
         ) : 
-      <button id="available" onClick={() => CreateAppointment(currentUser, appointmentStartDate, appointmentService, id)}>
-      
-      <Display dateobject={start_date} user={user}/></button>}
+        <CreateAppointment id={id} start_date={start_date} user={user}/>
+    }
     </div>
   )
 }
 
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
-  console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
+  //console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
   let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter((usersPreviousTime) => {
     let prevTimeMoment = moment(usersPreviousTime.start_date)
     let dayDifference = requestedTimeMoment.diff(prevTimeMoment, 'days')
-    console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
-    console.log('day diff', dayDifference)
+    //console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
+    //console.log('day diff', dayDifference)
     return Math.abs(dayDifference) <14
   })
-  console.log('usersAppointmentsWithinTheLastTwoWeeks after filter', usersAppointmentsWithinTheLastTwoWeeks)
-  console.log('usersAppointmentsWithinTheLastTwoWeeks.lenght', usersAppointmentsWithinTheLastTwoWeeks.length)
+  //console.log('usersAppointmentsWithinTheLastTwoWeeks after filter', usersAppointmentsWithinTheLastTwoWeeks)
+  //console.log('usersAppointmentsWithinTheLastTwoWeeks.lenght', usersAppointmentsWithinTheLastTwoWeeks.length)
   return usersAppointmentsWithinTheLastTwoWeeks.length === 0
 }
 
