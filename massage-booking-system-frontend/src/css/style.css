@@ -495,48 +495,56 @@ align-content: center;
 
 /*Background*/
 .appointmentListWrapperMain { 
+    min-height: 100vh;
+    padding-top: 10%;
     background-color: #2b5876;
-    min-height: 100%;
-    min-width: 100%;
-    height: auto;
-    position: fixed;
     display: grid;
     grid-template-columns: 1fr 1fr;
-
 }
 
 /*Calendar*/
 .appointmentListWrapperCalendar {
-  margin-top: 10%;
-  margin-left: 290px;
-  display: flex;
-  flex-direction: auto;
-  align-items: flex-start;
-
- 
-
 }
 
 .react-calendar {
-  height: 700px;
-  width: 900px;
-  max-width: 100%;
+  min-width: 350px;
+  width: auto;
   background: white;
   border-radius: 15px;
-  border: 1px solid #a0a096;
   font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.900em;
-  font-size: 30px;
+  line-height: 1.25em;
+  font-size: 1.5em;
 
 }
 .List{
-  margin-right: 590px;
-  margin-top: 3%;
+  /* border: 2px solid green; */
+}
 
+@media screen and (max-width: 1160px){
+  .appointmentListWrapperMain { 
+    grid-template-columns: 1fr;
+  }
+
+  .react-calendar {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 900px){
+ .react-calendar {
+  padding: 10px 5px;
+  line-height: 1.15em;
+  font-size: 1.35em;
+ }
+
+ .List {
+   margin-top: -10px;
+ }
 }
 
 /*Logo*/
-.appointmentListWrapperMain img{
+/* .appointmentListWrapperMain img{
   width: 20%;
   display: block;
   float: right;
@@ -546,15 +554,19 @@ align-content: center;
   position: fixed;
   bottom: 0;
   right: 0;
-} 
+}  */
 
 /*Headers*/
 .appointmentListWrapperMain h1{
   text-align: center;
   font-family: Roboto, sans-serif;
-  font-size: 350%;
+  font-size: 2.5em;
   color: white;
   margin-top: 15px;
+}
+
+.all_apps_div {
+  margin-top: 60px;
 }
 
 /*List*/
@@ -567,8 +579,7 @@ align-content: center;
 }
 .appointmentListWrapper div{
   margin: 0 auto;
-  margin-bottom: 20px;
-
+  /* margin-bottom: 20px; */
 }
 
 /*Buttons*/

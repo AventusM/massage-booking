@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, Fragment } from 'react'
 import moment from 'moment'
 import { AppointmentContext } from '../../App'
 import { UserContext } from '../../App'
@@ -108,11 +108,11 @@ const AppointmentsList = () => {
   const currentUser = userContext.user
   const appointments = appointmentContext.appointments
   const user = users.find(user => user._id === currentUser._id)
-/*  console.log(user._id)
+  console.log(user._id)
   console.log(currentUser._id)
   console.log(user.appointments)
-  console.log(currentUser.appointments) */
-  const ownAppointments = appointments.filter(app => app._id === user.appointments[0]._id)
+  console.log(currentUser.appointments) 
+  const ownAppointments = appointments.filter(app => app.user_id === user._id)
   return (
     <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {
