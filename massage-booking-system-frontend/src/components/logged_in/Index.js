@@ -32,7 +32,7 @@ const Index = (props) => {
 
         <div className='List'>
           {tab ? (
-            <div>
+            <div className="all_apps_div">
               <h1>All appointments</h1>
               <button className="buttonList" onClick={() => setTab(!tab)}>Own appointments</button>
               <Appointments />

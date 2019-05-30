@@ -541,8 +541,9 @@ align-content: center;
   line-height: 1.15em;
   font-size: 1.35em;
  }
- .List{
-   margin-top: -30px;
+
+ .List {
+   margin-top: -10px;
  }
 }
 
@@ -568,6 +569,10 @@ align-content: center;
   margin-top: 15px;
 }
 
+.all_apps_div {
+  margin-top: 60px;
+}
+
 /*List*/
 .appointmentListWrapper{
   display: flex;
@@ -578,8 +583,7 @@ align-content: center;
 }
 .appointmentListWrapper div{
   margin: 0 auto;
-  margin-bottom: 20px;
-
+  /* margin-bottom: 20px; */
 }
 
 /*Buttons*/

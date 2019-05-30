@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, Fragment } from 'react'
 import { AppointmentContext, UserContext } from '../../App'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
@@ -24,7 +24,6 @@ const CancelAppointment = (props) => {
 
 const Appointments = (props) => {
   const { type } = props
-  console.log('type', type)
   if (type === OWN_APPOINTMENTS) {
     return <AppointmentsList />
   }
