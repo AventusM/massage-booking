@@ -16,39 +16,40 @@ const Index = (props) => {
   const setSelectedDate = appointmentContext.setSelectedDate
   return (
     <Fragment>
-    <div className="appointmentListWrapperMain">
-      <div className="appointmentListWrapperCalendar">
-      <Calendar
-        showWeekNumbers={true}
-        locale={"en-UK"}
-        onChange={(value) => {
-            console.log('value ',value, 'value type', typeof value) 
-            //console.log('setselecteddate', setSelectedDate)
-            setSelectedDate(value)
-            setTab(true)
-          }}
-      />
-      
+      <div className="appointmentListWrapperMain">
+        <div className="appointmentListWrapperCalendar">
+          <Calendar
+            showWeekNumbers={true}
+            locale={"en-UK"}
+            onChange={(value) => {
+              console.log('value ', value, 'value type', typeof value)
+              //console.log('setselecteddate', setSelectedDate)
+              setSelectedDate(value)
+              setTab(true)
+            }}
+          />
+        </div>
+
+
+        <div className='List'>
+          {tab ? (
+            <div>
+              <h1>All appointments</h1>
+              <button className="buttonList" onClick={() => setTab(!tab)}>Own appointments</button>
+              <Appointments />
+            </div>
+          ) : (
+              <div>
+                <h1>Own appointments</h1>
+                <button className="buttonList" onClick={() => setTab(!tab)}>All appointments</button>
+                <Appointments type={OWN_APPOINTMENTS} />
+              </div>
+            )}
+          {/* <img id="unity4" src={unity4}></img> */}
+        </div>
+
+
       </div>
-      <div className='List'>
-      {tab ? (
-        <div>
-        <h1>All appointments</h1>
-        <button className="buttonList" onClick = {() => setTab(!tab)}>Own appointments</button>
-        <Appointments />
-        </div>
-      ) : (
-        <div>
-        <h1>Own appointments</h1>
-        <button className="buttonList" onClick = {() => setTab(!tab)}>All appointments</button>
-        <Appointments type={OWN_APPOINTMENTS} />
-        </div>
-      )} 
-      <img id= "unity4" src = {unity4}></img>
-      </div> 
-      
-   
-    </div>
     </Fragment>
   )
 }
