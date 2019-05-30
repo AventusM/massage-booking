@@ -508,7 +508,6 @@ align-content: center;
 
 /*Calendar*/
 .appointmentListWrapperCalendar {
- /* border: 2px solid red; */
 }
 
 .react-calendar {
@@ -538,8 +537,12 @@ align-content: center;
 
 @media screen and (max-width: 900px){
  .react-calendar {
-  line-height: 0.8em;
-  font-size: 1em;
+  padding: 10px 5px;
+  line-height: 1.15em;
+  font-size: 1.35em;
+ }
+ .List{
+   margin-top: -30px;
  }
 }
 
@@ -560,7 +563,7 @@ align-content: center;
 .appointmentListWrapperMain h1{
   text-align: center;
   font-family: Roboto, sans-serif;
-  font-size: 350%;
+  font-size: 2.5em;
   color: white;
   margin-top: 15px;
 }
