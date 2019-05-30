@@ -499,6 +499,7 @@ align-content: center;
 
 /*Background*/
 .appointmentListWrapperMain { 
+    min-height: 100vh;
     padding-top: 10%;
     background-color: #2b5876;
     display: grid;
