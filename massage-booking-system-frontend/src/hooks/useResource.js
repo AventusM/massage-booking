@@ -24,10 +24,11 @@ const useResource = (baseUrl) => {
 
   const update = async (id, data) => {
     const config = { headers: { Authorization: token } }
-    console.log('Update data given: ', data)
-    // console.log('config', config)
     const updatedResource = await axios.put(`${baseUrl}/${id}`, data, config)
-    setResources(resources.map(resource => resource._id !== id ? resource : updatedResource.data))
+    // console.log('has property?', updatedResource.data.hasOwnProperty('_id'))
+    if (updatedResource.data.hasOwnProperty('_id')) {
+      setResources(resources.map(resource => resource._id !== id ? resource : updatedResource.data))
+    }
   }
 
   const remove = async (id) => {
@@ -38,8 +39,14 @@ const useResource = (baseUrl) => {
     setResources(updatedResources)
   }
 
+  const getOne = async (id) => {
+    const config = { headers: { Authorization: token } }
+    const response = await axios.get(`${baseUrl}/${id}`, config)
+    return response.data
+  }
+
   const service = {
-    getAll, create, remove, update, setToken
+    getAll, create, remove, update, setToken, getOne
   }
 
   return [resources, service]

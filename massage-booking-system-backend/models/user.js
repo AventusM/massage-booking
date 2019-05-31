@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
+    googleId: String,
     name: {
         type: String,
         required: true
@@ -13,12 +14,10 @@ const userSchema = mongoose.Schema({
         required: true
     },
     admin: {
-        type: Boolean,
-        required: true
+        type: Boolean
     },
     passwordHash: {
-        type: String,
-        required: true
+        type: String
     },
     appointments: [
         {

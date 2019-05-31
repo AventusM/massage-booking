@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useState } from 'react'
 //import Calendar from 'react-calendar';
 import Calendar from 'react-calendar/dist/entry.nostyle'
 import { AppointmentContext } from '../../App'
-import { AppointmentsList, FreeAppointments } from './Appointment'
 import unity4 from '../../pics/unity4.png'
 
 
@@ -10,9 +9,8 @@ import { Appointments } from './Appointment'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const Index = (props) => {
-  const appointmentContext = useContext(AppointmentContext)
+  const { setSelectedDate } = useContext(AppointmentContext)
   const [tab, setTab] = useState(true)
-  const setSelectedDate = appointmentContext.setSelectedDate
   return (
     <Fragment>
       <div className="appointmentListWrapperMain">
