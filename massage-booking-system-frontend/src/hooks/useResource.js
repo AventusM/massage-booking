@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 
 // TOKEN ABOVE useResource -- OTHERWISE IT WILL GO NULL ON EVERY ACTION

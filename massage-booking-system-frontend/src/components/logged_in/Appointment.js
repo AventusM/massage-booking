@@ -13,8 +13,17 @@ const CreateAppointment = (props) => {
   let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
   console.log('reservation rule check result ', reservationRuleCheck(currentUser.appointments, appointmentStartDate)) 
   if (reservationRuleCheck(currentUser.appointments, appointmentStartDate)) {
+    let setMessage=appointmentContext.setErrorMessage
+
+    const handleAppointmentCreation = () => {
+      appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })
+      setMessage('Appointment reserved successfully')
+      setTimeout(() => {
+        setMessage(null)
+      }, 8000)
+    }
     return (
-      <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: currentUser._id })}>CREATE</button>
+      <button onClick={() => handleAppointmentCreation()}>CREATE</button>
     )
   }
   return null
@@ -141,17 +150,17 @@ const Appointment = (props) => {
 }
 
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
-  console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
+  //console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
   let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter((usersPreviousTime) => {
     let prevTimeMoment = moment(usersPreviousTime.start_date)
     let dayDifference = requestedTimeMoment.diff(prevTimeMoment, 'days')
-    console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
-    console.log('day diff', dayDifference)
+    //console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
+    //console.log('day diff', dayDifference)
     return Math.abs(dayDifference) <14
   })
-  console.log('usersAppointmentsWithinTheLastTwoWeeks after filter', usersAppointmentsWithinTheLastTwoWeeks)
-  console.log('usersAppointmentsWithinTheLastTwoWeeks.lenght', usersAppointmentsWithinTheLastTwoWeeks.length)
+  //console.log('usersAppointmentsWithinTheLastTwoWeeks after filter', usersAppointmentsWithinTheLastTwoWeeks)
+  //console.log('usersAppointmentsWithinTheLastTwoWeeks.lenght', usersAppointmentsWithinTheLastTwoWeeks.length)
   return usersAppointmentsWithinTheLastTwoWeeks.length === 0
 }
 
