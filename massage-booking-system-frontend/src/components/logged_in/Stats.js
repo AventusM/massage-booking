@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { AppointmentContext } from '../../App'
 
 const Stats = () => {
