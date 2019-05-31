@@ -15,8 +15,8 @@ import history from './history';
 import logo from "./pics/unity5.png"
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext(null)
-const AppointmentContext = createContext(null)
+// const UserContext = createContext(null)
+// const AppointmentContext = createContext(null)
 
 
 const App = () => {
@@ -110,6 +110,27 @@ const App = () => {
     appointmentService.getAll()
   }, [user])
 
+  useEffect(() => {
+    const local_storage_data = window.localStorage.getItem('loggedInUser')
+    const parsed_local_storage_data = JSON.parse(local_storage_data)
+    // console.log('parsed -- ', parsed_local_storage_data)
+    const id = parsed_local_storage_data._id
+    userService.getOne(id)
+      .then(user => {
+        window.localStorage.setItem('logged_in_user_data', JSON.stringify({ ...user }))
+      })
+  }, [appointments])
+
+  // useEffect(() => {
+  //   const _id = localStorage.getItem('loggedInUser')._id
+
+  //   localStorage.clear()
+  //   userService.getOne(_id)
+  //     .then(user => {
+  //       window.localStorage.setItem('logged_in_user_data', JSON.stringify({ ...user }))
+  //     })
+  // }, [appointments])
+
 
   if (user === null) {
     // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
@@ -156,36 +177,28 @@ const App = () => {
           </ul>
         </nav>
 
-        <Switch>
-          <Route exact path="/">
-            <UserContext.Provider value={{ user, setUser, users, userService }}>
-              <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate }}>
-                <Index />
-              </AppointmentContext.Provider>
-            </UserContext.Provider>
-          </Route>
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
+          <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate }}>
+            <Route exact path="/" render={() => <Index />} />
+          </AppointmentContext.Provider>
+        </UserContext.Provider>
 
-          {/* ADD PROPER CONTEXT / STRAIGHT UP PROPS TO ACCESS APPOINTMENT STATS ETC.. */}
-          {/* CURRENTLY ONLY DIRECT PROPS GIVEN TO STATS PAGE */}
-          <Route exact path="/stats">
-            <AppointmentContext.Provider value={{ appointments, appointmentService }}>
-              <Stats />
-            </AppointmentContext.Provider>
-          </Route>
+        {/* ADD PROPER CONTEXT / STRAIGHT UP PROPS TO ACCESS APPOINTMENT STATS ETC.. */}
+        {/* CURRENTLY ONLY DIRECT PROPS GIVEN TO STATS PAGE */}
+        <AppointmentContext.Provider value={{ appointments, appointmentService }}>
+          <Route exact path="/stats" render={() => <Stats />} />
+        </AppointmentContext.Provider>
 
-          <Route exact path="/dashboard">
-            <UserContext.Provider value={{ user, setUser, users, userService }}>
-              <DashBoard />
-            </UserContext.Provider>
-          </Route>
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
+          <Route exact path="/dashboard" render={() => <DashBoard />} />
+        </UserContext.Provider>
 
-          <Route render={() => <NotFoundPage />} />
-
-        </Switch>
       </Router>
-    </Fragment>
+    </Fragment >
   )
 }
 
-export { AppointmentContext, UserContext }
+export const AppointmentContext = createContext(null);
+export const UserContext = createContext(null);
+// export {AppointmentContext, UserContext }
 export default App
