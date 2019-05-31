@@ -16,7 +16,6 @@ const CreateAppointment = (props) => {
   const handleAppointmentCreation = () => {
     let user = users.find(user => user._id === currentUser._id)
     console.log(user.appointments)
-    console.log(currentUser.appointments)
     let appointmentStartDate = appointmentContext.appointments.find(app => app._id === id).start_date
     console.log('reservation rule check result ', reservationRuleCheck(user.appointments, appointmentStartDate)) 
     if (reservationRuleCheck(user.appointments, appointmentStartDate)) {
@@ -109,9 +108,7 @@ const AppointmentsList = () => {
   const appointments = appointmentContext.appointments
   const user = users.find(user => user._id === currentUser._id)
   console.log(user._id)
-  console.log(currentUser._id)
   console.log(user.appointments)
-  console.log(currentUser.appointments) 
   const ownAppointments = appointments.filter(app => app.user_id === user._id)
   return (
     <ul className="appointmentListWrapper">
