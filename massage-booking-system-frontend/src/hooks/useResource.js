@@ -38,8 +38,14 @@ const useResource = (baseUrl) => {
     setResources(updatedResources)
   }
 
+  const getOne = async (id) => {
+    const config = { headers: { Authorization: token } }
+    const response = await axios.get(`${baseUrl}/${id}`, config)
+    return response.data
+  }
+
   const service = {
-    getAll, create, remove, update, setToken
+    getAll, create, remove, update, setToken, getOne
   }
 
   return [resources, service]

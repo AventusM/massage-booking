@@ -3,6 +3,7 @@ import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import RegistrationFormFragment from './components/logged_in/RegistrationForm'
 import loginService from './services/login'
+
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import Stats from "./components/logged_in/Stats";
@@ -37,29 +38,15 @@ const App = () => {
   const registrationPassword = useField('password')
   const registrationPasswordCheck = useField('password')
 
+
   const redirectToIndex = () => {
     history.push('/')
   }
 
-  const handleLogin = async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault()
-    try {
-      // CUSTOM HOOKS --> const email and password no longer contain values straight up. 
-      const loggedInUser = await loginService.login({ email: email.value, password: password.value })
-      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-      userService.setToken(loggedInUser.token)
-      appointmentService.setToken(loggedInUser.token)
-
-      setUser(loggedInUser)
-      email.reset()
-      password.reset()
-      redirectToIndex()
-    } catch (exception) {
-      setErrorMessage('Wrong username or password')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 3000)
-    }
+    window.open("http://127.0.0.1:3001/auth/google", "_self");
+    redirectToIndex()
   }
 
   const handleLogout = async (event) => {
@@ -99,8 +86,20 @@ const App = () => {
   }
 
   useEffect(() => {
-    const loggedInUser = window.localStorage.getItem('loggedInUser')
-    if (loggedInUser) {
+    let params = (new URL(document.location)).searchParams;
+    let token = params.get('token');
+    let id = params.get('id');
+    if (token) {
+     userService.getOne(id).then(user => {
+      setUser(user)
+      window.localStorage.setItem('loggedInUser', JSON.stringify({ ...user, token }))
+      userService.setToken(token)
+      appointmentService.setToken(token)
+     }) 
+
+      redirectToIndex()
+    } else if (window.localStorage.getItem('loggedInUser')) {
+      const loggedInUser = window.localStorage.getItem('loggedInUser')
       const userInCache = JSON.parse(loggedInUser)
       setUser(userInCache)
       userService.setToken(userInCache.token)
@@ -118,12 +117,11 @@ const App = () => {
   if (user === null) {
     // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
     // /api routes are protected in the backend, so it currently seems that this solution is sufficient...
-    history.replace('/')
     return (
       <Fragment>
         <Router>
-          <Route path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
-          <Route path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
+          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
+          <Route exact path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
         </Router>
       </Fragment>
     )
@@ -133,12 +131,14 @@ const App = () => {
       <Router history={history}>
 
 
+
         <nav className="navbar">
           <span className="navbar-toggle" id="js-navbar-toggle">
             <i onClick={() => document.getElementById("js-menu").classList.toggle('active')} className="fas fa-bars"></i>
           </span>
           <img src={logo} className="logo" />
           <ul className="main-nav" id="js-menu">
+
             <li>
               <Link className="nav-link" to="/">Index</Link>
             </li>
@@ -146,10 +146,12 @@ const App = () => {
               <Link className="nav-link" to="/dashboard">Admin dashboard</Link>
             </li>
             <li>
+
               <Link className="nav-link" to="/stats">Stats</Link>
             </li>
             <li>
               <i onClick={handleLogout} id="logout" className="fas fa-sign-out-alt"></i>
+
             </li>
           </ul>
         </nav>
