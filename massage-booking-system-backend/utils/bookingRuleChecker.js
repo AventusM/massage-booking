@@ -1,5 +1,5 @@
 const Appointment = require('../models/appointment')
-const  moment = require('moment');
+const  moment = require('moment')
 
 
 const userAllowedToMakeAppointment = async (usersAppointmentList, requestedAppointmentID) => {

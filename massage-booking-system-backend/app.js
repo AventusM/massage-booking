@@ -26,6 +26,7 @@ const masseussesRouter = require('./controllers/masseusses')
 const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const statsRouter = require('./controllers/stats')
 
 app.use(cors())
 app.use('/api', ProtectedRoutes)
@@ -33,6 +34,7 @@ app.use('/api/masseusses', masseussesRouter)
 app.use('/api/appointments', appointmentsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/stats', statsRouter)
 
 ProtectedRoutes.use(protectedRoute.routeProtector)
 

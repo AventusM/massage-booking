@@ -24,6 +24,7 @@ const App = () => {
   const [users, userService] = useResource('/api/users')
   // appointmentService FETCHES ALL apps AND also all users apps by ID
   const [appointments, appointmentService] = useResource('/api/appointments')
+  const [stats, statsService] = useResource('api/stats')
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
@@ -110,6 +111,7 @@ const App = () => {
   useEffect(() => {
     userService.getAll()
     appointmentService.getAll()
+    statsService.getAll()
   }, [user])
 
 
@@ -166,7 +168,7 @@ const App = () => {
           {/* CURRENTLY ONLY DIRECT PROPS GIVEN TO STATS PAGE */}
           <Route exact path="/stats">
             <AppointmentContext.Provider value={{ appointments, appointmentService }}>
-              <Stats appointments={appointments} />
+              <Stats appointments={appointments} stats={stats} />
             </AppointmentContext.Provider>
           </Route>
 
