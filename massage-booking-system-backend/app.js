@@ -33,6 +33,7 @@ const masseussesRouter = require('./controllers/masseusses')
 const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const statsRouter = require('./controllers/stats')
 const authRouter = require('./controllers/auth')
 
 
@@ -42,6 +43,7 @@ app.use('/api/masseusses', masseussesRouter)
 app.use('/api/appointments', appointmentsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/stats', statsRouter)
 
 // router.use(protectedRoute.routeProtector)
 
