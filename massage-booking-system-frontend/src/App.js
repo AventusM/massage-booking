@@ -167,8 +167,8 @@ const App = () => {
           {/* ADD PROPER CONTEXT / STRAIGHT UP PROPS TO ACCESS APPOINTMENT STATS ETC.. */}
           {/* CURRENTLY ONLY DIRECT PROPS GIVEN TO STATS PAGE */}
           <Route exact path="/stats">
-            <AppointmentContext.Provider value={{ appointments, appointmentService }}>
-              <Stats appointments={appointments} stats={stats} />
+            <AppointmentContext.Provider value={{ appointments, appointmentService, stats}}>
+              <Stats />
             </AppointmentContext.Provider>
           </Route>
 
