@@ -6,18 +6,26 @@ import { OWN_APPOINTMENTS } from '../../types/logged_in'
 const CreateAppointment = (props) => {
   const { id } = props
   const { user } = useContext(UserContext)
-  const { appointments, appointmentService } = useContext(AppointmentContext)
-  // const appointmentContext = useContext(AppointmentContext)
-  // const appointmentService = appointmentContext.appointmentService
+  const { appointments, appointmentService, setErrorMessage } = useContext(AppointmentContext)
   let appointmentStartDate = appointments.find(app => app._id === id).start_date
-  // console.log('reservation rule check result ', reservationRuleCheck(user.appointments, appointmentStartDate))
+  // console.log('reservation rule check result ', reservationRuleCheck(currentUser.appointments, appointmentStartDate)) 
   const checkOk = reservationRuleCheck(user.appointments, appointmentStartDate)
   if (checkOk) {
+    let setMessage=setErrorMessage
+
+    const handleAppointmentCreation = () => {
+      appointmentService.update(id, { type_of_reservation: 1, user_id: user._id })
+      setMessage('Appointment reserved successfully')
+      setTimeout(() => {
+        setMessage(null)
+      }, 8000)
+    }
     return (
-      <button onClick={() => appointmentService.update(id, { type_of_reservation: 1, user_id: user._id })}>CREATE</button>
+      <button onClick={() => handleAppointmentCreation()}>CREATE</button>
     )
-  }
-  return null
+  
+    } 
+    return null
 }
 
 const CancelAppointment = (props) => {
