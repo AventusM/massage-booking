@@ -25,6 +25,7 @@ const App = () => {
   const [users, userService] = useResource('/api/users')
   // appointmentService FETCHES ALL apps AND also all users apps by ID
   const [appointments, appointmentService] = useResource('/api/appointments')
+  const [stats, statsService] = useResource('api/stats')
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
@@ -109,9 +110,10 @@ const App = () => {
   useEffect(() => {
     userService.getAll()
     appointmentService.getAll()
-  }, [user])
+    statsService.getAll()
+  }, [])
 
-  useEffect(() => {
+   useEffect(() => {
     if (window.localStorage.length > 0) {
       const local_storage_data = window.localStorage.getItem('loggedInUser')
       const parsed_local_storage_data = JSON.parse(local_storage_data)
@@ -121,7 +123,7 @@ const App = () => {
           setUser(user)
         })
     }
-  }, [appointments])
+  }, [appointments]) 
 
   if (user === null) {
     // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
@@ -167,24 +169,24 @@ const App = () => {
             </li>
           </ul>
         </nav>
+    <Switch>
+          <Route exact path="/">
+          <UserContext.Provider value={{ user, setUser, users, userService }}>
+            <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
+              <Notification message={errorMessage}/>
+              <Index />
+            </AppointmentContext.Provider>
+          </UserContext.Provider>  
+          </Route>
 
-        <UserContext.Provider value={{ user, setUser, users, userService }}>
-          <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
-            <Notification message={errorMessage}/>
-            <Route exact path="/" render={() => <Index />} />
-          </AppointmentContext.Provider>
-        </UserContext.Provider>
-
-        {/* ADD PROPER CONTEXT / STRAIGHT UP PROPS TO ACCESS APPOINTMENT STATS ETC.. */}
-        {/* CURRENTLY ONLY DIRECT PROPS GIVEN TO STATS PAGE */}
-        <AppointmentContext.Provider value={{ appointments, appointmentService }}>
+        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
           <Route exact path="/stats" render={() => <Stats />} />
         </AppointmentContext.Provider>
 
         <UserContext.Provider value={{ user, setUser, users, userService }}>
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
-
+      </Switch>
       </Router>
     </Fragment >
   )

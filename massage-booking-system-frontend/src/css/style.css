@@ -2,9 +2,73 @@
   box-sizing: border-box;
 }
 
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 body {
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: "Roboto", "Arial", sans-serif;
 }  
+
+.dashboard_user_list {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.dashboard_user_item {
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  margin: 5px;
+  min-width: 360px;
+  padding: 15px 10px;
+}
+
+.dashboard_user_item_name {
+  font-size: 1.4em;
+  font-weight: 600;
+}
+
+.dashboard_user_item_email {
+  /* TODO  */
+}
+
+.dashboard_user_item_number {
+  /* TODO  */
+}
+
+.dashboard_user_item_actions {
+  border-top: 1px solid black;
+  width: 100%;
+  /* border: 1px solid green; */
+}
+
+.dashboard_user_item_actions p {
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard_user_item_actions button {
+  border: 0;
+  margin-right: 5px;
+}
+
+/* SHOULD MOVE THIS TO OWN FILE -- media queries here get overridden later on */
+/* @media screen and(max-width: 825px){
+  .dashboard_user_list {
+    justify-content: center;
+  }
+} */
+
+
 
 .main_wrapper {
   background-color: #E4E4E1;
@@ -269,6 +333,10 @@ align-content: center;
     .userHomepageWrapper_desktop h2 {
       margin-top: 5%;
       font-size: 200%;
+    }
+    .dashboard_user_list {
+      /* BETTER BREAKPOINT MEDIA QUERY EXISTS CURRENTLY IN THE UPPER PART OF THIS FILE */
+      justify-content: center;
     }
   }
   
