@@ -115,11 +115,13 @@ const App = () => {
     const local_storage_data = window.localStorage.getItem('loggedInUser')
     const parsed_local_storage_data = JSON.parse(local_storage_data)
     // console.log('parsed -- ', parsed_local_storage_data)
+    if (parsed_local_storage_data !== null) {
     const id = parsed_local_storage_data._id
     userService.getOne(id)
       .then(user => {
         window.localStorage.setItem('logged_in_user_data', JSON.stringify({ ...user }))
       })
+    }
   }, [appointments])
 
   // useEffect(() => {

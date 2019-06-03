@@ -13,12 +13,12 @@ const CreateAppointment = (props) => {
   const handleAppointmentCreation = () => {
     const foundUser = users.find(u => user._id === u._id )
     let appointmentStartDate = appointments.find(app => app._id === id).start_date
-    console.log('reservation rule check result ', reservationRuleCheck(foundUser.appointments, appointmentStartDate)) 
+    console.log('reservation rule check result ', reservationRuleCheck(user.appointments, appointmentStartDate)) 
     console.log("tämän hetkisen käyttäjän ajat ", user.appointments)
-    console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", foundUser.appointments)
-    if (reservationRuleCheck(foundUser.appointments, appointmentStartDate)) {
+    console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", user.appointments)
+    if (reservationRuleCheck(user.appointments, appointmentStartDate)) {
       let setMessage=setErrorMessage
-      appointmentService.update(id, { type_of_reservation: 1, user_id: foundUser._id })
+      appointmentService.update(id, { type_of_reservation: 1, user_id: user._id })
       setMessage('Appointment reserved successfully')
       setTimeout(() => {
         setMessage(null)
@@ -52,7 +52,7 @@ const AllAppointments = () => {
 
   const allButOwnAppointments = appointments.filter(app => app.user_id !== user._id)
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
-  const todaysAppointments = allButOwnAppointments.filter((appointment) => {
+  const todaysAppointments = appointments.filter((appointment) => {
     let appointmentsDate = new Date (appointment.start_date)
     let appointmentsDay = appointmentsDate.getDate()
     let appointmentsMonth = appointmentsDate.getMonth() + 1
@@ -104,7 +104,7 @@ const AppointmentsList = () => {
   //console.log("tämän hetkisen käyttäjän ajat ", user.appointments)
   const foundUser = users.find(u => user._id === u._id )
   //console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", foundUser.appointments)
-  const ownAppointments = appointments.filter(app => app.user_id === foundUser._id)
+  const ownAppointments = appointments.filter(app => app.user_id === user._id)
   return (
     <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {
@@ -113,7 +113,7 @@ const AppointmentsList = () => {
             id={app._id}
             start_date={app.start_date}
             type_of_reservation={app.type_of_reservation} 
-            appUser = {foundUser} 
+            appUser = {user} 
             /> 
         )
       })}
