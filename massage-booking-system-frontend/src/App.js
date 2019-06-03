@@ -111,26 +111,16 @@ const App = () => {
   }, [user])
 
   useEffect(() => {
-    const local_storage_data = window.localStorage.getItem('loggedInUser')
-    const parsed_local_storage_data = JSON.parse(local_storage_data)
-    // console.log('parsed -- ', parsed_local_storage_data)
-    const id = parsed_local_storage_data._id
-    userService.getOne(id)
-      .then(user => {
-        window.localStorage.setItem('logged_in_user_data', JSON.stringify({ ...user }))
-      })
+    if (window.localStorage.length > 0) {
+      const local_storage_data = window.localStorage.getItem('loggedInUser')
+      const parsed_local_storage_data = JSON.parse(local_storage_data)
+      const id = parsed_local_storage_data._id
+      userService.getOne(id)
+        .then(user => {
+          setUser(user)
+        })
+    }
   }, [appointments])
-
-  // useEffect(() => {
-  //   const _id = localStorage.getItem('loggedInUser')._id
-
-  //   localStorage.clear()
-  //   userService.getOne(_id)
-  //     .then(user => {
-  //       window.localStorage.setItem('logged_in_user_data', JSON.stringify({ ...user }))
-  //     })
-  // }, [appointments])
-
 
   if (user === null) {
     // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
