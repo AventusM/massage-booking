@@ -1,10 +1,10 @@
 import React, { Fragment, useContext } from 'react'
-import Calendar from 'react-calendar';
+import Calendar from 'react-calendar'
 import { AppointmentContext, UserContext } from '../../App'
 import { Appointments } from './Appointment'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
-const Index = (props) => {
+const Index = props => {
   const { user } = useContext(UserContext)
   const { setSelectedDate } = useContext(AppointmentContext)
   // const currentUser = appointmentContext.user
@@ -14,7 +14,7 @@ const Index = (props) => {
       Welcome {user.name}!
       <Calendar
         tileClassName="calendarItem"
-        onChange={(value) => {
+        onChange={value => {
           // console.log('value ', value, 'value type', typeof value)
           setSelectedDate(value)
         }}

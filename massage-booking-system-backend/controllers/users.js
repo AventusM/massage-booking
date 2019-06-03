@@ -18,22 +18,22 @@ const formatUser = (input) => {
 }
 
 usersRouter.get('/', async (req, res, next) => {
-    try {
-        const users = await User.find({}).populate('appointments')
-        res.json(users.map(formatUser))
-    } catch (exception) {
-        next(exception)
-    }
+  try {
+    const users = await User.find({}).populate('appointments')
+    res.json(users.map(formatUser))
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 usersRouter.get('/:id', async (req, res, next) => {
-    try {
-        const user = await User.findById({ _id: req.params.id })
-        console.log("userriii: ", user)
-        res.json(user)
-    } catch (exception) {
-        next(exception)
-    }
+  try {
+    const user = await User.findById({ _id: req.params.id })
+    console.log('userriii: ', user)
+    res.json(user)
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 // User data which gets updated by administrator only
@@ -66,14 +66,13 @@ usersRouter.put('/:id', async (req, res, next) => {
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {
-    try {
-        const user = await User.findById({ _id: req.params.id })
-        await user.remove()
-        res.status(204).end()
-    } catch (exception) {
-        next(exception)
-    }
-
+  try {
+    const user = await User.findById({ _id: req.params.id })
+    await user.remove()
+    res.status(204).end()
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 module.exports = usersRouter

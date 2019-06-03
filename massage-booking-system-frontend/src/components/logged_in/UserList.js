@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../../App'
 
-
-const User = (props) => {
+const User = props => {
   // Order depends on value prop in original provider (this one in App.js)
   const { user, userService } = useContext(UserContext)
   const { id, name, email, number, admin, banned } = props
@@ -39,7 +38,8 @@ const UserList = (props) => {
     <ul className="dashboard_user_list">
       {users.map(user => {
         return (
-          <User key={user._id}
+          <User
+            key={user._id}
             id={user._id}
             name={user.name}
             email={user.email}
@@ -50,7 +50,6 @@ const UserList = (props) => {
         )
       })}
     </ul>
-
   )
 }
 
