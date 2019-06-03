@@ -9,14 +9,14 @@ const useResource = (baseUrl) => {
 
   const getAll = async () => {
     const config = { headers: { Authorization: token } }
-    // console.log('config', config)
+
     const response = await axios.get(baseUrl, config)
     setResources(response.data)
   }
 
   const create = async (data) => {
     const config = { headers: { Authorization: token } }
-    // console.log('config', config)
+
     const newResource = await axios.post(baseUrl, data, config)
     const updatedResources = resources.concat(newResource.data)
     setResources(updatedResources)
@@ -24,15 +24,16 @@ const useResource = (baseUrl) => {
 
   const update = async (id, data) => {
     const config = { headers: { Authorization: token } }
-    console.log('Update data given: ', data)
-    // console.log('config', config)
+
     const updatedResource = await axios.put(`${baseUrl}/${id}`, data, config)
-    setResources(resources.map(resource => resource._id !== id ? resource : updatedResource.data))
+    if (updatedResource.data.hasOwnProperty('_id')) {
+      setResources(resources.map(resource => resource._id !== id ? resource : updatedResource.data))
+    }
   }
 
   const remove = async (id) => {
     const config = { headers: { Authorization: token } }
-    // console.log('config', config)
+
     const deletedResource = await axios.delete(`${baseUrl}/${id}`, config)
     const updatedResources = resources.filter(resource => resource._id !== id)
     setResources(updatedResources)
@@ -40,6 +41,7 @@ const useResource = (baseUrl) => {
 
   const getOne = async (id) => {
     const config = { headers: { Authorization: token } }
+
     const response = await axios.get(`${baseUrl}/${id}`, config)
     return response.data
   }

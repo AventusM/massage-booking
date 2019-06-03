@@ -16,8 +16,8 @@ import logo from "./pics/unity5.png"
 import Notification from './components/Notification'
 
 // CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-const UserContext = createContext(null)
-const AppointmentContext = createContext(null)
+// const UserContext = createContext(null)
+// const AppointmentContext = createContext(null)
 
 
 const App = () => {
@@ -90,12 +90,12 @@ const App = () => {
     let token = params.get('token');
     let id = params.get('id');
     if (token) {
-     userService.getOne(id).then(user => {
-      setUser(user)
-      window.localStorage.setItem('loggedInUser', JSON.stringify({ ...user, token }))
-      userService.setToken(token)
-      appointmentService.setToken(token)
-     }) 
+      userService.getOne(id).then(user => {
+        setUser(user)
+        window.localStorage.setItem('loggedInUser', JSON.stringify({ ...user, token }))
+        userService.setToken(token)
+        appointmentService.setToken(token)
+      })
 
       redirectToIndex()
     } else if (window.localStorage.getItem('loggedInUser')) {
@@ -113,6 +113,17 @@ const App = () => {
     statsService.getAll()
   }, [user])
 
+  useEffect(() => {
+    if (window.localStorage.length > 0) {
+      const local_storage_data = window.localStorage.getItem('loggedInUser')
+      const parsed_local_storage_data = JSON.parse(local_storage_data)
+      const id = parsed_local_storage_data._id
+      userService.getOne(id)
+        .then(user => {
+          setUser(user)
+        })
+    }
+  }, [appointments])
 
   if (user === null) {
     // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
@@ -120,10 +131,13 @@ const App = () => {
     return (
       <Fragment>
         <Router>
-          <Route exact path="/" render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} />
+          <Route exact path="/">
+            <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />
+          </Route>
+          {/* </Route> render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} /> */}
           <Route exact path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
         </Router>
-      </Fragment>
+      </Fragment >
     )
   }
   return (
@@ -156,7 +170,6 @@ const App = () => {
           </ul>
         </nav>
 
-        <Switch>
           <Route exact path="/">
           <UserContext.Provider value={{ user, setUser, users, userService }}>
             <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
@@ -166,27 +179,20 @@ const App = () => {
           </UserContext.Provider>  
           </Route>
 
-          {/* ADD PROPER CONTEXT / STRAIGHT UP PROPS TO ACCESS APPOINTMENT STATS ETC.. */}
-          {/* CURRENTLY ONLY DIRECT PROPS GIVEN TO STATS PAGE */}
-          <Route exact path="/stats">
-            <AppointmentContext.Provider value={{ appointments, appointmentService, stats}}>
-              <Stats />
-            </AppointmentContext.Provider>
-          </Route>
+        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
+          <Route exact path="/stats" render={() => <Stats />} />
+        </AppointmentContext.Provider>
 
-          <Route exact path="/dashboard">
-            <UserContext.Provider value={{ user, setUser, users, userService }}>
-              <DashBoard />
-            </UserContext.Provider>
-          </Route>
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
+          <Route exact path="/dashboard" render={() => <DashBoard />} />
+        </UserContext.Provider>
 
-          <Route render={() => <NotFoundPage />} />
-
-        </Switch>
       </Router>
-    </Fragment>
+    </Fragment >
   )
 }
 
-export { AppointmentContext, UserContext }
+export const AppointmentContext = createContext(null);
+export const UserContext = createContext(null);
+// export {AppointmentContext, UserContext }
 export default App

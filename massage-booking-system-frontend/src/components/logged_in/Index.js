@@ -1,21 +1,21 @@
 import React, { Fragment, useContext } from 'react'
 import Calendar from 'react-calendar';
-import { AppointmentContext } from '../../App'
+import { AppointmentContext, UserContext } from '../../App'
 import { Appointments } from './Appointment'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const Index = (props) => {
-  const appointmentContext = useContext(AppointmentContext)
-  const currentUser = appointmentContext.user
-  const setSelectedDate = appointmentContext.setSelectedDate
+  const { user } = useContext(UserContext)
+  const { setSelectedDate } = useContext(AppointmentContext)
+  // const currentUser = appointmentContext.user
+  // const setSelectedDate = appointmentContext.setSelectedDate
   return (
     <Fragment>
-      Welcome {currentUser.name}!
+      Welcome {user.name}!
       <Calendar
         tileClassName="calendarItem"
         onChange={(value) => {
-          console.log('value ', value, 'value type', typeof value)
-          //console.log('setselecteddate', setSelectedDate)
+          // console.log('value ', value, 'value type', typeof value)
           setSelectedDate(value)
         }}
       />
