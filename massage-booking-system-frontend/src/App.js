@@ -158,37 +158,33 @@ const App = () => {
             </li>
           </ul>
         </nav>
-        <Switch>
-          <Route exact path="/">
-            <UserContext.Provider value={{ user, setUser, users, userService }}>
-              <AppointmentContext.Provider
-                value={{
-                  user,
-                  appointments,
-                  appointmentService,
-                  selectedDate,
-                  setSelectedDate,
-                  setErrorMessage,
-                }}
-              >
-                <Notification message={errorMessage} />
-                <Index />
-              </AppointmentContext.Provider>
-            </UserContext.Provider>
-          </Route>
 
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
           <AppointmentContext.Provider
-            value={{ appointments, appointmentService, stats }}
+            value={{
+              user,
+              appointments,
+              appointmentService,
+              selectedDate,
+              setSelectedDate,
+              setErrorMessage,
+            }}
           >
-            <Route exact path="/stats" render={() => <Stats />} />
+            <Route exact path="/" render={() => <Index />} />
           </AppointmentContext.Provider>
+        </UserContext.Provider>
 
-          <UserContext.Provider value={{ user, setUser, users, userService }}>
-            <Route exact path="/dashboard" render={() => <DashBoard />} />
-          </UserContext.Provider>
-        </Switch>
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
+          <Route exact path="/dashboard" render={() => <DashBoard />} />
+        </UserContext.Provider>
+
+        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
+          <Route exact path="/stats" render={() => <Stats />} />
+        </AppointmentContext.Provider>
+
+
       </Router>
-    </Fragment>
+    </Fragment >
   )
 }
 
