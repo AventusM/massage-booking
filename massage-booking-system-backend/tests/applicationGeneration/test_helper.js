@@ -16,7 +16,7 @@ const emptyTheDatabaseOfAppointments = async ()=>{
     let response = await Appointment.find()
     while(response.length != 0){
       await Appointment.deleteMany({})
-      await sleep(100)
+      await sleep(500)
       response = await Appointment.find()
       console.log('how many appointments in the database (loop ends when 0)', response.length)
     }

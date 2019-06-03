@@ -169,7 +169,7 @@ const App = () => {
             </li>
           </ul>
         </nav>
-
+    <Switch>
           <Route exact path="/">
           <UserContext.Provider value={{ user, setUser, users, userService }}>
             <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
@@ -186,7 +186,7 @@ const App = () => {
         <UserContext.Provider value={{ user, setUser, users, userService }}>
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
-
+      </Switch>
       </Router>
     </Fragment >
   )
