@@ -30,13 +30,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
-  const email = useField('text')
-  const password = useField('password')
-  const registrationName = useField('text')
-  const registrationEmail = useField('text')
-  const registrationNumber = useField('text')
-  const registrationPassword = useField('password')
-  const registrationPasswordCheck = useField('password')
 
 
   const redirectToIndex = () => {
@@ -58,27 +51,6 @@ const App = () => {
       redirectToIndex()
     } catch (exception) {
       setErrorMessage("Couldn't logout")
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 3000)
-    }
-  }
-
-  const handleRegistration = async (event) => {
-    event.preventDefault()
-    console.log('handleRegistration called')
-    try {
-      const userObject = {
-        name: registrationName.value,
-        number: registrationNumber.value,
-        email: registrationEmail.value,
-        admin: false,
-        password: registrationPassword.value
-      }
-      userService.create(userObject)
-      redirectToIndex()
-    } catch (exception) {
-      setErrorMessage("Registration failed")
       setTimeout(() => {
         setErrorMessage(null)
       }, 3000)
@@ -113,17 +85,17 @@ const App = () => {
     statsService.getAll()
   }, [])
 
-   useEffect(() => {
-    if (window.localStorage.length > 0) {
-      const local_storage_data = window.localStorage.getItem('loggedInUser')
-      const parsed_local_storage_data = JSON.parse(local_storage_data)
-      const id = parsed_local_storage_data._id
-      userService.getOne(id)
-        .then(user => {
-          setUser(user)
-        })
-    }
-  }, [appointments]) 
+  // useEffect(() => {
+  //   if (window.localStorage.length > 0) {
+  //     const local_storage_data = window.localStorage.getItem('loggedInUser')
+  //     const parsed_local_storage_data = JSON.parse(local_storage_data)
+  //     const id = parsed_local_storage_data._id
+  //     userService.getOne(id)
+  //       .then(user => {
+  //         setUser(user)
+  //       })
+  //   }
+  // }, [appointments])
 
   if (user === null) {
     // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
@@ -132,10 +104,8 @@ const App = () => {
       <Fragment>
         <Router>
           <Route exact path="/">
-            <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />
+            <LoginIndex handleLoginFunction={handleLogin} errorMessage={errorMessage} />
           </Route>
-          {/* </Route> render={() => <LoginIndex handleLoginFunction={handleLogin} email={email} password={password} errorMessage={errorMessage} />} /> */}
-          <Route exact path="/registration" render={() => <RegistrationFormFragment handleRegistrationFunction={handleRegistration} name={registrationName} email={registrationEmail} number={registrationNumber} password={registrationPassword} passwordCheck={registrationPasswordCheck} />} />
         </Router>
       </Fragment >
     )
@@ -165,28 +135,27 @@ const App = () => {
             </li>
             <li>
               <i onClick={handleLogout} id="logout" className="fas fa-sign-out-alt"></i>
-
             </li>
           </ul>
         </nav>
-    <Switch>
+        <Switch>
           <Route exact path="/">
-          <UserContext.Provider value={{ user, setUser, users, userService }}>
-            <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
-              <Notification message={errorMessage}/>
-              <Index />
-            </AppointmentContext.Provider>
-          </UserContext.Provider>  
+            <UserContext.Provider value={{ user, setUser, users, userService }}>
+              <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
+                <Notification message={errorMessage} />
+                <Index />
+              </AppointmentContext.Provider>
+            </UserContext.Provider>
           </Route>
 
-        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
-          <Route exact path="/stats" render={() => <Stats />} />
-        </AppointmentContext.Provider>
+          <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
+            <Route exact path="/stats" render={() => <Stats />} />
+          </AppointmentContext.Provider>
 
-        <UserContext.Provider value={{ user, setUser, users, userService }}>
-          <Route exact path="/dashboard" render={() => <DashBoard />} />
-        </UserContext.Provider>
-      </Switch>
+          <UserContext.Provider value={{ user, userService }}>
+            <Route exact path="/dashboard" render={() => <DashBoard />} />
+          </UserContext.Provider>
+        </Switch>
       </Router>
     </Fragment >
   )
@@ -194,5 +163,4 @@ const App = () => {
 
 export const AppointmentContext = createContext(null);
 export const UserContext = createContext(null);
-// export {AppointmentContext, UserContext }
 export default App

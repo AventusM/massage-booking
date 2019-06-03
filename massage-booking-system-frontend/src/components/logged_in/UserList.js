@@ -4,6 +4,7 @@ import { UserContext } from '../../App'
 
 const User = (props) => {
   // Order depends on value prop in original provider (this one in App.js)
+  console.log('UserList.js props', props)
   const { user, userService } = useContext(UserContext)
   const { id, name, email, number, admin, banned } = props
   return (
