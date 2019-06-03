@@ -50,7 +50,7 @@ loginRouter.post('/', async (req, res, next) => {
     */
     const body = req.body
 
-    const foundUser = await User.findOne({ email: body.email })
+    const foundUser = await User.findOne({ email: body.email }).populate('appointments')
     console.log('found user', foundUser)
     const pwMatch = foundUser === null
       ? false
@@ -80,5 +80,7 @@ loginRouter.post('/', async (req, res, next) => {
     next(exception)
   }
 })
+
+
 
 module.exports = loginRouter

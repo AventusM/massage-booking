@@ -22,11 +22,12 @@ const routeProtector = (req, res, next) => {
             token = authorization.substring(7)
         }
 
-        console.log('token', token)
+
         const decodedToken = jsonWebToken.verify(token, process.env.SECRET)
         if (!token || !decodedToken.id) {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
+        
         next()
     }
 }
