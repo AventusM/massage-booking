@@ -3,12 +3,21 @@
 }
 
 body {
-  font-family: "Helvetica", "Arial", sans-serif;
-}  
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
 
 .main_wrapper {
-  background-color: #E4E4E1;
-  background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
+  background-color: #e4e4e1;
+  background-image: radial-gradient(
+      at top center,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(0, 0, 0, 0.03) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(143, 152, 157, 0.6) 100%
+    );
   background-blend-mode: normal, multiply;
   min-height: 100%;
   min-width: 100%;
@@ -18,17 +27,15 @@ body {
 }
 
 .login_wrapper_mobile img {
-    width: 170px;
-   display: block;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: 100px;
-   margin-bottom: 30px;
-
-
+  width: 170px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  margin-bottom: 30px;
 }
 
-.login_wrapper_mobile{
+.login_wrapper_mobile {
   background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
   min-height: 100%;
   min-width: 100%;
@@ -41,30 +48,28 @@ body {
 }
 
 .userList {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-
 .appointmentItem {
-padding: 5px;
-border: 1px solid black;
-display: grid;
-grid-template-columns: 75px auto 100px;
-margin-bottom: 20px;
+  padding: 5px;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 75px auto 100px;
+  margin-bottom: 20px;
 }
 
 .appointmentItem div {
-word-break: break-all;
-margin-right: 10px;
+  word-break: break-all;
+  margin-right: 10px;
 }
 
 .appointmentItem button {
-border: none;
-background-color: black;
-color: white;
+  border: none;
+  background-color: black;
+  color: white;
 }
-
 
 .timelist {
   padding: 5px;
@@ -75,22 +80,22 @@ color: white;
   margin: 2px;
 }
 
-.login_wrapper_mobile h1, h3 {
+.login_wrapper_mobile h1,
+h3 {
   text-align: center;
-  font-family: Sans-serif, "Roboto";
+  font-family: Sans-serif, 'Roboto';
   color: white;
-  
 }
 
 .login_wrapper_mobile form {
-margin: auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
   width: 250px;
   margin-top: 25px;
 }
 
-.login_wrapper_mobile label{
+.login_wrapper_mobile label {
   margin-bottom: 5px;
   color: white;
   opacity: 0.9;
@@ -108,65 +113,58 @@ margin: auto;
   border: 0px;
 }
 
-.login_wrapper_mobile button{
+.login_wrapper_mobile button {
   background: #09203f;
   border-radius: 15px;
   color: white;
   padding: 10px 5px;
 }
 
-.login_wrapper_desktop img{
+.login_wrapper_desktop img {
   width: 30%;
   display: block;
   float: right;
   margin-right: 2%;
   margin-top: 20%;
-  margin-bottom: 2%; 
+  margin-bottom: 2%;
   position: fixed;
   bottom: 0;
   right: 0;
-
- 
-
-} 
-
-.login_wrapper_desktop{
-/* background-image: url("../pics/unity2.jpeg");*/
-background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
-min-height: 100%;
-min-width: 700px;
-width: 100%;
-height: auto;
-position: fixed;
-top: 0;
-left: 0;
-align-content: center;
-
 }
 
-.login_wrapper_desktop h1, h3 {
+.login_wrapper_desktop {
+  /* background-image: url("../pics/unity2.jpeg");*/
+  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+  min-height: 100%;
+  min-width: 700px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  align-content: center;
+}
+
+.login_wrapper_desktop h1,
+h3 {
   text-align: center;
   margin-top: 300px;
   font-family: Roboto, sans-serif;
   font-size: 500%;
   color: white;
-  
 }
 
 .login_wrapper_desktop form {
-
   display: flex;
   flex-direction: column;
   width: 300px;
   margin: auto;
 }
 
-.login_wrapper_desktop label{
+.login_wrapper_desktop label {
   margin-bottom: 5px;
   font-size: 120%;
   color: white;
-
-  
 }
 
 .login_wrapper_desktop input {
@@ -180,7 +178,7 @@ align-content: center;
   width: 100%;
 }
 
-.login_wrapper_desktop button{
+.login_wrapper_desktop button {
   border: 3px solid #09203f;
   background: #09203f;
   font-size: 120%;
@@ -189,24 +187,29 @@ align-content: center;
   padding: 10px 5px;
   height: 50px;
   width: 100%;
-  
 }
 
 /* Tästä alkaa Homepage Desktop*/
 
-
-.userHomepageWrapper_desktop{
-  background-color: #E4E4E1;
-  background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
-   background-blend-mode: normal, multiply;
+.userHomepageWrapper_desktop {
+  background-color: #e4e4e1;
+  background-image: radial-gradient(
+      at top center,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(0, 0, 0, 0.03) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(143, 152, 157, 0.6) 100%
+    );
+  background-blend-mode: normal, multiply;
   min-height: 100%;
   min-width: 100%;
   height: auto;
   position: fixed;
   left: 0;
-  
 }
-
 
 .userHomepageWrapper_desktop form {
   display: flex;
@@ -216,14 +219,11 @@ align-content: center;
   margin-left: auto;
 }
 
-
-@media screen
-  and (max-width: 700px) {
-    .userHomepageWrapper_desktop form {
-      width: 220px;
-    }
+@media screen and (max-width: 700px) {
+  .userHomepageWrapper_desktop form {
+    width: 220px;
   }
-  
+}
 
 .userHomepageWrapper_desktop input {
   text-align: center;
@@ -245,8 +245,6 @@ align-content: center;
   color: white;
 }
 
-  
-
 .userHomepageWrapper_desktop h2 {
   text-align: center;
   font-family: Roboto, sans-serif;
@@ -255,21 +253,18 @@ align-content: center;
   margin-top: 2%;
 }
 
-
-@media screen
-  and (max-width: 700px) {
-    .userHomepageWrapper_desktop h3 {
-      margin-top: 5%;
-      font-size: 120%;
-    }
-    .userHomepageWrapper_desktop h2 {
-      margin-top: 5%;
-      font-size: 200%;
-    }
+@media screen and (max-width: 700px) {
+  .userHomepageWrapper_desktop h3 {
+    margin-top: 5%;
+    font-size: 120%;
   }
-  
+  .userHomepageWrapper_desktop h2 {
+    margin-top: 5%;
+    font-size: 200%;
+  }
+}
 
-.userHomepageWrapper_desktop button{
+.userHomepageWrapper_desktop button {
   border: 3px solid #537895;
   background: #537895;
   font-size: 120%;
@@ -278,15 +273,12 @@ align-content: center;
   padding: 10px 5px;
   height: 50px;
   width: 100%;
-  
 }
 
-.userHomepageWrapper_desktop label{
+.userHomepageWrapper_desktop label {
   margin-bottom: 5px;
   font-size: 120%;
-  color: #334e63
-
-  
+  color: #334e63;
 }
 
 .alert {
@@ -299,13 +291,11 @@ align-content: center;
   width: 100%;
 }
 
-
-
 /* NavBar */
 
 .navbar {
   font-size: 18px;
-  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf   100%);
+  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 5px;
 }
@@ -313,8 +303,8 @@ align-content: center;
   position: absolute;
   top: 10px;
   right: 20px;
-  cursor: pointer; 
-  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 24px;
 }
 
@@ -337,7 +327,7 @@ align-content: center;
   cursor: pointer;
   position: relative;
   top: 6px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .logo {
@@ -352,28 +342,28 @@ align-content: center;
 
 @media screen and (min-width: 700px) {
   .navbar {
-      display: flex;
-      justify-content: space-between;
-      padding-bottom: 0;
-      height: 60px;
-      align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 60px;
+    align-items: center;
   }
   .main-nav {
-      display: flex;
-      margin-right: 30px;
-      flex-direction: row;
-      justify-content: flex-end;
+    display: flex;
+    margin-right: 30px;
+    flex-direction: row;
+    justify-content: flex-end;
   }
   .main-nav li {
-      margin: 0;
+    margin: 0;
   }
   .nav-link {
-      margin-left: 40px;
+    margin-left: 40px;
   }
 
   #logout {
-    cursor: pointer; 
-    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
     font-size: 24px;
     margin-top: 9px;
     margin-left: 50px;
@@ -385,25 +375,22 @@ align-content: center;
     position: relative;
     top: -6px;
     width: 50px;
-}
+  }
 
- .navbar-toggle {
-     display: none;
+  .navbar-toggle {
+    display: none;
   }
 
   .navbar button {
     margin-left: 40px;
   }
-  
-  .nav-link:hover {
-      color: rgba(255, 255, 255, 1);
-  }
 
+  .nav-link:hover {
+    color: rgba(255, 255, 255, 1);
+  }
 }
 
-
 /*Tästä alkaa Homepage Mobile*/
-
 
 /*
 @media screen
@@ -478,23 +465,22 @@ align-content: center;
 */
 /**/
 
-
 .timelist {
-    padding: 5px;
-    list-style-type: none;
-    border-style: solid;
-    border-width: 1px;
-    align-content: center;
-    margin: 2px;
+  padding: 5px;
+  list-style-type: none;
+  border-style: solid;
+  border-width: 1px;
+  align-content: center;
+  margin: 2px;
 }
 
 .timelist_button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 2px 5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-  }
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 2px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}

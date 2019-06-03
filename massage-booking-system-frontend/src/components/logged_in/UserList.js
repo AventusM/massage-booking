@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../../App'
 
-const User = (props) => {
+const User = props => {
   // Order depends on value prop in original provider (this one in App.js)
   const currentUserContext = useContext(UserContext)
   const currentUser = currentUserContext.user
@@ -13,21 +13,27 @@ const User = (props) => {
       <div>Data for {name}</div>
       <p>Email: {email}</p>
       <p>Number: {number}</p>
-      {currentUser.admin
-        ? <button onClick={() => userService.remove(id)}>REMOVE</button>
-        : <div>Temporary view shown that conditional operator works. Admin gets shown remove button instead of this text</div>}
+      {currentUser.admin ? (
+        <button onClick={() => userService.remove(id)}>REMOVE</button>
+      ) : (
+        <div>
+          Temporary view shown that conditional operator works. Admin gets shown
+          remove button instead of this text
+        </div>
+      )}
     </li>
   )
 }
 
-const UserList = (props) => {
+const UserList = props => {
   const currentUserContext = useContext(UserContext)
   const users = currentUserContext.users
   return (
     <ul>
       {users.map(user => {
         return (
-          <User key={user._id}
+          <User
+            key={user._id}
             id={user._id}
             name={user.name}
             email={user.email}
@@ -36,7 +42,6 @@ const UserList = (props) => {
         )
       })}
     </ul>
-
   )
 }
 

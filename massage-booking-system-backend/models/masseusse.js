@@ -3,24 +3,24 @@ const mongoose = require('mongoose')
 const masseusseSchema = mongoose.Schema({
   id: {
     type: Number,
-    unique: true
+    unique: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   number: {
     type: String,
-    required: true
+    required: true,
   },
   passwordHash: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const Masseusse = mongoose.model('Masseusse', masseusseSchema)
