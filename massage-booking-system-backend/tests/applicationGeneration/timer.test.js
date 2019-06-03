@@ -15,6 +15,9 @@ let friday = timer.formatTime(new Date('July 19, 2019 12:00:00'))
 let saturday = timer.formatTime(new Date('July 20, 2019 12:00:00'))
 let sunday = timer.formatTime(new Date('July 21, 2019 12:00:00'))
 
+/**
+ * IF TESTS FAIL GO TO tests/applicationGeneration/test_helper.js and increse the time in the loop of the function "emptyTheDatabaseOfAppointments"
+ */
 describe('with any date given', () => {
     beforeEach(async () => {
       jest.setTimeout(1000000)
