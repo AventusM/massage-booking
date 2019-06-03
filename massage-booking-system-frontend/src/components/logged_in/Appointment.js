@@ -23,6 +23,8 @@ const CreateAppointment = (props) => {
       setTimeout(() => {
         setMessage(null)
       }, 8000)
+    } else {
+      window.alert("You have already booked an appointment this week")
     }
   }
 
@@ -52,7 +54,7 @@ const AllAppointments = () => {
 
   const allButOwnAppointments = appointments.filter(app => app.user_id !== user._id)
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
-  const todaysAppointments = appointments.filter((appointment) => {
+  const todaysAppointments = allButOwnAppointments.filter((appointment) => {
     let appointmentsDate = new Date (appointment.start_date)
     let appointmentsDay = appointmentsDate.getDate()
     let appointmentsMonth = appointmentsDate.getMonth() + 1
