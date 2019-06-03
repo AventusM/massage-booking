@@ -6,7 +6,7 @@ import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const CreateAppointment = (props) => {
   const { id, start_date } = props
-  const { user, users, userService } = useContext(UserContext)
+  const { user, users } = useContext(UserContext)
   const { appointments, appointmentService, setErrorMessage } = useContext(AppointmentContext)
   
   
@@ -101,9 +101,9 @@ const AllAppointments = () => {
 const AppointmentsList = () => {
   const { appointments } = useContext(AppointmentContext)
   const { user, users } = useContext(UserContext)
-  console.log("tämän hetkisen käyttäjän ajat ", user.appointments)
+  //console.log("tämän hetkisen käyttäjän ajat ", user.appointments)
   const foundUser = users.find(u => user._id === u._id )
-  console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", foundUser.appointments)
+  //console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", foundUser.appointments)
   const ownAppointments = appointments.filter(app => app.user_id === foundUser._id)
   return (
     <ul className="appointmentListWrapper">
