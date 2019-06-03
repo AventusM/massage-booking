@@ -43,7 +43,10 @@ const App = () => {
 
   const handleLogin = event => {
     event.preventDefault()
-    window.open('http://127.0.0.1:3001/auth/google', '_self')
+    window.open(
+      'https://glacial-lowlands-81447.herokuapp.com/auth/google',
+      '_self'
+    )
     redirectToIndex()
   }
 
@@ -178,13 +181,13 @@ const App = () => {
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
 
-        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
+        <AppointmentContext.Provider
+          value={{ appointments, appointmentService, stats }}
+        >
           <Route exact path="/stats" render={() => <Stats />} />
         </AppointmentContext.Provider>
-
-
       </Router>
-    </Fragment >
+    </Fragment>
   )
 }
 

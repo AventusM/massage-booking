@@ -30,7 +30,12 @@ authRouter.get(
       name: user.name,
     }
     const token = jsonWebToken.sign(payload, process.env.SECRET)
-    res.redirect(307, `http://localhost:3000/?token=${token}&id=${user._id}`)
+    res.redirect(
+      307,
+      `https://glacial-lowlands-81447.herokuapp.com/?token=${token}&id=${
+        user._id
+      }`
+    )
   }
 )
 
