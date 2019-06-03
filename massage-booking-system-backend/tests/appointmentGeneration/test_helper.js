@@ -10,7 +10,7 @@ const howManyAppointmentsAreInDB = async() => {
 }
 /**
  * empties the database and makes sure the database is truly empty by waiting in a loop (500ms) to make sure there is no data being written to it.
- * IF TESTS FAIL INCREASE TIME!
+ * IF TESTS FAIL INCREASE THE SLEEP TIME VALUE INSIDE THE LOOP! 
  */
 const emptyTheDatabaseOfAppointments = async ()=>{
     await sleep(500)

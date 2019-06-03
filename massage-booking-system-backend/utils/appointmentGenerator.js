@@ -12,13 +12,10 @@ const createEmptyAppointment = async (start_date, end_date) =>{
    /* console.log('start date', start_date)
     console.log('end date  ', end_date)
     */
-    let does = await doesAppointmentExist(new Date(start_date))
-    if(does){
-    let start = start_date.getTime()
-    let end = end_date.getTime()
+    if(await doesAppointmentExist(new Date(start_date))){
     const appointment = new Appointment({
-        start_date: start,
-        end_date: end,
+        start_date: start_date.getTime(),
+        end_date: end_date.getTime(),
         type_of_reservation: 0
       })
       try {
@@ -27,7 +24,7 @@ const createEmptyAppointment = async (start_date, end_date) =>{
           console.log(exception)
       }
     }else{
-        console.log('appointment already exists!', start_date)
+    //   console.log('appointment already exists!', start_date)
     }
 }
     /**
