@@ -1,10 +1,16 @@
 import React from 'react'
 
-const RegistrationForm = (props) => {
-  const { handleRegistrationFunction, name, email, number, password, passwordCheck } = props
+const RegistrationForm = props => {
+  const {
+    handleRegistrationFunction,
+    name,
+    email,
+    number,
+    password,
+    passwordCheck,
+  } = props
   return (
     <form onSubmit={handleRegistrationFunction}>
-
       <label>Name</label>
       <input
         type={name.type}

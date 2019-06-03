@@ -60,9 +60,11 @@ const AllAppointments = () => {
     let appointmentsMonth = appointmentsDate.getMonth() + 1
     let appointmentsYear = appointmentsDate.getFullYear()
 
-    return appointmentsMonth === selectedMonth
-      && appointmentsDay === selectedDay
-      && appointmentsYear === selectedYear
+    return (
+      appointmentsMonth === selectedMonth &&
+      appointmentsDay === selectedDay &&
+      appointmentsYear === selectedYear
+    )
   })
   
 
@@ -86,7 +88,8 @@ const AllAppointments = () => {
     <ul className="appointmentListWrapper">
       {todaysAppointments.map(app => {
         return (
-          <Appointment key={app._id}
+          <Appointment
+            key={app._id}
             id={app._id}
             start_date={app.start_date}
             type_of_reservation={app.type_of_reservation} 
@@ -98,7 +101,6 @@ const AllAppointments = () => {
    
     </ul>
   )
-
 }
 
 const AppointmentsList = () => {
@@ -112,7 +114,8 @@ const AppointmentsList = () => {
     <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {
         return (
-          <Appointment key={app._id}
+          <Appointment
+            key={app._id}
             id={app._id}
             start_date={app.start_date}
             type_of_reservation={app.type_of_reservation} 
@@ -192,4 +195,3 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
 }
 
 export { Appointments }
-

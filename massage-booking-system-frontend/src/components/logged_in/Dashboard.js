@@ -6,6 +6,7 @@ import UserList from './UserList'
 // 1. List of all banned users
 // 2. List of all priviledged users (masseusses, admins)
 const DashBoard = (props) => {
+  console.log('We are in dashboard', props)
   return (
     <UserList />
   )
