@@ -1,6 +1,6 @@
 const schedule = require('node-schedule')
 const generator = require('./appointmentGenerator')
-const appoint = require('../models/appointment') 
+const Appointment = require('../models/appointment') 
  
 
   /**
@@ -18,7 +18,7 @@ const appoint = require('../models/appointment')
    * finds the day given as a parameter from the week which is defined by the date given as a parameter and returns it. 
    */
   const setDay = (day, date) =>{
-    var today = date.getDay()
+    let today = date.getDay()
     if(today == day){
       return date
     }else if(today < day){
@@ -49,25 +49,26 @@ const appoint = require('../models/appointment')
    * @param {*} date represents the week.
    */
   const pickDays = async (date) =>{
-    var monday = setDay(1 ,new Date(date))
-    var tuesday = setDay(2 ,new Date(date))
+    let monday = setDay(1 ,new Date(date))
+    let tuesday = setDay(2 ,new Date(date))
     await ifNotInDBCreateDay(new Date(monday))
     await ifNotInDBCreateDay(new Date(tuesday))
   }
 
   /**
-   * Checks if database contains appointments for the day (compares date given as a parameter that is formated to 8:55:00 time to appointments starting times in the database).
-   * If a match is found the method doesnt do anythings, else it will generate a day full of appointments by calling generator.
+   * Checks if database contains appointments for the day (compares date given as a parameter that is formated to 16:50:00 time to appointments ending times in the database to find the last appointment of the day).
+   * If a match is found the method doesnt do anything, else it will generate a day full of appointments by calling generator.
    * @param {*} date represents the day.
    */
   const ifNotInDBCreateDay = async(date) =>{
   date = formatTime(new Date(date))
-  var doesDayHaveAppointments = await appoint.find({start_date: date})
+  let checkup = new Date(date).setMinutes(475)
+  let doesDayHaveAppointments = await Appointment.find({end_date: checkup})
   if(doesDayHaveAppointments.length == 0 && date.toISOString().includes('08:55:00')){
-    await generator(new Date(date))
+    await generator.generateAppointmentsForDay(new Date(date))
    // console.log('date has been saved into database', date)
   }else{
-    console.log('day has appointments in database or time is formatted wrong', date)
+    console.log('day has appointments in database or time is formatted wrong', date, ' checkup date: ', checkup)
   }
 }
 
@@ -82,4 +83,4 @@ const formatTime = (date) =>{
   return date 
 }
 
-module.exports = { everyWeek }
+module.exports = { everyWeek, formatTime, ifNotInDBCreateDay, nextSixMonths, pickDays, setDay }
