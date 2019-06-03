@@ -15,6 +15,10 @@ let friday = timer.formatTime(new Date('July 19, 2019 12:00:00'))
 let saturday = timer.formatTime(new Date('July 20, 2019 12:00:00'))
 let sunday = timer.formatTime(new Date('July 21, 2019 12:00:00'))
 
+
+/**
+ * IF TESTS FAIL GO TO tests/applicationGeneration/test_helper.js and increse the time in the loop of the function "emptyTheDatabaseOfAppointments"
+ */
 describe('with any date', () => {
   beforeEach(async () => {
     jest.setTimeout(1000000)
@@ -82,47 +86,27 @@ describe('with any date', () => {
     )
   })
 
-  it('generateAppoinmentsForDay generates proper amount of appointments when monday is generated', async () => {
-    await generator.generateAppointmentsForDay(monday)
-    await helper.wait(13)
-    const response = await Appointment.find()
-    expect(response.length).toBe(13)
-  })
-  it('generateAppoinmentsForDay generates proper amount of appointments when tuesday is generated', async () => {
-    await generator.generateAppointmentsForDay(tuesday)
-    await helper.wait(13)
-    const response = await Appointment.find()
-    expect(response.length).toBe(13)
-  })
-  it('generateAppoinmentsForDay generates proper amount of appointments when wednesday is generated', async () => {
-    await generator.generateAppointmentsForDay(wednesday)
-    await helper.wait(13)
-    const response = await Appointment.find()
-    expect(response.length).toBe(13)
-  })
-  it('generateAppoinmentsForDay generates proper amount of appointments when thursday is generated', async () => {
-    await generator.generateAppointmentsForDay(thursday)
-    await helper.wait(13)
-    const response = await Appointment.find()
-    expect(response.length).toBe(13)
-  })
-  it('generateAppoinmentsForDay generates proper amount of appointments when friday is generated', async () => {
-    await generator.generateAppointmentsForDay(friday)
-    await helper.wait(13)
-    const response = await Appointment.find()
-    expect(response.length).toBe(13)
-  })
-  it('generateAppoinmentsForDay generates proper amount of appointments when saturday is generated', async () => {
-    await generator.generateAppointmentsForDay(saturday)
-    await helper.wait(13)
-    const response = await Appointment.find()
-    expect(response.length).toBe(13)
-  })
-  it('generateAppoinmentsForDay generates proper amount of appointments when sunday is generated', async () => {
-    await generator.generateAppointmentsForDay(sunday)
-    await helper.wait(13)
-    const response = await Appointment.find()
-    expect(response.length).toBe(13)
+     it('generateAppoinmentsForDay generates proper amount of appointments when each day is generated', async () => {
+      await generator.generateAppointmentsForDay(wednesday)
+      await helper.wait(13)
+      const response = await Appointment.find()
+      expect(response.length).toBe(13)    
+      await generator.generateAppointmentsForDay(monday)
+     // await helper.wait(26)
+      await generator.generateAppointmentsForDay(tuesday)
+     // await helper.wait(39)
+      await generator.generateAppointmentsForDay(thursday)
+     // await helper.wait(52)
+      await generator.generateAppointmentsForDay(friday)
+     // await helper.wait(65)
+      await generator.generateAppointmentsForDay(saturday)
+     // await helper.wait(78)
+      await generator.generateAppointmentsForDay(sunday)
+      await helper.wait(91)
+      const response2 = await Appointment.find()
+      expect(response2.length).toBe(91)
+      
+    })
   })
 
   it('generateAppoinmentsForDay generates proper amount of appointments when each day is generated', async () => {
@@ -145,8 +129,8 @@ describe('with any date', () => {
     const response2 = await Appointment.find()
     expect(response2.length).toBe(91)
   })
-})
 
-afterAll(() => {
-  mongoose.disconnect()
-})
+
+afterAll(async() => {
+   await mongoose.disconnect()
+  })

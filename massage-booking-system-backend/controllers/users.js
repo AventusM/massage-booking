@@ -4,15 +4,17 @@ const bodyParser = require('body-parser')
 usersRouter.use(bodyParser.json())
 const bcrypt = require('bcrypt')
 
-const formatUser = input => {
-  return {
-    _id: input._id,
-    name: input.name,
-    number: input.number,
-    email: input.email,
-    admin: input.admin,
-    appointments: input.appointments,
-  }
+
+const formatUser = (input) => {
+    return {
+        _id: input._id,
+        name: input.name,
+        number: input.number,
+        email: input.email,
+        admin: input.admin,
+        banned: input.banned,
+        appointments: input.appointments
+    }
 }
 
 usersRouter.get('/', async (req, res, next) => {
@@ -34,43 +36,33 @@ usersRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-usersRouter.put('/:id/toggleadmin', async (req, res, next) => {
-  try {
-    // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-    // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-    // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-    // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-    // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-    // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-
-    const foundUser = await User.findByIdAndUpdate(req.params.id)
-    foundUser.admin = !foundUser.admin
-    await foundUser.save()
-  } catch (exception) {
-    next(exception)
-  }
-})
-
-// Basic user data changes here. Visible for normal user
+// User data which gets updated by administrator only
 usersRouter.put('/:id', async (req, res, next) => {
-  console.log('user put called')
-  try {
-    const body = req.body
+    try {
 
-    // TODO -- FIND OUT WHAT GETS UPDATED HERE
-    // TODO -- FIND OUT WHAT GETS UPDATED HERE
-    // TODO -- FIND OUT WHAT GETS UPDATED HERE
-    const updateUserData = {}
+        const body = req.body
 
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      updateUserData,
-      { new: true }
-    )
-    res.json(updatedUser)
-  } catch (exception) {
-    next(exception)
-  }
+        // Verify that change is made by admin
+        const given_id = body.auth_id
+        const found_user = await User.findById({ _id: given_id })
+        if (!found_user.admin) {
+            // console.log('change request made by non-admin')
+            return res.status(400).end()
+        }
+
+        // console.log('Update called')
+        // console.log('Body given', body)
+        const updateUserData = {
+            admin: body.admin || false,
+            banned: body.banned || false
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, updateUserData, { new: true })
+        res.json(updatedUser)
+    } catch (exception) {
+        next(exception)
+    }
+
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {
