@@ -30,7 +30,7 @@ authRouter.get(
       name: user.name,
     }
     const token = jsonWebToken.sign(payload, process.env.SECRET)
-    res.redirect(307, `http://127.0.0.1:3000/?token=${token}&id=${user._id}`)
+    res.redirect(307, `http://localhost:3000/?token=${token}&id=${user._id}`)
   }
 )
 
