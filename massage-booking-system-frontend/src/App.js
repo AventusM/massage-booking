@@ -85,7 +85,7 @@ const App = () => {
       userService.setToken(userInCache.token)
       appointmentService.setToken(userInCache.token)
     }
-  }, [])
+  },)
 
   useEffect(() => {
     userService.getAll()
