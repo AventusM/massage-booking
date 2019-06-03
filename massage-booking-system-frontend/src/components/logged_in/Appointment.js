@@ -13,12 +13,12 @@ const CreateAppointment = (props) => {
   const handleAppointmentCreation = () => {
     const foundUser = users.find(u => user._id === u._id )
     let appointmentStartDate = appointments.find(app => app._id === id).start_date
-    console.log('reservation rule check result ', reservationRuleCheck(user.appointments, appointmentStartDate)) 
-    console.log("tämän hetkisen käyttäjän ajat ", user.appointments)
-    console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", user.appointments)
-    if (reservationRuleCheck(user.appointments, appointmentStartDate)) {
+    console.log('reservation rule check result ', reservationRuleCheck(foundUser.appointments, appointmentStartDate)) 
+    console.log("tämän hetkisen käyttäjän ajat ", foundUser.appointments)
+    console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", foundUser.appointments)
+    if (reservationRuleCheck(foundUser.appointments, appointmentStartDate)) {
       let setMessage=setErrorMessage
-      appointmentService.update(id, { type_of_reservation: 1, user_id: user._id })
+      appointmentService.update(id, { type_of_reservation: 1, user_id: foundUser._id })
       setMessage('Appointment reserved successfully')
       setTimeout(() => {
         setMessage(null)
@@ -81,6 +81,7 @@ const AllAppointments = () => {
     return 0
   })
   
+  
   return (
     <ul className="appointmentListWrapper">
       {todaysAppointments.map(app => {
@@ -106,7 +107,7 @@ const AppointmentsList = () => {
   //console.log("tämän hetkisen käyttäjän ajat ", user.appointments)
   const foundUser = users.find(u => user._id === u._id )
   //console.log("tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ", foundUser.appointments)
-  const ownAppointments = appointments.filter(app => app.user_id === user._id)
+  const ownAppointments = appointments.filter(app => app.user_id === foundUser._id)
   return (
     <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {
@@ -115,7 +116,7 @@ const AppointmentsList = () => {
             id={app._id}
             start_date={app.start_date}
             type_of_reservation={app.type_of_reservation} 
-            appUser = {user} 
+            appUser = {foundUser} 
             /> 
         )
       })}
@@ -125,6 +126,11 @@ const AppointmentsList = () => {
 
 const Display = ({dateobject, user, own}) => {
   let date = new Date(dateobject)
+
+  let minutes = date.getMinutes() 
+
+  let time = date.getTimezoneOffset()
+  date.setMinutes(minutes+time)
 
   let dateDisplay
   let day = date.getDate()
@@ -156,15 +162,15 @@ const Appointment = (props) => {
   const { appointmentService } = useContext(AppointmentContext)
   const { user } = useContext(UserContext)
   const { id, start_date, type_of_reservation, appUser } = props
- 
+
   return (
     <div>
     {type_of_reservation === 1 ? 
-      (user._id === appUser._id ? 
-        <button id="reservedOwn" onClick={() => appointmentService.update(id, { type_of_reservation: 0, user_id: user._id })}><Display dateobject={start_date} own={true}/></button> 
-        : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={appUser}/></button>
-        ) : 
-        <CreateAppointment id={id} start_date={start_date}/>
+      (appUser ?
+        (user._id === appUser._id ? <button id="reservedOwn" onClick={() => appointmentService.update(id, { type_of_reservation: 0, user_id: user._id })}><Display dateobject={start_date} own={true}/></button> : <button id="reserved" onClick={() => {window.alert("You cannot book this slot")}}><Display dateobject={start_date} user={appUser}/></button>)
+        : null
+      ) : 
+      <CreateAppointment id={id} start_date={start_date}/>
     }
     </div>
   )
