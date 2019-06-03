@@ -9,10 +9,11 @@ const howManyAppointmentsAreInDB = async() => {
     return size
 }
 /**
- * empties the database and makes sure the database is truly empty by waiting in a loop (100ms) to make sure there is no data being written to it.
+ * empties the database and makes sure the database is truly empty by waiting in a loop (500ms) to make sure there is no data being written to it.
+ * IF TESTS FAIL INCREASE TIME!
  */
 const emptyTheDatabaseOfAppointments = async ()=>{
-    await sleep(100)
+    await sleep(500)
     let response = await Appointment.find()
     while(response.length != 0){
       await Appointment.deleteMany({})
