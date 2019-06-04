@@ -16,18 +16,19 @@ const LoginIndex = props => {
   if (isMobile) {
     return (
       <div className="login_wrapper_mobile">
-        <img id= "unity" src = {unity5}></img>
+        <img id="unity" src={unity5}></img>
         <h1>Massage Booking</h1>
         <LoginForm {...props} />
       </div>
     )
-    }else {
-      return (
-        <div className="login_wrapper_desktop">
-        
-         
-         <div className="form-div">
-         <h1>Massage Booking</h1>
+  } else {
+    return (
+      <div className="login_wrapper_desktop">
+
+
+        <div className="form-div">
+          <h1>Massage Booking</h1>
+          <a href="/auth/google">SIGN IN WITH GOOGLE</a>
           <LoginForm {...props} />
         </div>
         <img id="unity4" src={unity4} />

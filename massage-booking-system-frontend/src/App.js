@@ -22,9 +22,8 @@ import history from './history'
 import logo from './pics/unity5.png'
 import Notification from './components/Notification'
 
-// CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-// const UserContext = createContext(null)
-// const AppointmentContext = createContext(null)
+// Temporarily here for logout
+import axios from 'axios'
 
 const App = () => {
   // userService CONTAINS APPOINTMENT ID
@@ -37,55 +36,35 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
 
-  const redirectToIndex = () => {
-    history.push('/')
-  }
-
-  const handleLogin = event => {
+  const handleLogout = async (event) => {
     event.preventDefault()
-    window.open("http://127.0.0.1:3001/auth/google", "_self");
-    redirectToIndex()
+    await axios.get('/api/logout')
   }
 
-  const handleLogout = async event => {
-    event.preventDefault()
-    console.log('logging out')
-    try {
-      window.localStorage.removeItem('loggedInUser')
-      setUser(null)
-      redirectToIndex()
-    } catch (exception) {
-      setErrorMessage("Couldn't logout")
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 3000)
-    }
-  }
+  // useEffect(() => {
+  //   let params = new URL(document.location).searchParams
+  //   let token = params.get('token')
+  //   let id = params.get('id')
+  //   if (token) {
+  //     userService.getOne(id).then(user => {
+  //       setUser(user)
+  //       window.localStorage.setItem(
+  //         'loggedInUser',
+  //         JSON.stringify({ ...user, token })
+  //       )
+  //       userService.setToken(token)
+  //       appointmentService.setToken(token)
+  //     })
 
-  useEffect(() => {
-    let params = new URL(document.location).searchParams
-    let token = params.get('token')
-    let id = params.get('id')
-    if (token) {
-      userService.getOne(id).then(user => {
-        setUser(user)
-        window.localStorage.setItem(
-          'loggedInUser',
-          JSON.stringify({ ...user, token })
-        )
-        userService.setToken(token)
-        appointmentService.setToken(token)
-      })
-
-      redirectToIndex()
-    } else if (window.localStorage.getItem('loggedInUser')) {
-      const loggedInUser = window.localStorage.getItem('loggedInUser')
-      const userInCache = JSON.parse(loggedInUser)
-      setUser(userInCache)
-      userService.setToken(userInCache.token)
-      appointmentService.setToken(userInCache.token)
-    }
-  }, [])
+  //     redirectToIndex()
+  //   } else if (window.localStorage.getItem('loggedInUser')) {
+  //     const loggedInUser = window.localStorage.getItem('loggedInUser')
+  //     const userInCache = JSON.parse(loggedInUser)
+  //     setUser(userInCache)
+  //     userService.setToken(userInCache.token)
+  //     appointmentService.setToken(userInCache.token)
+  //   }
+  // }, [])
 
   useEffect(() => {
     userService.getAll()
@@ -99,17 +78,6 @@ const App = () => {
       .then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
-  // useEffect(() => {
-  //   if (window.localStorage.length > 0) {
-  //     const local_storage_data = window.localStorage.getItem('loggedInUser')
-  //     const parsed_local_storage_data = JSON.parse(local_storage_data)
-  //     const id = parsed_local_storage_data._id
-  //     userService.getOne(id).then(user => {
-  //       setUser(user)
-  //     })
-  //   }
-  // }, [appointments])
-
   if (user === null) {
     // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
     // /api routes are protected in the backend, so it currently seems that this solution is sufficient...
@@ -118,7 +86,6 @@ const App = () => {
         <Router>
           <Route exact path="/">
             <LoginIndex
-              handleLoginFunction={handleLogin}
               errorMessage={errorMessage}
             />
           </Route>
@@ -141,7 +108,7 @@ const App = () => {
           <img src={logo} className="logo" />
           <ul className="main-nav" id="js-menu">
             <li>
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/index">
                 Index
               </Link>
             </li>
@@ -176,7 +143,7 @@ const App = () => {
               setErrorMessage,
             }}
           >
-            <Route exact path="/" render={() => <Index />} />
+            <Route exact path="/index" render={() => <Index />} />
           </AppointmentContext.Provider>
         </UserContext.Provider>
 
