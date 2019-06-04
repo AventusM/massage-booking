@@ -8,4 +8,9 @@ authRouter.get('/google',
 
 authRouter.get('/google/callback', passport.authenticate('google'))
 
+authRouter.get('/logout', (req, res) => {
+  req.logout()
+  res.send(req.user)
+})
+
 module.exports = authRouter

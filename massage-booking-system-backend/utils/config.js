@@ -7,6 +7,7 @@ let PORT = process.env.PORT
 let MONGODB_URI = process.env.MONGODB_URI
 let CLIENT_ID = process.env.CLIENT_ID
 let CLIENT_SECRET = process.env.CLIENT_SECRET
+let COOKIE_KEY = process.env.COOKIE_KEY
 
 
 if (process.env.NODE_ENV === 'test') {
@@ -17,5 +18,6 @@ module.exports = {
   MONGODB_URI,
   PORT,
   CLIENT_ID,
-  CLIENT_SECRET
+  CLIENT_SECRET,
+  COOKIE_KEY
 }

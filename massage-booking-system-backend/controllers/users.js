@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt')
 const formatUser = (input) => {
     return {
         _id: input._id,
+        // googleId: input.googleId,
         name: input.name,
         number: input.number,
         email: input.email,

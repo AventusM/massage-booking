@@ -6,6 +6,8 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const router = express.Router()
 const jsonWebToken = require('jsonwebtoken')
+const cookieSession = require('cookie-session')
+const passport = require('passport')
 
 // const protectedRoute = require('./utils/protectedRoute')
 const config = require('./utils/config')
@@ -14,26 +16,17 @@ const middleware = require('./utils/middleware')
 // Makes passport configuration run by itself. No need for app.use(passportConfig) etc
 require('./services/passport')
 
-// const passport = require('passport');
-// const GoogleStrategy = require('passport-google-oauth20').Strategy
-
-// passport.use(new GoogleStrategy({
-//   clientID: config.CLIENT_ID,
-//   clientSecret: config.CLIENT_SECRET,
-//   callbackURL: '/auth/google/callback'
-// },
-//   (accessToken, refreshToken, profile, done) => {
-//     console.log('accesstoken', accessToken)
-//     console.log('refreshtoken', refreshToken)
-//     console.log('profile', profile)
-//   }))
-
-// app.get('/auth/google',
-//   passport.authenticate('google', {
-//     scope: ['profile', 'email']
-//   }))
-
-// app.get('/auth/google/callback', passport.authenticate('google'))
+// 1day = 24 * 60 * 60 * 1000
+// Use multiplier as you wish
+// You can actually just faceroll the cookie key
+// More elements in keys array -> a cookie key is randomly chosen out of those
+// for additional level of security
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [config.COOKIE_KEY]
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 logger.info('connecting to', config.MONGODB_URI)
 app.use(cors())
