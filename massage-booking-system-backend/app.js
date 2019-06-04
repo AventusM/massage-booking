@@ -39,10 +39,6 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
     logger.error('error connection to MongoDB:', error.message)
   })
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-
 const masseussesRouter = require('./controllers/masseusses')
 const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')

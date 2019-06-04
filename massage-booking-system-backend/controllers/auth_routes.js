@@ -6,12 +6,14 @@ authRouter.get('/google', passport.authenticate('google', {
 }))
 
 authRouter.get('/google/callback', passport.authenticate('google'), (req, res) => {
-  res.redirect('/index')
+  // res.json(res.req.user)
+  res.redirect('/')
 })
 
 authRouter.get('/logout', (req, res) => {
   req.logout()
-  res.send(req.user)
+  res.redirect('/')
+  // res.send(req.user)
 })
 
 module.exports = authRouter
