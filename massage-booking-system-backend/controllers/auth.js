@@ -21,7 +21,7 @@ authRouter.get(
 authRouter.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
+  function (req, res) {
     const user = req.user
 
     const payload = {
@@ -30,12 +30,7 @@ authRouter.get(
       name: user.name,
     }
     const token = jsonWebToken.sign(payload, process.env.SECRET)
-    res.redirect(
-      307,
-      `https://glacial-lowlands-81447.herokuapp.com/?token=${token}&id=${
-        user._id
-      }`
-    )
+    res.redirect(307, `http://127.0.0.1:3000/?token=${token}&id=${user._id}`)
   }
 )
 

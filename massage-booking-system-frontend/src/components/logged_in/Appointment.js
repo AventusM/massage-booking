@@ -11,18 +11,21 @@ const CreateAppointment = props => {
   )
 
   const handleAppointmentCreation = () => {
-    const foundUser = users.find(u => user._id === u._id)
+    // Using user found from original state as it updates on appointment updates
+    const foundUser = user
+    // const foundUser = users.find(u => user._id === u._id)
     let appointmentStartDate = appointments.find(app => app._id === id)
       .start_date
-    console.log(
-      'reservation rule check result ',
-      reservationRuleCheck(foundUser.appointments, appointmentStartDate)
-    )
-    console.log('tämän hetkisen käyttäjän ajat ', foundUser.appointments)
-    console.log(
-      'tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ',
-      foundUser.appointments
-    )
+    console.log('voiko varata?', reservationRuleCheck(foundUser.appointments, appointmentStartDate))
+    // console.log(
+    //   'reservation rule check result ',
+    //   reservationRuleCheck(foundUser.appointments, appointmentStartDate)
+    // )
+    // console.log('tämän hetkisen käyttäjän ajat ', foundUser.appointments)
+    // console.log(
+    //   'tietokannasta tämän hetkisen käyttäjän idllä haetun käyttäjän ajat ',
+    //   foundUser.appointments
+    // )
     if (reservationRuleCheck(foundUser.appointments, appointmentStartDate)) {
       let setMessage = setErrorMessage
       appointmentService.update(id, {
@@ -197,19 +200,19 @@ const Appointment = props => {
               <Display dateobject={start_date} own={true} />
             </button>
           ) : (
-            <button
-              id="reserved"
-              onClick={() => {
-                window.alert('You cannot book this slot')
-              }}
-            >
-              <Display dateobject={start_date} user={appUser} />
-            </button>
-          )
+              <button
+                id="reserved"
+                onClick={() => {
+                  window.alert('You cannot book this slot')
+                }}
+              >
+                <Display dateobject={start_date} user={appUser} />
+              </button>
+            )
         ) : null
       ) : (
-        <CreateAppointment id={id} start_date={start_date} />
-      )}
+          <CreateAppointment id={id} start_date={start_date} />
+        )}
     </div>
   )
 }

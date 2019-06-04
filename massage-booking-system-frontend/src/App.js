@@ -43,10 +43,7 @@ const App = () => {
 
   const handleLogin = event => {
     event.preventDefault()
-    window.open(
-      'https://glacial-lowlands-81447.herokuapp.com/auth/google',
-      '_self'
-    )
+    window.open("http://127.0.0.1:3001/auth/google", "_self");
     redirectToIndex()
   }
 
@@ -88,13 +85,19 @@ const App = () => {
       userService.setToken(userInCache.token)
       appointmentService.setToken(userInCache.token)
     }
-  },)
+  }, [])
 
   useEffect(() => {
     userService.getAll()
     appointmentService.getAll()
     statsService.getAll()
   }, [])
+
+  useEffect(() => {
+    user && userService
+      .getOne(user._id)
+      .then(refreshedUser => setUser(refreshedUser))
+  }, [appointments])
 
   // useEffect(() => {
   //   if (window.localStorage.length > 0) {
