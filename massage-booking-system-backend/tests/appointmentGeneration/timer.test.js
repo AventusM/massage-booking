@@ -15,12 +15,15 @@ let friday = timer.formatTime(new Date('July 19, 2019 12:00:00'))
 let saturday = timer.formatTime(new Date('July 20, 2019 12:00:00'))
 let sunday = timer.formatTime(new Date('July 21, 2019 12:00:00'))
 
+/**
+ * IF TESTS FAIL GO TO tests/applicationGeneration/test_helper.js and increse the time in the loop of the function "emptyTheDatabaseOfAppointments"
+ */
 describe('with any date given', () => {
     beforeEach(async () => {
       jest.setTimeout(1000000)
       await helper.emptyTheDatabaseOfAppointments()
-      const response = await Appointment.find()
-      console.log('appointments in database (should be empty)', response)
+      //const response = await Appointment.find()
+      //console.log('appointments in database (should be empty)', response)
 
       monday = timer.formatTime(new Date('July 15, 2019 12:00:00'))
       tuesday = timer.formatTime(new Date('July 16, 2019 12:00:00'))
@@ -76,9 +79,6 @@ describe('with any date given', () => {
       await helper.wait(13)
       const response = await Appointment.find()
       expect(response.length).toBe(13)
-    })
-    it('ifNotInDBCreateDay if the time is not set as 8:55:00 do not create the day', async () => {
-
     })
     it('formatTime formats time of date to 8:55:00', async () => {
       let formattedDate = new Date(timer.formatTime(monday))

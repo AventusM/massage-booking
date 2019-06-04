@@ -17,13 +17,15 @@ let saturday = timer.formatTime(new Date('July 20, 2019 12:00:00'))
 let sunday = timer.formatTime(new Date('July 21, 2019 12:00:00'))
 
 
-
+/**
+ * IF TESTS FAIL GO TO tests/applicationGeneration/test_helper.js and increse the time in the loop of the function "emptyTheDatabaseOfAppointments"
+ */
 describe('with any date', () => {
     beforeEach(async () => {
       jest.setTimeout(1000000)
       await helper.emptyTheDatabaseOfAppointments()
-      const response = await Appointment.find()
-      console.log('appointments in database (should be empty)', response)
+      //const response = await Appointment.find()
+      //console.log('appointments in database (should be empty)', response)
       monday = timer.formatTime(new Date('July 15, 2019 12:00:00'))
       tuesday = timer.formatTime(new Date('July 16, 2019 12:00:00'))
       wednesday = timer.formatTime(new Date('July 17, 2019 12:00:00'))
@@ -138,15 +140,15 @@ it('generateAppoinmentsForDay generates proper amount of appointments when sunda
       const response = await Appointment.find()
       expect(response.length).toBe(13)    
       await generator.generateAppointmentsForDay(monday)
-      await helper.wait(26)
+     // await helper.wait(26)
       await generator.generateAppointmentsForDay(tuesday)
-      await helper.wait(39)
+     // await helper.wait(39)
       await generator.generateAppointmentsForDay(thursday)
-      await helper.wait(52)
+     // await helper.wait(52)
       await generator.generateAppointmentsForDay(friday)
-      await helper.wait(65)
+     // await helper.wait(65)
       await generator.generateAppointmentsForDay(saturday)
-      await helper.wait(78)
+     // await helper.wait(78)
       await generator.generateAppointmentsForDay(sunday)
       await helper.wait(91)
       const response2 = await Appointment.find()
@@ -156,6 +158,6 @@ it('generateAppoinmentsForDay generates proper amount of appointments when sunda
   })
 
 
-afterAll(() => {
-    mongoose.disconnect()
+afterAll(async() => {
+   await mongoose.disconnect()
   })
