@@ -11,27 +11,29 @@ const jsonWebToken = require('jsonwebtoken')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
+// Makes passport configuration run by itself. No need for app.use(passportConfig) etc
+require('./services/passport')
 
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy
+// const passport = require('passport');
+// const GoogleStrategy = require('passport-google-oauth20').Strategy
 
-passport.use(new GoogleStrategy({
-  clientID: config.CLIENT_ID,
-  clientSecret: config.CLIENT_SECRET,
-  callbackURL: '/auth/google/callback'
-},
-  (accessToken, refreshToken, profile, done) => {
-    console.log('accesstoken', accessToken)
-    console.log('refreshtoken', refreshToken)
-    console.log('profile', profile)
-  }))
+// passport.use(new GoogleStrategy({
+//   clientID: config.CLIENT_ID,
+//   clientSecret: config.CLIENT_SECRET,
+//   callbackURL: '/auth/google/callback'
+// },
+//   (accessToken, refreshToken, profile, done) => {
+//     console.log('accesstoken', accessToken)
+//     console.log('refreshtoken', refreshToken)
+//     console.log('profile', profile)
+//   }))
 
-app.get('/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email']
-  }))
+// app.get('/auth/google',
+//   passport.authenticate('google', {
+//     scope: ['profile', 'email']
+//   }))
 
-app.get('/auth/google/callback', passport.authenticate('google'))
+// app.get('/auth/google/callback', passport.authenticate('google'))
 
 logger.info('connecting to', config.MONGODB_URI)
 app.use(cors())
@@ -53,7 +55,9 @@ const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const statsRouter = require('./controllers/stats')
+const authRouter = require('./controllers/auth_routes')
 
+app.use('/auth', authRouter)
 app.use('/api', router)
 app.use('/api/masseusses', masseussesRouter)
 app.use('/api/appointments', appointmentsRouter)
