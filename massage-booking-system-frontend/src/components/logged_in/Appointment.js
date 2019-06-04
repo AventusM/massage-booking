@@ -182,12 +182,15 @@ const Appointment = (props) => {
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
   //console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
+  let firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week')
   let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter((usersPreviousTime) => {
     let prevTimeMoment = moment(usersPreviousTime.start_date)
-    let dayDifference = requestedTimeMoment.diff(prevTimeMoment, 'days')
+    let firstWeekDayOfPrevtime = prevTimeMoment.startOf('week')
+    let dayDifference = firstWeekDayOfrequestedTimesWeek.diff(firstWeekDayOfPrevtime, 'days')
     //console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
+    // console.log('usersAppointmentsWithinTheLastTwoWeeks ', usersAppointmentsWithinTheLastTwoWeeks, ' firstWeekDayOfPrevtime ', firstWeekDayOfPrevtime)
     //console.log('day diff', dayDifference)
-    return Math.abs(dayDifference) <14
+    return Math.abs(dayDifference) < 14
   })
   //console.log('usersAppointmentsWithinTheLastTwoWeeks after filter', usersAppointmentsWithinTheLastTwoWeeks)
   //console.log('usersAppointmentsWithinTheLastTwoWeeks.lenght', usersAppointmentsWithinTheLastTwoWeeks.length)
