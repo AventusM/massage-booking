@@ -43,7 +43,7 @@ const App = () => {
 
   const handleLogin = event => {
     event.preventDefault()
-    window.open('http://127.0.0.1:3001/auth/google', '_self')
+    window.open("http://127.0.0.1:3001/auth/google", "_self");
     redirectToIndex()
   }
 
@@ -85,13 +85,19 @@ const App = () => {
       userService.setToken(userInCache.token)
       appointmentService.setToken(userInCache.token)
     }
-  },)
+  }, [])
 
   useEffect(() => {
     userService.getAll()
     appointmentService.getAll()
     statsService.getAll()
   }, [])
+
+  useEffect(() => {
+    user && userService
+      .getOne(user._id)
+      .then(refreshedUser => setUser(refreshedUser))
+  }, [appointments])
 
   // useEffect(() => {
   //   if (window.localStorage.length > 0) {
@@ -178,13 +184,13 @@ const App = () => {
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
 
-        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
+        <AppointmentContext.Provider
+          value={{ appointments, appointmentService, stats }}
+        >
           <Route exact path="/stats" render={() => <Stats />} />
         </AppointmentContext.Provider>
-
-
       </Router>
-    </Fragment >
+    </Fragment>
   )
 }
 
