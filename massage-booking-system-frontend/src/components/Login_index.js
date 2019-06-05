@@ -28,8 +28,6 @@ const LoginIndex = props => {
 
         <div className="form-div">
           <h1>Massage Booking</h1>
-          <a href="/auth/google">SIGN IN WITH GOOGLE</a>
-          <a href="/auth/logout" className="fas fa-sign-out-alt">SIGN OUT</a>
           <LoginForm {...props} />
         </div>
         <img id="unity4" src={unity4} />

@@ -6,6 +6,7 @@ import unity4 from '../../pics/unity4.png'
 
 
 import { Appointments } from './Appointment'
+import LoginIndex from '../Login_index'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
 const Index = () => {
@@ -13,7 +14,7 @@ const Index = () => {
   if (user) {
     return <AuthIndex user={user} />
   }
-  return <p>Redesign this page or move login functionality out of navbar?</p>
+  return <LoginIndex />
 }
 
 

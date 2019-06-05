@@ -6,11 +6,9 @@ const LoginForm = props => {
   // console.log('props within loginform', props)
   const { handleLoginFunction, email, password, errorMessage } = props
   return (
-    <form onSubmit={handleLoginFunction}>
-      <button id="login_button" type="submit">
-        Log in
-      </button>
-    </form>
+    <div className="login_button">
+      <a href="/auth/google">Log in</a>
+    </div>
   )
 }
 

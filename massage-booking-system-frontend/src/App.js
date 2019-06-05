@@ -70,7 +70,7 @@ const AuthHeader = (props) => {
         </Link>
         </li>
         <li>
-          <a href="/auth/logout">Log Out</a>
+          <a id="logout" className="fas fa-sign-out-alt" href="/auth/logout" />
         </li>
       </ul>
     </nav>
