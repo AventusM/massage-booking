@@ -7,32 +7,35 @@ loginRouter.use(bodyParser.json())
 const User = require('../models/user')
 const Masseusse = require('../models/masseusse')
 
-
 loginRouter.post('/masseusse', async (req, res, next) => {
   try {
     const body = req.body
 
     const foundMasseusse = await Masseusse.findOne({ email: body.email })
 
-    const pwMatch = foundMasseusse === null
-      ? false
-      : await bcrypt.compare(body.password, foundMasseusse.passwordHash)
+    const pwMatch =
+      foundMasseusse === null
+        ? false
+        : await bcrypt.compare(body.password, foundMasseusse.passwordHash)
 
     const invalidMasseusseOrPw = !(foundMasseusse && pwMatch)
 
     if (invalidMasseusseOrPw) {
       return res.status(401).json({
-        error: 'invalid email or password'
+        error: 'invalid email or password',
       })
     }
 
     const MasseusseCheckForTokenObject = {
       email: foundMasseusse.email,
       name: foundMasseusse.name,
-      id: foundMasseusse._id
+      id: foundMasseusse._id,
     }
 
-    const token = jsonWebToken.sign(MasseusseCheckForTokenObject, process.env.SECRET)
+    const token = jsonWebToken.sign(
+      MasseusseCheckForTokenObject,
+      process.env.SECRET
+    )
     res
       .status(200)
       .send({ token, email: foundMasseusse.email, name: foundMasseusse.name })
@@ -40,7 +43,6 @@ loginRouter.post('/masseusse', async (req, res, next) => {
     next(exception)
   }
 })
-
 
 loginRouter.post('/', async (req, res, next) => {
   try {
@@ -50,16 +52,19 @@ loginRouter.post('/', async (req, res, next) => {
     */
     const body = req.body
 
-    const foundUser = await User.findOne({ email: body.email }).populate('appointments')
+    const foundUser = await User.findOne({ email: body.email }).populate(
+      'appointments'
+    )
     console.log('found user', foundUser)
-    const pwMatch = foundUser === null
-      ? false
-      : await bcrypt.compare(body.password, foundUser.passwordHash)
+    const pwMatch =
+      foundUser === null
+        ? false
+        : await bcrypt.compare(body.password, foundUser.passwordHash)
 
     const invalidUserOrPw = !(foundUser && pwMatch)
     if (invalidUserOrPw) {
       return res.status(401).json({
-        error: 'invalid email or password'
+        error: 'invalid email or password',
       })
     }
 
@@ -67,20 +72,23 @@ loginRouter.post('/', async (req, res, next) => {
       email: foundUser.email,
       name: foundUser.name,
       id: foundUser._id,
-      admin: foundUser.admin
+      admin: foundUser.admin,
     }
 
     const token = jsonWebToken.sign(userCheckForTokenObject, process.env.SECRET)
 
-    res
-      .status(200)
-      .send({ token, _id: foundUser._id, email: foundUser.email, name: foundUser.name, admin: foundUser.admin, appointments: foundUser.appointments, number: foundUser.number })
-
+    res.status(200).send({
+      token,
+      _id: foundUser._id,
+      email: foundUser.email,
+      name: foundUser.name,
+      admin: foundUser.admin,
+      appointments: foundUser.appointments,
+      number: foundUser.number,
+    })
   } catch (exception) {
     next(exception)
   }
 })
-
-
 
 module.exports = loginRouter

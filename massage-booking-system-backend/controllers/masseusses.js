@@ -5,12 +5,12 @@ const bodyParser = require('body-parser')
 masseussesRouter.use(bodyParser.json())
 const bcrypt = require('bcrypt')
 
-const formatMasseusse = (input) => {
+const formatMasseusse = input => {
   return {
     _id: input._id,
     name: input.name,
     email: input.email,
-    number: input.number
+    number: input.number,
   }
 }
 
@@ -68,7 +68,6 @@ masseussesRouter.delete('/:id', async (req, res, next) => {
   } catch (exception) {
     next(exception)
   }
-
 })
 
 module.exports = masseussesRouter

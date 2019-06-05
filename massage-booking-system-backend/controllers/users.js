@@ -12,58 +12,50 @@ const formatUser = (input) => {
         number: input.number,
         email: input.email,
         admin: input.admin,
+        banned: input.banned,
         appointments: input.appointments
     }
 }
 
 usersRouter.get('/', async (req, res, next) => {
-    try {
-        const users = await User.find({}).populate('appointments')
-        res.json(users.map(formatUser))
-    } catch (exception) {
-        next(exception)
-    }
+  try {
+    const users = await User.find({}).populate('appointments')
+    res.json(users.map(formatUser))
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 usersRouter.get('/:id', async (req, res, next) => {
-    try {
-        const user = await User.findById({ _id: req.params.id })
-        console.log("userriii: ", user)
-        res.json(user)
-    } catch (exception) {
-        next(exception)
-    }
+  try {
+    const user = await User.findById({ _id: req.params.id })
+    console.log('userriii: ', user)
+    res.json(user)
+  } catch (exception) {
+    next(exception)
+  }
 })
 
-usersRouter.put('/:id/toggleadmin', async (req, res, next) => {
-    try {
-
-        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-        // TODO -- VERIFY THAT ONLY ADMIN CAN DO THIS CHANGE
-
-        const foundUser = await User.findByIdAndUpdate(req.params.id)
-        foundUser.admin = !foundUser.admin
-        await foundUser.save()
-    } catch (exception) {
-        next(exception)
-    }
-})
-
-
-// Basic user data changes here. Visible for normal user
+// User data which gets updated by administrator only
 usersRouter.put('/:id', async (req, res, next) => {
-    console.log('user put called')
     try {
+
         const body = req.body
 
-        // TODO -- FIND OUT WHAT GETS UPDATED HERE
-        // TODO -- FIND OUT WHAT GETS UPDATED HERE
-        // TODO -- FIND OUT WHAT GETS UPDATED HERE
-        const updateUserData = {}
+        // Verify that change is made by admin
+        const given_id = body.auth_id
+        const found_user = await User.findById({ _id: given_id })
+        if (!found_user.admin) {
+            // console.log('change request made by non-admin')
+            return res.status(400).end()
+        }
+
+        // console.log('Update called')
+        // console.log('Body given', body)
+        const updateUserData = {
+            admin: body.admin || false,
+            banned: body.banned || false
+        }
 
         const updatedUser = await User.findByIdAndUpdate(req.params.id, updateUserData, { new: true })
         res.json(updatedUser)
@@ -73,19 +65,14 @@ usersRouter.put('/:id', async (req, res, next) => {
 
 })
 
-
 usersRouter.delete('/:id', async (req, res, next) => {
-    try {
-        const user = await User.findById({ _id: req.params.id })
-        await user.remove()
-        res.status(204).end()
-    } catch (exception) {
-        next(exception)
-    }
-
+  try {
+    const user = await User.findById({ _id: req.params.id })
+    await user.remove()
+    res.status(204).end()
+  } catch (exception) {
+    next(exception)
+  }
 })
-
-
-
 
 module.exports = usersRouter

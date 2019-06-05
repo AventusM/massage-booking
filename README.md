@@ -1,5 +1,6 @@
 # Massage Booking System
 
+
 ## Links
 
 #### Current release
@@ -13,7 +14,7 @@
 #### Documentation
 * [Työaikakirjanpito](https://docs.google.com/spreadsheets/d/1fjP2D151ztWsJjcSJaEmJoBS2PO8vtVpgMbC6XzBtG8/edit?usp=sharing)
 * [Definition of Done](https://docs.google.com/document/d/1GWJ4O4cwQlEctThPPWPhKNrtAo130FBovdOwL5_kU4o/edit?usp=sharing)
-* [Google Drive](https://drive.google.com/open?id=1GWJ4O4cwQlEctThPPWPhKNrtAo130FBovdOwL5_kU4o)
+* [Google Drive](https://drive.google.com/drive/folders/1_SwrSQs1FtOPYT5ovSs91bb5sp6tQM-Y?usp=sharing)
 * [Our process](https://github.com/karoliinaemilia/massage-booking-system/blob/staging/process/PALAVERIT.md)
 ---
 #### Communication
