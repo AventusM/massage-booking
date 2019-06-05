@@ -77,9 +77,7 @@ const Appointment = require('../models/appointment')
  * @param {*} date the date to be formatted.
  */
 const formatTime = (date) =>{
-  date.setHours(8,0,0,0)
-  let time = date.getTimezoneOffset() * (-1)
-  date.setMinutes(time + 55)
+  date.setUTCHours(8,55,0,0)
   return date 
 }
 
