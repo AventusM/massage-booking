@@ -22,9 +22,90 @@ import history from './history'
 import logo from './pics/unity5.png'
 import Notification from './components/Notification'
 
-// CREATING CONTEXTS TO BE CONSUMED BY INDIVIDUAL COMPONENTS INSTEAD OF PASSING PARAMETERS IN A CHAIN
-// const UserContext = createContext(null)
-// const AppointmentContext = createContext(null)
+// Temporarily here for data fetching as authentication is completely server-side now
+import axios from 'axios'
+// const Header = (props) => {
+//   const { user, logOutFunction } = props
+
+//   return (
+//     <nav className="header">
+//       <img src={logo} className="logo" />
+
+//       <div className="links">
+//         {user
+//           ? <a href="/auth/logout">LOGOUT</a>
+//           : <a href="/auth/google">LOGIN WITH GOOGLE</a>}
+//       </div>
+//     </nav>
+//   )
+// }
+
+const AuthHeader = (props) => {
+  const { user } = props
+  return (
+    <nav className="navbar">
+      <span className="navbar-toggle" id="js-navbar-toggle">
+        <i
+          onClick={() =>
+            document.getElementById('js-menu').classList.toggle('active')
+          }
+          className="fas fa-bars"
+        />
+      </span>
+      <img src={logo} className="logo" />
+      <ul className="main-nav" id="js-menu">
+        <li>
+          <Link className="nav-link" to="/">
+            Index
+        </Link>
+        </li>
+        <li>
+          <Link className="nav-link" to="/dashboard">
+            Admin dashboard
+        </Link>
+        </li>
+        <li>
+          <Link className="nav-link" to="/stats">
+            Stats
+        </Link>
+        </li>
+        <li>
+          <a id="logout" className="fas fa-sign-out-alt" href="/auth/logout" />
+        </li>
+      </ul>
+    </nav>
+  )
+}
+
+const NonAuthHeader = (props) => {
+  return (
+    <nav className="navbar">
+      <span className="navbar-toggle" id="js-navbar-toggle">
+        <i
+          onClick={() =>
+            document.getElementById('js-menu').classList.toggle('active')
+          }
+          className="fas fa-bars"
+        />
+      </span>
+      <img src={logo} className="logo" />
+      <ul className="main-nav" id="js-menu">
+        <li>
+          <a href="/auth/google">Log in</a>
+        </li>
+      </ul>
+    </nav>
+  )
+}
+
+const Header = (props) => {
+  const { user } = props
+  if (user) {
+    return <AuthHeader user={user} />
+  }
+  return <NonAuthHeader />
+}
+
 
 const App = () => {
   // userService CONTAINS APPOINTMENT ID
@@ -37,54 +118,15 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
 
-  const redirectToIndex = () => {
-    history.push('/')
-  }
-
-  const handleLogin = event => {
-    event.preventDefault()
-    window.open("http://127.0.0.1:3001/auth/google", "_self");
-    redirectToIndex()
-  }
-
-  const handleLogout = async event => {
-    event.preventDefault()
-    console.log('logging out')
-    try {
-      window.localStorage.removeItem('loggedInUser')
-      setUser(null)
-      redirectToIndex()
-    } catch (exception) {
-      setErrorMessage("Couldn't logout")
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 3000)
-    }
+  const logOut = async () => {
+    const response = await axios.get('/auth/logout')
+    console.log('response data logout', response)
+    setUser(response.data)
   }
 
   useEffect(() => {
-    let params = new URL(document.location).searchParams
-    let token = params.get('token')
-    let id = params.get('id')
-    if (token) {
-      userService.getOne(id).then(user => {
-        setUser(user)
-        window.localStorage.setItem(
-          'loggedInUser',
-          JSON.stringify({ ...user, token })
-        )
-        userService.setToken(token)
-        appointmentService.setToken(token)
-      })
-
-      redirectToIndex()
-    } else if (window.localStorage.getItem('loggedInUser')) {
-      const loggedInUser = window.localStorage.getItem('loggedInUser')
-      const userInCache = JSON.parse(loggedInUser)
-      setUser(userInCache)
-      userService.setToken(userInCache.token)
-      appointmentService.setToken(userInCache.token)
-    }
+    axios.get('/api/users/current_user')
+      .then(response => setUser(response.data))
   }, [])
 
   useEffect(() => {
@@ -99,83 +141,15 @@ const App = () => {
       .then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
-  // useEffect(() => {
-  //   if (window.localStorage.length > 0) {
-  //     const local_storage_data = window.localStorage.getItem('loggedInUser')
-  //     const parsed_local_storage_data = JSON.parse(local_storage_data)
-  //     const id = parsed_local_storage_data._id
-  //     userService.getOne(id).then(user => {
-  //       setUser(user)
-  //     })
-  //   }
-  // }, [appointments])
-
-  if (user === null) {
-    // Usage of <Redirect to="/path"/> seems to be broken (exhibit A - component hierarchy in return when currentUser has some values)
-    // /api routes are protected in the backend, so it currently seems that this solution is sufficient...
-    return (
-      <Fragment>
-        <Router>
-          <Route exact path="/">
-            <LoginIndex
-              handleLoginFunction={handleLogin}
-              errorMessage={errorMessage}
-            />
-          </Route>
-        </Router>
-      </Fragment>
-    )
-  }
   return (
     <Fragment>
-      <Router history={history}>
-        <nav className="navbar">
-          <span className="navbar-toggle" id="js-navbar-toggle">
-            <i
-              onClick={() =>
-                document.getElementById('js-menu').classList.toggle('active')
-              }
-              className="fas fa-bars"
-            />
-          </span>
-          <img src={logo} className="logo" />
-          <ul className="main-nav" id="js-menu">
-            <li>
-              <Link className="nav-link" to="/">
-                Index
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/dashboard">
-                Admin dashboard
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/stats">
-                Stats
-              </Link>
-            </li>
-            <li>
-              <i
-                onClick={handleLogout}
-                id="logout"
-                className="fas fa-sign-out-alt"
-              />
-            </li>
-          </ul>
-        </nav>
-
+      <Router>
+        <Header user={user} />
         <UserContext.Provider value={{ user, setUser, users, userService }}>
           <AppointmentContext.Provider
             value={{
-              user,
-              appointments,
-              appointmentService,
-              selectedDate,
-              setSelectedDate,
-              setErrorMessage,
-            }}
-          >
+              user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage,
+            }}>
             <Route exact path="/" render={() => <Index />} />
           </AppointmentContext.Provider>
         </UserContext.Provider>
@@ -184,9 +158,7 @@ const App = () => {
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
 
-        <AppointmentContext.Provider
-          value={{ appointments, appointmentService, stats }}
-        >
+        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
           <Route exact path="/stats" render={() => <Stats />} />
         </AppointmentContext.Provider>
       </Router>
@@ -196,5 +168,4 @@ const App = () => {
 
 export const AppointmentContext = createContext(null)
 export const UserContext = createContext(null)
-// export {AppointmentContext, UserContext }
 export default App

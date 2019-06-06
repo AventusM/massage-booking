@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
+// passwordhash removed for foreseeable future
 const userSchema = mongoose.Schema({
-  googleId: String,
+  googleId: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true,
@@ -15,9 +19,7 @@ const userSchema = mongoose.Schema({
   },
   admin: {
     type: Boolean,
-  },
-  passwordHash: {
-    type: String,
+    default: false
   },
   appointments: [
     {

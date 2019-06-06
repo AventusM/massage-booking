@@ -6,13 +6,27 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const router = express.Router()
 const jsonWebToken = require('jsonwebtoken')
-const passport = require('passport');
-
+const cookieSession = require('cookie-session')
+const passport = require('passport')
 
 // const protectedRoute = require('./utils/protectedRoute')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
+// Makes passport configuration run by itself. No need for app.use(passportConfig) etc
+require('./services/passport')
+
+// 1day = 24 * 60 * 60 * 1000
+// Use multiplier as you wish
+// You can actually just faceroll the cookie key
+// More elements in keys array -> a cookie key is randomly chosen out of those
+// for additional level of security
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [config.COOKIE_KEY]
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 logger.info('connecting to', config.MONGODB_URI)
 app.use(cors())
@@ -25,17 +39,12 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
     logger.error('error connection to MongoDB:', error.message)
   })
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-
 const masseussesRouter = require('./controllers/masseusses')
 const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const statsRouter = require('./controllers/stats')
-const authRouter = require('./controllers/auth')
-
+const authRouter = require('./controllers/auth_routes')
 
 app.use('/auth', authRouter)
 app.use('/api', router)

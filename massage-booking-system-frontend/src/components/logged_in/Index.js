@@ -1,14 +1,25 @@
 import React, { Fragment, useContext, useState } from 'react'
 //import Calendar from 'react-calendar';
 import Calendar from 'react-calendar/dist/entry.nostyle'
-import { AppointmentContext } from '../../App'
+import { AppointmentContext, UserContext } from '../../App'
 import unity4 from '../../pics/unity4.png'
 
 
 import { Appointments } from './Appointment'
+import LoginIndex from '../Login_index'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 
-const Index = (props) => {
+const Index = () => {
+  const { user } = useContext(UserContext)
+  if (user) {
+    return <AuthIndex user={user} />
+  }
+  return <LoginIndex />
+}
+
+
+
+const AuthIndex = (props) => {
   const { setSelectedDate } = useContext(AppointmentContext)
   const [tab, setTab] = useState(true)
   return (
