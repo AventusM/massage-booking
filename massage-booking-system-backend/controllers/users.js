@@ -20,7 +20,11 @@ const formatUser = (input) => {
 
 // Returns current user data depending on whether one has logged in or not
 usersRouter.get('/current_user', async (req, res, next) => {
-  res.send(req.user)
+  if (req.user) {
+    res.send(req.user)
+  } else {
+    res.send({ error: 'not authenticated' }).status(400).end()
+  }
 })
 
 usersRouter.get('/', async (req, res, next) => {

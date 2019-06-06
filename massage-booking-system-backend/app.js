@@ -9,7 +9,7 @@ const jsonWebToken = require('jsonwebtoken')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 
-// const protectedRoute = require('./utils/protectedRoute')
+const protectedRoute = require('./utils/protectedRoute')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
@@ -54,7 +54,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/stats', statsRouter)
 
-// router.use(protectedRoute.routeProtector)
+router.use(protectedRoute.routeProtector)
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static('build'))
