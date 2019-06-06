@@ -64,7 +64,7 @@ const AllAppointments = () => {
   let selectedDay = givenDate.getDate()
   let selectedMonth = givenDate.getMonth() + 1
   let selectedYear = givenDate.getFullYear()
-
+  // console.log('appointments in allappointments', appointments)
   const allButOwnAppointments = appointments.filter(
     app => app.user_id !== user._id
   )

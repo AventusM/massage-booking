@@ -24,9 +24,10 @@ passport.use(new GoogleStrategy({
   callbackURL: '/auth/google/callback'
 },
   (accessToken, refreshToken, profile, done) => {
+    // CHECK IF UNITY EMAIL ADDRESS INCLUDED
+    // IF NO UNITY ADDRESS --> done(null, false)
+    // or something like that which should fail
 
-    // findOne returns single item. 
-    // find returns an array. BE CAREFUL!!!
     User.findOne({ googleId: profile.id })
       .then((foundUser) => {
         if (foundUser) {
