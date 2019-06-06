@@ -43,7 +43,6 @@ const useResource = baseUrl => {
     create,
     remove,
     update,
-    setToken,
     getOne,
   }
 
