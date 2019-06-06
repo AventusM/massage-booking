@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { UserContext } from '../../App'
 
 const User = props => {
@@ -41,11 +41,17 @@ const User = props => {
 
 const UserList = (props) => {
   const { users } = useContext(UserContext)
+  const [filter, setFilter] = useState("")
+  const filteredUsers = filter === "" ? users : users.filter(user => user.name.toLowerCase().startsWith(filter.toLowerCase()))
+
+  const filterChange = (event) => {
+    setFilter(event.target.value)
+  }
   return (
     <div className="dashboard_wrapper">
     <div className="user_search">
     <i class="fas fa-search"></i>
-    <input placeholder="Search"></input></div>
+    <input value={filter} onChange={filterChange} placeholder="Search"></input></div>
     <table>
       <thead>
         <tr>
@@ -57,7 +63,7 @@ const UserList = (props) => {
         </tr>
       </thead>
       <tbody>
-      {users.map(user => {
+      {filteredUsers.map(user => {
         return (
           <User
             key={user._id}
