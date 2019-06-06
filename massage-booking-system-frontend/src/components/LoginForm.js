@@ -7,7 +7,7 @@ const LoginForm = props => {
   const { handleLoginFunction, email, password, errorMessage } = props
   return (
     <div className="login_button">
-      <a href="/auth/google">Log in</a>
+      <a href="/auth/google">Login</a>
     </div>
   )
 }

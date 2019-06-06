@@ -7,14 +7,18 @@ const User = props => {
   const { user, userService } = useContext(UserContext)
   const { id, name, email, number, admin, banned } = props
   return (
-    <li className="dashboard_user_item">
-      <p className="dashboard_user_item_name">{name}</p>
-      <p className="dashboard_user_item_email">{email}</p>
-
+    <tr>
+      <td>avatar</td>
+      <td>{name} </td>
+      <td>{email}</td>
+      <td>user</td>
       {number
-        ? <p className="dashboard_user_item_number">{number}</p>
-        : <p>No number specified</p>}
+          ? <td>{number}</td>
+          : <td>No number specified</td>
+      }
+    
 
+      {/*}
       <div className="dashboard_user_item_actions">
         <p>Admin actions</p>
         <button onClick={() => userService.update(id, { admin: !admin, auth_id: user._id })}>
@@ -28,15 +32,31 @@ const User = props => {
             : 'Ban'}
         </button>
         <button onClick={() => userService.remove(id)}>Remove</button>
-      </div>
-    </li>
+      </div> 
+      */}
+    </tr>
+    
   )
 }
 
 const UserList = (props) => {
   const { users } = useContext(UserContext)
   return (
-    <ul className="dashboard_user_list">
+    <div className="dashboard_wrapper">
+    <div className="user_search">
+    <i class="fas fa-search"></i>
+    <input placeholder="Search"></input></div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Email</th>
+          <th>Number</th>
+        </tr>
+      </thead>
+      <tbody>
       {users.map(user => {
         return (
           <User
@@ -50,7 +70,9 @@ const UserList = (props) => {
           />
         )
       })}
-    </ul>
+    </tbody>
+    </table>
+    </div>
   )
 }
 
