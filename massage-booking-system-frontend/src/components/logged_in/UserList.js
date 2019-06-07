@@ -49,36 +49,39 @@ const UserList = (props) => {
   }
   return (
     <div className="dashboard_wrapper">
-    <div className="user_search">
-    <i class="fas fa-search"></i>
-    <input value={filter} onChange={filterChange} placeholder="Search"></input></div>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Email</th>
-          <th>Number</th>
-        </tr>
-      </thead>
-      <tbody>
-      {filteredUsers.map(user => {
-        return (
-          <User
-            key={user._id}
-            id={user._id}
-            name={user.name}
-            email={user.email}
-            number={user.number}
-            admin={user.admin}
-            banned={user.banned}
-          />
-        )
-      })}
-    </tbody>
-    </table>
-    </div>
+      <div className="overflowX">
+        <div className="user_search">
+          <i class="fas fa-search"></i>
+          <input value={filter} onChange={filterChange} placeholder="Search"></input>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>NAME</th>
+              <th>ROLE</th>
+              <th>EMAIL</th>
+              <th>NUMBER</th>
+            </tr>
+          </thead>
+        <tbody>
+          {filteredUsers.map(user => {
+            return (
+              <User
+              key={user._id}
+              id={user._id}
+              name={user.name}
+              email={user.email}
+              number={user.number}
+              admin={user.admin}
+              banned={user.banned}
+              />
+            )
+          })}
+          </tbody>
+          </table>
+      </div>
+      </div>
   )
 }
 
