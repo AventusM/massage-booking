@@ -24,7 +24,8 @@ passport.use(new GoogleStrategy({
   callbackURL: '/auth/google/callback'
 },
   (accessToken, refreshToken, profile, done) => {
-
+    console.log('GOOGLE PROFILE ', profile)
+    // console.log('pic url', profile.photos[0].value)
     // findOne returns single item. 
     // find returns an array. BE CAREFUL!!!
     User.findOne({ googleId: profile.id })
@@ -37,7 +38,8 @@ passport.use(new GoogleStrategy({
           new User({
             googleId: profile.id,
             name: profile.displayName,
-            email: profile.emails[0].value
+            email: profile.emails[0].value,
+            avatarUrl: profile.photos[0].value
           })
             .save()
             .then(createdUser => done(null, createdUser))

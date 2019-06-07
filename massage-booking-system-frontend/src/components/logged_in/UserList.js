@@ -5,10 +5,12 @@ const User = props => {
   // Order depends on value prop in original provider (this one in App.js)
   console.log('UserList.js props', props)
   const { user, userService } = useContext(UserContext)
-  const { id, name, email, number, admin, banned } = props
+  const { id, name, email, number, admin, banned, avatarUrl } = props
+
+  console.log('user', user)
   return (
     <tr>
-      <td>avatar</td>
+      <td>{avatarUrl ? <img src={user.avatarUrl} alt="profile pic" height="50" width="50"/> : 'avatar'}</td>
       <td>{name} </td>
       <td>{email}</td>
       <td>user</td>
@@ -75,6 +77,7 @@ const UserList = (props) => {
               number={user.number}
               admin={user.admin}
               banned={user.banned}
+              avatarUrl={user.avatarUrl || null}
               />
             )
           })}
