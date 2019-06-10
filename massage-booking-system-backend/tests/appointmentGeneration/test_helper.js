@@ -12,14 +12,14 @@ const howManyAppointmentsAreInDB = async () => {
  * empties the database and makes sure the database is truly empty by waiting in a loop (500ms) to make sure there is no data being written to it.
  * IF TESTS FAIL INCREASE THE SLEEP TIME VALUE INSIDE THE LOOP! 
  */
-const emptyTheDatabaseOfAppointments = async ()=>{
+  const emptyTheDatabaseOfAppointments = async() =>{
     await sleep(500)
     let response = await Appointment.find()
-    while(response.length != 0){
+    while(response.length != 0) {
       await Appointment.deleteMany({})
       await sleep(500)
       response = await Appointment.find()
-      console.log('how many appointments in the database (loop ends when 0)', response.length)
+      //await console.log('how many appointments in the database (loop ends when 0)', response.length)
     }
   
 }
@@ -28,16 +28,16 @@ const emptyTheDatabaseOfAppointments = async ()=>{
  * waits for given time in milliseconds.
  * @param {*} time amount in milliseconds.
  */
-function sleep(time) {
-  return new Promise(resolve => {
-    setTimeout(resolve, time)
-  })
-}
+  async function sleep(time) {
+    return new Promise(resolve => {
+      setTimeout(resolve, time)
+    })
+  }
 /**
  * Waits in a loop of 50 milliseconds to see wether the data has been written to the database. if time exeeds 1 second or the data goes over the expected amount the loop will end.
  * @param {*} howMany how many appointments are expected to be in the database.
  */
-const wait = async howMany => {
+const wait = async(howMany) => {
   let limit = 0
   let response = await Appointment.find()
   while (
@@ -47,21 +47,23 @@ const wait = async howMany => {
   ) {
     await sleep(50)
     response = await Appointment.find()
-    console.log(
+   /* await console.log(
       'how many appointments should be',
       howMany,
       'current amount ',
       response.length
     )
-    limit++
+    */
+    await limit++
   }
+
 }
 /**
  * Compares dates to the dates of the appointments in the database and makes sure they exist.
  * @param {*} rounds how many appointments are in a row.
  * @param {*} date the starting time of the first appointment in a row.
  */
-const loopThroughTheAppointments = async (rounds, date) => {
+async function loopThroughTheAppointments (rounds, date)  {
   let start
   let end
   for (i = 0; i < rounds; i++) {

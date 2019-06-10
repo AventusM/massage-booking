@@ -14,7 +14,8 @@ const formatUser = (input) => {
     email: input.email,
     admin: input.admin,
     banned: input.banned,
-    appointments: input.appointments
+    appointments: input.appointments,
+    avatarUrl: input.avatarUrl
   }
 }
 

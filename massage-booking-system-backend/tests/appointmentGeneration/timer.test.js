@@ -33,9 +33,9 @@ describe('with any date given', () => {
       saturday = timer.formatTime(new Date('July 20, 2019 12:00:00'))
       sunday = timer.formatTime(new Date('July 21, 2019 12:00:00'))
       })
-      it('everyWeek rule works', async () => {
+      /*it('everyWeek rule works', async () => {
 
-    })
+    })*/
     it('setDay finds the correct day from the date (representing the week) given', async () => {
       
       expect(new Date(timer.setDay(1,new Date(saturday))).toISOString()).toBe('2019-07-15T08:55:00.000Z')
@@ -83,8 +83,9 @@ describe('with any date given', () => {
     it('formatTime formats time of date to 8:55:00', async () => {
       let formattedDate = new Date(timer.formatTime(monday))
       expect(formattedDate.toISOString()).toBe('2019-07-15T08:55:00.000Z')
+      
     })
 })
-afterAll(() => {
-    mongoose.disconnect()
+afterAll(async() => {
+    await mongoose.disconnect()
   })

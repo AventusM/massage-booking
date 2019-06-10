@@ -49,6 +49,8 @@ const CreateAppointment = props => {
 }
 
 const Appointments = props => {
+  const { user, users } = useContext(UserContext)
+  console.log('user', user)
   const { type } = props
   // console.log('type', type)
   if (type === OWN_APPOINTMENTS) {
