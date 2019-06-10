@@ -3,11 +3,12 @@ import { UserContext } from '../../App'
 
 const User = props => {
   // Order depends on value prop in original provider (this one in App.js)
-  console.log('UserList.js props', props)
+  //console.log('UserList.js props', props)
   const { user, userService } = useContext(UserContext)
   const { id, name, email, number, admin, banned, avatarUrl } = props
 
-  console.log('user', user)
+  //console.log('user', user)
+
   return (
     <tr>
       <td>{avatarUrl ? <img src={user.avatarUrl} alt="profile pic" height="50" width="50"/> : 'avatar'}</td>
@@ -18,7 +19,12 @@ const User = props => {
           ? <td>{number}</td>
           : <td>No number specified</td>
       }
-    
+      <td>
+        <button className="makeAdminButton" onClick={() => userService.update(id, { admin: !admin, auth_id: user._id })}>
+          {admin ? 'Remove Admin' : 'Make Admin'}
+        </button>
+      </td>
+      <td><button className="removeUserButton" onClick={() => userService.remove(id)}>REMOVE</button></td>
 
       {/*}
       <div className="dashboard_user_item_actions">
@@ -61,9 +67,11 @@ const UserList = (props) => {
             <tr>
               <th></th>
               <th>NAME</th>
-              <th>ROLE</th>
               <th>EMAIL</th>
+              <th>ROLE</th>
               <th>NUMBER</th>
+              <th>MAKE ADMIN</th>
+              <th>REMOVE</th>
             </tr>
           </thead>
         <tbody>
