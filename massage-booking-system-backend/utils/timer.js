@@ -1,4 +1,4 @@
-//const schedule = require('node-schedule')
+//const schedule = require('node-schedule') 
 const generator = require('./appointmentGenerator')
 const Appointment = require('../models/appointment') 
  
@@ -6,16 +6,10 @@ const Appointment = require('../models/appointment')
   /**
    *  scheduling rule for everyday.
    *  nextSixMonths = starting from the week of the date given as a parameter (any day of the week will do).
-   */
-  /*
-  let rule = new schedule.RecurrenceRule()
-  rule.dayOfWeek = [1,2,3,4,5,6]
-  //rule.seconds = [5,10,15,20,25,30,35,40,45,50,55]
-  const everyWeek = new schedule.scheduleJob(rule, function(){
+  
+  const everyDay = schedule.scheduleJob({hour: 0, minute: 0}, function(){
     nextSixMonths(new Date)
-  })
-  */
-
+  }) */
   /**
    * finds the day given as a parameter from the week which is defined by the date given as a parameter and returns it. 
    */
@@ -83,4 +77,4 @@ const formatTime = (date) =>{
   return date 
 }
 
-module.exports = { /*everyWeek,*/ formatTime, ifNotInDBCreateDay, nextSixMonths, pickDays, setDay }
+module.exports = {formatTime, ifNotInDBCreateDay, nextSixMonths, pickDays, setDay }
