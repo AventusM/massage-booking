@@ -70,7 +70,7 @@ const AuthHeader = (props) => {
         </Link>
         </li>
         <li>
-          <a id="logout" className="fas fa-sign-out-alt" href="/auth/logout" />
+          <i onClick={() => window.location.href="/auth/logout"} id="logout" className="fas fa-sign-out-alt"></i>
         </li>
       </ul>
     </nav>

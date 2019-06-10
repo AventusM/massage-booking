@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import LoginForm from './LoginForm'
 import unity5 from '../pics/unity5.png'
 import unity4 from '../pics/unity4.png'
+import GoogleButton from 'react-google-button'
 
 const LoginIndex = props => {
   // console.log('Login index props', props)
@@ -18,7 +18,12 @@ const LoginIndex = props => {
       <div className="login_wrapper_mobile">
         <img id="unity" src={unity5}></img>
         <h1>Massage Booking</h1>
-        <LoginForm {...props} />
+        <div className="login_button">
+        <GoogleButton 
+          type="light"
+          onClick={() => window.location.href="/auth/google"}
+        />
+        </div>
       </div>
     )
   } else {
@@ -26,10 +31,13 @@ const LoginIndex = props => {
       <div className="login_wrapper_desktop">
 
 
-        <div className="form-div">
           <h1>Massage Booking</h1>
-          <LoginForm {...props} />
-        </div>
+          <div className="login_button">
+          <GoogleButton 
+            type="light" 
+            onClick={() => window.location.href="/auth/google"}
+          />
+          </div>
         <img id="unity4" src={unity4} />
       </div>
     )

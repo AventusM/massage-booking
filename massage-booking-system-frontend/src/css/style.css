@@ -161,18 +161,11 @@ h3 {
 
 .login_button {
   /* border: 1px solid black; */
+  margin-top: 30px;
   display: flex;
   justify-content: center;
 }
 
-.login_button a {
-  background: #09203f;
-  border-radius: 15px;
-  color: white;
-  padding: 10px 5px;
-  text-align: center;
-  width: 200px;
-}
 
 .login_wrapper_mobile label {
   margin-bottom: 5px;
