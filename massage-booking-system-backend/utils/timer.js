@@ -1,4 +1,4 @@
-const schedule = require('node-schedule')
+//const schedule = require('node-schedule') 
 const generator = require('./appointmentGenerator')
 const Appointment = require('../models/appointment')
 
@@ -23,6 +23,28 @@ const setDay = (day, date) => {
   } else if (today < day) {
     day -= today
     return date.setDate(date.getDate() + day)
+
+  /**
+   *  scheduling rule for everyday.
+   *  nextSixMonths = starting from the week of the date given as a parameter (any day of the week will do).
+  
+  const everyDay = schedule.scheduleJob({hour: 0, minute: 0}, function(){
+    nextSixMonths(new Date)
+  }) */
+  /**
+   * finds the day given as a parameter from the week which is defined by the date given as a parameter and returns it. 
+   */
+  const setDay = (day, date) =>{
+    let today = date.getDay()
+    if(today == day){
+      return date
+    }else if(today < day){
+      day -= today
+      return date.setDate(date.getDate() + day)
+    }
+    today -= day
+    return date.setDate(date.getDate() - today)
+  }
   }
   today -= day
   return date.setDate(date.getDate() - today)

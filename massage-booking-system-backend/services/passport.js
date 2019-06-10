@@ -30,6 +30,7 @@ passport.use(
       // or something like that which should fail
 
       User.findOne({ googleId: profile.id }).then(foundUser => {
+
         if (foundUser) {
           // User has already been registered, continue with existing user
           done(null, foundUser)
@@ -39,6 +40,7 @@ passport.use(
             googleId: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
+            avatarUrl: profile.photos[0].value
           })
             .save()
             .then(createdUser => done(null, createdUser))

@@ -22,6 +22,69 @@ nav a {
   color: white;
 }
 
+
+/* Dashboard styles */
+
+.dashboard_wrapper {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #2b5876;
+  left: 0px;
+  text-align: center;
+}
+
+.overflowX {
+  overflow-x:auto;
+  display: flexbox;
+}
+
+.user_search {
+  color: white;
+  margin-top: 150px;
+  margin-left: 44%;
+}
+
+::placeholder {
+  opacity: 1;
+  color: rgba(238, 238, 238, 0.993);
+}
+
+.user_search input {
+  color: white;
+  margin-left: 7px;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #22465e;
+}
+
+table {
+  margin: auto;
+  margin-top: 10px;
+  background: #366787;
+  border-radius: 15px;
+  color: rgba(255, 255, 255, 0.89);
+  width: 60%;
+  font-size: 20px;
+}
+
+.dashboard_wrapper td {
+  text-align: center;
+  min-width: 100px;
+  padding-top: 12px;
+  overflow: hidden;
+}
+
+.dashboard_wrapper th {
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid #22465e;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+
+/*
 .dashboard_user_list {
   align-items: flex-start;
   display: flex;
@@ -49,18 +112,19 @@ nav a {
 
 .dashboard_user_item_email {
   /* TODO  */
-}
+/*}
 
 .dashboard_user_item_number {
   /* TODO  */
-}
+/*}
+/*
 
 .dashboard_user_item_actions {
   border-top: 1px solid black;
   width: 100%;
   /* border: 1px solid green; */
-}
-
+/*}
+/*
 .dashboard_user_item_actions p {
   margin: 0;
   padding: 0;
@@ -163,16 +227,26 @@ h3 {
   /* border: 1px solid black; */
   display: flex;
   justify-content: center;
+  
 }
 
 .login_button a {
+  margin-top: 15px;
   background: #09203f;
   border-radius: 15px;
   color: white;
   padding: 10px 5px;
   text-align: center;
   width: 200px;
+  
 }
+
+@media screen
+  and (max-width: 700px) {
+    .login_button a {
+      border: 1px solid white
+    }
+  }
 
 .login_wrapper_mobile label {
   margin-bottom: 5px;
@@ -272,6 +346,7 @@ h3 {
 
 
 /*Background*/
+/*
 .userHomepageWrapper_desktop{
   background-color: #2b5876;
   min-height: 100%;
@@ -282,6 +357,7 @@ h3 {
   
 }
 /*Form*/
+/*
 .userHomepageWrapper_desktop form {
   display: flex;
   flex-direction: column;
@@ -296,6 +372,7 @@ h3 {
   }
   
 /*Input*/
+/*
 .userHomepageWrapper_desktop input {
   text-align: center;
   border: 0px;
@@ -308,8 +385,9 @@ h3 {
 }
 
 /*Headers*/
-
+/*
 .userHomepageWrapper_desktop h3 {
+
   text-align: center;
   font-family: Roboto, sans-serif;
   font-size: 200%;
@@ -326,7 +404,7 @@ h3 {
   margin-top: 2%;
 }
 }
-
+*/
 @media screen
   and (max-width: 700px) {
     .userHomepageWrapper_desktop h3 {
@@ -345,7 +423,7 @@ h3 {
   
 /*Buttons*/
 
-
+/*
 .userHomepageWrapper_desktop button {
   border: 3px solid #537895;
   background: #537895;
@@ -358,7 +436,7 @@ h3 {
 }
 
 /*Label*/
-
+/*
 .userHomepageWrapper_desktop label{
   margin-bottom: 5px;
   font-size: 120%;

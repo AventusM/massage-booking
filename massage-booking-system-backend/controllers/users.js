@@ -13,6 +13,7 @@ const formatUser = input => {
     admin: input.admin,
     banned: input.banned,
     appointments: input.appointments,
+    avatarUrl: input.avatarUrl
   }
 }
 
