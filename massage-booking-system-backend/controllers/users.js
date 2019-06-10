@@ -79,6 +79,7 @@ usersRouter.put('/:id', async (req, res, next) => {
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {
+  console.log('DELETE USER')
   try {
     const user = await User.findById({ _id: req.params.id })
     await user.remove()

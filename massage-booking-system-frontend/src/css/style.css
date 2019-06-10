@@ -71,8 +71,12 @@ table {
 .dashboard_wrapper td {
   text-align: center;
   min-width: 100px;
-  padding-top: 12px;
+  padding-top: 13px;
   overflow: hidden;
+}
+
+.dashboard_wrapper tr:hover {
+  background-color: #3365a7
 }
 
 .dashboard_wrapper th {
@@ -81,6 +85,18 @@ table {
   border-bottom: 1px solid #22465e;
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.makeAdminButton {
+  background-color: rgb(96, 233, 169);
+  border-radius: 3px;
+  border: none;
+}
+
+.removeUserButton {
+  background-color: red;
+  border-radius: 3px;
+  border: none;
 }
 
 
