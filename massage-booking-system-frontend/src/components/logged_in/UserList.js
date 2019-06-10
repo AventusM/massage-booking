@@ -11,7 +11,7 @@ const User = props => {
 
   return (
     <tr>
-      <td>{avatarUrl ? <img src={user.avatarUrl} alt="profile pic" height="50" width="50"/> : 'avatar'}</td>
+      <td>{avatarUrl ? <img src={avatarUrl} alt="profile pic" height="50" width="50"/> : 'avatar'}</td>
       <td>{name} </td>
       <td>{email}</td>
       <td>user</td>
