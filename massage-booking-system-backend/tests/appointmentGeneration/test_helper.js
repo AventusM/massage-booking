@@ -12,7 +12,7 @@ const howManyAppointmentsAreInDB = async () => {
  * empties the database and makes sure the database is truly empty by waiting in a loop (500ms) to make sure there is no data being written to it.
  * IF TESTS FAIL INCREASE THE SLEEP TIME VALUE INSIDE THE LOOP! 
  */
-  async function emptyTheDatabaseOfAppointments(){
+  const emptyTheDatabaseOfAppointments = async() =>{
     await sleep(500)
     let response = await Appointment.find()
     while(response.length != 0) {
@@ -37,7 +37,7 @@ const howManyAppointmentsAreInDB = async () => {
  * Waits in a loop of 50 milliseconds to see wether the data has been written to the database. if time exeeds 1 second or the data goes over the expected amount the loop will end.
  * @param {*} howMany how many appointments are expected to be in the database.
  */
-async function wait(howMany) {
+const wait = async(howMany) => {
   let limit = 0
   let response = await Appointment.find()
   while (
