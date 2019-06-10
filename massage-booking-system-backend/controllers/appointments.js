@@ -80,9 +80,10 @@ appointmentsRouter.post('/', async (req, res, next) => {
 appointmentsRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
-    //console.log('appointmentRouter put called with req body ', body)
+    console.log('appointmentRouter put called with req body ', body)
 
     let user = await User.findById(body.user_id).populate('appointments')
+    // console.log('found user in router', user)
     if (!user) {
       res.status(400).end()
       return
