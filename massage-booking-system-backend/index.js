@@ -4,8 +4,6 @@ const config = require('./utils/config')
 const server = http.createServer(app)
 
 //everyWeek = every week at given times this method is scheduled to check the database and populate it with appointments when necissary
-server.listen(config.PORT,  () => {
+server.listen(config.PORT, () => {
   console.log(`Server running on port ${config.PORT}`)
-
 })
-

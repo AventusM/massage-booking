@@ -5,6 +5,7 @@ const fakeGoogleAccountData = {
   googleId: `123456789${randomNumber()}`,
   name: `Test account${randomNumber()}`,
   email: `test@test.account${randomNumber()}`
+
 }
 
 const fakeGoogleAccountData2 = {
@@ -14,6 +15,7 @@ const fakeGoogleAccountData2 = {
 }
 const fakeGoogleUser = new User(fakeGoogleAccountData)
 const fakeGoogleUser2 = new User(fakeGoogleAccountData2)
+
 
 // Putting things to the end of this century...
 // const original_test_appointment_tuesday = {

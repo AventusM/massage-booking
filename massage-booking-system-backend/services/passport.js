@@ -1,4 +1,4 @@
-const passport = require('passport');
+const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const mongoose = require('mongoose')
 const config = require('../utils/config')
@@ -12,24 +12,25 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser((id, done) => {
-  User.findById(id)
-    .then(foundUser => {
-      done(null, foundUser)
-    })
+  User.findById(id).then(foundUser => {
+    done(null, foundUser)
+  })
 })
 
-passport.use(new GoogleStrategy({
-  clientID: config.CLIENT_ID,
-  clientSecret: config.CLIENT_SECRET,
-  callbackURL: '/auth/google/callback'
-},
-  (accessToken, refreshToken, profile, done) => {
-    console.log('GOOGLE PROFILE ', profile)
-    // console.log('pic url', profile.photos[0].value)
-    // findOne returns single item. 
-    // find returns an array. BE CAREFUL!!!
-    User.findOne({ googleId: profile.id })
-      .then((foundUser) => {
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: config.CLIENT_ID,
+      clientSecret: config.CLIENT_SECRET,
+      callbackURL: '/auth/google/callback',
+    },
+    (accessToken, refreshToken, profile, done) => {
+      // CHECK IF UNITY EMAIL ADDRESS INCLUDED
+      // IF NO UNITY ADDRESS --> done(null, false)
+      // or something like that which should fail
+
+      User.findOne({ googleId: profile.id }).then(foundUser => {
+
         if (foundUser) {
           // User has already been registered, continue with existing user
           done(null, foundUser)
@@ -45,5 +46,6 @@ passport.use(new GoogleStrategy({
             .then(createdUser => done(null, createdUser))
         }
       })
-
-  }))
+    }
+  )
+)

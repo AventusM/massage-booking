@@ -2,10 +2,8 @@ const User = require('../models/user')
 const usersRouter = require('express').Router()
 const bodyParser = require('body-parser')
 usersRouter.use(bodyParser.json())
-const bcrypt = require('bcrypt')
 
-
-const formatUser = (input) => {
+const formatUser = input => {
   return {
     _id: input._id,
     // googleId: input.googleId,
@@ -24,7 +22,10 @@ usersRouter.get('/current_user', async (req, res, next) => {
   if (req.user) {
     res.send(req.user)
   } else {
-    res.send({ error: 'not authenticated' }).status(400).end()
+    res
+      .send({ error: 'not authenticated' })
+      .status(400)
+      .end()
   }
 })
 
@@ -40,7 +41,6 @@ usersRouter.get('/', async (req, res, next) => {
 usersRouter.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findById({ _id: req.params.id })
-    console.log('userriii: ', user)
     res.json(user)
   } catch (exception) {
     next(exception)
@@ -50,7 +50,6 @@ usersRouter.get('/:id', async (req, res, next) => {
 // User data which gets updated by administrator only
 usersRouter.put('/:id', async (req, res, next) => {
   try {
-
     const body = req.body
 
     // Verify that change is made by admin
@@ -65,15 +64,18 @@ usersRouter.put('/:id', async (req, res, next) => {
     // console.log('Body given', body)
     const updateUserData = {
       admin: body.admin || false,
-      banned: body.banned || false
+      banned: body.banned || false,
     }
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, updateUserData, { new: true })
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updateUserData,
+      { new: true }
+    )
     res.json(updatedUser)
   } catch (exception) {
     next(exception)
   }
-
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {

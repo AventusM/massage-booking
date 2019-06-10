@@ -149,4 +149,3 @@ describe('PUT appointments', () => {
 })
 
 afterAll(() => setTimeout(() => process.exit(), 1000))
-
