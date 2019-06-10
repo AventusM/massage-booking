@@ -1,4 +1,4 @@
-const passport = require('passport');
+const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const mongoose = require('mongoose')
 const config = require('../utils/config')
@@ -12,24 +12,24 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser((id, done) => {
-  User.findById(id)
-    .then(foundUser => {
-      done(null, foundUser)
-    })
+  User.findById(id).then(foundUser => {
+    done(null, foundUser)
+  })
 })
 
-passport.use(new GoogleStrategy({
-  clientID: config.CLIENT_ID,
-  clientSecret: config.CLIENT_SECRET,
-  callbackURL: '/auth/google/callback'
-},
-  (accessToken, refreshToken, profile, done) => {
-    // CHECK IF UNITY EMAIL ADDRESS INCLUDED
-    // IF NO UNITY ADDRESS --> done(null, false)
-    // or something like that which should fail
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: config.CLIENT_ID,
+      clientSecret: config.CLIENT_SECRET,
+      callbackURL: '/auth/google/callback',
+    },
+    (accessToken, refreshToken, profile, done) => {
+      // CHECK IF UNITY EMAIL ADDRESS INCLUDED
+      // IF NO UNITY ADDRESS --> done(null, false)
+      // or something like that which should fail
 
-    User.findOne({ googleId: profile.id })
-      .then((foundUser) => {
+      User.findOne({ googleId: profile.id }).then(foundUser => {
         if (foundUser) {
           // User has already been registered, continue with existing user
           done(null, foundUser)
@@ -38,11 +38,12 @@ passport.use(new GoogleStrategy({
           new User({
             googleId: profile.id,
             name: profile.displayName,
-            email: profile.emails[0].value
+            email: profile.emails[0].value,
           })
             .save()
             .then(createdUser => done(null, createdUser))
         }
       })
-
-  }))
+    }
+  )
+)

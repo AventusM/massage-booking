@@ -3,7 +3,6 @@ const Masseusse = require('../models/masseusse')
 const masseussesRouter = express.Router()
 const bodyParser = require('body-parser')
 masseussesRouter.use(bodyParser.json())
-const bcrypt = require('bcrypt')
 
 const formatMasseusse = input => {
   return {
@@ -29,32 +28,6 @@ masseussesRouter.get('/:id', async (req, res, next) => {
     const masseusse = await Masseusse.findById({ _id: req.params.id })
     // console.log('masseusse', masseusse)
     res.json(masseusse)
-  } catch (exception) {
-    next(exception)
-  }
-})
-
-masseussesRouter.post('/', async (req, res, next) => {
-  try {
-    const body = req.body
-
-    if (body.password === undefined || body.password.length < 3) {
-      return res.status(400).json({ error: 'Password is too short or missing' })
-    }
-
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(body.password, saltRounds)
-
-    const masseusse = new Masseusse({
-      name: body.name,
-      email: body.email,
-      number: body.number,
-      passwordHash,
-    })
-
-    const savedMasseusse = await masseusse.save()
-
-    res.json(savedMasseusse)
   } catch (exception) {
     next(exception)
   }

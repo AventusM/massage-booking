@@ -4,11 +4,10 @@ const Appointment = require('../../models/appointment')
 const fakeGoogleAccountData = {
   googleId: '123456789',
   name: 'Test account',
-  email: 'test@test.account'
+  email: 'test@test.account',
 }
 
 const fakeGoogleUser = new User(fakeGoogleAccountData)
-
 
 // Awaiting passing PR
 const valid_test_appointment = {
@@ -17,12 +16,10 @@ const valid_test_appointment = {
   end_date: null,
 }
 
-const invalid_test_appointment = {
-
-}
+const invalid_test_appointment = {}
 
 module.exports = {
   fakeGoogleUser,
   valid_test_appointment,
-  invalid_test_appointment
+  invalid_test_appointment,
 }
