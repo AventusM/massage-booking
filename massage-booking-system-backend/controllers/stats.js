@@ -96,8 +96,7 @@ statsRouter.post('/', async (req, res, next) => {
     numberOfUnusedPastAppointments,
     numberOfUsers,
     mostAppointmentsBySingleUser,
-    totalAppointmentsUsed,
-    usedGhostAppointments
+    totalAppointmentsUsed
   }
 
   console.log('statics to send ', statisticsToSend)
