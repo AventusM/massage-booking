@@ -1,6 +1,5 @@
 const supertest = require('supertest')
 const mongoose = require('mongoose')
-const user_helper = require('./test_helper')
 const app = require('../../app')
 const api = supertest(app)
 
@@ -32,6 +31,41 @@ const USERS_API_PATH = '/api/users'
 const APPOINTMENTS_API_PATH = '/api/appointments'
 const APPOINTMENT_RESERVATION_KEY = 1
 const APPOINTMENT_CANCELLATION_KEY = 0
+const ACCEPTED_APPOINTMENT = 1
+const FREE_APPOINTMENT = 0
+const FIRST_DAY_FIRST_INDEX = 0
+const FIRST_DAY_SECOND_INDEX = 1
+const SECOND_DAY_LAST_INDEX = 25
+
+const get_random_user = async (index) => {
+  const user_response =
+    await api
+      .get(USERS_API_PATH)
+
+  return user_response.body[index]
+}
+
+const get_random_appointment = async (index) => {
+  const appointment_response =
+    await api
+      .get(APPOINTMENTS_API_PATH)
+
+  return appointment_response.body[index]
+}
+
+const update_appointment = async (original_appointment_id, param_user_id, param_type_of_reservation) => {
+  await api
+    .put(`${APPOINTMENTS_API_PATH}/${original_appointment_id}`)
+    .send({ user_id: param_user_id, type_of_reservation: param_type_of_reservation })
+}
+
+const get_appointment = async (id) => {
+  const appointment_response =
+    await api
+      .get(`${APPOINTMENTS_API_PATH}/${id}`)
+
+  return appointment_response.body
+}
 
 describe('GET appointments', () => {
   beforeEach(async () => {
@@ -45,128 +79,73 @@ describe('GET appointments', () => {
   })
 })
 
-// Problem with tests
-// Must have random_user() function straight up in this file instead of exporting.
-// Otherwise it will fetch it correctly once for 1 test and for the rest returns undefined
 describe('PUT appointments', () => {
+
+  let original_user
+  let original_appointment
 
   beforeEach(async () => {
     await appointment_helper.emptyTheDatabaseOfAppointments()
     await User.deleteMany({})
     await random_user().save()
     await generate_apps_to_db_for_date('July 15, 2019 12:00:00')
+
+    // User has 0 appointments by default and all appointments are free
+    original_user = await get_random_user(FIRST_DAY_FIRST_INDEX)
+    original_appointment = await get_random_appointment(FIRST_DAY_FIRST_INDEX)
   })
 
   it('when user wants to create an appointment when not having any, the appointment SHOULD change its type', async () => {
-    const users_response = await api.get(USERS_API_PATH)
-    const original_user = users_response.body[0]
+    await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
+    const updated_original_appointment = await get_appointment(original_appointment._id)
 
-    const appointment_response = await api.get(APPOINTMENTS_API_PATH)
-    const original_appointment = appointment_response.body[0]
-
-    await api
-      .put(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-      .send({ user_id: original_user._id, type_of_reservation: 1 })
-
-    const updated_original_appointment_response = await api.get(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-    const updated_original_appointment = updated_original_appointment_response.body
-
-    expect(original_appointment.type_of_reservation).toBe(APPOINTMENT_CANCELLATION_KEY)
-    expect(updated_original_appointment.type_of_reservation).toBe(APPOINTMENT_RESERVATION_KEY)
-
+    expect(original_appointment.type_of_reservation).toBe(FREE_APPOINTMENT)
+    expect(updated_original_appointment.type_of_reservation).toBe(ACCEPTED_APPOINTMENT)
   })
 
   it('appointment type should not change if user attempts to create consecutive appointments in too small intervals', async () => {
-    const users_response = await api.get(USERS_API_PATH)
-    const original_user = users_response.body[0]
+    const second_app_same_day = await get_random_appointment(FIRST_DAY_SECOND_INDEX)
 
-    const appointment_response = await api.get(APPOINTMENTS_API_PATH)
-    const original_appointment = appointment_response.body[0]
-    const second_app_same_day = appointment_response.body[1]
+    await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
+    await update_appointment(second_app_same_day._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
 
-    await api
-      .put(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-      .send({ user_id: original_user._id, type_of_reservation: 1 })
+    const updated_original_appointment = await get_appointment(original_appointment._id)
+    const updated_same_day_appointment = await get_appointment(second_app_same_day._id)
 
-    await api
-      .put(`${APPOINTMENTS_API_PATH}/${second_app_same_day._id}`)
-      .send({ user_id: original_user._id, type_of_reservation: 1 })
-
-    const updated_original_response = await api.get(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-    const updated_original = updated_original_response.body
-
-    const updated_one_month_response = await api.get(`${APPOINTMENTS_API_PATH}/${second_app_same_day._id}`)
-    const updated_one_month = updated_one_month_response.body
-
-    expect(updated_original.type_of_reservation).toBe(1)
-    expect(updated_one_month.type_of_reservation).toBe(0)
+    expect(updated_original_appointment.type_of_reservation).toBe(ACCEPTED_APPOINTMENT)
+    expect(updated_same_day_appointment.type_of_reservation).toBe(FREE_APPOINTMENT)
   })
 
   it('when user wants to create an appointment when having one, the appointment SHOULD change its type if enough time has passed after previous user appointment', async () => {
-    // Generate appointments 1 month from original
+    // // Generate appointments 1 month from original
     await generate_apps_to_db_for_date('August 15, 2019 12:00:00')
+    const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
 
-    const users_response = await api.get(USERS_API_PATH)
-    const original_user = users_response.body[0]
+    await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
+    await update_appointment(one_month_after_original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
 
-    const appointment_response = await api.get(APPOINTMENTS_API_PATH)
-    const original_appointment = appointment_response.body[0]
-    // MASSIVE TRUST IS BEING GIVEN THAT THESE TWO WILL GIVE DIFFERENT DAYS
-    // MASSIVE TRUST IS BEING GIVEN THAT THESE TWO WILL GIVE DIFFERENT DAYS
-    // MASSIVE TRUST IS BEING GIVEN THAT THESE TWO WILL GIVE DIFFERENT DAYS
-    // TODO -- TODO -- TODO --
-    // TODO -- TODO -- TODO --
-    // TODO -- TODO -- TODO --
-    // search directly from db by date -> get _id and update that way
-    const one_month_from_original = appointment_response.body[25]
+    const updated_original_appointment = await get_appointment(original_appointment._id)
+    const updated_one_month_after_original_appointment = await get_appointment(one_month_after_original_appointment._id)
 
-    await api
-      .put(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-      .send({ user_id: original_user._id, type_of_reservation: 1 })
-
-    await api
-      .put(`${APPOINTMENTS_API_PATH}/${one_month_from_original._id}`)
-      .send({ user_id: original_user._id, type_of_reservation: 1 })
-
-    const updated_original_response = await api.get(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-    const updated_original = updated_original_response.body
-
-    const updated_one_month_response = await api.get(`${APPOINTMENTS_API_PATH}/${one_month_from_original._id}`)
-    const updated_one_month = updated_one_month_response.body
-
-    expect(updated_original.type_of_reservation).toBe(1)
-    expect(updated_one_month.type_of_reservation).toBe(1)
-
+    expect(updated_original_appointment.type_of_reservation).toBe(ACCEPTED_APPOINTMENT)
+    expect(updated_one_month_after_original_appointment.type_of_reservation).toBe(ACCEPTED_APPOINTMENT)
   })
 
   it('when user wants to cancel own appointment, the appointment SHOULD change its type', async () => {
-    const users_response = await api.get(USERS_API_PATH)
-    const original_user = users_response.body[0]
+    // Perform app reservation
+    await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
+    const updated_original_appointment = await get_appointment(original_appointment._id)
+    expect(updated_original_appointment.type_of_reservation).toBe(ACCEPTED_APPOINTMENT)
 
-    const appointment_response = await api.get(APPOINTMENTS_API_PATH)
-    const original_appointment = appointment_response.body[0]
-
-    await api
-      .put(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-      .send({ user_id: original_user._id, type_of_reservation: 1 })
-
-    const updated_original_response = await api.get(`${APPOINTMENTS_API_PATH}/${original_appointment._id}`)
-    const updated_original = updated_original_response.body
-    expect(updated_original.type_of_reservation).toBe(1)
-
-    await api
-      .put(`${APPOINTMENTS_API_PATH}/${updated_original._id}`)
-      .send({ user_id: original_user._id, type_of_reservation: 0 })
-
-    const cancelled_after_update_original_response = await api.get(`${APPOINTMENTS_API_PATH}/${updated_original._id}`)
-    const cancelled_after_update_original = cancelled_after_update_original_response.body
-    expect(cancelled_after_update_original.type_of_reservation).toBe(0)
-
+    // Perform app cancellation
+    await update_appointment(updated_original_appointment._id, original_user._id, APPOINTMENT_CANCELLATION_KEY)
+    const cancelled_original_appointment = await get_appointment(updated_original_appointment._id)
+    expect(cancelled_original_appointment.type_of_reservation).toBe(FREE_APPOINTMENT)
   })
 
-  // it('when user wants to cancel someone elses appointments, the user should get permabanned', async () => {
-  //   expect(true).toBe(false)
-  // })
+  it.skip('when user wants to cancel someone elses appointments, the user should get permabanned', async () => {
+    expect(true).toBe(false)
+  })
 })
 
 afterAll(() => setTimeout(() => process.exit(), 1000))
