@@ -41,8 +41,7 @@ import axios from 'axios'
 //   )
 // }
 
-const AuthHeader = props => {
-  const { user } = props
+const AuthHeader = ({ user }) => {
   return (
     <nav className="navbar">
       <span className="navbar-toggle" id="js-navbar-toggle">
@@ -173,7 +172,7 @@ const App = () => {
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
 
-        <UserContext.Provider value={{ user, setUser, users, userService }}>
+        <UserContext.Provider value={{ user }}>
           <Route exact path="/mypage" render={() => <MyPage />} />
         </UserContext.Provider>
 
