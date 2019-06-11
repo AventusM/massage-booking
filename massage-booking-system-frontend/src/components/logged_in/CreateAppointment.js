@@ -3,9 +3,8 @@ import moment from 'moment'
 import { AppointmentContext, UserContext } from '../../App'
 import Display from './Display'
 
-const CreateAppointment = props => {
-  const { id, start_date } = props
-  const { user, users } = useContext(UserContext)
+const CreateAppointment = ({ id, start_date }) => {
+  const { user } = useContext(UserContext)
   const { appointments, appointmentService, setErrorMessage } = useContext(
     AppointmentContext
   )
