@@ -171,8 +171,19 @@ const App = () => {
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
 
-        <UserContext.Provider value={{ user, setUser, userService }}>
-          <Route exact path="/mypage" render={() => <MyPage />} />
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
+          <AppointmentContext.Provider
+            value={{
+              user,
+              appointments,
+              appointmentService,
+              selectedDate,
+              setSelectedDate,
+              setErrorMessage,
+            }}
+          >
+            <Route exact path="/mypage" render={() => <MyPage />} />
+          </AppointmentContext.Provider>
         </UserContext.Provider>
 
         <AppointmentContext.Provider

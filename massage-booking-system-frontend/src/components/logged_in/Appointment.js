@@ -16,7 +16,10 @@ const CreateAppointment = props => {
     // const foundUser = users.find(u => user._id === u._id)
     let appointmentStartDate = appointments.find(app => app._id === id)
       .start_date
-    console.log('voiko varata?', reservationRuleCheck(foundUser.appointments, appointmentStartDate))
+    console.log(
+      'voiko varata?',
+      reservationRuleCheck(foundUser.appointments, appointmentStartDate)
+    )
     // console.log(
     //   'reservation rule check result ',
     //   reservationRuleCheck(foundUser.appointments, appointmentStartDate)
@@ -202,19 +205,19 @@ const Appointment = props => {
               <Display dateobject={start_date} own={true} />
             </button>
           ) : (
-              <button
-                id="reserved"
-                onClick={() => {
-                  window.alert('You cannot book this slot')
-                }}
-              >
-                <Display dateobject={start_date} user={appUser} />
-              </button>
-            )
+            <button
+              id="reserved"
+              onClick={() => {
+                window.alert('You cannot book this slot')
+              }}
+            >
+              <Display dateobject={start_date} user={appUser} />
+            </button>
+          )
         ) : null
       ) : (
-          <CreateAppointment id={id} start_date={start_date} />
-        )}
+        <CreateAppointment id={id} start_date={start_date} />
+      )}
     </div>
   )
 }
@@ -226,18 +229,23 @@ const reservationRuleCheck = (
   //console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
   let firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week')
-  let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter((usersPreviousTime) => {
-    let prevTimeMoment = moment(usersPreviousTime.start_date)
-    let firstWeekDayOfPrevtime = prevTimeMoment.startOf('week')
-    let dayDifference = firstWeekDayOfrequestedTimesWeek.diff(firstWeekDayOfPrevtime, 'days')
-    //console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
-    // console.log('usersAppointmentsWithinTheLastTwoWeeks ', usersAppointmentsWithinTheLastTwoWeeks, ' firstWeekDayOfPrevtime ', firstWeekDayOfPrevtime)
-    //console.log('day diff', dayDifference)
-    return Math.abs(dayDifference) < 14
-  })
+  let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter(
+    usersPreviousTime => {
+      let prevTimeMoment = moment(usersPreviousTime.start_date)
+      let firstWeekDayOfPrevtime = prevTimeMoment.startOf('week')
+      let dayDifference = firstWeekDayOfrequestedTimesWeek.diff(
+        firstWeekDayOfPrevtime,
+        'days'
+      )
+      //console.log('prevtimeMoment ', prevTimeMoment, 'requestedTiemMoment', requestedTimeMoment)
+      // console.log('usersAppointmentsWithinTheLastTwoWeeks ', usersAppointmentsWithinTheLastTwoWeeks, ' firstWeekDayOfPrevtime ', firstWeekDayOfPrevtime)
+      //console.log('day diff', dayDifference)
+      return Math.abs(dayDifference) < 14
+    }
+  )
   //console.log('usersAppointmentsWithinTheLastTwoWeeks after filter', usersAppointmentsWithinTheLastTwoWeeks)
   //console.log('usersAppointmentsWithinTheLastTwoWeeks.lenght', usersAppointmentsWithinTheLastTwoWeeks.length)
   return usersAppointmentsWithinTheLastTwoWeeks.length === 0
 }
 
-export { Appointments }
+export { Appointments, AppointmentsList }

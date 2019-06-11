@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext } from 'react'
-import { UserContext } from '../../App'
+import { UserContext, AppointmentContext } from '../../App'
 import useField from '../../hooks/useField'
+import AppointmentsList from './AppointmentList'
 
 const MyPage = () => {
   const currentUserContext = useContext(UserContext)
@@ -37,6 +38,8 @@ const MyPage = () => {
         />
         <button type="submit">Update</button>
       </form>
+
+      <AppointmentsList />
     </Fragment>
   )
 }
