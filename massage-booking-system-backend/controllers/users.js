@@ -47,7 +47,7 @@ usersRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-usersRouter.put('/update/:id', async (req, res, next) => {
+usersRouter.put('/:id/user', async (req, res, next) => {
   try {
     const body = req.body
 

@@ -9,14 +9,15 @@ const MyPage = () => {
   const { number, avatarUrl, name } = user
   const numberField = useField('text', number)
 
-  const handleNumberUpdate = event => {
+  const handleNumberUpdate = async event => {
     event.preventDefault()
+    console.log('event', event)
     const number = numberField.value
     const updatedUser = { ...user, number }
-    console.log('Hei', updatedUser)
+    const type = 'user'
 
     setUser(updatedUser)
-    userService.updateUser(user._id, updatedUser)
+    await userService.update(user._id, updatedUser, type)
   }
 
   return (
