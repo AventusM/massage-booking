@@ -1,5 +1,6 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import Display from './Display'
+import CreateAppointment from './CreateAppointment'
 import { AppointmentContext, UserContext } from '../../App'
 
 const Appointment = props => {
@@ -35,7 +36,7 @@ const Appointment = props => {
           )
         ) : null
       ) : (
-        <p>Heiii</p>
+        <CreateAppointment id={id} start_date={start_date} />
       )}
     </div>
   )

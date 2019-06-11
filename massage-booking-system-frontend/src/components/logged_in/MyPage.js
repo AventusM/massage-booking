@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { UserContext, AppointmentContext } from '../../App'
 import useField from '../../hooks/useField'
-import AppointmentsList from './AppointmentList'
+import AppointmentsList from './AppointmentsLists'
 
 const MyPage = () => {
   const currentUserContext = useContext(UserContext)
@@ -20,13 +20,13 @@ const MyPage = () => {
   }
 
   return (
-    <Fragment>
+    <div className="mypage_wrapper">
+      <p>{name}</p>
       {avatarUrl ? (
-        <img src={avatarUrl} alt="profile pic" height="50" width="50" />
+        <img src={avatarUrl} alt="profile pic" height="100" width="100" />
       ) : (
         'avatar'
       )}
-      {name}
       <label>Phone number</label>
       <form onSubmit={handleNumberUpdate}>
         <input
@@ -38,9 +38,9 @@ const MyPage = () => {
         />
         <button type="submit">Update</button>
       </form>
-
+      <h2>My Appointments</h2>
       <AppointmentsList />
-    </Fragment>
+    </div>
   )
 }
 

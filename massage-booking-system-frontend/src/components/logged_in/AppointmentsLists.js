@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import Appointment from './AppointmentComponent'
 import { AppointmentContext, UserContext } from '../../App'
 
