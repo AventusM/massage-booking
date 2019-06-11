@@ -2,14 +2,13 @@ import React, { useState, useEffect, Fragment, createContext } from 'react'
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import MyPage from './components/logged_in/MyPage'
-import loginService from './services/login'
 
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import Stats from './components/logged_in/Stats'
 import DashBoard from './components/logged_in/Dashboard'
 import NotFoundPage from './components/NotFoundPage'
-import ReservationView from './components/logged_in/ ReservationView'
+import ReservationView from './components/logged_in/ReservationView'
 import {
   BrowserRouter as Router,
   Route,
