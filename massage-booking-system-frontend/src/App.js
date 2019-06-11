@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment, createContext } from 'react'
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
 import MyPage from './components/logged_in/MyPage'
-import RegistrationFormFragment from './components/logged_in/RegistrationForm'
 import loginService from './services/login'
 
 import useResource from './hooks/useResource'
@@ -61,7 +60,7 @@ const AuthHeader = ({ user }) => {
         </li>
         <li>
           <Link className="nav-link" to="/mypage">
-            My Page
+            {user.name}
           </Link>
         </li>
         <li>
