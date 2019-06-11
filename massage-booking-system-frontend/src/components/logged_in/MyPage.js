@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useContext } from 'react'
-import { UserContext, AppointmentContext } from '../../App'
+import React, { useContext } from 'react'
+import { UserContext } from '../../App'
 import useField from '../../hooks/useField'
 import AppointmentsList from './AppointmentsLists'
 
