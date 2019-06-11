@@ -4,11 +4,18 @@ import useField from '../../hooks/useField'
 
 const MyPage = () => {
   const currentUserContext = useContext(UserContext)
-  const { avatarUrl, name, number } = currentUserContext.user
+  const { user, setUser, userService } = currentUserContext
+  const { number, avatarUrl, name } = user
   const numberField = useField('text', number)
 
-  const handleNumberUpdate = () => {
-    console.log('hei')
+  const handleNumberUpdate = event => {
+    event.preventDefault()
+    const number = numberField.value
+    const updatedUser = { ...user, number }
+    console.log('Hei', updatedUser)
+
+    setUser(updatedUser)
+    userService.updateUser(user._id, updatedUser)
   }
 
   return (
@@ -20,7 +27,7 @@ const MyPage = () => {
       )}
       {name}
       <label>Phone number</label>
-      <form onSubmit={() => handleNumberUpdate()}>
+      <form onSubmit={handleNumberUpdate}>
         <input
           type={numberField.type}
           id="number"

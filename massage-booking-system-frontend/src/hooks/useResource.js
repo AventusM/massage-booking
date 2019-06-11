@@ -26,6 +26,17 @@ const useResource = baseUrl => {
     }
   }
 
+  const updateUser = async (id, data) => {
+    const updatedResource = await axios.put(`${baseUrl}/update/${id}`, data)
+    if (updatedResource.data.hasOwnProperty('_id')) {
+      setResources(
+        resources.map(resource =>
+          resource._id !== id ? resource : updatedResource.data
+        )
+      )
+    }
+  }
+
   const remove = async id => {
     const deletedResource = await axios.delete(`${baseUrl}/${id}`)
     const updatedResources = resources.filter(resource => resource._id !== id)
@@ -33,7 +44,6 @@ const useResource = baseUrl => {
   }
 
   const getOne = async id => {
-
     const response = await axios.get(`${baseUrl}/${id}`)
     return response.data
   }
@@ -43,6 +53,7 @@ const useResource = baseUrl => {
     create,
     remove,
     update,
+    updateUser,
     getOne,
   }
 

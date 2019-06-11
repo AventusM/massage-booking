@@ -171,7 +171,7 @@ const App = () => {
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
 
-        <UserContext.Provider value={{ user }}>
+        <UserContext.Provider value={{ user, setUser, userService }}>
           <Route exact path="/mypage" render={() => <MyPage />} />
         </UserContext.Provider>
 
