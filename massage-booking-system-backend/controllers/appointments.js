@@ -39,6 +39,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
     console.log('appointmentRouter put called with req body ', body)
+    const appointmentID = req.params.id
 
     let user = await User.findById(body.user_id).populate('appointments')
     // console.log('found user in router', user)
@@ -50,14 +51,21 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
     let updatedAppointment = {}
 
     if (body.type_of_reservation === 0) {
-      // user wishes to cancel his/her appointment
+      // user wishes to cancel their appointment
+      
+      let userAllowedToCancel = await ruleChecker.userAllowedtoCancelAppointment(user._id, appointmentID)
+      if (!userAllowedToCancel) {
+        res.status(400).end()
+        return
+      }
+
       const appointment = {
         user_id: null,
         type_of_reservation: body.type_of_reservation,
       }
 
       updatedAppointment = await Appointment.findByIdAndUpdate(
-        req.params.id,
+        appointmentID,
         appointment,
         { new: true }
       )
@@ -82,7 +90,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
       )
     } else {
       // user wishes to make an appointment
-      let ruleCheckResult = await ruleChecker(user.appointments, req.params.id)
+      let ruleCheckResult = await ruleChecker.userAllowedToMakeAppointment(user.appointments, req.params.id)
       //console.log('rule check result', ruleCheckResult )
       if (ruleCheckResult) {
         //user is allowed to make reservation, proceed with reservation
@@ -92,15 +100,15 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
         }
 
         updatedAppointment = await Appointment.findByIdAndUpdate(
-          req.params.id,
+          appointmentID,
           appointment,
           { new: true } 
         )
 
         //adds appointment to users appointments
         user.appointments = user.appointments.concat(updatedAppointment._id)
-        user = await User.findByIdAndUpdate(user._id, user)
-        //console.log('user', user)
+        user.save()
+        console.log('user after new appointment', user)
       } else {
         // user is not allowed to make this appointment
         console.log('NOT ALLOWED')
