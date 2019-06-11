@@ -15,7 +15,7 @@ const useResource = baseUrl => {
     setResources(updatedResources)
   }
 
-  const update = async (id, data, type) => {
+  const update = async (id, data, type = '') => {
     const updatedResource = await axios.put(`${baseUrl}/${id}/${type}`, data)
     if (updatedResource.data.hasOwnProperty('_id')) {
       setResources(
