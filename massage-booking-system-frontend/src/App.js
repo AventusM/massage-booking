@@ -144,7 +144,10 @@ const App = () => {
   return (
     <Fragment>
       <Router>
-        <Header user={user} />
+        <Header user={user} />       
+        <Notification icon ="fas fa-check-circle fa-lg"type="success" message ="You have successfully reserved an appointment! "/> 
+        <Notification icon="fas fa-exclamation-triangle fa-lg" type="error" message ="You have reached maximum allowed appointments"/> 
+        <Notification icon="fas fa-info-circle fa-lg" type="general" message ="Hello from Timi"/> 
         <UserContext.Provider value={{ user, setUser, users, userService }}>
           <AppointmentContext.Provider
             value={{
