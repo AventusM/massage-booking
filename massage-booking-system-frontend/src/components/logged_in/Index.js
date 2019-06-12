@@ -7,6 +7,7 @@ import unity4 from '../../pics/unity4.png'
 import Appointments from './Appointments'
 import LoginIndex from '../Login_index'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
+import moment from 'moment'
 
 const Index = () => {
   const { user } = useContext(UserContext)
@@ -16,9 +17,13 @@ const Index = () => {
   return <LoginIndex />
 }
 
-const AuthIndex = props => {
-  const { setSelectedDate } = useContext(AppointmentContext)
+const AuthIndex = (props) => {
+  const { setSelectedDate, appointments } = useContext(AppointmentContext)
+
   const [tab, setTab] = useState(true)
+
+  const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
+  
   return (
     <Fragment>
       <div className="appointmentListWrapperMain">
@@ -29,8 +34,18 @@ const AuthIndex = props => {
               console.log('value ', value, 'value type', typeof value)
               //console.log('setselecteddate', setSelectedDate)
               setSelectedDate(value)
+              
               setTab(true)
             }}
+            minDetail="year"
+            prev2Label={null}
+            next2Label={null}
+           
+            tileClassName={({date, view}) => view === 'month' && freeAppointments.filter(app => moment(app.start_date).isSame(moment(date), 'day')).length > 0 ? 'availableDay' : view === 'month' && date.getDay() < 3 && date.getDay() !== 0 ? 'nonAvailableDay' : 'disabled'} 
+ 
+            tileDisabled={({date, view}) => view === 'month' && ((date.getDay() > 2 || date.getDay() === 0))}
+            showNeighboringMonth={false}
+
           />
         </div>
 

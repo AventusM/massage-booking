@@ -690,7 +690,26 @@ h3 {
   line-height: 1.25em;
   font-size: 1.5em;
 }
+
+.tile {
+  background: white;
+}
+
+.nonAvailableDay {
+  color: red;
+}
+
+.availableDay {
+  color: rgb(100, 172, 100);
+}
+
+.disabled {
+  color: rgb(211, 208, 208);
+}
+
+
 .List {
+
   /* border: 2px solid green; */
 }
 
