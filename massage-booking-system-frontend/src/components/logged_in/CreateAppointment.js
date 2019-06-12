@@ -10,6 +10,7 @@ const CreateAppointment = ({ id, start_date }) => {
   )
 
   const handleAppointmentCreation = () => {
+    console.log('user in handle appointment creation ', user)
     // Using user found from original state as it updates on appointment updates
     const foundUser = user
     // const foundUser = users.find(u => user._id === u._id)
@@ -54,7 +55,7 @@ const reservationRuleCheck = (
   usersAppointments,
   requestedAppointmentStartDate
 ) => {
-  //console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
+  console.log('usersAppointments', usersAppointments, ' requestedAppointStartTime', requestedAppointmentStartDate)
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
   let firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week')
   let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter(

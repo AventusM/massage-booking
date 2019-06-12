@@ -40,7 +40,7 @@ usersRouter.get('/', async (req, res, next) => {
 
 usersRouter.get('/:id', async (req, res, next) => {
   try {
-    const user = await User.findById({ _id: req.params.id })
+    const user = await User.findById({ _id: req.params.id }).populate('appointments')
     res.json(user)
   } catch (exception) {
     next(exception)
