@@ -18,6 +18,7 @@ import DashBoard from './components/logged_in/Dashboard'
 import NotFoundPage from './components/NotFoundPage'
 import Notification from './components/Notification'
 import Header from './components/Header'
+import TVview from './components/TVview'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
 
@@ -112,6 +113,16 @@ const App = () => {
         >
           <Route exact path="/stats" render={() => <Stats />} />
         </AppointmentContext.Provider>
+        
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
+          <AppointmentContext.Provider
+            value={{
+              user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, createNotification
+            }}>
+            <Route exact path="/tvview" render={() => <TVview />} />
+          </AppointmentContext.Provider>
+        </UserContext.Provider>       
+          
       </Router>
     </Fragment>
   )
