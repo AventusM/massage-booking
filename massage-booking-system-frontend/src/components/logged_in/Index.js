@@ -1,11 +1,10 @@
 import React, { Fragment, useContext, useState } from 'react'
 //import Calendar from 'react-calendar';
-import Calendar from 'react-calendar/dist/entry.nostyle'
+import Calendar from 'react-calendar'
 import { AppointmentContext, UserContext } from '../../App'
 import unity4 from '../../pics/unity4.png'
 
-
-import { Appointments } from './Appointment'
+import Appointments from './Appointments'
 import LoginIndex from '../Login_index'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 import moment from 'moment'
@@ -18,10 +17,9 @@ const Index = () => {
   return <LoginIndex />
 }
 
-
-
 const AuthIndex = (props) => {
   const { setSelectedDate, appointments } = useContext(AppointmentContext)
+
   const [tab, setTab] = useState(true)
 
   const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
@@ -31,8 +29,8 @@ const AuthIndex = (props) => {
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
-            locale={"en-UK"}
-            onChange={(value) => {
+            locale={'en-UK'}
+            onChange={value => {
               console.log('value ', value, 'value type', typeof value)
               //console.log('setselecteddate', setSelectedDate)
               setSelectedDate(value)
@@ -51,25 +49,26 @@ const AuthIndex = (props) => {
           />
         </div>
 
-
-        <div className='List'>
+        <div className="List">
           {tab ? (
             <div className="all_apps_div">
               <h1>All appointments</h1>
-              <button className="buttonList" onClick={() => setTab(!tab)}>Own appointments</button>
+              <button className="buttonList" onClick={() => setTab(!tab)}>
+                Own appointments
+              </button>
               <Appointments />
             </div>
           ) : (
-              <div>
-                <h1>Own appointments</h1>
-                <button className="buttonList" onClick={() => setTab(!tab)}>All appointments</button>
-                <Appointments type={OWN_APPOINTMENTS} />
-              </div>
-            )}
+            <div>
+              <h1>Own appointments</h1>
+              <button className="buttonList" onClick={() => setTab(!tab)}>
+                All appointments
+              </button>
+              <Appointments type={OWN_APPOINTMENTS} />
+            </div>
+          )}
           {/* <img id="unity4" src={unity4}></img> */}
         </div>
-
-
       </div>
     </Fragment>
   )

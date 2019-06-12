@@ -15,8 +15,8 @@ const useResource = baseUrl => {
     setResources(updatedResources)
   }
 
-  const update = async (id, data) => {
-    const updatedResource = await axios.put(`${baseUrl}/${id}`, data)
+  const update = async (id, data, type = '') => {
+    const updatedResource = await axios.put(`${baseUrl}/${id}/${type}`, data)
     if (updatedResource.data.hasOwnProperty('_id')) {
       setResources(
         resources.map(resource =>
@@ -33,7 +33,6 @@ const useResource = baseUrl => {
   }
 
   const getOne = async id => {
-
     const response = await axios.get(`${baseUrl}/${id}`)
     return response.data
   }
