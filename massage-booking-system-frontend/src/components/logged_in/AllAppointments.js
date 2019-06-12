@@ -41,7 +41,13 @@ const AllAppointments = () => {
 
     return 0
   })
-
+  const getStart_Date = (date) => {
+    date = new Date(date)
+    let minutes = date.getMinutes()
+    let time = date.getTimezoneOffset()
+    date.setMinutes(minutes + time)
+    return date
+  }
   return (
     <ul className="appointmentListWrapper">
       {todaysAppointments.map(app => {
@@ -49,7 +55,7 @@ const AllAppointments = () => {
           <Appointment
             key={app._id}
             id={app._id}
-            start_date={app.start_date}
+            start_date={getStart_Date(app.start_date)}
             type_of_reservation={app.type_of_reservation}
             appUser={users.find(u => u._id === app.user_id)}
           />
