@@ -37,7 +37,7 @@ import axios from 'axios'
 //           ? <a href="/auth/logout">LOGOUT</a>
 //           : <a href="/auth/google">LOGIN WITH GOOGLE</a>}
 //       </div>
-//     </nav>
+//     </nav>git
 //   )
 // }
 
