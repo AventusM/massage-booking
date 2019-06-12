@@ -1,5 +1,0 @@
-GET http://localhost:3001/api/masseusses
-Content-Type: application/json
-
-{
-}

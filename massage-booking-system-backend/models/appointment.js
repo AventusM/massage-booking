@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 
 const appointmentSchema = mongoose.Schema({
-  masseusse_id: {
-    type: String,
-  },
   user_id: {
     type: String,
   },

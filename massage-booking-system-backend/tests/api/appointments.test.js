@@ -143,7 +143,7 @@ describe('PUT appointments', () => {
     expect(cancelled_original_appointment.type_of_reservation).toBe(FREE_APPOINTMENT)
   })
 
-  it.skip('when user wants to cancel someone elses appointments, the user should get permabanned', async () => {
+  it.skip('when user wants to cancel someone elses appointments, appointment should not be canceled', async () => {
     expect(true).toBe(false)
   })
 })
