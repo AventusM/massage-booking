@@ -19,7 +19,7 @@ const UserList = props => {
     <div className="dashboard_wrapper">
       <div className="overflowX">
         <div className="user_search">
-          <i class="fas fa-search" />
+          <i className="fas fa-search" />
           <input value={filter} onChange={filterChange} placeholder="Search" />
         </div>
         <table>
