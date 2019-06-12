@@ -3,11 +3,11 @@ import { UserContext } from '../../App'
 import useField from '../../hooks/useField'
 import AppointmentsList from './AppointmentsLists'
 
-const MyPage = () => {
-  const currentUserContext = useContext(UserContext)
-  const { user, setUser, userService } = currentUserContext
-  const { number, avatarUrl, name } = user
-  const numberField = useField('text', number)
+const MyPage = props => {
+  const { user, setUser, userService } = useContext(UserContext)
+  console.log('user: ', user)
+
+  const numberField = useField('text', user.number)
 
   const handleNumberUpdate = async event => {
     event.preventDefault()
@@ -22,9 +22,9 @@ const MyPage = () => {
 
   return (
     <div className="mypage_wrapper">
-      <p>{name}</p>
-      {avatarUrl ? (
-        <img src={avatarUrl} alt="profile pic" height="100" width="100" />
+      <p>{user.name}</p>
+      {user.avatarUrl ? (
+        <img src={user.avatarUrl} alt="profile pic" height="100" width="100" />
       ) : (
         'avatar'
       )}
