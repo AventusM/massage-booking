@@ -47,28 +47,27 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
       res.status(400).end()
       return
     }
-    //console.log('user before appointment added', user)
-    let updatedAppointment = {}
+
+    let appointment = await Appointment.findById(appointmentID)
+    console.log('appointment ', appointment, typeof(appointment))
+    if(!appointment) {
+      res.status(400).end()
+      return
+    }
 
     if (body.type_of_reservation === 0) {
       // user wishes to cancel their appointment
       
-      let userAllowedToCancel = await ruleChecker.userAllowedtoCancelAppointment(user._id, appointmentID)
+      let userAllowedToCancel = await ruleChecker.userAllowedtoCancelAppointment(user._id, appointment)
       if (!userAllowedToCancel) {
         res.status(400).end()
         return
       }
 
-      const appointment = {
-        user_id: null,
-        type_of_reservation: body.type_of_reservation,
-      }
+      appointment.user_id = null
+      appointment.type_of_reservation = body.type_of_reservation
+      appointment = await appointment.save()
 
-      updatedAppointment = await Appointment.findByIdAndUpdate(
-        appointmentID,
-        appointment,
-        { new: true }
-      )
       console.log(
         'users appointments before cancelation',
         user.appointments,
@@ -76,37 +75,31 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
         user.appointments.length
       )
       //remove appointment from users appointments
-      user.appointments = user.appointments.filter(appointment => {
+      user.appointments = user.appointments.filter(app => {
         return (
-          JSON.stringify(appointment._id) !==
-          JSON.stringify(updatedAppointment._id)
+          JSON.stringify(app._id) !==
+          JSON.stringify(appointment._id)
         )
       })
       user = await user.save()
       console.log(
-        'users appointments after canellation',
+        'users appointments after cancelation',
         ' length ',
         user.appointments.length
       )
     } else {
       // user wishes to make an appointment
-      let ruleCheckResult = await ruleChecker.userAllowedToMakeAppointment(user.appointments, req.params.id)
+      let ruleCheckResult = await ruleChecker.userAllowedToMakeAppointment(user.appointments, appointment)
       //console.log('rule check result', ruleCheckResult )
       if (ruleCheckResult) {
         //user is allowed to make reservation, proceed with reservation
-        const appointment = {
-          user_id: body.user_id || null,
-          type_of_reservation: body.type_of_reservation,
-        }
 
-        updatedAppointment = await Appointment.findByIdAndUpdate(
-          appointmentID,
-          appointment,
-          { new: true } 
-        )
+      appointment.user_id = body.user_id
+      appointment.type_of_reservation = body.type_of_reservation
+      appointment = await appointment.save()
 
         //adds appointment to users appointments
-        user.appointments = user.appointments.concat(updatedAppointment._id)
+        user.appointments = user.appointments.concat(appointment._id)
         user.save()
         console.log('user after new appointment', user)
       } else {
@@ -115,7 +108,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
       }
     }
     //console.log('user after appointment added', user)
-    res.json(updatedAppointment)
+    res.json(appointment)
   } catch (exception) {
     next(exception)
   }

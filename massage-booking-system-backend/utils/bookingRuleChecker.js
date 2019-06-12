@@ -1,29 +1,27 @@
-const Appointment = require('../models/appointment')
 const moment = require('moment')
 
 const userAllowedToMakeAppointment = async (
   usersAppointmentList,
-  requestedAppointmentID
+  appointment
 ) => {
   try {
-    const appointment = await Appointment.findById(requestedAppointmentID)
+    console.log('appointment in rulechecker ', appointment)
     let usersPreviousMassageTimes = usersAppointmentList.map(
-      appointment => appointment.start_date
+      app => app.start_date
     )
     //console.log('users appointment history ', usersPreviousMassageTimes)
 
     let now = moment()
     let appointmentTimeMoment = moment(appointment.start_date)
-    let appointmentsFirstDayOfTheWeek = appointmentTimeMoment.startOf('week')
-    //console.log('first day of the week appoint is being booked in', appointmentsFirstDayOfTheWeek)
-    //console.log('appointmentTimeMoment', appointmentTimeMoment)
-
+    console.log('appointmentTimeMoment', appointmentTimeMoment)
     /*  Checks that requested appointment is in the future. Cant book past appointments */
     if (appointmentTimeMoment.isBefore(now)) {
       console.log('Tried to book past date')
       return false
     }
 
+    let appointmentsFirstDayOfTheWeek = appointmentTimeMoment.startOf('week') // note that this also modifies apppointmentTimeMoment
+    //console.log('first day of the week appoint is being booked in', appointmentsFirstDayOfTheWeek)
     /*  Checks that requested appointment is no more tha six weeks away. Appointments can be made 6 weeks in advance. */
     let startOfThisWeek = now.startOf('week')
     let sixWeeksFromNow = startOfThisWeek.add( 42, 'days') 
@@ -57,8 +55,9 @@ const userAllowedToMakeAppointment = async (
   }
 }
 
-const userAllowedtoCancelAppointment = async (userID, appointmentID) => {
-  const appointment = await Appointment.findById(appointmentID)
+const userAllowedtoCancelAppointment = async (userID, appointment) => {
+  //const appointment = await Appointment.findById(appointmentID)
+  console.log('appointment in checker ', appointment)
   //console.log('userAllowedToCancelAppointment', (String(userID) === String(appointment.user_id)))
   return String(userID) === String(appointment.user_id)
 }
