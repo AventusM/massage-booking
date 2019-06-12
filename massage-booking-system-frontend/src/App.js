@@ -21,6 +21,8 @@ import {
 import history from './history'
 import logo from './pics/unity5.png'
 import Notification from './components/Notification'
+import * as types from './types/types.js'
+import * as icons from './types/fa-icons.js'
 
 // Temporarily here for data fetching as authentication is completely server-side now
 import axios from 'axios'
@@ -114,14 +116,30 @@ const App = () => {
   const [appointments, appointmentService] = useResource('/api/appointments')
   const [stats, statsService] = useResource('api/stats')
 
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
+  const [notification_type, setType] = useState(null)
+  const [notification_icon, setIcon] = useState(null)
+
+  const [message, setErrorMessage] = useState(null)
+
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
 
-  const logOut = async () => {
-    const response = await axios.get('/auth/logout')
-    console.log('response data logout', response)
-    setUser(response.data)
+  const createNotification= (message, type) => {
+    console.log(type)
+    setNotification(message)
+    if (type === types.SUCCESS){
+      setType(types.SUCCESS)
+      setIcon(icons.SUCCESS)
+    } else {
+      setType(types.ERROR)
+      setIcon(icons.ERROR)
+    }
+      setTimeout(() => {
+      setNotification(null)
+      setType(null)
+      setIcon(null)
+    },5000) 
   }
 
   useEffect(() => {
@@ -145,13 +163,14 @@ const App = () => {
     <Fragment>
       <Router>
         <Header user={user} />       
-        <Notification icon ="fas fa-check-circle fa-lg"type="success" message ="You have successfully reserved an appointment! "/> 
-        <Notification icon="fas fa-exclamation-triangle fa-lg" type="error" message ="You have reached maximum allowed appointments"/> 
-        <Notification icon="fas fa-info-circle fa-lg" type="general" message ="Hello from Timi"/> 
+        <Notification icon={notification_icon} type= {notification_type} message ={notification}/>
+        {/*<button onClick={()=> createNotification("moi", "success")}>
+          testii
+        </button>*/}       
         <UserContext.Provider value={{ user, setUser, users, userService }}>
           <AppointmentContext.Provider
             value={{
-              user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage,
+              user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, createNotification
             }}>
             <Route exact path="/" render={() => <Index />} />
           </AppointmentContext.Provider>
@@ -169,6 +188,23 @@ const App = () => {
   )
 }
 
+//export const NotificationContext = createContext(null)
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
 export const AppointmentContext = createContext(null)
 export const UserContext = createContext(null)
 export default App
+

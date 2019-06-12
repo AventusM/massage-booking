@@ -1,8 +1,9 @@
 import React from 'react'
 
 
-const Notification = ({ type,message,icon }) => {
- 
+const Notification = (props) => {
+    const {type, message, icon} = props
+ console.log('NOTIFICATION PROPS', message)
     if (message === null) {
         return null
     } 
