@@ -667,23 +667,29 @@ h3 {
   font-size: 1.5em;
 
 }
-.List{
-  /* border: 2px solid green; */
-}
 
-.weekend {
-  color: rgb(211, 208, 208);
-  background: white;
-}
+
+
 
 .tile {
   background: white;
+}
+
+.nonAvailableDay {
+  color: red;
 }
 
 .availableDay {
   color: rgb(100, 172, 100);
 }
 
+.disabled {
+  color: rgb(211, 208, 208);
+}
+
+.List{
+  /* border: 2px solid green; */
+}
 
 @media screen and (max-width: 1160px){
   .appointmentListWrapperMain { 
