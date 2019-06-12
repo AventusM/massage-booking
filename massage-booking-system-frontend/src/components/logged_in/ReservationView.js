@@ -1,7 +1,7 @@
 import React from 'react'
 import Calendar from 'react-calendar'
 
-const ReservationView = ({ user }) => {
+const ReservationView = props => {
   return (
     <>
       <Calendar

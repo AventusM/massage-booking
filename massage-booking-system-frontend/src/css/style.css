@@ -3,7 +3,8 @@
 }
 
 /* TÄMÄ OVERWRITEE ESIM HEADERIT ATM */
-ul, li {
+ul,
+li {
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -23,6 +24,40 @@ nav a {
   color: white;
 }
 
+/* My Page styles */
+
+.mypage_wrapper {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #2b5876;
+  left: 0px;
+  text-align: center;
+}
+
+.mypage_wrapper h2 {
+  text-align: center;
+  font-family: Sans-serif, 'Roboto';
+  color: white;
+}
+
+.mypage_wrapper label {
+  color: white;
+  font-size: 20px;
+}
+
+.mypage_wrapper p {
+  font-size: 30px;
+  color: white;
+}
+
+.mypage_wrapper input {
+  color: white;
+  margin-left: 7px;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #22465e;
+}
 
 /* Dashboard styles */
 
@@ -36,7 +71,7 @@ nav a {
 }
 
 .overflowX {
-  overflow-x:auto;
+  overflow-x: auto;
   display: flexbox;
 }
 
@@ -77,7 +112,7 @@ table {
 }
 
 .dashboard_wrapper tr:hover {
-  background-color: #3365a7
+  background-color: #3365a7;
 }
 
 .dashboard_wrapper th {
@@ -99,7 +134,6 @@ table {
   border-radius: 3px;
   border: none;
 }
-
 
 /*
 .dashboard_user_list {
@@ -159,8 +193,6 @@ table {
   }
 } */
 
-
-
 .main_wrapper {
   background-color: #e4e4e1;
   background-image: radial-gradient(
@@ -183,13 +215,11 @@ table {
 
 .login_wrapper_mobile img {
   width: 170px;
-   display: block;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: 100px;
-   margin-bottom: 30px;
-
-
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  margin-bottom: 30px;
 }
 
 .login_wrapper_mobile {
@@ -223,7 +253,6 @@ table {
   color: white;
 }
 
-
 /*.timelist {
   padding: 5px;
   list-style-type: none;
@@ -245,16 +274,13 @@ h3 {
   margin-top: 30px;
   display: flex;
   justify-content: center;
-  
 }
 
-
-@media screen
-  and (max-width: 700px) {
-    .login_button a {
-      border: 1px solid white
-    }
+@media screen and (max-width: 700px) {
+  .login_button a {
+    border: 1px solid white;
   }
+}
 
 .login_wrapper_mobile label {
   margin-bottom: 5px;
@@ -352,7 +378,6 @@ h3 {
 
 /* Tästä alkaa Homepage Desktop*/
 
-
 /*Background*/
 /*
 .userHomepageWrapper_desktop{
@@ -413,22 +438,21 @@ h3 {
 }
 }
 */
-@media screen
-  and (max-width: 700px) {
-    .userHomepageWrapper_desktop h3 {
-      margin-top: 5%;
-      font-size: 120%;
-    }
-    .userHomepageWrapper_desktop h2 {
-      margin-top: 5%;
-      font-size: 200%;
-    }
-    .dashboard_user_list {
-      /* BETTER BREAKPOINT MEDIA QUERY EXISTS CURRENTLY IN THE UPPER PART OF THIS FILE */
-      justify-content: center;
-    }
+@media screen and (max-width: 700px) {
+  .userHomepageWrapper_desktop h3 {
+    margin-top: 5%;
+    font-size: 120%;
   }
-  
+  .userHomepageWrapper_desktop h2 {
+    margin-top: 5%;
+    font-size: 200%;
+  }
+  .dashboard_user_list {
+    /* BETTER BREAKPOINT MEDIA QUERY EXISTS CURRENTLY IN THE UPPER PART OF THIS FILE */
+    justify-content: center;
+  }
+}
+
 /*Buttons*/
 
 /*
@@ -469,10 +493,9 @@ h3 {
 
 .navbar {
   font-size: 18px;
-  background-color:#2b5876;
+  background-color: #2b5876;
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 5px;
-
 }
 .navbar-toggle {
   position: absolute;
@@ -481,7 +504,6 @@ h3 {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.8);
   font-size: 24px;
-  
 }
 
 .main-nav {
@@ -497,7 +519,6 @@ h3 {
 .main-nav li {
   text-align: center;
   margin: 15px auto;
- 
 }
 
 #logout {
@@ -540,7 +561,7 @@ h3 {
   }
 
   #logout {
-    cursor: pointer; 
+    cursor: pointer;
     color: white;
     font-size: 24px;
     margin-top: 9px;
@@ -646,12 +667,12 @@ h3 {
 /*Appointment List desktop*/
 
 /*Background*/
-.appointmentListWrapperMain { 
-    min-height: 100vh;
-    padding-top: 10%;
-    background-color: #2b5876;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.appointmentListWrapperMain {
+  min-height: 100vh;
+  padding-top: 10%;
+  background-color: #2b5876;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 /*Calendar*/
@@ -666,14 +687,13 @@ h3 {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.25em;
   font-size: 1.5em;
-
 }
-.List{
+.List {
   /* border: 2px solid green; */
 }
 
-@media screen and (max-width: 1160px){
-  .appointmentListWrapperMain { 
+@media screen and (max-width: 1160px) {
+  .appointmentListWrapperMain {
     grid-template-columns: 1fr;
   }
 
@@ -683,16 +703,16 @@ h3 {
   }
 }
 
-@media screen and (max-width: 900px){
- .react-calendar {
-  padding: 10px 5px;
-  line-height: 1.15em;
-  font-size: 1.35em;
- }
+@media screen and (max-width: 900px) {
+  .react-calendar {
+    padding: 10px 5px;
+    line-height: 1.15em;
+    font-size: 1.35em;
+  }
 
- .List {
-   margin-top: -10px;
- }
+  .List {
+    margin-top: -10px;
+  }
 }
 
 /*Logo*/
@@ -709,7 +729,7 @@ h3 {
 }  */
 
 /*Headers*/
-.appointmentListWrapperMain h1{
+.appointmentListWrapperMain h1 {
   text-align: center;
   font-family: Roboto, sans-serif;
   font-size: 2.5em;
@@ -722,22 +742,20 @@ h3 {
 }
 
 /*List*/
-.appointmentListWrapper{
+.appointmentListWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-
 }
-.appointmentListWrapper div{
+.appointmentListWrapper div {
   margin: 0 auto;
   /* margin-bottom: 20px; */
 }
 
 /*Buttons*/
 
-.appointmentListWrapper button{
-
+.appointmentListWrapper button {
   background: white;
   font-size: 120%;
   border-radius: 15px;
@@ -745,9 +763,8 @@ h3 {
   height: 50px;
   width: 400px;
   margin-top: 20px;
-  
 }
-.buttonList{
+.buttonList {
   background: #2b5876;
   color: white;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -759,8 +776,6 @@ h3 {
   margin-right: auto;
   margin-left: auto;
   justify-content: center;
-  
-  
 }
 
 /*Colors for buttons*/
@@ -775,59 +790,52 @@ h3 {
   background: white;
   border: white;
 }
-#reservedOwn{
+#reservedOwn {
   background: #3b9962;
   color: white;
   border: #3b9962;
 }
-#available:hover{
+#available:hover {
   background: #3b9962;
   border: #3b9962;
 }
 
-
-
 /* Appointment List mobile */
 
-@media screen and (min-width: 701px){
+@media screen and (min-width: 701px) {
   .indexWrapper {
-
     background: linear-gradient(to right, #d7d2cc 0%, #304352 100%);
   }
 }
 
 @media screen and (max-width: 700px) {
-
-  .appointmentListWrapper button{
-
+  .appointmentListWrapper button {
     background: #dddddd;
     border-radius: 15px;
     height: 50px;
     width: 250px;
-    border:white;
+    border: white;
     border-style: solid;
     border-width: 2px;
-    
   }
 
   /*Buttons*/
-  .appointmentListWrapper button:hover{
+  .appointmentListWrapper button:hover {
     background: #47bb77;
     border: #47bb77;
   }
-  
-  /*Header*/
-.appointmentListWrapperMain h1{
-  margin: 0 auto;
-  margin-top: 5%;
-  margin-bottom: 3%;
-  color: white;
-  font-size: 30px;
-}
-.indexWrapper {
-  background: #526675;
-}
 
+  /*Header*/
+  .appointmentListWrapperMain h1 {
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 3%;
+    color: white;
+    font-size: 30px;
+  }
+  .indexWrapper {
+    background: #526675;
+  }
 }
 /* Notification*/
 
