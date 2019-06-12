@@ -1,13 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { UserContext } from '../../App'
-import useField from '../../hooks/useField'
 import AppointmentsList from './AppointmentsLists'
+import useField from '../../hooks/useField'
 
-const MyPage = props => {
+const MyPage = () => {
   const { user, setUser, userService } = useContext(UserContext)
   console.log('user: ', user)
 
-  const numberField = useField('text', user.number)
+  let numberField = useField('text', '')
+  useEffect(() => {
+    if (!user) return
+    numberField.changeValue(user.number)
+  }, [user])
 
   const handleNumberUpdate = async event => {
     event.preventDefault()
@@ -20,14 +24,15 @@ const MyPage = props => {
     await userService.update(user._id, updatedUser, type)
   }
 
+  // NOTICE -- user && rest rendered. Otherwise nothing gets rendered
   return (
-    <div className="mypage_wrapper">
+    user && <div className="mypage_wrapper">
       <p>{user.name}</p>
       {user.avatarUrl ? (
         <img src={user.avatarUrl} alt="profile pic" height="100" width="100" />
       ) : (
-        'avatar'
-      )}
+          'avatar'
+        )}
       <label>Phone number</label>
       <form onSubmit={handleNumberUpdate}>
         <input

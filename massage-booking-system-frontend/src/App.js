@@ -37,21 +37,21 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
 
-  const createNotification= (message, type) => {
+  const createNotification = (message, type) => {
     console.log(type)
     setNotification(message)
-    if (type === types.SUCCESS){
+    if (type === types.SUCCESS) {
       setType(types.SUCCESS)
       setIcon(icons.SUCCESS)
     } else {
       setType(types.ERROR)
       setIcon(icons.ERROR)
     }
-      setTimeout(() => {
+    setTimeout(() => {
       setNotification(null)
       setType(null)
       setIcon(null)
-    },5000) 
+    }, 5000)
   }
 
   useEffect(() => {
@@ -74,16 +74,11 @@ const App = () => {
   return (
     <Fragment>
       <Router>
-        <Header user={user} />       
-        <Notification icon={notification_icon} type= {notification_type} message ={notification}/>
-        {/*<button onClick={()=> createNotification("moi", "success")}>
-          testii
-        </button>*/}       
+        <Header user={user} />
+        <Notification icon={notification_icon} type={notification_type} message={notification} />
         <UserContext.Provider value={{ user, setUser, users, userService }}>
           <AppointmentContext.Provider
-            value={{
-              user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, createNotification
-            }}>
+            value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, createNotification }}>
             <Route exact path="/" render={() => <Index />} />
           </AppointmentContext.Provider>
         </UserContext.Provider>
@@ -107,9 +102,7 @@ const App = () => {
           </AppointmentContext.Provider>
         </UserContext.Provider>
 
-        <AppointmentContext.Provider
-          value={{ appointments, appointmentService, stats }}
-        >
+        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
           <Route exact path="/stats" render={() => <Stats />} />
         </AppointmentContext.Provider>
       </Router>
