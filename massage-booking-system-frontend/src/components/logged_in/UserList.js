@@ -7,7 +7,7 @@ const User = props => {
   const { user, userService } = useContext(UserContext)
   const { id, name, email, number, admin, banned, avatarUrl } = props
 
-  //console.log('user', user)
+  const role = admin ? 'admin' : 'user'
 
   return (
     <tr>
@@ -20,7 +20,7 @@ const User = props => {
       </td>
       <td>{name} </td>
       <td>{email}</td>
-      <td>user</td>
+      <td>{role}</td>
       {number ? <td>{number}</td> : <td>No number specified</td>}
       <td>
         <button

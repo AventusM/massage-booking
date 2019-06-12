@@ -134,6 +134,7 @@ const App = () => {
     axios
       .get('/api/users/current_user')
       .then(response => setUser(response.data))
+    console.log('heiii:', user)
   }, [])
 
   useEffect(() => {
