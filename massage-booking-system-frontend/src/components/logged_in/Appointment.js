@@ -145,11 +145,6 @@ const AppointmentsList = () => {
 const Display = ({ dateobject, user, own }) => {
   let date = new Date(dateobject)
 
-  let minutes = date.getMinutes()
-
-  let time = date.getTimezoneOffset()
-  date.setMinutes(minutes + time)
-
   let dateDisplay
   let day = date.getDate()
   let month = date.getMonth() + 1

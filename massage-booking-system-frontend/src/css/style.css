@@ -671,6 +671,20 @@ h3 {
   /* border: 2px solid green; */
 }
 
+.weekend {
+  color: rgb(211, 208, 208);
+  background: white;
+}
+
+.tile {
+  background: white;
+}
+
+.availableDay {
+  color: rgb(100, 172, 100);
+}
+
+
 @media screen and (max-width: 1160px){
   .appointmentListWrapperMain { 
     grid-template-columns: 1fr;

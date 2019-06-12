@@ -32,8 +32,17 @@ const AuthIndex = (props) => {
               console.log('value ', value, 'value type', typeof value)
               //console.log('setselecteddate', setSelectedDate)
               setSelectedDate(value)
+              
               setTab(true)
             }}
+            minDetail="year"
+            tileClassName={ ({date, view}) => view === 'month' && date.getDate() === 12 ? 'availableDay' : null}
+            prev2Label={null}
+            next2Label={null}
+            tileClassName={({ date, view }) => view === 'month' && (date.getDay() > 2 || date.getDay() === 0) ? 'weekend' : null}
+            tileDisabled={({date, view}) => view === 'month' && ((date.getDay() > 2 || date.getDay() === 0))}
+            showNeighboringMonth={false}
+
           />
         </div>
 
