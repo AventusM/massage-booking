@@ -1,9 +1,0 @@
-POST http://localhost:3001/api/masseusses
-Content-Type: application/json
-
-{
-  "name": "Hanna Hieroja",
-  "number": "90210",
-  "email": "jes@jes.hemohes",
-  "password": "testing"
-}

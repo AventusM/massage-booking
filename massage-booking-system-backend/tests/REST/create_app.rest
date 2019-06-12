@@ -3,6 +3,5 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjhhbnRvbjEyMzEyMzFtQGdtYWlsLmNvbSIsIm5hbWUiOiJBbnRvbiIsImlkIjoiNWNlNjY2Mjg3YjllOTUyNzMyM2ViYWFlIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg2MDMzMTh9.O0AXV5GHvI0JzjQCTMmYKXDbtXScNJ_yn4HVhbsRGus
 
 {
-  "masseusse_id":"5cde7fa4011a6a288584abca",
   "user_id": "5ce666287b9e9527323ebaae"
 }

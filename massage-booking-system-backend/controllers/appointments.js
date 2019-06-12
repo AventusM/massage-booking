@@ -9,7 +9,6 @@ const ruleChecker = require('../utils/bookingRuleChecker')
 const formatAppointment = input => {
   return {
     _id: input._id,
-    masseusse_id: input.masseusse_id,
     user_id: input.user_id,
     start_date: input.start_date,
     end_date: input.end_date,
@@ -145,7 +144,7 @@ appointmentsRouter.post('/:date', async (req, res, next) => {
 })
 
 /**
- *Removes appointment from user and removes user and masseusse from appointment
+ *Removes appointment from user and removes user from appointment
  */
 
 removeAppointment = async(appointment) =>{
@@ -155,7 +154,6 @@ removeAppointment = async(appointment) =>{
     user.appointments = appointmentsToKeep
 
     appointments.user_id = null
-    appointment.masseusse_id = null
     appointment.type_of_reservation = 3
     
     user = await User.findByIdAndUpdate(user._id, user)
