@@ -204,6 +204,8 @@ const App = () => {
 // CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
 // CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
 // CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+// CURRENTLY createNotification is being passed around in irrelevant contexts. FIX THIS LATER IN OWN CONTEXT
+
 export const AppointmentContext = createContext(null)
 export const UserContext = createContext(null)
 export default App
