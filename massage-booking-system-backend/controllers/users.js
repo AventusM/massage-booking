@@ -13,7 +13,7 @@ const formatUser = input => {
     admin: input.admin,
     banned: input.banned,
     appointments: input.appointments,
-    avatarUrl: input.avatarUrl
+    avatarUrl: input.avatarUrl,
   }
 }
 
@@ -42,6 +42,34 @@ usersRouter.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findById({ _id: req.params.id })
     res.json(user)
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+usersRouter.put('/:id/user', async (req, res, next) => {
+  try {
+    const body = req.body
+
+    const given_id = req.params.id
+    console.log('given_id: ', given_id)
+
+    const found_user = await User.findById({ _id: given_id })
+    if (!found_user) {
+      console.log('user not found')
+      return res.status(400).end()
+    }
+
+    const updateUserData = {
+      number: body.number || '',
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updateUserData,
+      { new: true }
+    )
+    res.json(updatedUser)
   } catch (exception) {
     next(exception)
   }

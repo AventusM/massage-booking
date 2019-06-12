@@ -1,15 +1,14 @@
 import React, { useState, useEffect, Fragment, createContext } from 'react'
 import LoginIndex from './components/Login_index'
 import Index from './components/logged_in/Index'
-import RegistrationFormFragment from './components/logged_in/RegistrationForm'
-import loginService from './services/login'
+import MyPage from './components/logged_in/MyPage'
 
 import useResource from './hooks/useResource'
 import useField from './hooks/useField'
 import Stats from './components/logged_in/Stats'
 import DashBoard from './components/logged_in/Dashboard'
 import NotFoundPage from './components/NotFoundPage'
-import ReservationView from './components/logged_in/ ReservationView'
+import ReservationView from './components/logged_in/ReservationView'
 import {
   BrowserRouter as Router,
   Route,
@@ -40,8 +39,7 @@ import axios from 'axios'
 //   )
 // }
 
-const AuthHeader = (props) => {
-  const { user } = props
+const AuthHeader = ({ user }) => {
   return (
     <nav className="navbar">
       <span className="navbar-toggle" id="js-navbar-toggle">
@@ -57,27 +55,36 @@ const AuthHeader = (props) => {
         <li>
           <Link className="nav-link" to="/">
             Index
-        </Link>
+          </Link>
+        </li>
+        <li>
+          <Link className="nav-link" to="/mypage">
+            {user.name}
+          </Link>
         </li>
         <li>
           <Link className="nav-link" to="/dashboard">
             Admin dashboard
-        </Link>
+          </Link>
         </li>
         <li>
           <Link className="nav-link" to="/stats">
             Stats
-        </Link>
+          </Link>
         </li>
         <li>
-          <i onClick={() => window.location.href="/auth/logout"} id="logout" className="fas fa-sign-out-alt"></i>
+          <i
+            onClick={() => (window.location.href = '/auth/logout')}
+            id="logout"
+            className="fas fa-sign-out-alt"
+          />
         </li>
       </ul>
     </nav>
   )
 }
 
-const NonAuthHeader = (props) => {
+const NonAuthHeader = props => {
   return (
     <nav className="navbar">
       <span className="navbar-toggle" id="js-navbar-toggle">
@@ -98,14 +105,13 @@ const NonAuthHeader = (props) => {
   )
 }
 
-const Header = (props) => {
+const Header = props => {
   const { user } = props
   if (user) {
     return <AuthHeader user={user} />
   }
   return <NonAuthHeader />
 }
-
 
 const App = () => {
   // userService CONTAINS APPOINTMENT ID
@@ -125,7 +131,8 @@ const App = () => {
   }
 
   useEffect(() => {
-    axios.get('/api/users/current_user')
+    axios
+      .get('/api/users/current_user')
       .then(response => setUser(response.data))
   }, [])
 
@@ -136,9 +143,8 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    user && userService
-      .getOne(user._id)
-      .then(refreshedUser => setUser(refreshedUser))
+    user &&
+      userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
   return (
@@ -148,8 +154,14 @@ const App = () => {
         <UserContext.Provider value={{ user, setUser, users, userService }}>
           <AppointmentContext.Provider
             value={{
-              user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage,
-            }}>
+              user,
+              appointments,
+              appointmentService,
+              selectedDate,
+              setSelectedDate,
+              setErrorMessage,
+            }}
+          >
             <Route exact path="/" render={() => <Index />} />
           </AppointmentContext.Provider>
         </UserContext.Provider>
@@ -158,7 +170,24 @@ const App = () => {
           <Route exact path="/dashboard" render={() => <DashBoard />} />
         </UserContext.Provider>
 
-        <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
+        <UserContext.Provider value={{ user, setUser, users, userService }}>
+          <AppointmentContext.Provider
+            value={{
+              user,
+              appointments,
+              appointmentService,
+              selectedDate,
+              setSelectedDate,
+              setErrorMessage,
+            }}
+          >
+            <Route exact path="/mypage" render={() => <MyPage />} />
+          </AppointmentContext.Provider>
+        </UserContext.Provider>
+
+        <AppointmentContext.Provider
+          value={{ appointments, appointmentService, stats }}
+        >
           <Route exact path="/stats" render={() => <Stats />} />
         </AppointmentContext.Provider>
       </Router>
