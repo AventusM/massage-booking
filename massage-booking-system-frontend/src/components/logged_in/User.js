@@ -1,11 +1,33 @@
 import React, { useContext } from 'react'
-import { UserContext } from '../../App'
+import { UserContext, NotificationContext } from '../../App'
 
 const User = props => {
   const { user, userService } = useContext(UserContext)
+  const { createNotification } = useContext(NotificationContext)
   const { id, name, email, number, admin, banned, avatarUrl } = props
 
+  console.log('id outside?', id)
+
   const role = admin ? 'admin' : 'user'
+  const adminButtonToggleText = admin ? 'Remove Admin' : 'Make Admin'
+
+  const toggleAdmin = async () => {
+    try {
+      await userService.update(id, { admin: !admin, auth_id: user._id })
+      createNotification(`Users ${name} role has been changed`, 'success')
+    } catch (exception) {
+      createNotification(`Unable to change role for ${name}`)
+    }
+  }
+
+  const removeUser = async (id) => {
+    try {
+      await userService.remove(id)
+      createNotification(`User ${name} has been deleted`, 'success')
+    } catch (exception) {
+      createNotification(`Unable to delete ${name}`)
+    }
+  }
 
   return (
     <tr>
@@ -23,18 +45,14 @@ const User = props => {
       <td>
         <button
           className="makeAdminButton"
-          onClick={() =>
-            userService.update(id, { admin: !admin, auth_id: user._id })
-          }
-        >
-          {admin ? 'Remove Admin' : 'Make Admin'}
+          onClick={() => toggleAdmin()}>
+          {adminButtonToggleText}
         </button>
       </td>
       <td>
         <button
           className="removeUserButton"
-          onClick={() => userService.remove(id)}
-        >
+          onClick={() => removeUser(id)}>
           REMOVE
         </button>
       </td>
