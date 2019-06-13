@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 const router = express.Router()
 const cookieSession = require('cookie-session')
 const passport = require('passport')
-const scheduler = require('./utils/scheduler')
 
 const protectedRoute = require('./utils/protectedRoute')
 const config = require('./utils/config')
@@ -62,9 +61,5 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
-/**
- * scheduler schedules appointment generation for the next 6 months when necissary
- */
-scheduler.everyDay
 
 module.exports = app

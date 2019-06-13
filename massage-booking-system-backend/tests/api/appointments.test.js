@@ -123,7 +123,7 @@ describe('PUT appointments', () => {
     // // Generate appointments 1 month from original
     await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
     const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
-    console.log('TÄMÄ', one_month_after_original_appointment)
+    //console.log('TÄMÄ', one_month_after_original_appointment)
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(one_month_after_original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
 
