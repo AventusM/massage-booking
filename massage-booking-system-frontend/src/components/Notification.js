@@ -2,18 +2,16 @@ import React from 'react'
 
 
 const Notification = (props) => {
-    const {type, message, icon} = props
- console.log('NOTIFICATION PROPS', message)
-    if (message === null) {
-        return null
-    } 
+    const { type, message, icon } = props
 
-    return (
-        <div className={`notification ${type}`}>
-        <i class= { `${icon}`}/>
-        <p className= "scale-in-center" >
-            {message}
-        </p>
+    return (message &&
+        <div className="notification_container">
+            <div className={`notification ${type}`}>
+                <i class={`${icon}`} />
+                <p>
+                    {message}
+                </p>
+            </div>
         </div>
     )
 

@@ -5,7 +5,6 @@ import useField from '../../hooks/useField'
 
 const MyPage = () => {
   const { user, setUser, userService } = useContext(UserContext)
-  console.log('user: ', user)
 
   let numberField = useField('text', '')
   useEffect(() => {
@@ -15,7 +14,6 @@ const MyPage = () => {
 
   const handleNumberUpdate = async event => {
     event.preventDefault()
-    console.log('event', event)
     const number = numberField.value
     const updatedUser = { ...user, number }
     const type = 'user'
