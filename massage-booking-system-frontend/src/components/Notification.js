@@ -7,7 +7,7 @@ const Notification = (props) => {
     return (message &&
         <div className="notification_container">
             <div className={`notification ${type}`}>
-                <i class={`${icon}`} />
+                <i className={`${icon}`} />
                 <p>
                     {message}
                 </p>

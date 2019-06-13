@@ -2,12 +2,7 @@ import React from 'react'
 import logo from '../pics/unity5.png'
 
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  Redirect,
-  withRouter,
+  Link
 } from 'react-router-dom'
 
 const AuthHeader = ({ user }) => {
