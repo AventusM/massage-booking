@@ -969,3 +969,19 @@ h3 {
   font-size: 70px;
   font-weight: 500;
 }
+
+.tvViewAppointmentList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tvViewAppointmentList button {
+  background: white;
+  font-size: 120%;
+  border-radius: 15px;
+  padding: 10px 5px;
+  height: 50px;
+  width: 400px;
+  margin-top: 20px;
+}
