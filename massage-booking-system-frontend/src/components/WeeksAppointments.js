@@ -4,6 +4,7 @@ import Appointment from './logged_in/Appointment'
 import { AppointmentContext, UserContext } from '../App'
 import Clock from './Clock'
 import unity4 from '../pics/unity4.png'
+import Notification from './Notification';
 
 const WeeksAppointments = () => {
   const { appointments } = useContext(AppointmentContext)
@@ -97,9 +98,13 @@ const WeeksAppointments = () => {
 
 
   return (
-    <>
-    <Clock />
-    <h2>Monday</h2>
+<div className="tv_view">
+    <div className="clock_and_notification_div">
+        <Clock/>
+        <Notification icon={'fas fa-info-circle fa-lg'} type={'general tv_notification'} message={'MOiasdjlaksjdajklsajklsdhajklsdhieRIKUEIRY2934723948YEQW8  OR378623HR  JFGHLQRKGHEQRWGEORDHEMRIOUCMER8923CT908T7CK349RT8KX34CR03489XFU3490FHXK235GY2HV95FCJ59CFHK50GCKY25GCK29C450CKG904GHCEOW5GPCHWEOGIHWG0HW4G9CW4GKCJW4KMGIOJI'}/>
+    </div>
+    <div className="app_list_div">
+     <h2 className= "day">Monday</h2>
     <ul className="tvViewAppointmentList">
       {mondayFirstHalf.map(app => {
         return (
@@ -113,7 +118,7 @@ const WeeksAppointments = () => {
         )
       })}
     </ul>
-    <h5>LUNCH</h5>
+    <h5 className= "lunch">LUNCH</h5>
     <ul className="tvViewAppointmentList">
       {mondaySecondHalf.map(app => {
         return (
@@ -126,8 +131,10 @@ const WeeksAppointments = () => {
           />
         )
       })}
-    </ul>
-    <h2>Tuesday</h2>
+    </ul>    
+    </div>
+    <div className="app_list_div">
+    <h2 className= "day">Tuesday</h2>
     <ul className="tvViewAppointmentList">
     {tuesdayFirstHalf.map(app => {
       return (
@@ -141,7 +148,7 @@ const WeeksAppointments = () => {
       )
     })}
   </ul>
-  <h5>LUCNH</h5>
+  <h5 className= "lunch">LUNCH</h5>
   <ul className="tvViewAppointmentList">
     {tuesdaySecondHalf.map(app => {
       return (
@@ -155,10 +162,8 @@ const WeeksAppointments = () => {
       )
     })}
   </ul>
-    <img className= "logoTV"
-    id="unity4" src={unity4}></img>
-    </>
-    
+  </div>
+    </div>
   )
 }
 
