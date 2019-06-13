@@ -858,12 +858,13 @@ h3 {
     background: #526675;
   }
 }
-/* Notification*/
 
+/* Notification*/
 .notification_container {
   position: fixed;
   top: 20%;
   width: 100%;
+  z-index: 999;
 }
 
 .notification {
