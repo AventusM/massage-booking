@@ -107,7 +107,8 @@ const WeeksAppointments = () => {
       )
     })}
   </ul>
-    <img id="unity4" src={unity4}></img>
+    <img className= "logoTV"
+    id="unity4" src={unity4}></img>
     </>
     
   )

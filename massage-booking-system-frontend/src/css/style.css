@@ -965,7 +965,20 @@ h3 {
   font-size: 16px;
 }
 
+
+/*TV-view*/
+
 .clock {
-  font-size: 70px;
+  font-size: 150px;
   font-weight: 500;
+  color: white;
+  margin-left: 100px;
+ 
+}
+
+.logoTV {
+  width: 700px;
+  height: 250px;
+  margin-left: 100px;
+  margin-bottom: 50px;
 }
