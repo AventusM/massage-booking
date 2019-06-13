@@ -2,39 +2,55 @@ import React, { useContext } from 'react'
 import moment from 'moment'
 import Appointment from './logged_in/Appointment'
 import { AppointmentContext, UserContext } from '../App'
+import Clock from './Clock'
+import unity4 from '../pics/unity4.png'
 
 const WeeksAppointments = () => {
   const { appointments } = useContext(AppointmentContext)
   const { users } = useContext(UserContext)
-  const today = new Date()
-  let todaysDay = today.getDate()
-  let todaysMonth = today.getMonth() + 1
-  let todaysYear = today.getFullYear()
+
+  /* Generate appointment listing for this weeks monday*/
+
+  let monday = moment().startOf('week').add(1, 'days') // monday of this week
 
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
-  const todaysAppointments = appointments.filter(appointment => {
-    let appointmentsDate = new Date(appointment.start_date)
-    let appointmentsDay = appointmentsDate.getDate()
-    let appointmentsMonth = appointmentsDate.getMonth() + 1
-    let appointmentsYear = appointmentsDate.getFullYear()
-
+  const mondayAppointments = appointments.filter(appointment => {
+    let appointmentsDate = moment(appointment.start_date)
+    
     return (
-      appointmentsMonth === todaysMonth &&
-      appointmentsDay === todaysDay &&
-      appointmentsYear === todaysYear
+      monday.isSame(appointmentsDate, 'day')
     )
   })
 
-  const tomorrow = moment().add(1, 'days')
-  const tomorrowsAppointments = appointments.filter(appointment => {
+  mondayAppointments.sort((a, b) => {
+    let dateA = new Date(a.start_date)
+    let dateB = new Date(b.start_date)
+
+    if (dateA < dateB) {
+      return -1
+    }
+
+    if (dateA > dateB) {
+      return 1
+    }
+
+    return 0
+  })
+
+/* Generate appointment list for this weeks tuesday */
+
+  const tuesday = moment().startOf('week').add(2, 'days')
+  const tuesdaysAppointments = appointments.filter(appointment => {
     let appointmentsDate = moment(appointment.start_date)
 
     return (
-      appointmentsDate.isSame(tomorrow, 'days')
+      appointmentsDate.isSame(tuesday, 'days')
     )
   })
 
-  todaysAppointments.sort((a, b) => {
+  
+
+  tuesdaysAppointments.sort((a, b) => {
     let dateA = new Date(a.start_date)
     let dateB = new Date(b.start_date)
 
@@ -49,22 +65,7 @@ const WeeksAppointments = () => {
     return 0
   })
 
-  tomorrowsAppointments.sort((a, b) => {
-    let dateA = new Date(a.start_date)
-    let dateB = new Date(b.start_date)
-
-    if (dateA < dateB) {
-      return -1
-    }
-
-    if (dateA > dateB) {
-      return 1
-    }
-
-    return 0
-  })
-
-
+  /* helper for correcting timezone offset*/
   const getStart_Date = (date) => {
     date = new Date(date)
     let minutes = date.getMinutes()
@@ -73,11 +74,14 @@ const WeeksAppointments = () => {
     return date
   }
 
-  console.log('')
+  console.log('TV todaysappointments ', mondayAppointments)
+  console.log('TV tomorrows appointments', tuesdaysAppointments)
   return (
     <>
+    <Clock />
+    <h2>Monday</h2>
     <ul className="appointmentListWrapper">
-      {todaysAppointments.map(app => {
+      {mondayAppointments.map(app => {
         return (
           <Appointment
             key={app._id}
@@ -89,8 +93,9 @@ const WeeksAppointments = () => {
         )
       })}
     </ul>
+    <h2>Tuesday</h2>
     <ul className="appointmentListWrapper">
-    {tomorrowsAppointments.map(app => {
+    {tuesdaysAppointments.map(app => {
       return (
         <Appointment
           key={app._id}
@@ -102,6 +107,7 @@ const WeeksAppointments = () => {
       )
     })}
   </ul>
+    <img id="unity4" src={unity4}></img>
     </>
     
   )

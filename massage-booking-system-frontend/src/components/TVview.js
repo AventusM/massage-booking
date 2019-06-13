@@ -1,9 +1,9 @@
 import React from 'react'
 import WeeksAppointments from './WeeksAppointments';
 
-const TVview = ({users, appointments}) => {
+const TVview = () => {
     return (
-        <WeeksAppointments users={users} appointments={appointments}/> 
+        <WeeksAppointments /> 
     )
 }
 
