@@ -51,7 +51,7 @@ app.use('/api/appointments', appointmentsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/stats', statsRouter)
 
-// router.use(protectedRoute.routeProtector)
+router.use(protectedRoute.routeProtector)
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static('build'))
