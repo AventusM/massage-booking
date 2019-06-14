@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react'
-import Appointment from './Appointment'
-import { AppointmentContext, UserContext } from '../../App'
-const moment = require('moment')
+import React from 'react'
 
 const SimpleAppointment = ({ app }) => {
   const date = new Date(app.start_date)
-  const currentWeek = moment().week()
-  console.log('currentWeek: ', currentWeek)
-  console.log('appointmentWekk:', moment(date).week())
+
   const weekdays = {
+    0: 'Sunday',
     1: 'Monday',
     2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
   }
 
   const months = {
@@ -27,20 +27,18 @@ const SimpleAppointment = ({ app }) => {
     10: 'November',
     11: 'December',
   }
-  console.log('date: ', date.getDate())
+
   return (
-    <p>
-      Your next appointment is on {weekdays[date.getDay()]}
-      {date.getHours()}:{date.getMinutes()} {months[date.getMonth()]}
-      {date.getDate()}
-    </p>
+    <div class="nextappoitnment_wrapper">
+      <p>
+        Your next appointment is on {weekdays[date.getDay()]} {date.getDate()}th
+        of {months[date.getMonth()]} {date.getHours()}:{date.getMinutes()}
+      </p>
+    </div>
   )
 }
 
 const NextAppointment = ({ user, appointments }) => {
-  console.log('appointments: ', appointments)
-  console.log('user: ', user)
-
   let ownAppointments = appointments.filter(app => app.user_id === user._id)
 
   ownAppointments.sort(function(a, b) {
@@ -49,13 +47,11 @@ const NextAppointment = ({ user, appointments }) => {
     return dateA - dateB
   })
 
-  return (
-    <ul className="appointmentListWrapper">
-      {ownAppointments.map(app => {
-        return <SimpleAppointment app={app} />
-      })}
-    </ul>
-  )
+  if (ownAppointments[0] === undefined) {
+    return null
+  }
+
+  return <SimpleAppointment app={ownAppointments[0]} />
 }
 
 export default NextAppointment

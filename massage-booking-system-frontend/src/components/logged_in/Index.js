@@ -28,6 +28,7 @@ const AuthIndex = ({ user }) => {
 
   return (
     <Fragment>
+      <NextAppointment user={user} appointments={appointments} />
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
@@ -58,7 +59,6 @@ const AuthIndex = ({ user }) => {
             showNeighboringMonth={false}
           />
         </div>
-        <NextAppointment user={user} appointments={appointments} />
         <div className="List">
           {tab ? (
             <div className="all_apps_div">

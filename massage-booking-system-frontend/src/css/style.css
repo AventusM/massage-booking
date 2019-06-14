@@ -25,6 +25,18 @@ nav a {
   color: white;
 }
 
+/* Next Appointment style */
+
+.nextappoitnment_wrapper {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.nextappoitnment_wrapper p {
+  font-size: 25px;
+  color: white;
+}
+
 /* My Page styles */
 
 .mypage_wrapper {
@@ -707,9 +719,7 @@ h3 {
   color: rgb(211, 208, 208);
 }
 
-
 .List {
-
   /* border: 2px solid green; */
 }
 
@@ -860,7 +870,7 @@ h3 {
 }
 /* Notification*/
 
-.notification{
+.notification {
   padding: 10px 5px;
   width: 340px;
   min-height: 77px;
@@ -870,7 +880,6 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .notification p {
@@ -879,34 +888,33 @@ h3 {
   margin: 0;
   padding: 0;
   width: 75%;
-  line-height: 23px;  
+  line-height: 23px;
   min-height: 0;
   word-wrap: break-word;
 }
 .notification i {
- margin-right: 10px;
+  margin-right: 10px;
 }
 
-.error{
-  background-color: #F6DCDC;
-  color: #984242; 
+.error {
+  background-color: #f6dcdc;
+  color: #984242;
 }
-.success{
-  background-color: #BDF4E7;
-  color: #237E68;
- 
+.success {
+  background-color: #bdf4e7;
+  color: #237e68;
 }
-.general{
-  background-color: #FFF9E2;
-  color: #4E3D01;
-  
+.general {
+  background-color: #fff9e2;
+  color: #4e3d01;
 }
 
 /*Animations for notifications*/
 
 .scale-in-center {
-	-webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 /* ----------------------------------------------
@@ -919,31 +927,30 @@ h3 {
  * animation scale-in-center
  * ----------------------------------------
  */
- @-webkit-keyframes scale-in-center {
+@-webkit-keyframes scale-in-center {
   0% {
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
     opacity: 1;
   }
   100% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
 @keyframes scale-in-center {
   0% {
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
     opacity: 1;
   }
   100% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
-
 
 .timelist {
   padding: 5px;
