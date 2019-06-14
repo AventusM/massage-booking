@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import moment from 'moment'
 import Appointment from './logged_in/Appointment'
 import { AppointmentContext, UserContext } from '../App'
@@ -8,8 +8,14 @@ import Notification from './Notification';
 
 const WeeksAppointments = () => {
   const { appointments } = useContext(AppointmentContext)
+  console.log('appointments length', appointments.length)
   const { users } = useContext(UserContext)
   const now = moment()
+
+  /* every 24 minutes force page refresh to keep next appointment uptodated. */
+  setInterval(()=> {
+    window.location.reload()
+  }, 1440000) 
 
   /* Generate appointment listing for monday*/
   let monday = null
@@ -62,8 +68,6 @@ const WeeksAppointments = () => {
       appointmentsDate.isSame(tuesday, 'days')
     )
   })
-
-  
 
   tuesdaysAppointments.sort((a, b) => {
     let dateA = new Date(a.start_date)
@@ -121,19 +125,15 @@ const WeeksAppointments = () => {
     return date
   }
 
-  if (next) {
     return (
       <>
-    {next.start_date}
-    <ul className="tvViewAppointmentList">  
-          <Appointment
-            key={next._id}
+      {next ? <Appointment
             id={next._id}
             start_date={getStart_Date(next.start_date)}
             type_of_reservation={next.type_of_reservation}
             appUser={users.find(u => u._id === next.user_id)}
-          />
-    </ul>
+      />: ''}
+      
     <Clock />
     <h2>Monday</h2>
     <ul className="tvViewAppointmentList">
@@ -195,76 +195,9 @@ const WeeksAppointments = () => {
     id="unity4" src={unity4}></img>
     </>
     )
-  }
+  
 
-  return (
-<div className="tv_view">
-    <div className="clock_and_notification_div">
-        <Clock/>
-        <Notification icon={'fas fa-info-circle fa-lg'} type={'general tv_notification'} message={'MOiasdjlaksjdajklsajklsdhajklsdhieRIKUEIRY2934723948YEQW8  OR378623HR  JFGHLQRKGHEQRWGEORDHEMRIOUCMER8923CT908T7CK349RT8KX34CR03489XFU3490FHXK235GY2HV95FCJ59CFHK50GCKY25GCK29C450CKG904GHCEOW5GPCHWEOGIHWG0HW4G9CW4GKCJW4KMGIOJI'}/>
-    </div>
-    <div className="app_list_div">
-     <h2 className= "day">Monday</h2>
-    <ul className="tvViewAppointmentList">
-      {mondayFirstHalf.map(app => {
-        return (
-          <Appointment
-            key={app._id}
-            id={app._id}
-            start_date={getStart_Date(app.start_date)}
-            type_of_reservation={app.type_of_reservation}
-            appUser={users.find(u => u._id === app.user_id)}
-          />
-        )
-      })}
-    </ul>
-    <h5 className= "lunch">LUNCH</h5>
-    <ul className="tvViewAppointmentList">
-      {mondaySecondHalf.map(app => {
-        return (
-          <Appointment
-            key={app._id}
-            id={app._id}
-            start_date={getStart_Date(app.start_date)}
-            type_of_reservation={app.type_of_reservation}
-            appUser={users.find(u => u._id === app.user_id)}
-          />
-        )
-      })}
-    </ul>    
-    </div>
-    <div className="app_list_div">
-    <h2 className= "day">Tuesday</h2>
-    <ul className="tvViewAppointmentList">
-    {tuesdayFirstHalf.map(app => {
-      return (
-        <Appointment
-          key={app._id}
-          id={app._id}
-          start_date={getStart_Date(app.start_date)}
-          type_of_reservation={app.type_of_reservation}
-          appUser={users.find(u => u._id === app.user_id)}
-        />
-      )
-    })}
-  </ul>
-  <h5 className= "lunch">LUNCH</h5>
-  <ul className="tvViewAppointmentList">
-    {tuesdaySecondHalf.map(app => {
-      return (
-        <Appointment
-          key={app._id}
-          id={app._id}
-          start_date={getStart_Date(app.start_date)}
-          type_of_reservation={app.type_of_reservation}
-          appUser={users.find(u => u._id === app.user_id)}
-        />
-      )
-    })}
-  </ul>
-  </div>
-    </div>
-  )
+  
 }
 
 export default WeeksAppointments
