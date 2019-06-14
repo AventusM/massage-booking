@@ -1,27 +1,34 @@
 import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../../App'
+import { UserContext, NotificationContext } from '../../App'
 import AppointmentsList from './AppointmentsLists'
 import useField from '../../hooks/useField'
 
 const MyPage = () => {
   const { user, setUser, userService } = useContext(UserContext)
-  console.log('user: ', user)
+  const { createNotification } = useContext(NotificationContext)
 
-  let numberField = useField('text', '')
+  let numberField = useField('text')
   useEffect(() => {
     if (!user) return
     numberField.changeValue(user.number)
   }, [user])
 
+  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
+  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
+  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
   const handleNumberUpdate = async event => {
     event.preventDefault()
-    console.log('event', event)
-    const number = numberField.value
-    const updatedUser = { ...user, number }
-    const type = 'user'
+    try {
+      const number = numberField.value
+      const updatedUser = { ...user, number }
+      const type = 'user'
 
-    setUser(updatedUser)
-    await userService.update(user._id, updatedUser, type)
+      setUser(updatedUser)
+      await userService.update(user._id, updatedUser, type)
+      createNotification('Succesfully changed number', 'success')
+    } catch (exception) {
+      createNotification('Unable to change number')
+    }
   }
 
   // NOTICE -- user && rest rendered. Otherwise nothing gets rendered

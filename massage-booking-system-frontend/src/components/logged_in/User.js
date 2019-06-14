@@ -1,13 +1,33 @@
 import React, { useContext } from 'react'
-import { UserContext } from '../../App'
+import { UserContext, NotificationContext } from '../../App'
 
 const User = props => {
-  // Order depends on value prop in original provider (this one in App.js)
-  //console.log('UserList.js props', props)
   const { user, userService } = useContext(UserContext)
+  const { createNotification } = useContext(NotificationContext)
   const { id, name, email, number, admin, banned, avatarUrl } = props
 
+  console.log('id outside?', id)
+
   const role = admin ? 'admin' : 'user'
+  const adminButtonToggleText = admin ? 'Remove Admin' : 'Make Admin'
+
+  const toggleAdmin = async () => {
+    try {
+      await userService.update(id, { admin: !admin, auth_id: user._id })
+      createNotification(`Users ${name} role has been changed`, 'success')
+    } catch (exception) {
+      createNotification(`Unable to change role for ${name}`)
+    }
+  }
+
+  const removeUser = async (id) => {
+    try {
+      await userService.remove(id)
+      createNotification(`User ${name} has been deleted`, 'success')
+    } catch (exception) {
+      createNotification(`Unable to delete ${name}`)
+    }
+  }
 
   return (
     <tr>
@@ -15,8 +35,8 @@ const User = props => {
         {avatarUrl ? (
           <img src={avatarUrl} alt="profile pic" height="50" width="50" />
         ) : (
-          'avatar'
-        )}
+            'avatar'
+          )}
       </td>
       <td>{name} </td>
       <td>{email}</td>
@@ -25,38 +45,17 @@ const User = props => {
       <td>
         <button
           className="makeAdminButton"
-          onClick={() =>
-            userService.update(id, { admin: !admin, auth_id: user._id })
-          }
-        >
-          {admin ? 'Remove Admin' : 'Make Admin'}
+          onClick={() => toggleAdmin()}>
+          {adminButtonToggleText}
         </button>
       </td>
       <td>
         <button
           className="removeUserButton"
-          onClick={() => userService.remove(id)}
-        >
+          onClick={() => removeUser(id)}>
           REMOVE
         </button>
       </td>
-
-      {/*}
-        <div className="dashboard_user_item_actions">
-          <p>Admin actions</p>
-          <button onClick={() => userService.update(id, { admin: !admin, auth_id: user._id })}>
-            {admin
-              ? 'Remove Admin'
-              : 'Create Admin'}
-          </button>
-          <button onClick={() => userService.update(id, { banned: !banned, auth_id: user._id })}>
-            {banned
-              ? 'Unban'
-              : 'Ban'}
-          </button>
-          <button onClick={() => userService.remove(id)}>Remove</button>
-        </div> 
-        */}
     </tr>
   )
 }

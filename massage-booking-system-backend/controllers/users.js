@@ -40,7 +40,7 @@ usersRouter.get('/', async (req, res, next) => {
 
 usersRouter.get('/:id', async (req, res, next) => {
   try {
-    const user = await User.findById({ _id: req.params.id })
+    const user = await User.findById({ _id: req.params.id }).populate('appointments')
     res.json(user)
   } catch (exception) {
     next(exception)
@@ -80,23 +80,30 @@ usersRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
 
-    // Verify that change is made by admin
     const given_id = body.auth_id
     const found_user = await User.findById({ _id: given_id })
+    const updateable_user = await User.findById({ _id: req.params.id })
+
+    const updated_admin_data = body.admin === undefined
+      ? updateable_user.admin
+      : body.admin
+
+    const updated_banned_data = body.banned === undefined
+      ? updateable_user.banned
+      : body.banned
+
+    // Verify that change is made by admin
     if (!found_user.admin) {
-      // console.log('change request made by non-admin')
       return res.status(400).end()
     }
 
-    // console.log('Update called')
-    // console.log('Body given', body)
     const updateUserData = {
-      admin: body.admin || false,
-      banned: body.banned || false,
+      admin: updated_admin_data,
+      banned: updated_banned_data,
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
+      updateable_user._id,
       updateUserData,
       { new: true }
     )
@@ -107,7 +114,6 @@ usersRouter.put('/:id', async (req, res, next) => {
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {
-  console.log('DELETE USER')
   try {
     const user = await User.findById({ _id: req.params.id })
     await user.remove()

@@ -4,41 +4,7 @@ const appointmentsRouter = express.Router()
 const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
 
-/**
- * let start and end have to be turned into milliseconds by getTime().
- * Checks if appointment exists
- */
 
-const createEmptyAppointment = async (start_date, end_date) => {
-  /* console.log('start date', start_date)
-    console.log('end date  ', end_date)
-    */
-  if (await doesAppointmentExist(new Date(start_date))) {
-    const appointment = new Appointment({
-      start_date: start_date.getTime(),
-      end_date: end_date.getTime(),
-      type_of_reservation: 0,
-    })
-    try {
-      await appointment.save()
-    } catch (exception) {
-      console.log(exception)
-    }
-  } else {
-    //   console.log('appointment already exists!', start_date)
-  }
-}
-/**
- * Checks if the appointment already exists in the database before creating it.
- * @param {*} date the starting time of the appointment
- */
-const doesAppointmentExist = async date => {
-  let doesNotExist = await Appointment.find({ start_date: date })
-  if (doesNotExist.length == 0) {
-    return true
-  }
-  return false
-}
 
 /**
  * Create appointments for the day given, starting from 8:55:00 .
@@ -82,6 +48,42 @@ const increaseTime = (minutes, currentTime) => {
   }
   currentTime.setMinutes(currentMinutes)
   return currentTime
+}
+
+/**
+ * start and end have to be turned into milliseconds by getTime() for the Database.
+ * Checks if appointment exists
+ */
+const createEmptyAppointment = async (start_date, end_date) => {
+  /* console.log('start date', start_date)
+    console.log('end date  ', end_date)
+    */
+  if (await doesAppointmentExist(new Date(start_date))) {
+    const appointment = new Appointment({
+      start_date: start_date.getTime(),
+      end_date: end_date.getTime(),
+      type_of_reservation: 0,
+    })
+    try {
+      await appointment.save()
+    } catch (exception) {
+      console.log(exception)
+    }
+  } else {
+    //   console.log('appointment already exists!', start_date)
+  }
+}
+
+/**
+ * Checks if the appointment already exists in the database before creating it.
+ * @param {*} date the starting time of the appointment
+ */
+const doesAppointmentExist = async date => {
+  let doesNotExist = await Appointment.find({ start_date: date })
+  if (doesNotExist.length == 0) {
+    return true
+  }
+  return false
 }
 
 module.exports = {
