@@ -53,7 +53,7 @@ const User = props => {
         <button
           className="removeUserButton"
           onClick={() => removeUser(id)}>
-          REMOVE
+          Remove
         </button>
       </td>
     </tr>

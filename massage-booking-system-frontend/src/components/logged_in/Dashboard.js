@@ -15,14 +15,18 @@ const DashBoard = props => {
     setAnnouncement(editedAnnouncement)
   }
   return(
+
     <div>
     <form onSubmit= {changeAnnouncement}>
-      <input
+      <input className="dashboard_announcement"
         value ={editedAnnouncement}
         onChange ={handleFieldChange}
       />
+      <div className="dashboard_announcement">
       <button type= "submit">Update</button>
+    </div>
     </form>
+
     <UserList />  
     </div>
   )
