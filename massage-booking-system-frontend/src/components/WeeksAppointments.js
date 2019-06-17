@@ -83,9 +83,9 @@ const WeeksAppointments = () => {
     let tuesdaySecondHalf = tuesdaysAppointments.slice(5,12)
 
     return (
-      <>
-      
-    <h2>Monday</h2>
+    <div className="week">
+    <div>
+    <h2 className= "tv_view_headers">Monday</h2>
     <ul className="tvViewAppointmentList">
       {mondayFirstHalf.map(app => {
         return (
@@ -99,7 +99,7 @@ const WeeksAppointments = () => {
         )
       })}
     </ul>
-    <h5>LUNCH</h5>
+    <h5 className= "tv_view_headers">LUNCH</h5>
     <ul className="tvViewAppointmentList">
       {mondaySecondHalf.map(app => {
         return (
@@ -113,7 +113,9 @@ const WeeksAppointments = () => {
         )
       })}
     </ul>
-    <h2>Tuesday</h2>
+    </div>
+    <div>
+    <h2 className= "tv_view_headers">Tuesday</h2>
     <ul className="tvViewAppointmentList">
     {tuesdayFirstHalf.map(app => {
       return (
@@ -127,7 +129,7 @@ const WeeksAppointments = () => {
       )
     })}
   </ul>
-  <h5>LUCNH</h5>
+  <h5 className= "tv_view_headers">LUNCH</h5>
   <ul className="tvViewAppointmentList">
     {tuesdaySecondHalf.map(app => {
       return (
@@ -141,8 +143,9 @@ const WeeksAppointments = () => {
       )
     })}
   </ul>
-    
-    </>
+
+    </div>
+    </div>
     )
   
 }

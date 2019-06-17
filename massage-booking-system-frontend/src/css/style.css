@@ -978,11 +978,15 @@ h3 {
   margin-bottom: 50px;
 }
 
+.week {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 .tv_view {
   border: 1px solid white;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
 
@@ -1021,13 +1025,11 @@ h3 {
   width: 400px;
   margin-top: 20px;
 }
-.lunch{
-  margin-top: 25px;
-  font-size: 40px;
-  color: white;
-}
 
-.day{
+
+
+
+.tv_view_headers{
   margin-top: 25px;
   font-size: 40px;
   color: white;

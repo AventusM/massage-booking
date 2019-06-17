@@ -45,8 +45,10 @@ const TVview = () => {
   // console.log('next ', next)
 
     return (
-        <div>
+        <div className="tv_view">
+          <div>
             <Clock />
+            
             <h2>NEXT APPOINTMENT</h2>
             {next ? <ul className="tvViewAppointmentList"><Appointment
             id={next._id}
@@ -54,9 +56,12 @@ const TVview = () => {
             type_of_reservation={next.type_of_reservation}
             appUser={users.find(u => u._id === next.user_id)}
             /> </ul>: ''}
+            </div>
+            <div>
             <WeeksAppointments /> 
             <img className= "logoTV"
             id="unity4" src={unity4}></img>
+            </div>
         </div>
         
     )
