@@ -52,7 +52,7 @@ const MyPage = () => {
         <button type="submit">Update</button>
       </form>
       <h2>My Appointments</h2>
-      <AppointmentsList />
+      <AppointmentsList ownPage={true} />
     </div>
   )
 }

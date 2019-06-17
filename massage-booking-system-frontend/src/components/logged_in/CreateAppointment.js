@@ -22,7 +22,7 @@ const CreateAppointment = ({ id, start_date }) => {
 
   return (
     <button onClick={() => handleAppointmentCreation()}>
-      <Display dateobject={start_date} />
+      <Display dateobject={start_date} free={true} />
     </button>
   )
 }
