@@ -82,6 +82,33 @@ nav a {
   background-color: #2b5876;
   left: 0px;
   text-align: center;
+
+}
+
+.dashboard_announcement{
+width: 400px;
+height: 100px;
+left: 70px;
+top: 29px;
+border-radius: 15px;
+border: none;
+
+}
+
+.dashboard_announcement button{
+  width: 138px;
+  height: 63px;
+  left: 183px;
+  top: 148px; 
+  background: #22465E;
+  color: white;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  border: none;
+  margin-left: 130px;
+  margin-top: 20px;
 }
 
 .overflowX {
@@ -141,10 +168,12 @@ table {
   background-color: rgb(96, 233, 169);
   border-radius: 3px;
   border: none;
+  color: rgb(12, 85, 51);
 }
 
 .removeUserButton {
-  background-color: red;
+  background: #F0A5A5;
+  color: rgb(143, 35, 35);
   border-radius: 3px;
   border: none;
 }
@@ -911,13 +940,14 @@ h3 {
   background-color: #f6dcdc;
   color: #984242;
 }
-.success {
-  background-color: #bdf4e7;
-  color: #237e68;
+
+.success{
+  background-color: #BDF4E7;
+  color: #237E68;
 }
-.general {
-  background-color: #fff9e2;
-  color: #4e3d01;
+.general{
+  background-color: #FFF9E2;
+  color: #4E3D01;  
 }
 
 /*Animations for notifications*/
@@ -982,3 +1012,5 @@ h3 {
   display: inline-block;
   font-size: 16px;
 }
+
+

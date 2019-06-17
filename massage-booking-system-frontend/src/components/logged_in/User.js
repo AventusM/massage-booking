@@ -6,7 +6,7 @@ const User = props => {
   const { createNotification } = useContext(NotificationContext)
   const { id, name, email, number, admin, banned, avatarUrl } = props
 
-  console.log('id outside?', id)
+  //console.log('id outside?', id)
 
   const role = admin ? 'admin' : 'user'
   const adminButtonToggleText = admin ? 'Remove Admin' : 'Make Admin'
@@ -53,7 +53,7 @@ const User = props => {
         <button
           className="removeUserButton"
           onClick={() => removeUser(id)}>
-          REMOVE
+          Remove
         </button>
       </td>
     </tr>
