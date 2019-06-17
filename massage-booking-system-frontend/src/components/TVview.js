@@ -6,6 +6,7 @@ import Clock from './Clock'
 import unity4 from '../pics/unity4.png'
 import moment from 'moment'
 import formatStartDate from '../utils/formatStartDate'
+import DaysAppointments from './DaysAppointments';
 
 const TVview = () => {
     const { appointments } = useContext(AppointmentContext)
@@ -56,11 +57,14 @@ const TVview = () => {
             type_of_reservation={next.type_of_reservation}
             appUser={users.find(u => u._id === next.user_id)}
             /> </ul>: ''}
-            </div>
-            <div>
-            <WeeksAppointments /> 
             <img className= "logoTV"
             id="unity4" src={unity4}></img>
+            </div>
+            <div><DaysAppointments dayNumber={1} lastdayWithAppointments={2} /></div>
+            <div><DaysAppointments dayNumber={2} lastdayWithAppointments={2} /></div>
+            
+            <div>
+            
             </div>
         </div>
         

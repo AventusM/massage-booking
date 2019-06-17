@@ -973,9 +973,12 @@ h3 {
 }
 
 .logoTV {
-  width: 700px;
+  width: 400px;
   margin-left: 100px;
   margin-bottom: 50px;
+  position: fixed;
+  left: 2px;
+  bottom: 2px;
 }
 
 .week {
@@ -984,12 +987,14 @@ h3 {
 }
 
 .tv_view {
-  border: 1px solid white;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   justify-items: center;
-  align-items: center;
 
+}
+
+.tv_view h2 {
+  color: white
 }
 
 .tv_notification{
