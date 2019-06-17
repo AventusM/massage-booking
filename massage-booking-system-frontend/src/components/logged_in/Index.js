@@ -19,7 +19,6 @@ const Index = () => {
 
 const AuthIndex = ({ user }) => {
   const { setSelectedDate, appointments } = useContext(AppointmentContext)
-  const [tab, setTab] = useState(true)
 
   const freeAppointments = appointments.filter(
     app => app.type_of_reservation === 0
@@ -35,8 +34,6 @@ const AuthIndex = ({ user }) => {
             onChange={value => {
               console.log('value ', value, 'value type', typeof value)
               setSelectedDate(value)
-
-              setTab(true)
             }}
             minDetail="year"
             prev2Label={null}
@@ -47,9 +44,13 @@ const AuthIndex = ({ user }) => {
                 moment(app.start_date).isSame(moment(date), 'day')
               ).length > 0
                 ? 'availableDay'
+                : view === 'month' && moment(date).isBefore(moment())
+                ? 'disabled'
                 : view === 'month' && date.getDay() < 3 && date.getDay() !== 0
                 ? 'nonAvailableDay'
-                : 'disabled'
+                : view === 'month' 
+                ? 'disabled'
+                : null
             }
             tileDisabled={({ date, view }) =>
               view === 'month' && (date.getDay() > 2 || date.getDay() === 0)
@@ -58,23 +59,11 @@ const AuthIndex = ({ user }) => {
           />
         </div>
         <div className="List">
-          {tab ? (
+          
             <div className="all_apps_div">
               <h1>All appointments</h1>
-              <button className="buttonList" onClick={() => setTab(!tab)}>
-                Own appointments
-              </button>
               <Appointments />
             </div>
-          ) : (
-              <div>
-                <h1>Own appointments</h1>
-                <button className="buttonList" onClick={() => setTab(!tab)}>
-                  All appointments
-              </button>
-                <Appointments type={OWN_APPOINTMENTS} />
-              </div>
-            )}
           {/* <img id="unity4" src={unity4}></img> */}
         </div>
       </div>

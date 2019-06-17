@@ -7,7 +7,7 @@ const Appointment = props => {
   const { appointmentService } = useContext(AppointmentContext)
   const { user } = useContext(UserContext)
   const { createNotification } = useContext(NotificationContext)
-  const { id, start_date, type_of_reservation, appUser } = props
+  const { id, start_date, type_of_reservation, appUser, ownPage } = props
 
   const cancelAppointment = async () => {
     await appointmentService.update(id, { type_of_reservation: 0, user_id: user._id, })
@@ -22,7 +22,7 @@ const Appointment = props => {
             <button
               id="reservedOwn"
               onClick={() => cancelAppointment()}>
-              <Display dateobject={start_date} own={true} />
+              <Display dateobject={start_date} ownPage={ownPage} />
             </button>
           ) : (
               <button
