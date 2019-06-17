@@ -2,9 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import moment from 'moment'
 import Appointment from './logged_in/Appointment'
 import { AppointmentContext, UserContext } from '../App'
-import Clock from './Clock'
-import unity4 from '../pics/unity4.png'
-import Notification from './Notification';
+import formatStartDate from '../utils/formatStartDate'
 
 const WeeksAppointments = () => {
   const { appointments } = useContext(AppointmentContext)
@@ -12,10 +10,6 @@ const WeeksAppointments = () => {
   const { users } = useContext(UserContext)
   const now = moment()
 
-  /* every 24 minutes force page refresh to keep next appointment uptodated. */
-  setInterval(()=> {
-    window.location.reload()
-  }, 1440000) 
 
   /* Generate appointment listing for monday*/
   let monday = null
@@ -88,53 +82,9 @@ const WeeksAppointments = () => {
     let tuesdayFirstHalf = tuesdaysAppointments.slice(0,5)
     let tuesdaySecondHalf = tuesdaysAppointments.slice(5,12)
 
-
-
-  /* Find next appointment */
-  
-  const comingAppointments = appointments.filter((app) => {
-    let appStartTime = moment(app.start_date)
-    return appStartTime.isAfter(now)
-  }) 
-
-  comingAppointments.sort((a, b) => {
-    let dateA = new Date(a.start_date)
-    let dateB = new Date(b.start_date)
-
-    if (dateA < dateB) {
-      return -1
-    }
-
-    if (dateA > dateB) {
-      return 1
-    }
-
-    return 0
-  })
-
-  let next = comingAppointments[0]
-  console.log('next ', next)
-
-
-  /* helper for correcting timezone offset*/
-  const getStart_Date = (date) => {
-    date = new Date(date)
-    let minutes = date.getMinutes()
-    let time = date.getTimezoneOffset()
-    date.setMinutes(minutes + time)
-    return date
-  }
-
     return (
       <>
-      {next ? <Appointment
-            id={next._id}
-            start_date={getStart_Date(next.start_date)}
-            type_of_reservation={next.type_of_reservation}
-            appUser={users.find(u => u._id === next.user_id)}
-      />: ''}
       
-    <Clock />
     <h2>Monday</h2>
     <ul className="tvViewAppointmentList">
       {mondayFirstHalf.map(app => {
@@ -142,7 +92,7 @@ const WeeksAppointments = () => {
           <Appointment
             key={app._id}
             id={app._id}
-            start_date={getStart_Date(app.start_date)}
+            start_date={formatStartDate(app.start_date)}
             type_of_reservation={app.type_of_reservation}
             appUser={users.find(u => u._id === app.user_id)}
           />
@@ -156,7 +106,7 @@ const WeeksAppointments = () => {
           <Appointment
             key={app._id}
             id={app._id}
-            start_date={getStart_Date(app.start_date)}
+            start_date={formatStartDate(app.start_date)}
             type_of_reservation={app.type_of_reservation}
             appUser={users.find(u => u._id === app.user_id)}
           />
@@ -170,7 +120,7 @@ const WeeksAppointments = () => {
         <Appointment
           key={app._id}
           id={app._id}
-          start_date={getStart_Date(app.start_date)}
+          start_date={formatStartDate(app.start_date)}
           type_of_reservation={app.type_of_reservation}
           appUser={users.find(u => u._id === app.user_id)}
         />
@@ -184,19 +134,16 @@ const WeeksAppointments = () => {
         <Appointment
           key={app._id}
           id={app._id}
-          start_date={getStart_Date(app.start_date)}
+          start_date={formatStartDate(app.start_date)}
           type_of_reservation={app.type_of_reservation}
           appUser={users.find(u => u._id === app.user_id)}
         />
       )
     })}
   </ul>
-    <img className= "logoTV"
-    id="unity4" src={unity4}></img>
+    
     </>
     )
-  
-
   
 }
 
