@@ -40,24 +40,52 @@ nav a {
 /* My Page styles */
 
 .mypage_wrapper {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: #2b5876;
-  left: 0px;
-  text-align: center;
-  margin-bottom: 20px;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .mypage_wrapper h2 {
   text-align: center;
   font-family: Sans-serif, 'Roboto';
   color: white;
+  font-weight: 800;
+  margin-bottom: -5px;
+  padding: 0;
 }
 
 .mypage_wrapper label {
   color: white;
   font-size: 20px;
+}
+
+.own_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.own_info img {
+  border-radius: 50%;
+  margin: 10px 0px;
+}
+
+.mypage_wrapper form {
+  margin-top: 10px;
+  display: flex;
+  background-color: #fff9e2;
+  color: black;
+  padding: 5px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+}
+
+.mypage_wrapper form > button {
+  background-color: transparent;
+  border: none;
 }
 
 .mypage_wrapper p {
@@ -66,11 +94,13 @@ nav a {
 }
 
 .mypage_wrapper input {
-  color: white;
   margin-left: 7px;
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid #22465e;
+}
+
+.own_appointments {
+  margin-top: 10px;
 }
 
 /* Dashboard styles */
@@ -82,36 +112,6 @@ nav a {
   background-color: #2b5876;
   left: 0px;
   text-align: center;
-
-}
-
-.dashboard_form{
-  max-width: 400px;
-}
-.dashboard_announcement{
-width: 400px;
-height: 100px;
-left: 70px;
-top: 29px;
-border-radius: 15px;
-border: none;
-
-}
-
-.dashboard_announcement_button{
-  width: 138px;
-  height: 63px;
-  left: 183px;
-  top: 148px; 
-  background: #22465E;
-  color: white;
-  border-radius: 15px;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 23px;
-  border: none;
-  margin-left: 130px;
-  margin-top: 20px;
 }
 
 .overflowX {
@@ -171,12 +171,10 @@ table {
   background-color: rgb(96, 233, 169);
   border-radius: 3px;
   border: none;
-  color: rgb(12, 85, 51);
 }
 
 .removeUserButton {
-  background: #F0A5A5;
-  color: rgb(143, 35, 35);
+  background-color: red;
   border-radius: 3px;
   border: none;
 }
@@ -325,6 +323,11 @@ h3 {
 @media screen and (max-width: 700px) {
   .login_button a {
     border: 1px solid white;
+  }
+
+  .nextappoitnment_wrapper p {
+    font-size: 20px;
+    color: white;
   }
 }
 
@@ -912,7 +915,7 @@ h3 {
 .notification {
   /* To center notification information */
   margin: 0 auto;
-  
+
   padding: 10px 5px;
   width: 340px;
   min-height: 77px;
@@ -943,14 +946,13 @@ h3 {
   background-color: #f6dcdc;
   color: #984242;
 }
-
-.success{
-  background-color: #BDF4E7;
-  color: #237E68;
+.success {
+  background-color: #bdf4e7;
+  color: #237e68;
 }
-.general{
-  background-color: #FFF9E2;
-  color: #4E3D01;  
+.general {
+  background-color: #fff9e2;
+  color: #4e3d01;
 }
 
 /*Animations for notifications*/
@@ -1015,5 +1017,3 @@ h3 {
   display: inline-block;
   font-size: 16px;
 }
-
-
