@@ -16,7 +16,9 @@ const AuthHeader = ({ user }) => {
           className="fas fa-bars"
         />
       </span>
-      <img src={logo} className="logo" />
+      <Link to="/">
+        <img src={logo} className="logo" />
+      </Link>
       <ul className="main-nav" id="js-menu">
         <li>
           <Link className="nav-link" to="/">
