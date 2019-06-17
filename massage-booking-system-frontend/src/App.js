@@ -24,7 +24,7 @@ const App = () => {
   const [notification, setNotification] = useState(null)
   const [notification_type, setType] = useState(null)
   const [notification_icon, setIcon] = useState(null)
-  const [announcement, setAnnouncement] = useState('BBBBBBB')
+  const [announcement, setAnnouncement] = useState('')
 
   const [message, setErrorMessage] = useState(null)
 

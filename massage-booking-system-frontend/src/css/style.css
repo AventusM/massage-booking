@@ -73,6 +73,9 @@ nav a {
 
 }
 
+.dashboard_form{
+  max-width: 400px;
+}
 .dashboard_announcement{
 width: 400px;
 height: 100px;
@@ -83,7 +86,7 @@ border: none;
 
 }
 
-.dashboard_announcement button{
+.dashboard_announcement_button{
   width: 138px;
   height: 63px;
   left: 183px;

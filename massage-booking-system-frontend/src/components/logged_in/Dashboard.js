@@ -17,17 +17,14 @@ const DashBoard = props => {
   return(
 
     <div>
-    <form onSubmit= {changeAnnouncement}>
+    <form className="dashboard_form"onSubmit= {changeAnnouncement}>
       <input className="dashboard_announcement"
         value ={editedAnnouncement}
         onChange ={handleFieldChange}
       />
-      <div className="dashboard_announcement">
-      <button type= "submit">Update</button>
-    </div>
+      <button className="dashboard_announcement_button" type= "submit">Update</button>
     </form>
-
-    <UserList />  
+    <UserList/>  
     </div>
   )
 }
