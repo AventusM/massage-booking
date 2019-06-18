@@ -1,7 +1,8 @@
 import React from 'react'
 
-const Display = ({ dateobject, user, own }) => {
+const Display = ({ dateobject, user, ownPage, free }) => {
   let date = new Date(dateobject)
+
 
   let dateDisplay
   let day = date.getDate()
@@ -13,11 +14,11 @@ const Display = ({ dateobject, user, own }) => {
     month = `0${date.getMonth() + 1}`
   }
 
-  if (own) {
+  if (ownPage) {
     dateDisplay = `${day}.${month}.${date.getFullYear()}`
   }
 
-  const userDisplay = user ? user.name : null
+  const userDisplay = user ? user.name : free ? "Free" : null
 
   if (date.getMinutes() < 10) {
     return (

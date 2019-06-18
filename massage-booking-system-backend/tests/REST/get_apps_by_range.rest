@@ -1,0 +1,5 @@
+GET http://localhost:3001/api/appointments/2019-06-10T09:30/2019-06-30T13:25
+Content-Type: application/json
+
+{
+}

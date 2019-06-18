@@ -18,12 +18,9 @@ const random_user = () => new User({
   email: `test@test.account${randomNumber()}`
 })
 
-const generate_apps_to_db_for_date = async (date) => {
-  let day = await timer.formatTime(new Date(date))
-  await timer.ifNotInDBCreateDay(day)
-  await appointment_helper.wait(13)
-  await generator.generateAppointmentsForDay(day)
-  await appointment_helper.wait(13)
+const generate_apps_to_db_for_date = async (date, waitTime) => {
+  await timer.ifNotInDBCreateDay(date)
+  await appointment_helper.wait(waitTime)
 }
 
 const DEFAULT_APPOINTMENTS_PER_DAY = 13
@@ -69,8 +66,11 @@ const get_appointment = async (id) => {
 
 describe('GET appointments', () => {
   beforeEach(async () => {
+    let date = new Date('July 14, 2019 12:00:00')
+    const dateNowStub = jest.fn(() => date)
+    global.Date.now = dateNowStub
     await appointment_helper.emptyTheDatabaseOfAppointments()
-    await generate_apps_to_db_for_date('July 15, 2019 12:00:00')
+    await generate_apps_to_db_for_date('July 15, 2019 12:00:00', 13)
   })
 
   it('should show 13 appointment slots for a single day', async () => {
@@ -85,10 +85,13 @@ describe('PUT appointments', () => {
   let original_appointment
 
   beforeEach(async () => {
+    let date = new Date('July 14, 2019 12:00:00')
+    const dateNowStub = jest.fn(() => date)
+    global.Date.now = dateNowStub
     await appointment_helper.emptyTheDatabaseOfAppointments()
     await User.deleteMany({})
     await random_user().save()
-    await generate_apps_to_db_for_date('July 15, 2019 12:00:00')
+    await generate_apps_to_db_for_date('July 15, 2019 12:00:00',13)
 
     // User has 0 appointments by default and all appointments are free
     original_user = await get_random_user(FIRST_DAY_FIRST_INDEX)
@@ -118,9 +121,9 @@ describe('PUT appointments', () => {
 
   it('when user wants to create an appointment when having one, the appointment SHOULD change its type if enough time has passed after previous user appointment', async () => {
     // // Generate appointments 1 month from original
-    await generate_apps_to_db_for_date('August 15, 2019 12:00:00')
+    await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
     const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
-
+    //console.log('TÄMÄ', one_month_after_original_appointment)
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(one_month_after_original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
 
@@ -143,9 +146,10 @@ describe('PUT appointments', () => {
     expect(cancelled_original_appointment.type_of_reservation).toBe(FREE_APPOINTMENT)
   })
 
-  it.skip('when user wants to cancel someone elses appointments, appointment should not be canceled', async () => {
+  /*it.skip('when user wants to cancel someone elses appointments, appointment should not be canceled', async () => {
     expect(true).toBe(false)
-  })
+  })*/
 })
-
-afterAll(() => setTimeout(() => process.exit(), 1000))
+afterAll(async() => {
+  await mongoose.disconnect()
+})

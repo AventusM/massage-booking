@@ -25,27 +25,67 @@ nav a {
   color: white;
 }
 
+/* Next Appointment style */
+
+.nextappoitnment_wrapper {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.nextappoitnment_wrapper p {
+  font-size: 25px;
+  color: white;
+}
+
 /* My Page styles */
 
 .mypage_wrapper {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: #2b5876;
-  left: 0px;
-  text-align: center;
-  margin-bottom: 20px;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .mypage_wrapper h2 {
   text-align: center;
   font-family: Sans-serif, 'Roboto';
   color: white;
+  font-weight: 800;
+  margin-bottom: -5px;
+  padding: 0;
 }
 
 .mypage_wrapper label {
   color: white;
   font-size: 20px;
+}
+
+.own_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.own_info img {
+  border-radius: 50%;
+  margin: 10px 0px;
+}
+
+.mypage_wrapper form {
+  margin-top: 10px;
+  display: flex;
+  background-color: #fff9e2;
+  color: black;
+  padding: 5px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+}
+
+.mypage_wrapper form > button {
+  background-color: transparent;
+  border: none;
 }
 
 .mypage_wrapper p {
@@ -54,14 +94,47 @@ nav a {
 }
 
 .mypage_wrapper input {
-  color: white;
   margin-left: 7px;
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid #22465e;
+}
+
+.own_appointments {
+  margin-top: 10px;
 }
 
 /* Dashboard styles */
+
+
+
+.dashboard_form{
+  max-width: 400px;
+}
+.dashboard_announcement{
+width: 400px;
+height: 100px;
+left: 70px;
+top: 29px;
+border-radius: 15px;
+border: none;
+
+}
+
+.dashboard_announcement_button{
+  width: 138px;
+  height: 63px;
+  left: 183px;
+  top: 148px; 
+  background: #22465E;
+  color: white;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  border: none;
+  margin-left: 130px;
+  margin-top: 20px;
+}
 
 .dashboard_wrapper {
   position: absolute;
@@ -281,6 +354,11 @@ h3 {
 @media screen and (max-width: 700px) {
   .login_button a {
     border: 1px solid white;
+  }
+
+  .nextappoitnment_wrapper p {
+    font-size: 20px;
+    color: white;
   }
 }
 
@@ -707,9 +785,7 @@ h3 {
   color: rgb(211, 208, 208);
 }
 
-
 .List {
-
   /* border: 2px solid green; */
 }
 
@@ -858,19 +934,29 @@ h3 {
     background: #526675;
   }
 }
-/* Notification*/
 
-.notification{
+/* Notification*/
+.notification_container {
+  position: fixed;
+  top: 20%;
+  width: 100%;
+  z-index: 999;
+}
+
+.notification {
+  /* To center notification information */
+  margin: 0 auto;
+
   padding: 10px 5px;
   width: 340px;
   min-height: 77px;
-  margin: 0 auto;
   border-radius: 15px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  /* For contained text and icon(s) */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-
 }
 
 .notification p {
@@ -879,31 +965,30 @@ h3 {
   margin: 0;
   padding: 0;
   width: 75%;
-  line-height: 23px;  
+  line-height: 23px;
   min-height: 0;
   word-wrap: break-word;
 }
 
-.error{
-  background-color: #F6DCDC;
-  color: #984242; 
+.error {
+  background-color: #f6dcdc;
+  color: #984242;
 }
-.success{
-  background-color: #BDF4E7;
-  color: #237E68;
- 
+.success {
+  background-color: #bdf4e7;
+  color: #237e68;
 }
-.general{
-  background-color: #FFF9E2;
-  color: #4E3D01;
-  
+.general {
+  background-color: #fff9e2;
+  color: #4e3d01;
 }
 
 /*Animations for notifications*/
 
 .scale-in-center {
-	-webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 /* ----------------------------------------------
@@ -916,31 +1001,30 @@ h3 {
  * animation scale-in-center
  * ----------------------------------------
  */
- @-webkit-keyframes scale-in-center {
+@-webkit-keyframes scale-in-center {
   0% {
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
     opacity: 1;
   }
   100% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
 @keyframes scale-in-center {
   0% {
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
     opacity: 1;
   }
   100% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
-
 
 .timelist {
   padding: 5px;
