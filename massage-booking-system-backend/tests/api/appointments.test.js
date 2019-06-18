@@ -34,20 +34,20 @@ const FIRST_DAY_FIRST_INDEX = 0
 const FIRST_DAY_SECOND_INDEX = 1
 const SECOND_DAY_LAST_INDEX = 25
 
-const get_random_user = async (index) => {
+const get_users = async () => {
   const user_response =
     await api
       .get(USERS_API_PATH)
 
-  return user_response.body[index]
+  return user_response.body
 }
 
-const get_random_appointment = async (index) => {
+const get_appointments = async () => {
   const appointment_response =
     await api
       .get(APPOINTMENTS_API_PATH)
 
-  return appointment_response.body[index]
+  return appointment_response.body
 }
 
 const update_appointment = async (original_appointment_id, param_user_id, param_type_of_reservation) => {
@@ -81,6 +81,8 @@ describe('GET appointments', () => {
 
 describe('PUT appointments', () => {
 
+  let user_list
+  let appointment_list
   let original_user
   let original_appointment
 
@@ -91,11 +93,17 @@ describe('PUT appointments', () => {
     await appointment_helper.emptyTheDatabaseOfAppointments()
     await User.deleteMany({})
     await random_user().save()
-    await generate_apps_to_db_for_date('July 15, 2019 12:00:00',13)
+    await generate_apps_to_db_for_date('July 15, 2019 12:00:00', 13)
+
+    // Generate appointments 1 month from original
+    // This is currently for a single test case, but appointment_list requires this
+    await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
 
     // User has 0 appointments by default and all appointments are free
-    original_user = await get_random_user(FIRST_DAY_FIRST_INDEX)
-    original_appointment = await get_random_appointment(FIRST_DAY_FIRST_INDEX)
+    user_list = await get_users()
+    original_user = user_list[0]
+    appointment_list = await get_appointments()
+    original_appointment = appointment_list[0]
   })
 
   it('when user wants to create an appointment when not having any, the appointment SHOULD change its type', async () => {
@@ -107,8 +115,11 @@ describe('PUT appointments', () => {
   })
 
   it('appointment type should not change if user attempts to create consecutive appointments in too small intervals', async () => {
-    const second_app_same_day = await get_random_appointment(FIRST_DAY_SECOND_INDEX)
 
+    // TEE SANITY CHECK
+    // TEE SANITY CHECK
+    // const second_app_same_day = await get_random_appointment(FIRST_DAY_SECOND_INDEX)
+    const second_app_same_day = appointment_list[FIRST_DAY_SECOND_INDEX]
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(second_app_same_day._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
 
@@ -120,9 +131,18 @@ describe('PUT appointments', () => {
   })
 
   it('when user wants to create an appointment when having one, the appointment SHOULD change its type if enough time has passed after previous user appointment', async () => {
+    // MOVED TO beforeEach
+    // MOVED TO beforeEach
+    // MOVED TO beforeEach
     // // Generate appointments 1 month from original
-    await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
-    const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
+    // await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
+
+    // TEE SANITY CHECK
+    // TEE SANITY CHECK
+    // const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
+    const one_month_after_original_appointment = appointment_list[SECOND_DAY_LAST_INDEX]
+    // console.log('app list', appointment_list)
+
     //console.log('TÄMÄ', one_month_after_original_appointment)
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(one_month_after_original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
@@ -150,6 +170,6 @@ describe('PUT appointments', () => {
     expect(true).toBe(false)
   })*/
 })
-afterAll(async() => {
+afterAll(async () => {
   await mongoose.disconnect()
 })
