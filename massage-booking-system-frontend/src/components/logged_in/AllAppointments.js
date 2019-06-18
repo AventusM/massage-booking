@@ -2,8 +2,9 @@ import React, { useContext } from 'react'
 import Appointment from './Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
+
 const AllAppointments = () => {
-  const { appointments, selectedDate } = useContext(AppointmentContext)
+  const { appointments, selectedDate, appointmentService } = useContext(AppointmentContext)
   const { users } = useContext(UserContext)
   const givenDate = new Date(selectedDate)
   let selectedDay = givenDate.getDate()
@@ -46,20 +47,28 @@ const AllAppointments = () => {
     date.setMinutes(minutes + time)
     return date
   }
+
+  const markDayUnavailable = () => {
+    appointmentService.update(givenDate.toDateString(), '', 'unavailable')
+  }
+
   return (
-    <ul className="appointmentListWrapper">
-      {todaysAppointments.map(app => {
-        return (
-          <Appointment
-            key={app._id}
-            id={app._id}
-            start_date={getStart_Date(app.start_date)}
-            type_of_reservation={app.type_of_reservation}
-            appUser={users.find(u => u._id === app.user_id)}
-          />
-        )
-      })}
-    </ul>
+    <div>
+      <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
+      <ul className="appointmentListWrapper">
+        {todaysAppointments.map(app => {
+          return (
+            <Appointment
+              key={app._id}
+              id={app._id}
+              start_date={getStart_Date(app.start_date)}
+              type_of_reservation={app.type_of_reservation}
+              appUser={users.find(u => u._id === app.user_id)}
+            />
+          )
+        })}
+      </ul>
+    </div >
   )
 }
 

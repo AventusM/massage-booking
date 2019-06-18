@@ -1,9 +1,9 @@
-import React, {useContext, useState} from 'react'
+import React, { useContext, useState } from 'react'
 import UserList from './UserList'
-import {NotificationContext} from '../../App'
+import { NotificationContext } from '../../App'
 
 const DashBoard = props => {
-  const {announcement, setAnnouncement} = useContext(NotificationContext)
+  const { setAnnouncement } = useContext(NotificationContext)
   const [editedAnnouncement, setEditedAnnouncement] = useState()
   const handleFieldChange = (event) => {
     console.log(event.target.value)
@@ -14,17 +14,17 @@ const DashBoard = props => {
     event.preventDefault()
     setAnnouncement(editedAnnouncement)
   }
-  return(
+  return (
 
     <div>
-    <form className="dashboard_form"onSubmit= {changeAnnouncement}>
-      <input className="dashboard_announcement"
-        value ={editedAnnouncement}
-        onChange ={handleFieldChange}
-      />
-      <button className="dashboard_announcement_button" type= "submit">Update</button>
-    </form>
-    <UserList/>  
+      <form className="dashboard_form" onSubmit={changeAnnouncement}>
+        <input className="dashboard_announcement"
+          value={editedAnnouncement}
+          onChange={handleFieldChange}
+        />
+        <button className="dashboard_announcement_button" type="submit">Update</button>
+      </form>
+      <UserList />
     </div>
   )
 }

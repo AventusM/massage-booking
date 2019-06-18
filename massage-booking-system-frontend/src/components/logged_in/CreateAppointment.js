@@ -5,7 +5,7 @@ import Display from './Display'
 
 const CreateAppointment = ({ id, start_date }) => {
   const { user } = useContext(UserContext)
-  const { appointments, appointmentService, setErrorMessage } = useContext(AppointmentContext)
+  const { appointments, appointmentService } = useContext(AppointmentContext)
   const { createNotification } = useContext(NotificationContext)
 
   const handleAppointmentCreation = async () => {

@@ -17,6 +17,7 @@ const AppointmentsList = ({ ownPage }) => {
     date.setMinutes(minutes + time)
     return date
   }
+
   return (
     <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {

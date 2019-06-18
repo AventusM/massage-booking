@@ -61,7 +61,6 @@ const AuthIndex = ({ user }) => {
           <div className="all_apps_div">
 
             <h1>All appointments</h1>
-
             < AllAppointments />
           </div>
           {/* <img id="unity4" src={unity4}></img> */}
