@@ -22,6 +22,15 @@ stretchingRouter.get('/current', async (req, res, next) => {
     res.send(default_object)
 })
 
+stretchingRouter.post('/current', async (req, res, next) => {
+    try {
+        const body = rep.body
+        console.log('body', body)
+    }  catch (exception){
+        next(exception)
+    }
+})
+
 
 
 
