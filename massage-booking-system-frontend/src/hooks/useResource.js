@@ -37,12 +37,18 @@ const useResource = baseUrl => {
     return response.data
   }
 
+  const setOne = async (path, data) => {
+    const response = await axios.post(`${baseUrl}/${path}`, data)
+    return response.data
+  }
+
   const service = {
     getAll,
     create,
     remove,
     update,
     getOne,
+    setOne
   }
 
   return [resources, service]

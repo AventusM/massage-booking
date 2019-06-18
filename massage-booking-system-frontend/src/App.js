@@ -20,6 +20,7 @@ const App = () => {
   const [users, userService] = useResource('/api/users')
   const [appointments, appointmentService] = useResource('/api/appointments')
   const [stats, statsService] = useResource('api/stats')
+  const [stretching, stretchingService] = useResource('/api/stretching')
 
   const [notification, setNotification] = useState(null)
   const [notification_type, setType] = useState(null)
@@ -65,8 +66,8 @@ const App = () => {
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
- 
-  
+
+
   return (
     <Fragment>
       <Router>
@@ -82,9 +83,11 @@ const App = () => {
               </AppointmentContext.Provider>
             </UserContext.Provider>
 
-            <UserContext.Provider value={{ user, setUser, users, userService}}>
-              <Route exact path="/dashboard" render={() => <DashBoard />} />
-            </UserContext.Provider>
+            <StretchContext.Provider value={{ stretching, stretchingService }}>
+              <UserContext.Provider value={{ user, setUser, users, userService }}>
+                <Route exact path="/dashboard" render={() => <DashBoard />} />
+              </UserContext.Provider>
+            </StretchContext.Provider>
 
             <UserContext.Provider value={{ user, setUser, users, userService }}>
               <AppointmentContext.Provider value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
@@ -105,5 +108,6 @@ const App = () => {
 export const NotificationContext = createContext(null)
 export const AppointmentContext = createContext(null)
 export const UserContext = createContext(null)
+export const StretchContext = createContext(null)
 export default App
 

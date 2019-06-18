@@ -24,9 +24,9 @@ stretchingRouter.get('/current', async (req, res, next) => {
 
 stretchingRouter.post('/current', async (req, res, next) => {
     try {
-        const body = rep.body
+        const body = req.body
         console.log('body', body)
-    }  catch (exception){
+    } catch (exception) {
         next(exception)
     }
 })

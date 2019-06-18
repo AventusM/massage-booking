@@ -1,0 +1,5 @@
+GET http://localhost:3001/api/stretching/current
+Content-Type: application/json
+
+{    
+}

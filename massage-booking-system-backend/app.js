@@ -53,7 +53,8 @@ app.use('/api/users', usersRouter)
 app.use('/api/stats', statsRouter)
 app.use('/api/stretching', stretchingRouter)
 
-router.use(protectedRoute.routeProtector)
+// ROUTE PROTECTION -- DISABLE FOR OWN TESTING IN REST CLIENT ETC.
+// router.use(protectedRoute.routeProtector)
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static('build'))
