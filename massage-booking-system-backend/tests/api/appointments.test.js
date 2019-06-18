@@ -87,6 +87,7 @@ describe('PUT appointments', () => {
   let original_appointment
 
   beforeEach(async () => {
+    jest.setTimeout(2000000)
     let date = new Date('July 14, 2019 12:00:00')
     const dateNowStub = jest.fn(() => date)
     global.Date.now = dateNowStub
@@ -95,6 +96,8 @@ describe('PUT appointments', () => {
     await random_user().save()
     await generate_apps_to_db_for_date('July 15, 2019 12:00:00', 13)
 
+    
+    await appointment_helper.wait(1000)
     // Generate appointments 1 month from original
     // This is currently for a single test case, but appointment_list requires this
     await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
