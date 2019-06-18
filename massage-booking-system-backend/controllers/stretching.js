@@ -2,9 +2,28 @@ const stretchingRouter = require('express').Router()
 const bodyParser = require('body-parser')
 stretchingRouter.use(bodyParser.json())
 
-stretchingRouter.get('/current', async (req, res, next)=>{ 
-    const TestObject = {message:'moi'}
-    res.send(TestObject)
+const default_object = {
+    participants: [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+    ],
+    time: {}
+}
+
+stretchingRouter.get('/current', async (req, res, next) => {
+    res.send(default_object)
 })
+
+
+
+
 
 module.exports = stretchingRouter
