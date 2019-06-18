@@ -13,29 +13,50 @@ const Appointment = props => {
     await appointmentService.update(id, { type_of_reservation: 0, user_id: user._id, })
     createNotification('Appointment cancelled succesfully', 'success')
   }
+  const markAppUnavailable = async () => {
+    await appointmentService.update(id)
+  }
 
+  const markAppAvailable = async () => {
+    await appointmentService.update(id, { type_of_reservation: 3, user_id: null })
+
+  }
   return (
     <div>
       {type_of_reservation === 1 ? (
         appUser ? (
           user._id === appUser._id ? (
-            <button
-              id="reservedOwn"
-              onClick={() => cancelAppointment()}>
-              <Display dateobject={start_date} ownPage={ownPage} />
-            </button>
+            <div>
+              <button
+                id="reservedOwn"
+                onClick={() => cancelAppointment()}>
+                <Display dateobject={start_date} ownPage={ownPage} />
+              </button>
+            </div>
           ) : (
-            <button
-              id="reserved"
-              onClick={() => { createNotification('You cannot book this slot!') }}>
-              <Display dateobject={start_date} user={appUser} />
-            </button>
+            <div>
+              <button
+                id="reserved"
+                onClick={() => { createNotification('You cannot book this slot!') }}>
+                <Display dateobject={start_date} user={appUser} />
+              </button>
+            </div>
           )
         ) : null
       ) : (
         <CreateAppointment id={id} start_date={start_date} />
       )}
-    </div>
+      {type_of_reservation === 3 ? (<div className="remove" onClick={() => markAppAvailable()}>
+        <i className="fas fa-undo"></i>
+      </div >
+      ) : (
+        <div className="remove" onClick={() => markAppUnavailable()}>
+          <i className="far fa-trash-alt"></i>
+        </div >
+      )
+      }
+
+    </div >
   )
 }
 
