@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const appointmentSchema = mongoose.Schema({
   user_id: {
     type: String,
+    default: null
   },
   start_date: {
     type: Date,
@@ -14,7 +15,7 @@ const appointmentSchema = mongoose.Schema({
   },
   type_of_reservation: {
     type: Number,
-    default: 1,
+    default: 0,
   },
 })
 

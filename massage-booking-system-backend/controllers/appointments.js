@@ -37,7 +37,7 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
 appointmentsRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
-    console.log('appointmentRouter put called with req body ', body)
+    //console.log('appointmentRouter put called with req body ', body)
     const appointmentID = req.params.id
 
     let user = await User.findById(body.user_id).populate('appointments')
@@ -48,7 +48,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
     }
 
     let appointment = await Appointment.findById(appointmentID)
-    console.log('appointment ', appointment, typeof(appointment))
+    //console.log('appointment ', appointment, typeof(appointment))
     if(!appointment) {
       res.status(400).end()
       return
@@ -67,12 +67,12 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
       appointment.type_of_reservation = body.type_of_reservation
       appointment = await appointment.save()
 
-      console.log(
+      /*console.log(
         'users appointments before cancelation',
         user.appointments,
         ' length ',
         user.appointments.length
-      )
+      )*/
       //remove appointment from users appointments
       user.appointments = user.appointments.filter(app => {
         return (
@@ -81,11 +81,11 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
         )
       })
       user = await user.save()
-      console.log(
+      /*console.log(
         'users appointments after cancelation',
         ' length ',
         user.appointments.length
-      )
+      )*/
     } else {
       // user wishes to make an appointment
       let ruleCheckResult = await ruleChecker.userAllowedToMakeAppointment(user.appointments, appointment)
@@ -100,10 +100,10 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
         //adds appointment to users appointments
         user.appointments = user.appointments.concat(appointment._id)
         user.save()
-        console.log('user after new appointment', user)
+      //  console.log('user after new appointment', user)
       } else {
         // user is not allowed to make this appointment
-        console.log('NOT ALLOWED')
+      //  console.log('NOT ALLOWED')
       }
     }
     //console.log('user after appointment added', user)
@@ -116,12 +116,23 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
 /**
  * Searches appointment from database by id and then calls removeAppointment.
  */
-appointmentsRouter.post('/:id', async (req, res, next) => {
+appointmentsRouter.put('/:id/remove', async (req, res, next) => {
+  //verify?
   try {
+    /*
+    console.log('rRRRRRRr', req.user._id)
+    const found_user = await User.findById({ _id: req.user._id })
+    if (!found_user.admin) {
+      console.log('user not found')
+      return res.status(400).end()
+    }
+    */
     const appointment = await Appointment.findById({ _id: req.params.id })
-    removeAppointment(appointment)
+    await removeAppointment(appointment)
+    appointment = await Appointment.findById({ _id: req.params.id })
+    return res.json(appointment)
   } catch (exception) {
-    next(exception)
+      next(exception)
   }
 })
 
@@ -129,16 +140,30 @@ appointmentsRouter.post('/:id', async (req, res, next) => {
  * Removes appointments that matches the date given as parameter. 
  */
 
-appointmentsRouter.post('/:date', async (req, res, next) => {
+appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
+  //verify?
   try{
-    const date = req.params.date
+    /*
+    const found_user = await User.findById({ _id: req.user._id })
+    if (!found_user.admin) {
+      console.log('user not found')
+      console.log('USER EI TOIMINYT')
+      return res.status(400).end()
+    }*/
+
+    const date = new Date(req.params.date)
+
     const month = date.getMonth()
     const year = date.getYear()
     const day = date.getDay()
-    const appointments = await Appointment.findAll()
+    const appointments = await Appointment.find()
     const appointmentsToRemove = appointments.filter(appoint => appoint.start_date.getDay() === day && appoint.start_date.getMonth() === month && appoint.start_date.getYear() === year) 
-    appointmentsToRemove.map(appoint => removeAppointment(appoint))
-
+    for(appoint of appointmentsToRemove) {
+     await removeAppointment(appoint)
+    }
+    appointmentsChanged = await Appointment.find()
+    res.json(appointmentsChanged.map(formatAppointment))
+    
   } catch(exception) {
     next(exception)
   }
@@ -148,23 +173,26 @@ appointmentsRouter.post('/:date', async (req, res, next) => {
  *Removes appointment from user and removes user from appointment
  */
 
-removeAppointment = async(appointment) =>{
+const removeAppointment = async(appointment) =>{
   try {
+    if(appointment.user_id !== null){
     const user = await User.findById({ _id: appointment.user_id })
-    const appointmentsToKeep = appointment.filter(appoint => appointment !== appoint)
+    const appointmentsToKeep = user.appointments.filter(function(appoint) { 
+      if(appointment._id.stringify !== appoint.stringify){
+        return appoint
+      }
+    })
     user.appointments = appointmentsToKeep
-
-    appointments.user_id = null
+    await User.findByIdAndUpdate(user._id, user)
+  }
+    appointment.user_id = null
     appointment.type_of_reservation = 3
-    
-    user = await User.findByIdAndUpdate(user._id, user)
-    appointment = await Appointment.findByIdAndUpdate(appointment._id, appointment)
-  console.log('USER', user)
-  console.log('APPOINTMENT', appointment)
+
+    await Appointment.findByIdAndUpdate(appointment._id, appointment)
   } catch (exception) {
-    next(exception)
+    console.log('E', exception)
   }
 }  
 
 
-module.exports = appointmentsRouter
+module.exports =  appointmentsRouter 
