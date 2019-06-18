@@ -19,18 +19,25 @@ const Display = ({ dateobject, user, ownPage, free }) => {
   }
 
   const userDisplay = user ? user.name : free ? 'Free' : null
-
+  const markAppUnavailable = () => {
+    console.log('hei')
+  }
   if (date.getMinutes() < 10) {
     return (
       <h4>
         {dateDisplay} {`${date.getHours()}:0${date.getMinutes()}`} {userDisplay}{' '}
+
       </h4>
     )
   }
   return (
-    <h4>
-      {dateDisplay} {`${date.getHours()}:${date.getMinutes()}`} {userDisplay}
-    </h4>
+    <div>
+      <button className="moi" onClick={() => markAppUnavailable()}>Mark this day as unavailable</button>
+      <h4>
+        {dateDisplay} {`${date.getHours()}:${date.getMinutes()}`} {userDisplay}
+      </h4>
+    </div>
+
   )
 }
 

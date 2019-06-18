@@ -49,7 +49,7 @@ const AllAppointments = () => {
   }
 
   const markDayUnavailable = () => {
-    appointmentService.update(givenDate.toDateString(), '', 'unavailable')
+    appointmentService.update(givenDate.toDateString(), '', 'removeDate')
   }
 
   return (
