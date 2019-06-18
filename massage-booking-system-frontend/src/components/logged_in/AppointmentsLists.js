@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Appointment from './Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
-const AppointmentsList = ({ownPage}) => {
+const AppointmentsList = ({ ownPage }) => {
   const { appointments } = useContext(AppointmentContext)
   const { user, users } = useContext(UserContext)
   const foundUser = users.find(u => user._id === u._id)

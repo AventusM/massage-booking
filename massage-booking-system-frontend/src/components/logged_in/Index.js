@@ -1,12 +1,10 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext } from 'react'
 //import Calendar from 'react-calendar';
 import Calendar from 'react-calendar'
 import { AppointmentContext, UserContext } from '../../App'
-import unity4 from '../../pics/unity4.png'
 
-import Appointments from './Appointments'
+import AllAppointments from './AllAppointments'
 import LoginIndex from '../Login_index'
-import { OWN_APPOINTMENTS } from '../../types/logged_in'
 import moment from 'moment'
 import NextAppointment from './NextAppointment'
 const Index = () => {
@@ -40,17 +38,17 @@ const AuthIndex = ({ user }) => {
             next2Label={null}
             tileClassName={({ date, view }) =>
               view === 'month' &&
-              freeAppointments.filter(app =>
-                moment(app.start_date).isSame(moment(date), 'day')
-              ).length > 0
+                freeAppointments.filter(app =>
+                  moment(app.start_date).isSame(moment(date), 'day')
+                ).length > 0
                 ? 'availableDay'
                 : view === 'month' && moment(date).isBefore(moment())
-                ? 'disabled'
-                : view === 'month' && date.getDay() < 3 && date.getDay() !== 0
-                ? 'nonAvailableDay'
-                : view === 'month' 
-                ? 'disabled'
-                : null
+                  ? 'disabled'
+                  : view === 'month' && date.getDay() < 3 && date.getDay() !== 0
+                    ? 'nonAvailableDay'
+                    : view === 'month'
+                      ? 'disabled'
+                      : null
             }
             tileDisabled={({ date, view }) =>
               view === 'month' && (date.getDay() > 2 || date.getDay() === 0)
@@ -59,11 +57,13 @@ const AuthIndex = ({ user }) => {
           />
         </div>
         <div className="List">
-          
-            <div className="all_apps_div">
-              <h1>All appointments</h1>
-              <Appointments />
-            </div>
+
+          <div className="all_apps_div">
+
+            <h1>All appointments</h1>
+
+            < AllAppointments />
+          </div>
           {/* <img id="unity4" src={unity4}></img> */}
         </div>
       </div>

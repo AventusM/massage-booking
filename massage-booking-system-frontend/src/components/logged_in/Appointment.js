@@ -25,16 +25,16 @@ const Appointment = props => {
               <Display dateobject={start_date} ownPage={ownPage} />
             </button>
           ) : (
-              <button
-                id="reserved"
-                onClick={() => { createNotification('You cannot book this slot!') }}>
-                <Display dateobject={start_date} user={appUser} />
-              </button>
-            )
+            <button
+              id="reserved"
+              onClick={() => { createNotification('You cannot book this slot!') }}>
+              <Display dateobject={start_date} user={appUser} />
+            </button>
+          )
         ) : null
       ) : (
-          <CreateAppointment id={id} start_date={start_date} />
-        )}
+        <CreateAppointment id={id} start_date={start_date} />
+      )}
     </div>
   )
 }

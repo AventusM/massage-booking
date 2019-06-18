@@ -4,15 +4,13 @@ import { AppointmentContext, UserContext } from '../../App'
 
 const AllAppointments = () => {
   const { appointments, selectedDate } = useContext(AppointmentContext)
-  const { users, user } = useContext(UserContext)
+  const { users } = useContext(UserContext)
   const givenDate = new Date(selectedDate)
   let selectedDay = givenDate.getDate()
   let selectedMonth = givenDate.getMonth() + 1
   let selectedYear = givenDate.getFullYear()
   // console.log('appointments in allappointments', appointments)
-  const allButOwnAppointments = appointments.filter(
-    app => app.user_id !== user._id
-  )
+
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
   const todaysAppointments = appointments.filter(appointment => {
     let appointmentsDate = new Date(appointment.start_date)
