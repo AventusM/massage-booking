@@ -151,8 +151,8 @@ appointmentsRouter.put('/:id/remove', async (req, res, next) => {
     */
     const appointment = await Appointment.findById({ _id: req.params.id })
     await removeAppointment(appointment)
-    appointment = await Appointment.findById({ _id: req.params.id })
-    return res.json(appointment)
+    const newAppointments = await Appointment.findById({ _id: req.params.id })
+    return res.json(newAppointments)
   } catch (exception) {
     next(exception)
   }
@@ -216,4 +216,4 @@ const removeAppointment = async (appointment) => {
   }
 }
 
-module.exports = appointmentsRouter 
+module.exports = appointmentsRouter
