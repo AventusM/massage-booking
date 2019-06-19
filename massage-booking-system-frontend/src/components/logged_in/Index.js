@@ -51,9 +51,9 @@ const AuthIndex = ({ user }) => {
                       ? 'disabled'
                       : null
             }
-            tileDisabled={({ date, view }) =>
+            /* tileDisabled={({ date, view }) =>
               view === 'month' && (date.getDay() > 2 || date.getDay() === 0)
-            }
+            } */
             showNeighboringMonth={false}
           />
         </div>

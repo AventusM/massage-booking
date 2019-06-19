@@ -26,13 +26,26 @@ const CreateAppointment = ({ id, start_date }) => {
 }
 
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
+  let now = moment()
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
-  let firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week')
-  let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter(
-    usersPreviousTime => {
-      let prevTimeMoment = moment(usersPreviousTime.start_date)
-      let firstWeekDayOfPrevtime = prevTimeMoment.startOf('week')
-      let dayDifference = firstWeekDayOfrequestedTimesWeek.diff(
+  if (requestedTimeMoment.isSame(now, 'days')) {
+    const usersAppointmentOnSameDay = usersAppointments.find(( time ) => {
+      let timeMoment = moment(time.start_date)
+      return timeMoment.isSame(now, 'day')
+    })
+    if (usersAppointmentOnSameDay) {
+      console.log('FOUND APPOINT ON SAME DAY ', usersAppointmentOnSameDay)
+      console.log('RESERVATION DENIED')
+      return false
+    }
+    return true
+  } else {
+    let firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week')
+    let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter(
+      usersPreviousTime => {
+        let prevTimeMoment = moment(usersPreviousTime.start_date)
+        let firstWeekDayOfPrevtime = prevTimeMoment.startOf('week')
+        let dayDifference = firstWeekDayOfrequestedTimesWeek.diff(
         firstWeekDayOfPrevtime,
         'days'
       )
@@ -40,6 +53,8 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
     }
   )
   return usersAppointmentsWithinTheLastTwoWeeks.length === 0
+  }
+  
 }
 
 export default CreateAppointment
