@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 
 const stretchingSchema = mongoose.Schema({
-    date: {
-        type: Date,
+    day: {
+        type: String,
         required: true
     },
     time: {
         type: String,
-        required: true
+
     },
     users: [
         {

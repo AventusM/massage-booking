@@ -6,7 +6,7 @@ const Stretching = require('../models/stretching')
 const formatStretchingSession = input => {
     return {
         _id: input._id,
-        date: input.date,
+        day: input.day,
         time: input.time,
         users: input.users
     }
@@ -22,9 +22,12 @@ stretchingRouter.get('/current', async (req, res, next) => {
 
 stretchingRouter.post('/current', async (req, res, next) => {
     try {
-        const body = req.body
-        console.log('body', body)
-
+        const body = req.body    
+        const stretchingSession = new Stretching({
+            day:body.day
+        })
+        const savedStretchingSession = await stretchingSession.save()
+        res.json(savedStretchingSession.toJSON())
         // 1. Lisätään uusi venyttelytapahtuma mongooseen riippuen timin parametreistä
     } catch (exception) {
         next(exception)
