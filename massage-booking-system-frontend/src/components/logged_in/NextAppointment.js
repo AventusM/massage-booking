@@ -34,7 +34,7 @@ const SimpleAppointment = ({ app }) => {
   }
 
   return (
-    <div class="nextappoitnment_wrapper">
+    <div className="nextappoitnment_wrapper">
       <p>
         Your next appointment is on {weekdays[date.getDay()]} {date.getDate()}th
         of {months[date.getMonth()]} {date.getHours()}:{date.getMinutes()}

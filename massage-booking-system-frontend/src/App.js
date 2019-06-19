@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment, createContext } from 'react'
 import axios from 'axios'
+import moment from 'moment'
 import {
   BrowserRouter as Router,
   Route,
@@ -10,13 +11,13 @@ import MyPage from './components/logged_in/MyPage'
 import useResource from './hooks/useResource'
 import Stats from './components/logged_in/Stats'
 import DashBoard from './components/logged_in/Dashboard'
-import NotFoundPage from './components/NotFoundPage'
 import Notification from './components/Notification'
 import Header from './components/Header'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
 
 const App = () => {
+  console.log('RENDERING APP')
   const [users, userService] = useResource('/api/users')
   const [appointments, appointmentService] = useResource('/api/appointments')
   const [stats, statsService] = useResource('api/stats')
@@ -45,28 +46,54 @@ const App = () => {
       setNotification(null)
       setType(null)
       setIcon(null)
-    }, 3500)
+    }, 50)
   }
 
   useEffect(() => {
+    console.log('SET USER EFFEECT TRIGGERED')
     axios
       .get('/api/users/current_user')
       .then(response => setUser(response.data))
   }, [])
 
   useEffect(() => {
+    console.log('GET ALL EFFECT TRIGGERED')
     userService.getAll()
-    appointmentService.getAll()
+    let twoWeeksAgo = moment().subtract(15, 'days') 
+    let sixWeeksFromNow = moment().add(43, 'days')
+    appointmentService.getInterval(twoWeeksAgo, sixWeeksFromNow)
+    // appointmentService.getAll()
     statsService.getAll()
   }, [])
 
   useEffect(() => {
+    console.log('REFRESH USER EFFECT TRIGGERED')
     user &&
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
  
-  
+  return (
+    <Fragment>
+      <Router>
+        <Header user={user} />
+        <Notification icon={icons.GENERAL} type={types.GENERAL} message={announcement} />
+        <Notification icon={notification_icon} type={notification_type} message={notification} />
+        <div>
+          <NotificationContext.Provider value={{ createNotification, announcement, setAnnouncement }}>
+            <UserContext.Provider value={{ user, setUser, users, userService }}>
+              <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage }}>
+                <Route exact path="/" render={() => <Index />} />
+                <Route exact path="/dashboard" render={() => <DashBoard />} />
+                <Route exact path="/mypage" render={() => <MyPage />} />
+                <Route exact path="/stats" render={() => <Stats />} />
+              </AppointmentContext.Provider>
+            </UserContext.Provider>            
+          </NotificationContext.Provider>
+        </div>
+      </Router>
+    </Fragment >
+  )
   return (
     <Fragment>
       <Router>
