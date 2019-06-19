@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, Fragment } from 'react'
 import DatePicker, { setDefaultLocale } from 'react-datepicker'
 import UserList from './UserList'
 import { NotificationContext, StretchContext } from '../../App'
@@ -11,35 +11,55 @@ class DatePickerForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: new Date()
+      startDate: new Date(),
+      next: null
     }
+  }
+
+  async componentDidMount() {
+    const { stretchingService } = this.props
+    const next_from_db = await stretchingService.getOne('/current')
+    const next_time = next_from_db[0].date
+    console.log('next time @', next_time)
+    this.setState({
+      next: new Date(next_time).toDateString()
+    })
   }
 
   handleChange = (date) => {
     this.setState({ startDate: date })
   }
 
-  createStretch = (event) => {
+  createStretch = async (event) => {
     const { stretchingService } = this.props
     const { startDate } = this.state
     event.preventDefault()
-    console.log('DATA TO BE SENT', startDate)
-    stretchingService.setOne('/current', { date: startDate})
+    try {
+      await stretchingService.setOne('/current', { date: startDate })
+      // Luo notifikaatio tänne onnistumisesta
+    } catch (exception) {
+      // Luo notifikaatio tänne failuresta
+    }
 
   }
 
   render() {
-    const { startDate } = this.state
+    const { startDate, next } = this.state
     return (
-      <form onSubmit={this.createStretch}>
-        <DatePicker
-          showTimeSelect
-          selected={startDate}
-          onChange={this.handleChange}
-          locale={fi}
-        />
-        <button type="submit">PAINA</button>
-      </form >
+      <Fragment>
+        <div>
+          Next stretching session --> {next}
+        </div>
+        <form onSubmit={this.createStretch}>
+          <DatePicker
+            showTimeSelect
+            selected={startDate}
+            onChange={this.handleChange}
+            locale={fi}
+          />
+          <button type="submit">PAINA</button>
+        </form >
+      </Fragment>
     )
   }
 }
@@ -69,6 +89,7 @@ const DashBoard = props => {
         <button className="dashboard_announcement_button" type="submit">Update</button>
       </form>
       <DatePickerForm stretching={stretching} stretchingService={stretchingService} />
+
       <UserList />
     </div>
   )

@@ -57,6 +57,15 @@ stretchingRouter.put('/current', async (req, res, next) => {
 })
 
 
+// Removes all
+stretchingRouter.delete('/', async (req, res, next) => {
+    try {
+        await Stretching.deleteMany({})
+    } catch (exception) {
+        next(exception)
+    }
+})
+
 
 
 
