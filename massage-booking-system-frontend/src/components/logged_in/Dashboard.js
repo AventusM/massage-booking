@@ -24,7 +24,7 @@ class DatePickerForm extends React.Component {
     const { startDate } = this.state
     event.preventDefault()
     console.log('DATA TO BE SENT', startDate)
-    stretchingService.setOne('/current', { day: startDate.toLocaleDateString() })
+    stretchingService.setOne('/current', { date: startDate})
 
   }
 

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const stretchingSchema = mongoose.Schema({
-    day: {
-        type: String,
+    date: {
+        type: Date,
         required: true
     },
     time: {

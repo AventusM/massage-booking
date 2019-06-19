@@ -6,7 +6,7 @@ const Stretching = require('../models/stretching')
 const formatStretchingSession = input => {
     return {
         _id: input._id,
-        day: input.day,
+        date: input.date,
         time: input.time,
         users: input.users
     }
@@ -21,7 +21,7 @@ stretchingRouter.get('/current', async (req, res, next) => {
             await Stretching
                 .find({})
                 .populate('users')
-                .sort({ day: -1 })
+                .sort({ date: -1 })
                 .limit(1)
 
         res.send(latesStretchingSession.map(formatStretchingSession))
@@ -37,7 +37,7 @@ stretchingRouter.post('/current', async (req, res, next) => {
         const body = req.body
 
         const stretchingSession = new Stretching({
-            day: body.day
+            date: body.date
         })
 
         const savedStretchingSession = await stretchingSession.save()
