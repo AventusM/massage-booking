@@ -14,21 +14,34 @@ const formatStretchingSession = input => {
 
 
 stretchingRouter.get('/current', async (req, res, next) => {
-    // 2. Järjestetään haettu modeli
-    // 3. Palautetaan käyttäjälle järjestyksessä ylimmäinen näkyviin
-    const stretchingSessions = await Stretching.find({}).populate('users')
-    res.send(stretchingSessions.map(formatStretchingSession))
+    try {
+
+        // Returns single stretching session by sorting with days
+        const latesStretchingSession =
+            await Stretching
+                .find({})
+                .populate('users')
+                .sort({ day: -1 })
+                .limit(1)
+
+        res.send(latesStretchingSession.map(formatStretchingSession))
+
+    } catch (exception) {
+        next(exception)
+    }
+
 })
 
 stretchingRouter.post('/current', async (req, res, next) => {
     try {
-        const body = req.body    
+        const body = req.body
+
         const stretchingSession = new Stretching({
-            day:body.day
+            day: body.day
         })
+
         const savedStretchingSession = await stretchingSession.save()
         res.json(savedStretchingSession.toJSON())
-        // 1. Lisätään uusi venyttelytapahtuma mongooseen riippuen timin parametreistä
     } catch (exception) {
         next(exception)
     }
