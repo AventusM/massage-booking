@@ -201,6 +201,36 @@ appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
   }
 })
 
+appointmentsRouter.put('/:date/addDate', async (req, res, next) => {
+  try {
+    let start = new Date(req.params.date)
+    start.setHours(start.getHours() + 3)
+
+    let end = new Date(start)
+    end.setHours(end.getHours() + 23)
+
+    const appointments = await Appointment.find({
+      start_date: {
+        $gte: start,
+        $lte: end,
+      },
+    })
+
+    appointments.forEach(e => {
+      e.type_of_reservation = 0
+      Appointment.findByIdAndUpdate(e._id, e)
+    })
+
+    const appointmentsChanged = await Appointment.find()
+    console.log('appointmentsChanged: ', appointmentsChanged)
+
+    res.json(appointmentsChanged.map(formatAppointment))
+
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 /**
  *Removes appointment from user and removes user from appointment
  */
