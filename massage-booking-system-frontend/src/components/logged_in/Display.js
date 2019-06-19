@@ -18,7 +18,7 @@ const Display = ({ dateobject, user, ownPage, free }) => {
     dateDisplay = `${day}.${month}.${date.getFullYear()}`
   }
 
-  const userDisplay = user ? user.name : free ? "Free" : null
+  const userDisplay = user ? user.name : free ? 'Free' : null
 
   if (date.getMinutes() < 10) {
     return (
@@ -28,9 +28,9 @@ const Display = ({ dateobject, user, ownPage, free }) => {
     )
   }
   return (
-    <h4>
+    < h4 >
       {dateDisplay} {`${date.getHours()}:${date.getMinutes()}`} {userDisplay}
-    </h4>
+    </h4 >
   )
 }
 

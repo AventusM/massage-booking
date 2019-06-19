@@ -15,6 +15,26 @@ body {
   background-color: #2b5876;
 }
 
+.remove {
+  width: 20px;
+  height: 20px;
+}
+
+.appointmentListWrapper .controls button {
+  background:#f44b42;
+  font-size: 120%;
+  border-radius: 15px;
+  padding: 10px 5px;
+  height: 50px;
+  width: 400px;
+  margin-top: 20px;
+
+}
+
+.cont {
+  display: flex
+}
+
 /* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */
 /* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */
 /* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */

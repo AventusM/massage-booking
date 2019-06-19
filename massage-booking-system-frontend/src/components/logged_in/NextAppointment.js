@@ -6,7 +6,7 @@ const SimpleAppointment = ({ app }) => {
   let minutes = date.getMinutes()
   let time = date.getTimezoneOffset()
   date.setMinutes(minutes + time)
- 
+
 
   const weekdays = {
     0: 'Sunday',
@@ -46,7 +46,7 @@ const SimpleAppointment = ({ app }) => {
 const NextAppointment = ({ user, appointments }) => {
   let ownAppointments = appointments.filter(app => app.user_id === user._id)
 
-  ownAppointments.sort(function(a, b) {
+  ownAppointments.sort(function (a, b) {
     let dateA = new Date(a.start_date),
       dateB = new Date(b.start_date)
     return dateA - dateB
