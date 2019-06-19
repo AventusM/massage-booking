@@ -14,11 +14,13 @@ const Appointment = props => {
     createNotification('Appointment cancelled succesfully', 'success')
   }
   const markAppUnavailable = async () => {
-    await appointmentService.update(id)
+    await appointmentService.update(id, '', 'remove')
   }
 
   const markAppAvailable = async () => {
-    await appointmentService.update(id, { type_of_reservation: 3, user_id: null })
+    console.log('Id', id)
+    const response = await appointmentService.update(id, { type_of_reservation: 3 })
+    console.log('response: ', response)
 
   }
   return (
