@@ -1,20 +1,21 @@
 import React from 'react'
 
 
-const Notification = (props) => {
-    const { type, message, icon } = props
-
-    return (message &&
+const Notification = ({notification}) => {
+    return ( 
+        notification && notification.message !== undefined && notification.message && (
+        
         <div className="notification_container">
-            <div className={`notification ${type}`}>
-                <i className={`${icon}`} />
+            <div className={`notification ${notification.type}`}>
+                <i className={`${notification.icon}`} />
                 <p>
-                    {message}
+                    {notification.message}
                 </p>
             </div>
-        </div>
-    )
+        </div>)
 
+    )
+    
 }
 
 

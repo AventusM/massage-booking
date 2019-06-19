@@ -130,6 +130,7 @@ nav a {
 .dashboard_form{
   max-width: 400px;
 }
+
 .dashboard_announcement{
 width: 400px;
 height: 100px;
@@ -140,7 +141,7 @@ border: none;
 
 }
 
-.dashboard_announcement_button{
+.dashboard_form button{
   width: 138px;
   height: 63px;
   left: 183px;
@@ -957,10 +958,8 @@ h3 {
 
 /* Notification*/
 .notification_container {
-  position: fixed;
   top: 20%;
   width: 100%;
-  z-index: 999;
 }
 
 .notification {

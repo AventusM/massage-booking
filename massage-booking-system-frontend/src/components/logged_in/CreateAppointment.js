@@ -12,9 +12,9 @@ const CreateAppointment = ({ id, start_date }) => {
     const foundUser = user
     if (reservationRuleCheck(foundUser.appointments, start_date)) {
       await appointmentService.update(id, { type_of_reservation: 1, user_id: foundUser._id, })
-      //createNotification('Appointment reserved succesfully', 'success')
+      createNotification('Appointment reserved succesfully', 'success')
     } else {
-      //createNotification('You have already booked an appointment this week')
+      createNotification('You have already booked an appointment this week')
     }
   }
 

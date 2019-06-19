@@ -26,29 +26,31 @@ const App = () => {
   const [announcement, announcementService] = useResource('/api/announcements')
 
   const [notification, setNotification] = useState(null)
-  const [notification_type, setType] = useState(null)
-  const [notification_icon, setIcon] = useState(null)
-
-  const [message, setErrorMessage] = useState(null)
 
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
 
 
   const createNotification = (message, type) => {
-    setNotification(message)
+    let icon;
+    let messageType;
     if (type === types.SUCCESS) {
-      setType(types.SUCCESS)
-      setIcon(icons.SUCCESS)
+      icon = icons.SUCCESS
+      messageType = types.SUCCESS
     } else {
-      setType(types.ERROR)
-      setIcon(icons.ERROR)
+      icon = icons.ERROR
+      messageType = types.ERROR
     }
+    const notification = {
+      message: message,
+      icon: icon,
+      type: messageType
+    }
+    setNotification(notification)
+    
     setTimeout(() => {
       setNotification(null)
-      setType(null)
-      setIcon(null)
-    }, 50)
+    }, 3500)
   }
 
   useEffect(() => {
@@ -75,16 +77,24 @@ const App = () => {
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
+ const announcementNotification = {
+   message: announcement ? announcement.message : '',
+   type: types.GENERAL,
+   icon: icons.GENERAL
+ }
+  
   return (
     <Fragment>
       <Router>
         <Header user={user} />
-        <Notification icon={icons.GENERAL} type={types.GENERAL} message={announcement.message ? announcement.message : null} />
-        <Notification icon={notification_icon} type={notification_type} message={notification} />
+        <Notification notification={announcementNotification} />
+        <Notification notification={notification} />
         <div>
-          <NotificationContext.Provider value={{ createNotification, announcementService, announcement }}>
+          <NotificationContext.Provider value={{ createNotification, announcementService }}>
             <UserContext.Provider value={{ user, setUser, users, userService }}>
-              <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, stats }}>
+
+              <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
+            
                 <Route exact path="/" render={() => <Index />} />
                 <Route exact path="/dashboard" render={() => <DashBoard />} />
                 <Route exact path="/mypage" render={() => <MyPage />} />
