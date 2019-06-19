@@ -5,18 +5,16 @@ import Display from './Display'
 
 const CreateAppointment = ({ id, start_date }) => {
   const { user } = useContext(UserContext)
-  const { appointments, appointmentService, setErrorMessage } = useContext(AppointmentContext)
+  const {  appointmentService } = useContext(AppointmentContext)
   const { createNotification } = useContext(NotificationContext)
-
+  //console.log('CreateAPPOINTMENT start-date ', start_date)
   const handleAppointmentCreation = async () => {
     const foundUser = user
-    let appointmentStartDate = appointments.find(app => app._id === id).start_date
-    // console.log('voiko varata?', reservationRuleCheck(foundUser.appointments, appointmentStartDate))
-    if (reservationRuleCheck(foundUser.appointments, appointmentStartDate)) {
+    if (reservationRuleCheck(foundUser.appointments, start_date)) {
       await appointmentService.update(id, { type_of_reservation: 1, user_id: foundUser._id, })
-      createNotification('Appointment reserved succesfully', 'success')
+      //createNotification('Appointment reserved succesfully', 'success')
     } else {
-      createNotification('You have already booked an appointment this week')
+      //createNotification('You have already booked an appointment this week')
     }
   }
 

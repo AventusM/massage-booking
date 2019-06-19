@@ -4,9 +4,9 @@ import AppointmentsList from './AppointmentsLists'
 import useField from '../../hooks/useField'
 
 const MyPage = () => {
+  console.log('RENDERING MY PAGE')
   const { user, setUser, userService } = useContext(UserContext)
   const { createNotification } = useContext(NotificationContext)
-
   let numberField = useField('text')
   useEffect(() => {
     console.log('HEEEIi')

@@ -44,12 +44,14 @@ const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')
 const statsRouter = require('./controllers/stats')
 const authRouter = require('./controllers/auth_routes')
+const announcementsRouter = require('./controllers/announcement')
 
 app.use('/auth', authRouter)
 app.use('/api', router)
 app.use('/api/appointments', appointmentsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/stats', statsRouter)
+app.use('/api/announcements', announcementsRouter)
 
 router.use(protectedRoute.routeProtector)
 

@@ -1,30 +1,33 @@
-import React, {useContext, useState} from 'react'
+import React, { useContext, useState } from 'react'
 import UserList from './UserList'
-import {NotificationContext} from '../../App'
+import { NotificationContext } from '../../App'
 
 const DashBoard = props => {
-  const {announcement, setAnnouncement} = useContext(NotificationContext)
+  const { announcementService } = useContext(NotificationContext)
   const [editedAnnouncement, setEditedAnnouncement] = useState()
   const handleFieldChange = (event) => {
     console.log(event.target.value)
     setEditedAnnouncement(event.target.value)
   }
-  const changeAnnouncement = (event) => {
+  const changeAnnouncement = async (event) => {
     console.log('changeAnnouncement', editedAnnouncement)
     event.preventDefault()
-    setAnnouncement(editedAnnouncement)
+    const announcement = {
+      message: editedAnnouncement
+    }
+    announcementService.createWithoutConcat(announcement)
   }
-  return(
+  return (
 
     <div>
-    <form className="dashboard_form"onSubmit= {changeAnnouncement}>
-      <input className="dashboard_announcement"
-        value ={editedAnnouncement}
-        onChange ={handleFieldChange}
-      />
-      <button className="dashboard_announcement_button" type= "submit">Update</button>
-    </form>
-    <UserList/>  
+      <form className="dashboard_form" onSubmit={changeAnnouncement}>
+        <input className="dashboard_announcement"
+          value={editedAnnouncement}
+          onChange={handleFieldChange}
+        />
+        <button className="dashboard_announcement_button" type="submit">Update</button>
+      </form>
+      <UserList />
     </div>
   )
 }
