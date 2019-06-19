@@ -8,7 +8,7 @@ import Appointments from './Appointments'
 import LoginIndex from '../Login_index'
 import { OWN_APPOINTMENTS } from '../../types/logged_in'
 import moment from 'moment'
-
+import NextAppointment from './NextAppointment'
 const Index = () => {
   const { user } = useContext(UserContext)
   if (user) {
@@ -17,13 +17,16 @@ const Index = () => {
   return <LoginIndex />
 }
 
-const AuthIndex = (props) => {
+const AuthIndex = ({ user }) => {
   const { setSelectedDate, appointments } = useContext(AppointmentContext)
-  const [tab, setTab] = useState(true)
-  const freeAppointments = appointments.filter(app => app.type_of_reservation === 0)
+
+  const freeAppointments = appointments.filter(
+    app => app.type_of_reservation === 0
+  )
 
   return (
     <Fragment>
+      <NextAppointment user={user} appointments={appointments} />
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
@@ -31,39 +34,36 @@ const AuthIndex = (props) => {
             onChange={value => {
               console.log('value ', value, 'value type', typeof value)
               setSelectedDate(value)
-
-              setTab(true)
             }}
             minDetail="year"
             prev2Label={null}
             next2Label={null}
-
-            tileClassName={({ date, view }) => view === 'month' && freeAppointments.filter(app => moment(app.start_date).isSame(moment(date), 'day')).length > 0 ? 'availableDay' : view === 'month' && date.getDay() < 3 && date.getDay() !== 0 ? 'nonAvailableDay' : 'disabled'}
-
-            tileDisabled={({ date, view }) => view === 'month' && ((date.getDay() > 2 || date.getDay() === 0))}
+            tileClassName={({ date, view }) =>
+              view === 'month' &&
+              freeAppointments.filter(app =>
+                moment(app.start_date).isSame(moment(date), 'day')
+              ).length > 0
+                ? 'availableDay'
+                : view === 'month' && moment(date).isBefore(moment())
+                ? 'disabled'
+                : view === 'month' && date.getDay() < 3 && date.getDay() !== 0
+                ? 'nonAvailableDay'
+                : view === 'month' 
+                ? 'disabled'
+                : null
+            }
+            tileDisabled={({ date, view }) =>
+              view === 'month' && (date.getDay() > 2 || date.getDay() === 0)
+            }
             showNeighboringMonth={false}
-
           />
         </div>
-
         <div className="List">
-          {tab ? (
+          
             <div className="all_apps_div">
               <h1>All appointments</h1>
-              <button className="buttonList" onClick={() => setTab(!tab)}>
-                Own appointments
-              </button>
               <Appointments />
             </div>
-          ) : (
-              <div>
-                <h1>Own appointments</h1>
-                <button className="buttonList" onClick={() => setTab(!tab)}>
-                  All appointments
-              </button>
-                <Appointments type={OWN_APPOINTMENTS} />
-              </div>
-            )}
           {/* <img id="unity4" src={unity4}></img> */}
         </div>
       </div>

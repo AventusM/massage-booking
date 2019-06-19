@@ -13,6 +13,7 @@ import DashBoard from './components/logged_in/Dashboard'
 import NotFoundPage from './components/NotFoundPage'
 import Notification from './components/Notification'
 import Header from './components/Header'
+import TVview from './components/TVview'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
 
@@ -24,11 +25,13 @@ const App = () => {
   const [notification, setNotification] = useState(null)
   const [notification_type, setType] = useState(null)
   const [notification_icon, setIcon] = useState(null)
+  const [announcement, setAnnouncement] = useState('')
 
   const [message, setErrorMessage] = useState(null)
 
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
+
 
   const createNotification = (message, type) => {
     setNotification(message)
@@ -63,13 +66,16 @@ const App = () => {
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
+ 
+  
   return (
     <Fragment>
       <Router>
         <Header user={user} />
+        <Notification icon={icons.GENERAL} type={types.GENERAL} message={announcement} />
         <Notification icon={notification_icon} type={notification_type} message={notification} />
         <div>
-          <NotificationContext.Provider value={{ createNotification }}>
+          <NotificationContext.Provider value={{ createNotification, announcement, setAnnouncement }}>
             <UserContext.Provider value={{ user, setUser, users, userService }}>
               <AppointmentContext.Provider
                 value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, createNotification }}>
@@ -77,7 +83,7 @@ const App = () => {
               </AppointmentContext.Provider>
             </UserContext.Provider>
 
-            <UserContext.Provider value={{ user, setUser, users, userService }}>
+            <UserContext.Provider value={{ user, setUser, users, userService}}>
               <Route exact path="/dashboard" render={() => <DashBoard />} />
             </UserContext.Provider>
 
@@ -90,6 +96,15 @@ const App = () => {
             <AppointmentContext.Provider value={{ appointments, appointmentService, stats }}>
               <Route exact path="/stats" render={() => <Stats />} />
             </AppointmentContext.Provider>
+
+            <UserContext.Provider value={{ user, setUser, users, userService }}>
+              <AppointmentContext.Provider
+                value={{
+                  user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, createNotification
+                }}>
+                <Route exact path="/tvview" render={() => <TVview />} />
+              </AppointmentContext.Provider>
+            </UserContext.Provider> 
           </NotificationContext.Provider>
         </div>
       </Router>
