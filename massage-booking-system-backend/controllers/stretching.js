@@ -3,29 +3,21 @@ const bodyParser = require('body-parser')
 stretchingRouter.use(bodyParser.json())
 const Stretching = require('../models/stretching')
 
-const default_object = {
-    participants: [
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {}
-    ],
-    time: {}
+const formatStretchingSession = input => {
+    return {
+        _id: input._id,
+        date: input.date,
+        time: input.time,
+        users: input.users
+    }
 }
 
+
 stretchingRouter.get('/current', async (req, res, next) => {
-    //res.send(default_object)
-    // 1. Haetaan stretching model tietokannasta
     // 2. Järjestetään haettu modeli
     // 3. Palautetaan käyttäjälle järjestyksessä ylimmäinen näkyviin
-    const stretchingSessions = Stretching.find({})
-    res.json(stretchingSessions)
+    const stretchingSessions = await Stretching.find({}).populate('users')
+    res.send(stretchingSessions.map(formatStretchingSession))
 })
 
 stretchingRouter.post('/current', async (req, res, next) => {
