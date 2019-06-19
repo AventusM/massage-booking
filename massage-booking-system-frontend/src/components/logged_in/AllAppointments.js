@@ -59,12 +59,14 @@ const AllAppointments = () => {
   const available = 1
   console.log('admin ', user.admin)
   return (
-    <div>
-      {user.admin === true ? (
-        available === 1 ? (
-          <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
-        ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
-        )) : (null)}
+    <div className="appointmentListWrapper">
+      <div className="controls">
+        {user.admin === true ? (
+          available === 1 ? (
+            <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
+          ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
+          )) : (null)}
+      </div>
       < ul className="appointmentListWrapper">
         {todaysAppointments.map(app => {
           return (
