@@ -22,10 +22,11 @@ const App = () => {
   const [appointments, appointmentService] = useResource('/api/appointments')
   const [stats, statsService] = useResource('api/stats')
 
+  const [announcement, announcementService] = useResource('/api/announcements')
+
   const [notification, setNotification] = useState(null)
   const [notification_type, setType] = useState(null)
   const [notification_icon, setIcon] = useState(null)
-  const [announcement, setAnnouncement] = useState('')
 
   const [message, setErrorMessage] = useState(null)
 
@@ -59,23 +60,23 @@ const App = () => {
     userService.getAll()
     appointmentService.getAll()
     statsService.getAll()
+    announcementService.getAll()
   }, [])
 
   useEffect(() => {
     user &&
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
-
  
   
   return (
     <Fragment>
       <Router>
         <Header user={user} />
-        <Notification icon={icons.GENERAL} type={types.GENERAL} message={announcement} />
+        <Notification icon={icons.GENERAL} type={types.GENERAL} message={announcement.message ? announcement.message : null} />
         <Notification icon={notification_icon} type={notification_type} message={notification} />
         <div>
-          <NotificationContext.Provider value={{ createNotification, announcement, setAnnouncement }}>
+          <NotificationContext.Provider value={{ createNotification, announcement, announcementService }}>
             <UserContext.Provider value={{ user, setUser, users, userService }}>
               <AppointmentContext.Provider
                 value={{ user, appointments, appointmentService, selectedDate, setSelectedDate, setErrorMessage, createNotification }}>
