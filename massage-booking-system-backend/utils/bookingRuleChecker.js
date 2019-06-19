@@ -5,7 +5,7 @@ const userAllowedToMakeAppointment = async (
   appointment
 ) => {
   try {
-    console.log('appointment in rulechecker ', appointment)
+    //console.log('appointment in rulechecker ', appointment)
     let usersPreviousMassageTimes = usersAppointmentList.map(
       app => app.start_date
     )
@@ -77,7 +77,7 @@ const userAllowedToMakeAppointment = async (
 
 const userAllowedtoCancelAppointment = async (userID, appointment) => {
   //const appointment = await Appointment.findById(appointmentID)
-  console.log('appointment in checker ', appointment)
+  //console.log('appointment in cancel checker ', appointment)
   //console.log('userAllowedToCancelAppointment', (String(userID) === String(appointment.user_id)))
   return String(userID) === String(appointment.user_id)
 }

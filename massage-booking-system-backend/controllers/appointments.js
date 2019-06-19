@@ -37,7 +37,7 @@ appointmentsRouter.get('/:startDate/:endDate', async (req, res, next) => {
       },
     })
 
-    console.log(appointments)
+    //console.log(appointments)
     res.json(appointments.map(formatAppointment))
   } catch (exception) {
     next(exception)
@@ -216,4 +216,4 @@ const removeAppointment = async (appointment) => {
   }
 }
 
-module.exports = appointmentsRouter 
+module.exports = appointmentsRouter

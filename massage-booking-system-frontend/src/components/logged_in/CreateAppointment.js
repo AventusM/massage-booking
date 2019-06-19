@@ -30,10 +30,12 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
   if (requestedTimeMoment.isSame(now, 'days')) {
     const usersAppointmentOnSameDay = usersAppointments.find(( time ) => {
-      let timeMoment = moment(time)
-      return timeMoment.isSame(requestedTimeMoment, 'days')
+      let timeMoment = moment(time.start_date)
+      return timeMoment.isSame(now, 'day')
     })
     if (usersAppointmentOnSameDay) {
+      console.log('FOUND APPOINT ON SAME DAY ', usersAppointmentOnSameDay)
+      console.log('RESERVATION DENIED')
       return false
     }
     return true
