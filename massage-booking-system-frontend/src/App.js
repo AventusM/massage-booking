@@ -92,13 +92,14 @@ const App = () => {
         <div>
           <NotificationContext.Provider value={{ createNotification, announcementService }}>
             <UserContext.Provider value={{ user, setUser, users, userService }}>
-              <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate }}>
+
+              <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
+            
                 <Route exact path="/" render={() => <Index />} />
                 <Route exact path="/dashboard" render={() => <DashBoard />} />
                 <Route exact path="/mypage" render={() => <MyPage />} />
                 <Route exact path="/stats" render={() => <Stats />} />
                 <Route exact path="/tvview" render={() => <TVview />} />
-
               </AppointmentContext.Provider>
             </UserContext.Provider>
           </NotificationContext.Provider>

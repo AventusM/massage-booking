@@ -1,5 +1,6 @@
-import React, {useContext, useState} from 'react'
+import React, { useContext, useState } from 'react'
 import UserList from './UserList'
+
 import {NotificationContext} from '../../App'
 import useField from '../../hooks/useField'
 
@@ -14,7 +15,7 @@ const DashBoard = props => {
     }
     announcementService.createWithoutConcat(announcement)
   }
-  return(
+  return (
 
     <div>
     <form className="dashboard_form" onSubmit={changeAnnouncement}>
