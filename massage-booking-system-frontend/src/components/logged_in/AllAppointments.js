@@ -11,7 +11,6 @@ const AllAppointments = () => {
   let selectedMonth = givenDate.getMonth() + 1
   let selectedYear = givenDate.getFullYear()
   // console.log('appointments in allappointments', appointments)
-
   // compares appointment time to selected date on calendar, filtering to only include selected days appointments
   const todaysAppointments = appointments.filter(appointment => {
     let appointmentsDate = new Date(appointment.start_date)

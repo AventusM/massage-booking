@@ -16,6 +16,7 @@ const Index = () => {
 }
 
 const AuthIndex = ({ user }) => {
+  console.log('RENDERING INDEX')
   const { setSelectedDate, appointments } = useContext(AppointmentContext)
 
   const freeAppointments = appointments.filter(
