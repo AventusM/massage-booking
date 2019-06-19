@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { timeout } from 'q';
+import { timeout } from 'q'
 
 const useResource = baseUrl => {
   const [resources, setResources] = useState([])
@@ -32,7 +32,7 @@ const useResource = baseUrl => {
 
   const remove = async id => {
     //console.log('REMOVE')
-    const deletedResource = await axios.delete(`${baseUrl}/${id}`)
+    await axios.delete(`${baseUrl}/${id}`)
     const updatedResources = resources.filter(resource => resource._id !== id)
     setResources(updatedResources)
   }
@@ -47,6 +47,11 @@ const useResource = baseUrl => {
     //console.log('GET INTERVAL')
     const response = await axios.get(`${baseUrl}/${start}/${end}`)
     setResources(response.data)
+
+  }
+  const createWithoutConcat = async data => {
+    const newResource = await axios.post(baseUrl, data)
+    setResources(newResource.data)
   }
 
   const service = {
@@ -55,7 +60,8 @@ const useResource = baseUrl => {
     remove,
     update,
     getOne,
-    getInterval
+    getInterval,
+    createWithoutConcat
   }
 
   return [resources, service]
