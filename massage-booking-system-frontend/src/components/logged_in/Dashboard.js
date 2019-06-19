@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import fi from 'date-fns/locale/fi';
 setDefaultLocale('fi', fi)
 
+// CHANGE THIS TO USE HOOKS ETC
 class DatePickerForm extends React.Component {
   constructor(props) {
     super(props)

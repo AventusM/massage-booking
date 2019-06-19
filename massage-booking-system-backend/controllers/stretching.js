@@ -20,12 +20,26 @@ const default_object = {
 
 stretchingRouter.get('/current', async (req, res, next) => {
     res.send(default_object)
+    // 1. Haetaan stretching model tietokannasta
+    // 2. Järjestetään haettu modeli
+    // 3. Palautetaan käyttäjälle järjestyksessä ylimmäinen näkyviin
 })
 
 stretchingRouter.post('/current', async (req, res, next) => {
     try {
         const body = req.body
         console.log('body', body)
+
+        // 1. Lisätään uusi venyttelytapahtuma mongooseen riippuen timin parametreistä
+    } catch (exception) {
+        next(exception)
+    }
+})
+
+stretchingRouter.put('/current', async (req, res, next) => {
+    try {
+        // 1. Selvitä nykyinen käyttäjä
+        // 2. Lisää käyttäjä mukaan viimeisimpään stretchingtapahtumaan
     } catch (exception) {
         next(exception)
     }
