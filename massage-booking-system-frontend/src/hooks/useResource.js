@@ -38,12 +38,18 @@ const useResource = baseUrl => {
     return response.data
   }
 
+  const createWithoutConcat = async data => {
+    const newResource = await axios.post(baseUrl, data)
+    setResources(newResource.data)
+  }
+
   const service = {
     getAll,
     create,
     remove,
     update,
     getOne,
+    createWithoutConcat
   }
 
   return [resources, service]
