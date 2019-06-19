@@ -36,6 +36,9 @@ class DatePickerForm extends React.Component {
     event.preventDefault()
     try {
       await stretchingService.setOne('/current', { date: startDate })
+      this.setState({
+        next: new Date(startDate).toDateString()
+      })
       // Luo notifikaatio tänne onnistumisesta
     } catch (exception) {
       // Luo notifikaatio tänne failuresta
