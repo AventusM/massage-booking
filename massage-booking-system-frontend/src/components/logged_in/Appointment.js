@@ -46,14 +46,14 @@ const Appointment = props => {
       ) : (
         <CreateAppointment id={id} start_date={start_date} />
       )}
-      {type_of_reservation === 3 ? (<div className="remove" onClick={() => markAppAvailable()}>
+      {user.admin === true ? type_of_reservation === 3 ? (<div className="remove" onClick={() => markAppAvailable()}>
         <i className="fas fa-undo"></i>
       </div >
       ) : (
         <div className="remove" onClick={() => markAppUnavailable()}>
           <i className="far fa-trash-alt"></i>
         </div >
-      )
+      ) : (null)
       }
 
     </div >

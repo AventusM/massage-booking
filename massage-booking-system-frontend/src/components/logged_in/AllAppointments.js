@@ -5,7 +5,7 @@ import { AppointmentContext, UserContext } from '../../App'
 
 const AllAppointments = () => {
   const { appointments, selectedDate, appointmentService } = useContext(AppointmentContext)
-  const { users } = useContext(UserContext)
+  const { users, user } = useContext(UserContext)
   const givenDate = new Date(selectedDate)
   let selectedDay = givenDate.getDate()
   let selectedMonth = givenDate.getMonth() + 1
@@ -52,10 +52,20 @@ const AllAppointments = () => {
     appointmentService.update(givenDate.toDateString(), '', 'removeDate')
   }
 
+  const markDayAvailable = () => {
+    appointmentService.update(givenDate.toDateString(), '', 'removeDate')
+  }
+
+  const available = 1
+  console.log('admin ', user.admin)
   return (
     <div>
-      <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
-      <ul className="appointmentListWrapper">
+      {user.admin === true ? (
+        available === 1 ? (
+          <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
+        ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
+        )) : (null)}
+      < ul className="appointmentListWrapper">
         {todaysAppointments.map(app => {
           return (
             <Appointment

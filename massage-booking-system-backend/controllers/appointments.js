@@ -81,7 +81,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
         appointment
       )
       if (!userAllowedToCancel) {
-        res.status(400).end()
+        res.status(400).endsy()
         return
       }
 
