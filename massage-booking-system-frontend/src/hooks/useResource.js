@@ -12,7 +12,7 @@ const useResource = baseUrl => {
   }
 
   const create = async data => {
-    //console.log('CREATE')
+    console.log(data)
     const newResource = await axios.post(baseUrl, data)
     const updatedResources = resources.concat(newResource.data)
     setResources(updatedResources)
@@ -43,6 +43,14 @@ const useResource = baseUrl => {
     return response.data
   }
 
+  // POSSIBLY ABSOLUTELY REDUNDANT
+  // POSSIBLY ABSOLUTELY REDUNDANT
+  // POSSIBLY ABSOLUTELY REDUNDANT
+  const setOne = async (path, data) => {
+    const response = await axios.post(`${baseUrl}/${path}`, data)
+    return response.data
+  }
+
   const getInterval = async (start, end) => {
     //console.log('GET INTERVAL')
     const response = await axios.get(`${baseUrl}/${start}/${end}`)
@@ -60,6 +68,7 @@ const useResource = baseUrl => {
     remove,
     update,
     getOne,
+    setOne,
     getInterval,
     createWithoutConcat
   }
