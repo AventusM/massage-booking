@@ -223,6 +223,7 @@ appointmentsRouter.put('/:date/addDate', async (req, res, next) => {
     }
 
     const appointmentsChanged = await Appointment.find()
+    //console.log('appointmentsChanged: ', appointmentsChanged)
 
     res.json(appointmentsChanged.map(formatAppointment))
 
