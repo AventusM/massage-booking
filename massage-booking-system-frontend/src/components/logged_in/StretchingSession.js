@@ -1,18 +1,17 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StretchContext, UserContext } from '../../App';
 
 const StretchAppointmentDisplay = () => {
-  //todo Use Effect
   const { stretching } = useContext(StretchContext)
-  const {user} = useContext(UserContext) 
+  const { user } = useContext(UserContext)
+
   let nextAppointment = null
-  if (stretching.length > 0){
-  const dateData = stretching[0].date
-  console.log(dateData)
-  nextAppointment = new Date(dateData).toDateString()
+  if (stretching.length > 0) {
+    const dateData = stretching[0].date
+    nextAppointment = new Date(dateData).toDateString()
   }
 
-  return (
+  return (nextAppointment &&
     <div>
       {nextAppointment}
       <JoinStretchAppointment />
@@ -23,11 +22,13 @@ const StretchAppointmentDisplay = () => {
 
 const JoinStretchAppointment = () => {
   const { stretchingService, stretching } = useContext(StretchContext)
+  const { user } = useContext(UserContext)
 
+  const slotsRemainingAmount = 10 - stretching[0].users.length
+  const slotsRemainingText = `${slotsRemainingAmount} / 10 slots open`
 
   const joinSession = async () => {
     try {
-      console.log('TRYING TO JOIN SESSION')
       await stretchingService.update(stretching[0]._id, { join: true })
       // Add notification here for success on joining session
     } catch (exception) {
@@ -35,7 +36,7 @@ const JoinStretchAppointment = () => {
     }
   }
   return (
-    <button onClick={joinSession}>JOIN APPOINTMENT</button>
+    <button onClick={joinSession}>{slotsRemainingText}</button>
   )
 }
 
@@ -49,7 +50,7 @@ const CancelStretchAppointment = () => {
     }
   }
   return (
-    <button onClick= {cancelSession}>CANCEL APPOINTMENT</button>
+    <button onClick={cancelSession}>Cancel appointment</button>
   )
 }
 

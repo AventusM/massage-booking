@@ -78,7 +78,6 @@ stretchingRouter.put('/:id', async (req, res, next) => {
                 const saved = await stretchingAppointment.save()
                 user.stretchingSessions = user.stretchingSessions.concat(saved._id)
                 await user.save()
-
                 res.json(saved.toJSON())
             }
         }
@@ -88,7 +87,6 @@ stretchingRouter.put('/:id', async (req, res, next) => {
 
         }
 
-        // 3. Lisää stretchingtapahtuma mukaan käyttäjän tietoihin
     } catch (exception) {
         next(exception)
     }
