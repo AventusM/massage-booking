@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
 const User = require('../models/user')
 const ruleChecker = require('../utils/bookingRuleChecker')
+const appointmentUtil = require('../utils/appointmentUtil')
 
 const formatAppointment = input => {
   return {
@@ -56,8 +57,17 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
 appointmentsRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
-    //console.log('appointmentRouter put called with req body ', body)
     const appointmentID = req.params.id
+
+    if (body.type_of_reservation === 3) {
+      let appointment = await Appointment.findById(appointmentID)
+
+      appointment.type_of_reservation = 0
+
+      const response = await appointment.save()
+      return res.json(response)
+    }
+    //console.log('appointmentRouter put called with req body ', body)
 
     let user = await User.findById(body.user_id).populate('appointments')
     // console.log('found user in router', user)
@@ -121,7 +131,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
 
         //adds appointment to users appointments
         user.appointments = user.appointments.concat(appointment._id)
-        user.save()
+        await user.save()
         //  console.log('user after new appointment', user)
       } else {
         // user is not allowed to make this appointment
@@ -150,9 +160,10 @@ appointmentsRouter.put('/:id/remove', async (req, res, next) => {
     }
     */
     const appointment = await Appointment.findById({ _id: req.params.id })
-    await removeAppointment(appointment)
-    appointment = await Appointment.findById({ _id: req.params.id })
-    return res.json(appointment)
+    await appointmentUtil.removeAppointment(appointment)
+    const newAppointment = await Appointment.findById({ _id: req.params.id })
+
+    return res.json(newAppointment)
   } catch (exception) {
     next(exception)
   }
@@ -177,13 +188,13 @@ appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
 
     const month = date.getMonth()
     const year = date.getYear()
-    const day = date.getDay()
+    const day = date.getDate()
     const appointments = await Appointment.find()
-    const appointmentsToRemove = appointments.filter(appoint => appoint.start_date.getDay() === day && appoint.start_date.getMonth() === month && appoint.start_date.getYear() === year)
-    for (appoint of appointmentsToRemove) {
-      await removeAppointment(appoint)
+    const appointmentsToRemove = appointments.filter(appoint => appoint.start_date.getDate() === day && appoint.start_date.getMonth() === month && appoint.start_date.getYear() === year)
+    for (let appoint of appointmentsToRemove) {
+      await appointmentUtil.removeAppointment(appoint)
     }
-    appointmentsChanged = await Appointment.find()
+    const appointmentsChanged = await Appointment.find()
     res.json(appointmentsChanged.map(formatAppointment))
 
   } catch (exception) {
@@ -191,29 +202,33 @@ appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
   }
 })
 
-/**
- *Removes appointment from user and removes user from appointment
- */
-
-const removeAppointment = async (appointment) => {
+appointmentsRouter.put('/:date/addDate', async (req, res, next) => {
   try {
-    if (appointment.user_id !== null) {
-      const user = await User.findById({ _id: appointment.user_id })
-      const appointmentsToKeep = user.appointments.filter(function (appoint) {
-        if (appointment._id.stringify !== appoint.stringify) {
-          return appoint
-        }
-      })
-      user.appointments = appointmentsToKeep
-      await User.findByIdAndUpdate(user._id, user)
-    }
-    appointment.user_id = null
-    appointment.type_of_reservation = 3
+    let start = new Date(req.params.date)
+    start.setHours(start.getHours() + 3)
 
-    await Appointment.findByIdAndUpdate(appointment._id, appointment)
+    let end = new Date(start)
+    end.setHours(end.getHours() + 23)
+
+    const appointments = await Appointment.find({
+      start_date: {
+        $gte: start,
+        $lte: end,
+      },
+    })
+
+    for (let appointment of appointments) {
+      appointment.type_of_reservation = 0
+      await Appointment.findByIdAndUpdate(appointment._id, appointment)
+    }
+
+    const appointmentsChanged = await Appointment.find()
+
+    res.json(appointmentsChanged.map(formatAppointment))
+
   } catch (exception) {
-    console.log('E', exception)
+    next(exception)
   }
-}
+})
 
 module.exports = appointmentsRouter

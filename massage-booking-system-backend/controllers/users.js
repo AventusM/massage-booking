@@ -3,6 +3,7 @@ const Appointment = require('../models/appointment')
 const usersRouter = require('express').Router()
 const bodyParser = require('body-parser')
 usersRouter.use(bodyParser.json())
+const appointmentUtil = require('../utils/appointmentUtil')
 
 const formatUser = input => {
   return {
@@ -14,6 +15,7 @@ const formatUser = input => {
     admin: input.admin,
     banned: input.banned,
     appointments: input.appointments,
+    stretchingSessions: input.stretchingSessions,
     avatarUrl: input.avatarUrl,
   }
 }
@@ -115,7 +117,7 @@ usersRouter.put('/:id', async (req, res, next) => {
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {
-  
+
   try {
     /*
     //verify?
@@ -126,7 +128,7 @@ usersRouter.delete('/:id', async (req, res, next) => {
       return res.status(400).end()
     }*/
     const user = await User.findById({ _id: req.params.id })
-  
+
     await emptyAppointmentsFromUser(user)
     await user.remove()
     res.status(204).end()
@@ -136,20 +138,11 @@ usersRouter.delete('/:id', async (req, res, next) => {
 })
 
 const emptyAppointmentsFromUser = async (user) => {
-  const appointments = await Appointment.find({user_id: user._id})
-  for(appoint of appointments) {
-    await removeUserFromAppointment(appoint)
-   }
-  
-} 
-
-const removeUserFromAppointment = async(appointment) =>{
-  try {
-    appointment.user_id = null
-    appointment.type_of_reservation = 0
-    appointment = await Appointment.findByIdAndUpdate(appointment._id, appointment)
-  } catch (exception) {
-    next(exception)
+  const appointments = await Appointment.find({ user_id: user._id })
+  for(let appoint of appointments) {
+    await appointmentUtil.removeUserFromAppointment(appoint)
   }
-}  
+
+}
+
 module.exports = usersRouter

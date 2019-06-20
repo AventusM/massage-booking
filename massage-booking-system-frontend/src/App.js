@@ -22,6 +22,7 @@ const App = () => {
   const [users, userService] = useResource('/api/users')
   const [appointments, appointmentService] = useResource('/api/appointments')
   const [stats, statsService] = useResource('api/stats')
+  const [stretching, stretchingService] = useResource('/api/stretching')
 
   const [announcement, announcementService] = useResource('/api/announcements')
 
@@ -68,6 +69,7 @@ const App = () => {
     appointmentService.getInterval(twoWeeksAgo, sixWeeksFromNow)
     // appointmentService.getAll()
     statsService.getAll()
+    stretchingService.getAll()
     announcementService.getAll()
   }, [])
 
@@ -91,17 +93,17 @@ const App = () => {
         <Notification notification={notification} /> */}
         <div>
           <NotificationContext.Provider value={{ createNotification, announcementService, announcement, announcementNotification, notification }}>
-            <UserContext.Provider value={{ user, setUser, users, userService }}>
-
-              <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
-
-                <Route exact path="/" render={() => <Index />} />
-                <Route exact path="/dashboard" render={() => <DashBoard />} />
-                <Route exact path="/mypage" render={() => <MyPage />} />
-                <Route exact path="/stats" render={() => <Stats />} />
-                <Route exact path="/tvview" render={() => <TVview />} />
-              </AppointmentContext.Provider>
-            </UserContext.Provider>
+            <StretchContext.Provider value={{ stretching, stretchingService }}>
+              <UserContext.Provider value={{ user, setUser, users, userService }}>
+                <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
+                  <Route exact path="/" render={() => <Index />} />
+                  <Route exact path="/dashboard" render={() => <DashBoard />} />
+                  <Route exact path="/mypage" render={() => <MyPage />} />
+                  <Route exact path="/stats" render={() => <Stats />} />
+                  <Route exact path="/tvview" render={() => <TVview />} />
+                </AppointmentContext.Provider>
+              </UserContext.Provider>
+            </StretchContext.Provider>
           </NotificationContext.Provider>
         </div>
       </Router>
@@ -112,5 +114,6 @@ const App = () => {
 export const NotificationContext = createContext(null)
 export const AppointmentContext = createContext(null)
 export const UserContext = createContext(null)
+export const StretchContext = createContext(null)
 export default App
 

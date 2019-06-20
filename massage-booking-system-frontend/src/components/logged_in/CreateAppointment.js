@@ -5,7 +5,7 @@ import Display from './Display'
 
 const CreateAppointment = ({ id, start_date }) => {
   const { user } = useContext(UserContext)
-  const {  appointmentService } = useContext(AppointmentContext)
+  const { appointmentService } = useContext(AppointmentContext)
   const { createNotification } = useContext(NotificationContext)
   //console.log('CreateAPPOINTMENT start-date ', start_date)
   const handleAppointmentCreation = async () => {
@@ -29,7 +29,7 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
   let now = moment()
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
   if (requestedTimeMoment.isSame(now, 'days')) {
-    const usersAppointmentOnSameDay = usersAppointments.find(( time ) => {
+    const usersAppointmentOnSameDay = usersAppointments.find((time) => {
       let timeMoment = moment(time.start_date)
       return timeMoment.isSame(now, 'day')
     })

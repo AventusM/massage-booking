@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Appointment from './Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
@@ -7,6 +7,8 @@ const AllAppointments = () => {
   const { appointments, selectedDate, appointmentService } = useContext(AppointmentContext)
   const { users, user } = useContext(UserContext)
   const givenDate = new Date(selectedDate)
+  const [show, setShow] = useState(null)
+
   let selectedDay = givenDate.getDate()
   let selectedMonth = givenDate.getMonth() + 1
   let selectedYear = givenDate.getFullYear()
@@ -39,6 +41,13 @@ const AllAppointments = () => {
 
     return 0
   })
+
+  const isUnavailable = (value) => {
+    return value.type_of_reservation === 3
+  }
+
+  let Unavailable = todaysAppointments.every(isUnavailable)
+
   const getStart_Date = (date) => {
     date = new Date(date)
     let minutes = date.getMinutes()
@@ -47,21 +56,25 @@ const AllAppointments = () => {
     return date
   }
 
-  const markDayUnavailable = () => {
-    appointmentService.update(givenDate.toDateString(), '', 'removeDate')
+  const markDayUnavailable = async () => {
+    await appointmentService.update(givenDate.toDateString(), '', 'removeDate')
+    Unavailable = todaysAppointments.every(isUnavailable)
+    setShow(true)
+
   }
 
-  const markDayAvailable = () => {
-    appointmentService.update(givenDate.toDateString(), '', 'removeDate')
+  const markDayAvailable = async () => {
+    await appointmentService.update(givenDate.toDateString(), '', 'addDate')
+    Unavailable = todaysAppointments.every(isUnavailable)
+    setShow(false)
+
   }
 
-  const available = 1
-  console.log('admin ', user.admin)
   return (
     <div className="appointmentListWrapper">
       <div className="controls">
         {user.admin === true ? (
-          available === 1 ? (
+          (Unavailable === false || show === false) ? (
             <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
           ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
           )) : (null)}
@@ -75,6 +88,7 @@ const AllAppointments = () => {
               start_date={getStart_Date(app.start_date)}
               type_of_reservation={app.type_of_reservation}
               appUser={users.find(u => u._id === app.user_id)}
+              show={show}
             />
           )
         })}
