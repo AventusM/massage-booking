@@ -39,6 +39,8 @@ const AllAppointments = () => {
 
     return 0
   })
+
+
   const getStart_Date = (date) => {
     date = new Date(date)
     let minutes = date.getMinutes()
@@ -52,10 +54,10 @@ const AllAppointments = () => {
   }
 
   const markDayAvailable = () => {
-    appointmentService.update(givenDate.toDateString(), '', 'removeDate')
+    appointmentService.update(givenDate.toDateString(), '', 'addDate')
   }
 
-  const available = 1
+  const available = 0
   console.log('admin ', user.admin)
   return (
     <div className="appointmentListWrapper">
