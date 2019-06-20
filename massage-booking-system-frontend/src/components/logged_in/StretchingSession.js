@@ -1,15 +1,20 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { StretchContext } from '../../App';
+import { StretchContext, UserContext } from '../../App';
 
 const StretchAppointmentDisplay = () => {
   //todo Use Effect
   const { stretching } = useContext(StretchContext)
-  // console.log(stretching)
-  // const dateData = stretching[0].date
-  // console.log(dateData)
-  // const nextAppointment = new Date(dateData).toDateString()
+  const {user} = useContext(UserContext) 
+  let nextAppointment = null
+  if (stretching.length > 0){
+  const dateData = stretching[0].date
+  console.log(dateData)
+  nextAppointment = new Date(dateData).toDateString()
+  }
+
   return (
     <div>
+      {nextAppointment}
       <JoinStretchAppointment />
       <CancelStretchAppointment />
     </div>
