@@ -2,6 +2,7 @@ const stretchingRouter = require('express').Router()
 const bodyParser = require('body-parser')
 stretchingRouter.use(bodyParser.json())
 const Stretching = require('../models/stretching')
+const User = require('../models/user')
 
 const formatStretchingSession = input => {
     return {
@@ -38,7 +39,8 @@ stretchingRouter.post('/', async (req, res, next) => {
         const body = req.body
 
         const stretchingSession = new Stretching({
-            date: body.date
+            date: body.date,
+            users: []
         })
 
         const savedStretchingSession = await stretchingSession.save()
@@ -48,16 +50,43 @@ stretchingRouter.post('/', async (req, res, next) => {
     }
 })
 
-stretchingRouter.put('/current', async (req, res, next) => {
+// Todo Check that double booking is not possible
+stretchingRouter.put('/:id', async (req, res, next) => {
     try {
         const body = req.body
-        console.log('PUT CALLED', body)
-        // 1. Selvitä nykyinen käyttäjä
-        const getCurrentUser = req.user
-        console.log('current user', getCurrentUser)
+        const join_status = body.join
+        const stretching_id = req.params.id
 
-        // 2. Lisää käyttäjä mukaan viimeisimpään stretchingtapahtumaan
-        // 3. Lisää stretchingtapahtuma mukaan käyttäjän tietoihin
+        // 1. Extract current user data
+        const getCurrentUser = req.user
+        const user = await User.findById(getCurrentUser._id)
+
+        const stretchingAppointment = await Stretching.findById(stretching_id)
+
+        // User wants to join
+        if (join_status === true) {
+
+            // Space exists?
+            if (stretchingAppointment.users.length < 10) {
+
+                // Should still check here if attempting to double book
+                // ACTUALLY CRITICAL
+                // ACTUALLY CRITICAL
+                // ACTUALLY CRITICAL
+                // ACTUALLY CRITICAL
+                stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
+                const saved = await stretchingAppointment.save()
+                user.stretchingSessions = user.stretchingSessions.concat(saved._id)
+                await user.save()
+                res.json(saved.toJSON())
+            }
+        }
+
+        // User wants to cancel previously joined session
+        else if (join_status === false) {
+
+        }
+
     } catch (exception) {
         next(exception)
     }

@@ -56,7 +56,7 @@ app.use('/api/stretching', stretchingRouter)
 app.use('/api/announcements', announcementsRouter)
 
 // ROUTE PROTECTION -- DISABLE FOR OWN TESTING IN REST CLIENT ETC.
-router.use(protectedRoute.routeProtector)
+// router.use(protectedRoute.routeProtector)
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static('build'))

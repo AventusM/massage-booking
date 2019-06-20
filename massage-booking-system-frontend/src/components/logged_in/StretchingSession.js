@@ -1,15 +1,19 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { StretchContext } from '../../App';
+import React, { useContext, useEffect } from 'react'
+import { StretchContext, UserContext } from '../../App';
 
 const StretchAppointmentDisplay = () => {
-  //todo Use Effect
   const { stretching } = useContext(StretchContext)
-  // console.log(stretching)
-  // const dateData = stretching[0].date
-  // console.log(dateData)
-  // const nextAppointment = new Date(dateData).toDateString()
-  return (
+  const { user } = useContext(UserContext)
+
+  let nextAppointment = null
+  if (stretching.length > 0) {
+    const dateData = stretching[0].date
+    nextAppointment = new Date(dateData).toDateString()
+  }
+
+  return (nextAppointment &&
     <div>
+      {nextAppointment}
       <JoinStretchAppointment />
       <CancelStretchAppointment />
     </div>
@@ -17,33 +21,36 @@ const StretchAppointmentDisplay = () => {
 }
 
 const JoinStretchAppointment = () => {
-  const { stretchingService } = useContext(StretchContext)
+  const { stretchingService, stretching } = useContext(StretchContext)
+  const { user } = useContext(UserContext)
+
+  const slotsRemainingAmount = 10 - stretching[0].users.length
+  const slotsRemainingText = `${slotsRemainingAmount} / 10 slots open`
 
   const joinSession = async () => {
     try {
-      console.log('TRYING TO JOIN SESSION')
-      await stretchingService.update('current', { join: true })
+      await stretchingService.update(stretching[0]._id, { join: true })
       // Add notification here for success on joining session
     } catch (exception) {
       // Add notification here for failure to join session
     }
   }
   return (
-    <button onClick={joinSession}>JOIN APPOINTMENT</button>
+    <button onClick={joinSession}>{slotsRemainingText}</button>
   )
 }
 
 const CancelStretchAppointment = () => {
-  const { stretchingService } = useContext(StretchContext)
+  const { stretchingService, stretching } = useContext(StretchContext)
   const cancelSession = async () => {
     try {
-      await stretchingService.update('current', { join: false })
+      await stretchingService.update(stretching[0]._id, { join: false })
     } catch (exception) {
 
     }
   }
   return (
-    <button onClick= {cancelSession}>CANCEL APPOINTMENT</button>
+    <button onClick={cancelSession}>Cancel appointment</button>
   )
 }
 

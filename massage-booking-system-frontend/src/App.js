@@ -77,7 +77,7 @@ const App = () => {
     console.log('REFRESH USER EFFECT TRIGGERED')
     user &&
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
-  }, [appointments])
+  }, [appointments, stretching])
 
   const announcementNotification = {
     message: announcement ? announcement.message : '',
