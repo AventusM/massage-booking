@@ -30,12 +30,12 @@ const userSchema = mongoose.Schema({
       ref: 'Appointment',
     },
   ],
-  stretchingSession: 
+  stretchingSessions: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Stretching',
     }
-  
+  ]
 })
 
 const User = mongoose.model('User', userSchema)
