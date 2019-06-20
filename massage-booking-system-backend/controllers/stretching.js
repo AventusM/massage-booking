@@ -2,6 +2,7 @@ const stretchingRouter = require('express').Router()
 const bodyParser = require('body-parser')
 stretchingRouter.use(bodyParser.json())
 const Stretching = require('../models/stretching')
+const User = require('../models/user')
 
 const formatStretchingSession = input => {
     return {
@@ -23,7 +24,7 @@ stretchingRouter.get('/', async (req, res, next) => {
                 .find({})
                 .populate('users')
                 .sort({ date: -1 })
-                .limit(1)
+                .limit(1)               
 
         res.send(latesStretchingSession.map(formatStretchingSession))
 
@@ -38,7 +39,8 @@ stretchingRouter.post('/', async (req, res, next) => {
         const body = req.body
 
         const stretchingSession = new Stretching({
-            date: body.date
+            date: body.date,
+            users:[]
         })
 
         const savedStretchingSession = await stretchingSession.save()
@@ -48,15 +50,34 @@ stretchingRouter.post('/', async (req, res, next) => {
     }
 })
 
-stretchingRouter.put('/current', async (req, res, next) => {
+// Todo Check that double booking is not possible
+stretchingRouter.put('/:id', async (req, res, next) => {
     try {
         const body = req.body
-        console.log('PUT CALLED', body)
+        const stretching_id = req.params.id
+       // console.log(req.params)
+       // console.log('PUT CALLED', body)
         // 1. Selvitä nykyinen käyttäjä
         const getCurrentUser = req.user
-        console.log('current user', getCurrentUser)
+        const user = await User.findById(getCurrentUser._id)
+     //   console.log('current user', getCurrentUser)
 
         // 2. Lisää käyttäjä mukaan viimeisimpään stretchingtapahtumaan
+        const stretchingAppointment = await Stretching.findById(stretching_id)
+        if (body.join){
+            
+            if (stretchingAppointment.users.length < 10){
+               stretchingAppointment.users.concat(user._id)
+               const saved = await stretchingAppointment.save()
+               console.log(saved)
+               user.stretchingSession = saved._id
+               await user.save()
+            }
+            // Join if space available
+            console.log(stretchingAppointment.users)
+        }
+      //  console.log(stretchingAppointment)
+
         // 3. Lisää stretchingtapahtuma mukaan käyttäjän tietoihin
     } catch (exception) {
         next(exception)

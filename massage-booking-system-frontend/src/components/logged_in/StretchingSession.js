@@ -17,12 +17,13 @@ const StretchAppointmentDisplay = () => {
 }
 
 const JoinStretchAppointment = () => {
-  const { stretchingService } = useContext(StretchContext)
+  const { stretchingService, stretching } = useContext(StretchContext)
+
 
   const joinSession = async () => {
     try {
       console.log('TRYING TO JOIN SESSION')
-      await stretchingService.update('current', { join: true })
+      await stretchingService.update(stretching[0]._id, { join: true })
       // Add notification here for success on joining session
     } catch (exception) {
       // Add notification here for failure to join session
@@ -34,10 +35,10 @@ const JoinStretchAppointment = () => {
 }
 
 const CancelStretchAppointment = () => {
-  const { stretchingService } = useContext(StretchContext)
+  const { stretchingService, stretching } = useContext(StretchContext)
   const cancelSession = async () => {
     try {
-      await stretchingService.update('current', { join: false })
+      await stretchingService.update(stretching[0]._id, { join: false })
     } catch (exception) {
 
     }
