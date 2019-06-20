@@ -13,7 +13,8 @@ const formatStretchingSession = input => {
 }
 
 
-stretchingRouter.get('/current', async (req, res, next) => {
+// GETS latest / next / upcoming stretching session
+stretchingRouter.get('/', async (req, res, next) => {
     try {
 
         // Returns single stretching session by sorting with days
@@ -54,13 +55,15 @@ stretchingRouter.put('/current', async (req, res, next) => {
         console.log('current user', getCurrentUser)
 
         // 2. Lisää käyttäjä mukaan viimeisimpään stretchingtapahtumaan
+        // 3. Lisää stretchingtapahtuma mukaan käyttäjän tietoihin
     } catch (exception) {
         next(exception)
     }
 })
 
 
-// Removes all
+// Removes all. Created for testing purposes as one might want to spam the create
+// button at will
 stretchingRouter.delete('/', async (req, res, next) => {
     try {
         await Stretching.deleteMany({})
