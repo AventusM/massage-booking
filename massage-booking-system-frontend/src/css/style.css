@@ -47,12 +47,34 @@ nav a {
 
 /* Next Appointment style */
 
-.nextappoitnment_wrapper {
-  margin-top: 25px;
+.nextappointment_wrapper {
+  margin-top: 100px;
   text-align: center;
 }
 
-.nextappoitnment_wrapper p {
+@media screen and (max-width: 1549px) {
+  .nextappointment_wrapper {
+    
+    margin-top: 25px;
+  }
+
+  .desktop_no_appointments_info {
+  display: none;
+  }
+}
+.desktop_no_appointments_info {
+    margin-top: 100px;
+    text-align: center;
+  }
+  .desktop_no_appointments_info p {
+    font-size: 25px;
+    color: white;
+  }
+
+
+
+
+.nextappointment_wrapper p {
   font-size: 25px;
   color: white;
 }
@@ -363,6 +385,7 @@ h3 {
   text-align: center;
   font-family: Sans-serif, 'Roboto';
   color: white;
+  margin-top: 100px;
 }
 
 .login_button {
@@ -372,12 +395,16 @@ h3 {
   justify-content: center;
 }
 
+.login_wrapper_mobile img {
+  margin-top: 150px;
+}
+
 @media screen and (max-width: 700px) {
   .login_button a {
     border: 1px solid white;
   }
 
-  .nextappoitnment_wrapper p {
+  .nextappointment_wrapper p {
     font-size: 20px;
     color: white;
   }
@@ -421,7 +448,6 @@ h3 {
 }
 
 .login_wrapper_desktop {
-  /* background-image: url("../pics/unity2.jpeg");*/
   background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
   min-height: 100%;
   min-width: 700px;
@@ -640,7 +666,7 @@ h3 {
   display: block;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1161px) {
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -767,17 +793,33 @@ h3 {
 
 /*Appointment List desktop*/
 
-/*Background*/
-.appointmentListWrapperMain {
-  min-height: 100vh;
-  padding-top: 10%;
-  background-color: #2b5876;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+/*Announcement*/
+
+.index_notice {
+  margin-top: 100px;
 }
 
-/*Calendar*/
-.appointmentListWrapperCalendar {
+.index_notice h2{
+  font-size: 5em;
+  color: white;
+  text-align: center;
+
+}
+
+.index_notice p {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 2em;
+  color: white;
+}
+
+/*Background*/
+.appointmentListWrapperMain {
+  margin-top: 100px;
+  min-height: 100vh;
+  background-color: #2b5876;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
 }
 
 .react-calendar {
@@ -788,6 +830,21 @@ h3 {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.25em;
   font-size: 1.5em;
+}
+
+@media screen and (min-width: 1161px) {
+  .react-calendar {
+    min-height: 550px;
+    width: auto;
+    line-height: 1.5em;
+    font-size: 1.75em;
+    margin-left: 70px;
+  }
+
+  .appointmentListWrapperMain {
+
+    margin-top: 100px;
+  }
 }
 
 .tile {
@@ -804,10 +861,6 @@ h3 {
 
 .disabled {
   color: rgb(211, 208, 208);
-}
-
-.List {
-  /* border: 2px solid green; */
 }
 
 @media screen and (max-width: 1160px) {
@@ -828,9 +881,6 @@ h3 {
     font-size: 1.35em;
   }
 
-  .List {
-    margin-top: -10px;
-  }
 }
 
 /*Logo*/
@@ -850,14 +900,17 @@ h3 {
 .appointmentListWrapperMain h1 {
   text-align: center;
   font-family: Roboto, sans-serif;
-  font-size: 2.5em;
+  font-size: 3em;
   color: white;
-  margin-top: 15px;
 }
 
-.all_apps_div {
-  margin-top: 60px;
+.appointmentListWrapperMain h5 {
+  text-align: center;
+  font-family: Roboto, sans-serif;
+  color: white;
+  margin-top: 25px;
 }
+
 
 /*List*/
 .appointmentListWrapper {
@@ -880,7 +933,7 @@ h3 {
   padding: 10px 5px;
   height: 50px;
   width: 400px;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 .buttonList {
   background: #2b5876;
@@ -937,10 +990,8 @@ h3 {
     border-width: 2px;
   }
 
-  /*Buttons*/
-  .appointmentListWrapper button:hover {
-    background: #47bb77;
-    border: #47bb77;
+  .appointmentListWrapper {
+    margin-bottom: 5px;
   }
 
   /*Header*/
@@ -976,6 +1027,12 @@ h3 {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+@media screen and (min-width: 1161px) {
+  .notification_container {
+    margin-top: 60px;
+  }
 }
 
 .notification p {
@@ -1067,6 +1124,24 @@ h3 {
 
 
 /*TV-view*/
+
+.tv_notice {
+  margin-top: 150px;
+}
+
+.tv_notice h2{
+  font-size: 5em;
+  color: white;
+  text-align: center;
+
+}
+
+.tv_notice p {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 2em;
+  color: white;
+}
 
 .clock {
   font-size: 150px;

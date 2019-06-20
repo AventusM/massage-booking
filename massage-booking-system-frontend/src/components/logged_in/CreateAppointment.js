@@ -46,15 +46,15 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
         let prevTimeMoment = moment(usersPreviousTime.start_date)
         let firstWeekDayOfPrevtime = prevTimeMoment.startOf('week')
         let dayDifference = firstWeekDayOfrequestedTimesWeek.diff(
-        firstWeekDayOfPrevtime,
-        'days'
-      )
-      return Math.abs(dayDifference) < 14
-    }
-  )
-  return usersAppointmentsWithinTheLastTwoWeeks.length === 0
+          firstWeekDayOfPrevtime,
+          'days'
+        )
+        return Math.abs(dayDifference) < 14
+      }
+    )
+    return usersAppointmentsWithinTheLastTwoWeeks.length === 0
   }
-  
+
 }
 
 export default CreateAppointment

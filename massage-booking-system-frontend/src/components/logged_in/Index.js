@@ -1,12 +1,13 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
 //import Calendar from 'react-calendar';
 import Calendar from 'react-calendar'
-import { AppointmentContext, UserContext } from '../../App'
+import { AppointmentContext, UserContext, NotificationContext } from '../../App'
 
 import AllAppointments from './AllAppointments'
 import LoginIndex from '../Login_index'
 import moment from 'moment'
 import NextAppointment from './NextAppointment'
+import Notification from '../Notification'
 const Index = () => {
   const { user } = useContext(UserContext)
   if (user) {
@@ -18,14 +19,30 @@ const Index = () => {
 const AuthIndex = ({ user }) => {
   console.log('RENDERING INDEX')
   const { setSelectedDate, appointments } = useContext(AppointmentContext)
+  const { announcementNotification, announcement, notification } = useContext(NotificationContext)
 
   const freeAppointments = appointments.filter(
     app => app.type_of_reservation === 0
   )
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setWidth(window.innerWidth))
+  }, [])
+
+  const isMobile = width <= 1160
 
   return (
     <Fragment>
-      <NextAppointment user={user} appointments={appointments} />
+      {notification && !isMobile
+        ? <Notification notification={notification} />
+        : <NextAppointment user={user} appointments={appointments} />
+      }
+      {isMobile
+        ? notification
+          ? <Notification notification={notification}/>
+          : <Notification notification={announcementNotification}/>
+        : null}
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
@@ -56,15 +73,19 @@ const AuthIndex = ({ user }) => {
             } */
             showNeighboringMonth={false}
           />
+          {!isMobile && announcement && announcement.message
+            ? <div className="index_notice">
+              <h2>Notice</h2>
+              <p>{announcement.message}</p>
+            </div>
+            : null}
         </div>
-        <div className="List">
 
-          <div className="all_apps_div">
+        <div className="all_apps_div">
 
-            <h1>All appointments</h1>
-            < AllAppointments />
-          </div>
-          {/* <img id="unity4" src={unity4}></img> */}
+          <h1>All appointments</h1>
+          <h5>Click on a Free appointment to reserve it</h5>
+          < AllAppointments />
         </div>
       </div>
     </Fragment>

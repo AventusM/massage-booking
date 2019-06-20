@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from 'react'
 import { UserContext, NotificationContext } from '../../App'
 import AppointmentsList from './AppointmentsLists'
 import useField from '../../hooks/useField'
+import Notification from '../Notification'
 
 const MyPage = () => {
   console.log('RENDERING MY PAGE')
   const { user, setUser, userService } = useContext(UserContext)
-  const { createNotification } = useContext(NotificationContext)
+  const { createNotification, notification, announcementNotification } = useContext(NotificationContext)
   let numberField = useField('text')
   useEffect(() => {
     console.log('HEEEIi')
@@ -37,34 +38,40 @@ const MyPage = () => {
   // NOTICE -- user && rest rendered. Otherwise nothing gets rendered
   return (
     user && (
-      <div className="mypage_wrapper">
-        <div className="own_info">
-          <h2>{user.name}</h2>
-          {user.avatarUrl ? (
-            <img
-              src={user.avatarUrl}
-              alt="profile pic"
-              height="180"
-              width="180"
+
+      <div>
+        { notification
+          ? <Notification notification={notification}/>
+          : <Notification notification={announcementNotification}/>}
+        <div className="mypage_wrapper">
+          <div className="own_info">
+            <h2>{user.name}</h2>
+            {user.avatarUrl ? (
+              <img
+                src={user.avatarUrl}
+                alt="profile pic"
+                height="180"
+                width="180"
+              />
+            ) : (
+              'avatar'
+            )}
+            <label>Phone number</label>
+          </div>
+          <form onSubmit={handleNumberUpdate}>
+            <input
+              type={numberField.type}
+              id="number"
+              value={numberField.value}
+              name="number"
+              onChange={numberField.handleFieldChange}
             />
-          ) : (
-            'avatar'
-          )}
-          <label>Phone number</label>
-        </div>
-        <form onSubmit={handleNumberUpdate}>
-          <input
-            type={numberField.type}
-            id="number"
-            value={numberField.value}
-            name="number"
-            onChange={numberField.handleFieldChange}
-          />
-          <button type="submit">Update</button>
-        </form>
-        <div className="own_appointments">
-          <h2>My Appointments</h2>
-          <AppointmentsList />
+            <button type="submit">Update</button>
+          </form>
+          <div className="own_appointments">
+            <h2>My Appointments</h2>
+            <AppointmentsList />
+          </div>
         </div>
       </div>
     )

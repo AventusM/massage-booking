@@ -32,8 +32,8 @@ const App = () => {
 
 
   const createNotification = (message, type) => {
-    let icon;
-    let messageType;
+    let icon
+    let messageType
     if (type === types.SUCCESS) {
       icon = icons.SUCCESS
       messageType = types.SUCCESS
@@ -47,7 +47,7 @@ const App = () => {
       type: messageType
     }
     setNotification(notification)
-    
+
     setTimeout(() => {
       setNotification(null)
     }, 3500)
@@ -77,24 +77,24 @@ const App = () => {
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
- const announcementNotification = {
-   message: announcement ? announcement.message : '',
-   type: types.GENERAL,
-   icon: icons.GENERAL
- }
-  
+  const announcementNotification = {
+    message: announcement ? announcement.message : '',
+    type: types.GENERAL,
+    icon: icons.GENERAL
+  }
+
   return (
     <Fragment>
       <Router>
         <Header user={user} />
-        <Notification notification={announcementNotification} />
-        <Notification notification={notification} />
+        {/* <Notification notification={announcementNotification} />
+        <Notification notification={notification} /> */}
         <div>
-          <NotificationContext.Provider value={{ createNotification, announcementService }}>
+          <NotificationContext.Provider value={{ createNotification, announcementService, announcement, announcementNotification, notification }}>
             <UserContext.Provider value={{ user, setUser, users, userService }}>
 
               <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
-            
+
                 <Route exact path="/" render={() => <Index />} />
                 <Route exact path="/dashboard" render={() => <DashBoard />} />
                 <Route exact path="/mypage" render={() => <MyPage />} />
