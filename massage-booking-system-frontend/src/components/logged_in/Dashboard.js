@@ -13,21 +13,7 @@ class DatePickerForm extends React.Component {
     super(props)
     this.state = {
       startDate: new Date(),
-      // next - kenttä StretchingSession.js tiedostoon
-      // next - kenttä StretchingSession.js tiedostoon
-      // next - kenttä StretchingSession.js tiedostoon
-      next: null
     }
-  }
-
-  async componentDidMount() {
-    const { stretchingService } = this.props
-    const next_from_db = await stretchingService.getAll()
-    const next_time = next_from_db[0].date
-    console.log('next time @', next_time)
-    this.setState({
-      next: new Date(next_time).toDateString()
-    })
   }
 
   handleChange = (date) => {
@@ -39,7 +25,7 @@ class DatePickerForm extends React.Component {
     const { startDate } = this.state
     event.preventDefault()
     try {
-      await stretchingService.create('/current', { date: startDate })
+      await stretchingService.create({ date: startDate })
       // "Live" - change. Could use websockets or something to make it actually live
       this.setState({
         next: new Date(startDate).toDateString()
@@ -51,9 +37,8 @@ class DatePickerForm extends React.Component {
   }
 
   render() {
-    const { startDate, next } = this.state
+    const { startDate } = this.state
     const { stretching } = this.props
-    console.log('stretching', stretching)
     return (
       <Fragment>
         {/* Tämä tulee eriyttää omaan komponenttiin tuo divi */}

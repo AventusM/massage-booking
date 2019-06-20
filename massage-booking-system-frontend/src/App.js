@@ -59,6 +59,7 @@ const App = () => {
     userService.getAll()
     appointmentService.getAll()
     statsService.getAll()
+    stretchingService.getAll()
   }, [])
 
   useEffect(() => {

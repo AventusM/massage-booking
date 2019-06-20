@@ -10,6 +10,7 @@ const useResource = baseUrl => {
   }
 
   const create = async data => {
+    console.log(data)
     const newResource = await axios.post(baseUrl, data)
     const updatedResources = resources.concat(newResource.data)
     setResources(updatedResources)

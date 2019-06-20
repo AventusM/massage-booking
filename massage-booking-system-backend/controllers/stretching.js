@@ -33,7 +33,7 @@ stretchingRouter.get('/', async (req, res, next) => {
 
 })
 
-stretchingRouter.post('/current', async (req, res, next) => {
+stretchingRouter.post('/', async (req, res, next) => {
     try {
         const body = req.body
 
