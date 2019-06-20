@@ -26,10 +26,6 @@ class DatePickerForm extends React.Component {
     event.preventDefault()
     try {
       await stretchingService.create({ date: startDate })
-      // "Live" - change. Could use websockets or something to make it actually live
-      this.setState({
-        next: new Date(startDate).toDateString()
-      })
       // Luo notifikaatio tänne onnistumisesta
     } catch (exception) {
       // Luo notifikaatio tänne failuresta
