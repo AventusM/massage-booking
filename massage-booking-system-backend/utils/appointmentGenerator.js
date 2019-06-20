@@ -27,7 +27,7 @@ const generateAppointmentsForDay = date => {
  */
 const createAppointmentsInRow = (start, appointmentsInRow) => {
   let end = new Date(start)
-  for (i = 0; i < appointmentsInRow; i++) {
+  for (let i = 0; i < appointmentsInRow; i++) {
     end = increaseTime(30, new Date(start))
     createEmptyAppointment(start, end)
     start = increaseTime(5, new Date(end))
@@ -80,7 +80,7 @@ const createEmptyAppointment = async (start_date, end_date) => {
  */
 const doesAppointmentExist = async date => {
   let doesNotExist = await Appointment.find({ start_date: date })
-  if (doesNotExist.length == 0) {
+  if (doesNotExist.length === 0) {
     return true
   }
   return false
