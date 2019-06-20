@@ -50,6 +50,8 @@ stretchingRouter.post('/', async (req, res, next) => {
 
 stretchingRouter.put('/current', async (req, res, next) => {
     try {
+        const body = req.body
+        console.log('PUT CALLED', body)
         // 1. Selvitä nykyinen käyttäjä
         const getCurrentUser = req.user
         console.log('current user', getCurrentUser)
