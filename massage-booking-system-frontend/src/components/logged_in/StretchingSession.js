@@ -35,8 +35,15 @@ const JoinStretchAppointment = () => {
 
 const CancelStretchAppointment = () => {
   const { stretchingService } = useContext(StretchContext)
+  const cancelSession = async () => {
+    try {
+      await stretchingService.update('current', { join: false })
+    } catch (exception) {
+
+    }
+  }
   return (
-    <button onClick={() => console.log('MOI')}>CANCEL APPOINTMENT</button>
+    <button onClick= {cancelSession}>CANCEL APPOINTMENT</button>
   )
 }
 
