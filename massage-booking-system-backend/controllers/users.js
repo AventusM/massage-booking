@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Appointment = require('../models/appointment')
 const usersRouter = require('express').Router()
 const bodyParser = require('body-parser')
 usersRouter.use(bodyParser.json())
@@ -115,8 +116,19 @@ usersRouter.put('/:id', async (req, res, next) => {
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {
+  
   try {
+    /*
+    //verify?
+    const given_id = req.params.id
+    const found_user = await User.findById({ _id: given_id })
+    if (!found_user.admin) {
+      console.log('user not found')
+      return res.status(400).end()
+    }*/
     const user = await User.findById({ _id: req.params.id })
+  
+    await emptyAppointmentsFromUser(user)
     await user.remove()
     res.status(204).end()
   } catch (exception) {
@@ -124,4 +136,21 @@ usersRouter.delete('/:id', async (req, res, next) => {
   }
 })
 
+const emptyAppointmentsFromUser = async (user) => {
+  const appointments = await Appointment.find({user_id: user._id})
+  for(appoint of appointments) {
+    await removeUserFromAppointment(appoint)
+   }
+  
+} 
+
+const removeUserFromAppointment = async(appointment) =>{
+  try {
+    appointment.user_id = null
+    appointment.type_of_reservation = 0
+    appointment = await Appointment.findByIdAndUpdate(appointment._id, appointment)
+  } catch (exception) {
+    next(exception)
+  }
+}  
 module.exports = usersRouter

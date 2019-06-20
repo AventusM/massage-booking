@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { timeout } from 'q'
 
 const useResource = baseUrl => {
   const [resources, setResources] = useState([])
 
   const getAll = async () => {
+    //console.log('GET ALL')
     const response = await axios.get(baseUrl)
     setResources(response.data)
   }
@@ -17,6 +19,7 @@ const useResource = baseUrl => {
   }
 
   const update = async (id, data, type = '') => {
+    //console.log('UPDATE')
     const updatedResource = await axios.put(`${baseUrl}/${id}/${type}`, data)
     if (updatedResource.data.hasOwnProperty('_id')) {
       setResources(
@@ -28,12 +31,14 @@ const useResource = baseUrl => {
   }
 
   const remove = async id => {
-    const deletedResource = await axios.delete(`${baseUrl}/${id}`)
+    //console.log('REMOVE')
+    await axios.delete(`${baseUrl}/${id}`)
     const updatedResources = resources.filter(resource => resource._id !== id)
     setResources(updatedResources)
   }
 
   const getOne = async id => {
+    //console.log('GET ONE')
     const response = await axios.get(`${baseUrl}/${id}`)
     return response.data
   }
@@ -46,13 +51,26 @@ const useResource = baseUrl => {
     return response.data
   }
 
+  const getInterval = async (start, end) => {
+    //console.log('GET INTERVAL')
+    const response = await axios.get(`${baseUrl}/${start}/${end}`)
+    setResources(response.data)
+
+  }
+  const createWithoutConcat = async data => {
+    const newResource = await axios.post(baseUrl, data)
+    setResources(newResource.data)
+  }
+
   const service = {
     getAll,
     create,
     remove,
     update,
     getOne,
-    setOne
+    setOne,
+    getInterval,
+    createWithoutConcat
   }
 
   return [resources, service]

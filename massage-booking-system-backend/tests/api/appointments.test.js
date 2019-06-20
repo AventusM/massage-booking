@@ -15,7 +15,8 @@ const randomNumber = () => Math.floor(Math.random() * 99999999)
 const random_user = () => new User({
   googleId: `123456789${randomNumber()}`,
   name: `Test account${randomNumber()}`,
-  email: `test@test.account${randomNumber()}`
+  email: `test@test.account${randomNumber()}`,
+  admin: true
 })
 
 const generate_apps_to_db_for_date = async (date, waitTime) => {
@@ -34,20 +35,20 @@ const FIRST_DAY_FIRST_INDEX = 0
 const FIRST_DAY_SECOND_INDEX = 1
 const SECOND_DAY_LAST_INDEX = 25
 
-const get_random_user = async (index) => {
+const get_users = async () => {
   const user_response =
     await api
       .get(USERS_API_PATH)
 
-  return user_response.body[index]
+  return user_response.body
 }
 
-const get_random_appointment = async (index) => {
+const get_appointments = async () => {
   const appointment_response =
     await api
       .get(APPOINTMENTS_API_PATH)
 
-  return appointment_response.body[index]
+  return appointment_response.body
 }
 
 const update_appointment = async (original_appointment_id, param_user_id, param_type_of_reservation) => {
@@ -64,8 +65,24 @@ const get_appointment = async (id) => {
   return appointment_response.body
 }
 
+/**
+ * this functionality doesnt exist yet so it doesnt have a route
+ * @param {*} appointment 
+ */
+const remove_appointment = async(original_appointment_id) =>{
+    await api
+      .put(`${APPOINTMENTS_API_PATH}/${original_appointment_id}/remove`)
+      .send({original_appointment_id })
+}
+const remove_day_of_appointments = async(date) => {
+  await api
+    .put(`${APPOINTMENTS_API_PATH}/${date}/removeDate`)
+    .send({ date })
+}
+
 describe('GET appointments', () => {
   beforeEach(async () => {
+    jest.setTimeout(1000000)
     let date = new Date('July 14, 2019 12:00:00')
     const dateNowStub = jest.fn(() => date)
     global.Date.now = dateNowStub
@@ -81,21 +98,33 @@ describe('GET appointments', () => {
 
 describe('PUT appointments', () => {
 
+  let user_list
+  let appointment_list
   let original_user
   let original_appointment
 
   beforeEach(async () => {
+    jest.setTimeout(10000)
+
     let date = new Date('July 14, 2019 12:00:00')
     const dateNowStub = jest.fn(() => date)
     global.Date.now = dateNowStub
     await appointment_helper.emptyTheDatabaseOfAppointments()
     await User.deleteMany({})
     await random_user().save()
-    await generate_apps_to_db_for_date('July 15, 2019 12:00:00',13)
+    await generate_apps_to_db_for_date('July 15, 2019 12:00:00', 13)
+
+    
+    await appointment_helper.wait(1000)
+    // Generate appointments 1 month from original
+    // This is currently for a single test case, but appointment_list requires this
+    await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
 
     // User has 0 appointments by default and all appointments are free
-    original_user = await get_random_user(FIRST_DAY_FIRST_INDEX)
-    original_appointment = await get_random_appointment(FIRST_DAY_FIRST_INDEX)
+    user_list = await get_users()
+    original_user = user_list[0]
+    appointment_list = await get_appointments()
+    original_appointment = appointment_list[0]
   })
 
   it('when user wants to create an appointment when not having any, the appointment SHOULD change its type', async () => {
@@ -107,8 +136,11 @@ describe('PUT appointments', () => {
   })
 
   it('appointment type should not change if user attempts to create consecutive appointments in too small intervals', async () => {
-    const second_app_same_day = await get_random_appointment(FIRST_DAY_SECOND_INDEX)
 
+    // TEE SANITY CHECK
+    // TEE SANITY CHECK
+    // const second_app_same_day = await get_random_appointment(FIRST_DAY_SECOND_INDEX)
+    const second_app_same_day = appointment_list[FIRST_DAY_SECOND_INDEX]
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(second_app_same_day._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
 
@@ -120,9 +152,18 @@ describe('PUT appointments', () => {
   })
 
   it('when user wants to create an appointment when having one, the appointment SHOULD change its type if enough time has passed after previous user appointment', async () => {
+    // MOVED TO beforeEach
+    // MOVED TO beforeEach
+    // MOVED TO beforeEach
     // // Generate appointments 1 month from original
-    await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
-    const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
+    // await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
+
+    // TEE SANITY CHECK
+    // TEE SANITY CHECK
+    // const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
+    const one_month_after_original_appointment = appointment_list[SECOND_DAY_LAST_INDEX]
+    // console.log('app list', appointment_list)
+
     //console.log('TÄMÄ', one_month_after_original_appointment)
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(one_month_after_original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
@@ -146,10 +187,60 @@ describe('PUT appointments', () => {
     expect(cancelled_original_appointment.type_of_reservation).toBe(FREE_APPOINTMENT)
   })
 
+  it('when appointment is removed, remove user from the appointment and set the appointments reservation as 3', async () => {
+    await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
+    const updated_original_appointment = await get_appointment(original_appointment._id)
+   // console.log('start', updated_original_appointment)
+    await remove_appointment(updated_original_appointment._id)
+   // console.log('DURING', updated_original_appointment)
+    const removed_original_appointment = await get_appointment(original_appointment._id)
+   // console.log('REMOVEd', removed_original_appointment)
+    expect(removed_original_appointment.type_of_reservation).toBe(3)
+    expect(removed_original_appointment.user_id).toBe(null)
+
+
+  })//TESTAA ETTEI POISTU MUUT APPOINTMENTIT JNE!!!
+
+  it('when a day is removed, remove users from the appointments and set the appointments reservations as 3', async () => {
+    const appoint1 = await Appointment.findOne({start_date: '2019-07-15T12:15:00.000Z'})
+    const appoint2 = await Appointment.findOne({start_date: '2019-07-15T15:45:00.000Z'})
+    
+    //ERIYTÄ
+    user2 = new User({
+      googleId: `1234567891`,
+      name: `Test account1`,
+      email: `test@test.account1`,
+      admin: true
+    })
+    await user2.save()
+
+    await update_appointment(appoint1._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
+    await update_appointment(appoint2._id, user2._id, APPOINTMENT_RESERVATION_KEY)
+
+    await remove_day_of_appointments(appoint1.start_date)//DATE 15.7.2019
+
+
+
+    const removed_appoint1 = await Appointment.findOne({start_date: '2019-07-15T12:15:00.000Z'})   
+    const removed_appoint2 = await Appointment.findOne({start_date: '2019-07-15T15:45:00.000Z'})
+    const removed_appoint3 = await Appointment.findOne({start_date: '2019-07-15T16:20:00.000Z'})
+
+    expect(removed_appoint1.type_of_reservation).toBe(3)
+    expect(removed_appoint1.user_id).toBe(null)
+
+    expect(removed_appoint2.type_of_reservation).toBe(3)
+    expect(removed_appoint2.user_id).toBe(null)
+
+    expect(removed_appoint3.type_of_reservation).toBe(3)
+    expect(removed_appoint3.user_id).toBe(null)
+
+
+  }) //TESTAA ETTEI MUUT PÄIVÄT KATOA
+
   /*it.skip('when user wants to cancel someone elses appointments, appointment should not be canceled', async () => {
     expect(true).toBe(false)
   })*/
 })
-afterAll(async() => {
+afterAll(async () => {
   await mongoose.disconnect()
 })

@@ -5,6 +5,8 @@ import { NotificationContext, StretchContext } from '../../App'
 import StretchAppointmentDisplay from './StretchingSession'
 import "react-datepicker/dist/react-datepicker.css";
 import fi from 'date-fns/locale/fi';
+import useField from '../../hooks/useField'
+
 setDefaultLocale('fi', fi)
 
 // CHANGE THIS TO USE HOOKS ETC
@@ -58,26 +60,25 @@ class DatePickerForm extends React.Component {
 }
 
 const DashBoard = props => {
-  const { announcement, setAnnouncement } = useContext(NotificationContext)
+  const { announcementService } = useContext(NotificationContext)
   const { stretching, stretchingService } = useContext(StretchContext)
-  const [editedAnnouncement, setEditedAnnouncement] = useState('')
+  let editedAnnouncement = useField('')
 
-  const handleFieldChange = (event) => {
-    console.log(event.target.value)
-    setEditedAnnouncement(event.target.value)
-  }
-  const changeAnnouncement = (event) => {
-    console.log('changeAnnouncement', editedAnnouncement)
+  const changeAnnouncement = async event => {
     event.preventDefault()
-    setAnnouncement(editedAnnouncement)
+    console.log('changeAnnouncement', editedAnnouncement.value)
+    const announcement = {
+      message: editedAnnouncement.value
+    }
+    announcementService.createWithoutConcat(announcement)
   }
 
   return (
     <div>
       <form className="dashboard_form" onSubmit={changeAnnouncement}>
         <input className="dashboard_announcement"
-          value={editedAnnouncement}
-          onChange={handleFieldChange}
+          value={editedAnnouncement.value}
+          onChange={editedAnnouncement.handleFieldChange}
         />
         <button className="dashboard_announcement_button" type="submit">Update</button>
       </form>
