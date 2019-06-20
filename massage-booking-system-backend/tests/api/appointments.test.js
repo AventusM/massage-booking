@@ -202,7 +202,7 @@ describe('PUT appointments', () => {
     const appoint2 = await Appointment.findOne({ start_date: '2019-07-15T15:45:00.000Z' })
 
     //ERIYTÄ
-    user2 = new User({
+    const user2 = new User({
       googleId: '1234567891',
       name: 'Test account1',
       email: 'test@test.account1',
