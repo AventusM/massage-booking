@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Appointment from './logged_in/Appointment'
-import { AppointmentContext, UserContext } from '../App'
+import { AppointmentContext, UserContext, NotificationContext } from '../App'
 import Clock from './Clock'
 import unity4 from '../pics/unity4.png'
 import moment from 'moment'
@@ -9,6 +9,7 @@ import DaysAppointments from './DaysAppointments'
 
 const TVview = () => {
   const { appointments } = useContext(AppointmentContext)
+  const { announcement } = useContext(NotificationContext)
   // console.log('appointments length', appointments.length)
   const { users } = useContext(UserContext)
   const now = moment()
@@ -56,6 +57,10 @@ const TVview = () => {
           type_of_reservation={next.type_of_reservation}
           appUser={users.find(u => u._id === next.user_id)}
         /> </ul> : ''}
+        <div className="tv_notice">
+          <h2>Notice</h2>
+          <p>{announcement.message}</p>
+        </div>
         <img className="logoTV"
           id="unity4" src={unity4}></img>
       </div>

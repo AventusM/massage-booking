@@ -34,10 +34,10 @@ const SimpleAppointment = ({ app }) => {
   }
 
   return (
-    <div className="nextappoitnment_wrapper">
+    <div className="nextappointment_wrapper">
       <p>
         Your next appointment is on {weekdays[date.getDay()]} {date.getDate()}th
-        of {months[date.getMonth()]} {date.getHours()}:{date.getMinutes()}
+        of {months[date.getMonth()]} {date.getHours()}:{date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}
       </p>
     </div>
   )
@@ -53,7 +53,9 @@ const NextAppointment = ({ user, appointments }) => {
   })
 
   if (ownAppointments[0] === undefined) {
-    return null
+    return <div className="desktop_no_appointments_info">
+      <p>You currently have no appointments booked, you can reserve one by clicking on the desired date on the calendar and choosing a time.</p>
+    </div>
   }
 
   return <SimpleAppointment app={ownAppointments[0]} />

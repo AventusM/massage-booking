@@ -4,7 +4,7 @@ const app = require('../../app')
 const api = supertest(app)
 
 const timer = require('../../utils/timer')
-const generator = require('../../utils/appointmentGenerator')
+//const generator = require('../../utils/appointmentGenerator')
 const appointment_helper = require('../../tests/appointmentGeneration/test_helper')
 
 const User = require('../../models/user')
@@ -19,9 +19,9 @@ const random_user = () => new User({
   admin: true
 })
 
-const generate_apps_to_db_for_date = async (date, waitTime) => {
+const generate_apps_to_db_for_date = async (date, waitFor) => {
   await timer.ifNotInDBCreateDay(date)
-  await appointment_helper.wait(waitTime)
+  await appointment_helper.wait(waitFor)
 }
 
 const DEFAULT_APPOINTMENTS_PER_DAY = 13
@@ -31,7 +31,7 @@ const APPOINTMENT_RESERVATION_KEY = 1
 const APPOINTMENT_CANCELLATION_KEY = 0
 const ACCEPTED_APPOINTMENT = 1
 const FREE_APPOINTMENT = 0
-const FIRST_DAY_FIRST_INDEX = 0
+//const FIRST_DAY_FIRST_INDEX = 0
 const FIRST_DAY_SECOND_INDEX = 1
 const SECOND_DAY_LAST_INDEX = 25
 
@@ -109,9 +109,6 @@ describe('PUT appointments', () => {
     await appointment_helper.emptyTheDatabaseOfUsers()
     await random_user().save()
     await generate_apps_to_db_for_date('July 15, 2019 12:00:00', 13)
-
-
-    await appointment_helper.wait(1000)
     // Generate appointments 1 month from original
     // This is currently for a single test case, but appointment_list requires this
     await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)

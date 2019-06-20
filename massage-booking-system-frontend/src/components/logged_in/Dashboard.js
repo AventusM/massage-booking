@@ -6,6 +6,7 @@ import StretchAppointmentDisplay from './StretchingSession'
 import "react-datepicker/dist/react-datepicker.css";
 import fi from 'date-fns/locale/fi';
 import useField from '../../hooks/useField'
+import Notification from '../Notification'
 
 setDefaultLocale('fi', fi)
 
@@ -60,7 +61,7 @@ class DatePickerForm extends React.Component {
 }
 
 const DashBoard = props => {
-  const { announcementService } = useContext(NotificationContext)
+  const { announcementService, notification, announcementNotification } = useContext(NotificationContext)
   const { stretching, stretchingService } = useContext(StretchContext)
   let editedAnnouncement = useField('')
 
@@ -75,6 +76,9 @@ const DashBoard = props => {
 
   return (
     <div>
+      { notification
+        ? <Notification notification={notification}/>
+        : <Notification notification={announcementNotification}/>}
       <form className="dashboard_form" onSubmit={changeAnnouncement}>
         <input className="dashboard_announcement"
           value={editedAnnouncement.value}
