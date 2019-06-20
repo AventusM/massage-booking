@@ -130,7 +130,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
 
         //adds appointment to users appointments
         user.appointments = user.appointments.concat(appointment._id)
-        user.save()
+        await user.save()
         //  console.log('user after new appointment', user)
       } else {
         // user is not allowed to make this appointment
