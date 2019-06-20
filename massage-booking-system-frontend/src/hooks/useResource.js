@@ -21,6 +21,7 @@ const useResource = baseUrl => {
   const update = async (id, data, type = '') => {
     //console.log('UPDATE')
     const updatedResource = await axios.put(`${baseUrl}/${id}/${type}`, data)
+    console.log('updatedResource: ', updatedResource)
     if (updatedResource.data.hasOwnProperty('_id')) {
       setResources(
         resources.map(resource =>
@@ -28,6 +29,13 @@ const useResource = baseUrl => {
         )
       )
     }
+  }
+
+  const updateExpectMany = async (id, type = '') => {
+    //console.log('UPDATE')
+    const updatedResource = await axios.put(`${baseUrl}/${id}/${type}`)
+    console.log('updatedResource: ', updatedResource)
+    setResources(updatedResource.data)
   }
 
   const remove = async id => {
@@ -68,6 +76,7 @@ const useResource = baseUrl => {
     remove,
     update,
     getOne,
+    updateExpectMany,
     setOne,
     getInterval,
     createWithoutConcat

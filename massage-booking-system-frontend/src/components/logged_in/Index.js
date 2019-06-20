@@ -1,12 +1,13 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
 //import Calendar from 'react-calendar';
 import Calendar from 'react-calendar'
-import { AppointmentContext, UserContext } from '../../App'
+import { AppointmentContext, UserContext, NotificationContext } from '../../App'
 
 import AllAppointments from './AllAppointments'
 import LoginIndex from '../Login_index'
 import moment from 'moment'
 import NextAppointment from './NextAppointment'
+import Notification from '../Notification'
 const Index = () => {
   const { user } = useContext(UserContext)
   if (user) {
@@ -17,15 +18,34 @@ const Index = () => {
 
 const AuthIndex = ({ user }) => {
   console.log('RENDERING INDEX')
-  const { setSelectedDate, appointments } = useContext(AppointmentContext)
-
+  const { announcementNotification, announcement, notification } = useContext(NotificationContext)
+  const { selectedDate, setSelectedDate, appointments } = useContext(AppointmentContext)
   const freeAppointments = appointments.filter(
     app => app.type_of_reservation === 0
   )
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setWidth(window.innerWidth))
+  }, [])
+
+  const isMobile = width <= 1160
+
+
+  let selectedMoment = moment(selectedDate)
+  let now = moment()
 
   return (
     <Fragment>
-      <NextAppointment user={user} appointments={appointments} />
+      {notification && !isMobile
+        ? <Notification notification={notification} />
+        : <NextAppointment user={user} appointments={appointments} />
+      }
+      {isMobile
+        ? notification
+          ? <Notification notification={notification}/>
+          : <Notification notification={announcementNotification}/>
+        : null}
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
@@ -37,34 +57,63 @@ const AuthIndex = ({ user }) => {
             minDetail="year"
             prev2Label={null}
             next2Label={null}
-            tileClassName={({ date, view }) =>
-              view === 'month' &&
-                freeAppointments.filter(app =>
-                  moment(app.start_date).isSame(moment(date), 'day')
-                ).length > 0
-                ? 'availableDay'
-                : view === 'month' && moment(date).isBefore(moment())
-                  ? 'disabled'
-                  : view === 'month' && date.getDay() < 3 && date.getDay() !== 0
-                    ? 'nonAvailableDay'
-                    : view === 'month'
-                      ? 'disabled'
-                      : null
+            tileClassName={({ date, view }) => {
+              let dateMoment = moment(date)
+              if (dateMoment.isBefore(now) || dateMoment.day() > 2 || dateMoment.day() === 0) {
+                return 'disabled'
+              } else {
+                if (dateMoment.isSame(selectedMoment, 'days')) {
+                  // selected
+                  if (user.appointments.filter((app) => moment(app.start_date).isSame(dateMoment, 'days')).length > 0) {
+                    // selected, user has appointment for day
+                    return 'userHasAppSelected'
+                  } else {
+                    // selected, user does not have app for day
+                    if (freeAppointments.filter(app => moment(app.start_date).isSame(dateMoment, 'day')).length > 0) {
+                      // selected, user does not have app, day has free app
+                      return 'hasFreeSelected'
+                    } else {
+                      // selected, user does not have app, no free apps
+                      return 'noneFreeSelected'
+                    }
+                  }
+                } else {
+                  // not selected
+                  if (user.appointments.filter((app) => moment(app.start_date).isSame(dateMoment, 'days')).length > 0) {
+                    // not selected, user has app for day
+                    return 'userHasApp'
+                  } else {
+                    // not selected, user does not have app for day
+                    if (freeAppointments.filter(app => moment(app.start_date).isSame(dateMoment, 'day')).length > 0) {
+                      // not selected, user does not have app for day, day has free app
+                      return 'hasFree'
+                    } else {
+                      // not selected, user does not have app for day, no free apps
+                      return 'noneFree'
+                    }
+                  }
+                }
+              }
             }
-            /* tileDisabled={({ date, view }) =>
+            }
+            tileDisabled={({ date, view }) =>
               view === 'month' && (date.getDay() > 2 || date.getDay() === 0)
-            } */
+            }
             showNeighboringMonth={false}
           />
+          {!isMobile && announcement && announcement.message
+            ? <div className="index_notice">
+              <h2>Notice</h2>
+              <p>{announcement.message}</p>
+            </div>
+            : null}
         </div>
-        <div className="List">
 
-          <div className="all_apps_div">
+        <div className="all_apps_div">
 
-            <h1>All appointments</h1>
-            < AllAppointments />
-          </div>
-          {/* <img id="unity4" src={unity4}></img> */}
+          <h1>All appointments</h1>
+          <h5>Click on a Free appointment to reserve it</h5>
+          < AllAppointments />
         </div>
       </div>
     </Fragment>

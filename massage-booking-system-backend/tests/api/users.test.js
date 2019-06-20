@@ -23,6 +23,7 @@ const update_appointment = async (original_appointment_id, param_user_id, param_
 
 describe('Appointments and one user', () => {
   beforeEach(async () => {
+    jest.setTimeout(1000000)
     await appointment_helper.emptyTheDatabaseOfUsers()
     let date = new Date('July 14, 2019 12:00:00')
     const dateNowStub = jest.fn(() => date)
