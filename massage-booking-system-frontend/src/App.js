@@ -79,8 +79,6 @@ const App = () => {
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments])
 
-
-
   const announcementNotification = {
     message: announcement ? announcement.message : '',
     type: types.GENERAL,
@@ -91,10 +89,10 @@ const App = () => {
     <Fragment>
       <Router>
         <Header user={user} />
-        <Notification notification={announcementNotification} />
-        <Notification notification={notification} />
+        {/* <Notification notification={announcementNotification} />
+        <Notification notification={notification} /> */}
         <div>
-          <NotificationContext.Provider value={{ createNotification, announcementService }}>
+          <NotificationContext.Provider value={{ createNotification, announcementService, announcement, announcementNotification, notification }}>
             <StretchContext.Provider value={{ stretching, stretchingService }}>
               <UserContext.Provider value={{ user, setUser, users, userService }}>
                 <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
