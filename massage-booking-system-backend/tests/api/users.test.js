@@ -23,7 +23,7 @@ const update_appointment = async (original_appointment_id, param_user_id, param_
 
 describe('Appointments and one user', () => {
   beforeEach(async () => {
-    await User.deleteMany({})
+    await appointment_helper.emptyTheDatabaseOfUsers()
     let date = new Date('July 14, 2019 12:00:00')
     const dateNowStub = jest.fn(() => date)
     global.Date.now = dateNowStub
@@ -49,9 +49,6 @@ describe('Appointments and one user', () => {
     await delete_user(user._id)
     const freeAppointment = await Appointment.findById(appointment._id)
     const deletedUser = await User.findById(user._id)
-
-    console.log('DEL', deletedUser)
-    console.log('APPPO'. freeAppointment)
 
     expect(freeAppointment.type_of_reservation).toBe(0)
     expect(freeAppointment.user_id).toBe(null)

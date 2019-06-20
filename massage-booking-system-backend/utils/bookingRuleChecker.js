@@ -20,10 +20,10 @@ const userAllowedToMakeAppointment = async (
     date.setMinutes(minutes + time)
 
     let appointmentTimeMoment = moment(date)
-    console.log('appointmentTimeMoment', appointmentTimeMoment)
+    //console.log('appointmentTimeMoment', appointmentTimeMoment)
     /*  Checks that requested appointment is in the future. Cant book past appointments */
     if (appointmentTimeMoment.isBefore(now)) {
-      console.log('Tried to book past date')
+      //console.log('Tried to book past date')
       return false
     }
 
@@ -33,7 +33,7 @@ const userAllowedToMakeAppointment = async (
         return timeMoment.isSame(appointmentTimeMoment, 'days')
       })
       if(usersAppointmentOnSameDay) {
-        console.log('cant book samedat appointment if you already have an appointment that day')
+        //console.log('cant book samedat appointment if you already have an appointment that day')
         return false
       }
       return true
@@ -44,7 +44,7 @@ const userAllowedToMakeAppointment = async (
       let startOfThisWeek = now.startOf('week')
       let sixWeeksFromNow = startOfThisWeek.add( 42, 'days')
       if(appointmentsFirstDayOfTheWeek.isAfter(sixWeeksFromNow)) {
-        console.log('cant book appointments more than 6 weeks away')
+        //console.log('cant book appointments more than 6 weeks away')
         return false
       }
 
@@ -71,7 +71,7 @@ const userAllowedToMakeAppointment = async (
     }
 
   } catch (error) {
-    console.log('error in rule checker', error)
+    //console.log('error in rule checker', error)
   }
 }
 
