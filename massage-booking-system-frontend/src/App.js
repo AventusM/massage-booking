@@ -99,7 +99,7 @@ const App = () => {
                   <Route exact path="/" render={() => <Index />} />
                   <Route exact path="/dashboard" render={() => <DashBoard />} />
                   <Route exact path="/mypage" render={() => <MyPage />} />
-                  <Route exact path="/stats" render={() => <Stats />} />
+                  <Route exact path="/stats" render={() => <Stats stats={stats}/>} />
                   <Route exact path="/tvview" render={() => <TVview />} />
                 </AppointmentContext.Provider>
               </UserContext.Provider>

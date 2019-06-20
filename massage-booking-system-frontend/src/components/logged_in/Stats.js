@@ -1,8 +1,6 @@
 import React, { Fragment, useContext } from 'react'
-import { AppointmentContext } from '../../App'
 
-const Stats = () => {
-  const { stats } = useContext(AppointmentContext)
+const Stats = ({ stats }) => {
   console.log('stats', stats)
 
   let numberOfUnusedPastAppointments = stats.numberOfUnusedPastAppointments
