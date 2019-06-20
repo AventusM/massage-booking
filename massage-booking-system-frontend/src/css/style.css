@@ -794,17 +794,38 @@ h3 {
   background: white;
 }
 
-.nonAvailableDay {
-  color: red;
-}
-
-.availableDay {
-  color: rgb(100, 172, 100);
-}
-
 .disabled {
   color: rgb(211, 208, 208);
 }
+
+.noneFree {
+  color: grey;
+}
+.noneFreeSelected {
+  color: grey;
+  background-color: #006edc;
+}
+
+.hasFree {
+  color: rgb(100, 172, 100);
+}
+.hasFreeSelected {
+  color: rgb(100, 172, 100);
+  background-color: #006edc;
+}
+
+.userHasApp {
+  color: purple;
+}
+
+.userHasAppSelected {
+  color: purple;
+  background-color: #006edc;
+}
+
+
+
+
 
 .List {
   /* border: 2px solid green; */
