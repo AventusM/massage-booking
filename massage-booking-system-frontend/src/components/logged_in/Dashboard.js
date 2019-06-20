@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import UserList from './UserList'
 
-import {NotificationContext} from '../../App'
+import { NotificationContext } from '../../App'
 import useField from '../../hooks/useField'
 
 const DashBoard = props => {
@@ -18,14 +18,14 @@ const DashBoard = props => {
   return (
 
     <div>
-    <form className="dashboard_form" onSubmit={changeAnnouncement}>
-      <input className="dashboard_announcement"
-        value={editedAnnouncement.value}
-        onChange={editedAnnouncement.handleFieldChange}
-      />
-      <button type= "submit">Update</button>
-    </form>
-    <UserList/>  
+      <form className="dashboard_form" onSubmit={changeAnnouncement}>
+        <input className="dashboard_announcement"
+          value={editedAnnouncement.value}
+          onChange={editedAnnouncement.handleFieldChange}
+        />
+        <button type="submit">Update</button>
+      </form>
+      <UserList />
     </div>
   )
 }

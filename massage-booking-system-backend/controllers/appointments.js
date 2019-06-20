@@ -216,13 +216,12 @@ appointmentsRouter.put('/:date/addDate', async (req, res, next) => {
       },
     })
 
-    appointments.forEach(e => {
-      e.type_of_reservation = 0
-      Appointment.findByIdAndUpdate(e._id, e)
-    })
+    for (let appointment of appointments) {
+      appointment.type_of_reservation = 0
+      await Appointment.findByIdAndUpdate(appointment._id, appointment)
+    }
 
     const appointmentsChanged = await Appointment.find()
-    console.log('appointmentsChanged: ', appointmentsChanged)
 
     res.json(appointmentsChanged.map(formatAppointment))
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Appointment from './Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
@@ -7,6 +7,8 @@ const AllAppointments = () => {
   const { appointments, selectedDate, appointmentService } = useContext(AppointmentContext)
   const { users, user } = useContext(UserContext)
   const givenDate = new Date(selectedDate)
+  const [show, setShow] = useState(false)
+
   let selectedDay = givenDate.getDate()
   let selectedMonth = givenDate.getMonth() + 1
   let selectedYear = givenDate.getFullYear()
@@ -40,6 +42,12 @@ const AllAppointments = () => {
     return 0
   })
 
+  const isUnavailable = (value) => {
+    return value.type_of_reservation === 3
+  }
+
+  let Unavailable = todaysAppointments.every(isUnavailable)
+
 
   const getStart_Date = (date) => {
     date = new Date(date)
@@ -49,21 +57,24 @@ const AllAppointments = () => {
     return date
   }
 
-  const markDayUnavailable = () => {
-    appointmentService.update(givenDate.toDateString(), '', 'removeDate')
+  const markDayUnavailable = async () => {
+    await appointmentService.update(givenDate.toDateString(), '', 'removeDate')
+    Unavailable = todaysAppointments.every(isUnavailable)
+    setShow(false)
   }
 
-  const markDayAvailable = () => {
-    appointmentService.update(givenDate.toDateString(), '', 'addDate')
+  const markDayAvailable = async () => {
+    await appointmentService.update(givenDate.toDateString(), '', 'addDate')
+    Unavailable = todaysAppointments.every(isUnavailable)
+    setShow(true)
+
   }
 
-  const available = 0
-  console.log('admin ', user.admin)
   return (
     <div className="appointmentListWrapper">
       <div className="controls">
         {user.admin === true ? (
-          available === 1 ? (
+          Unavailable === false ? (
             <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
           ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
           )) : (null)}
