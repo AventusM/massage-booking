@@ -5,6 +5,8 @@ import { NotificationContext, StretchContext } from '../../App'
 import StretchAppointmentDisplay from './StretchingSession'
 import "react-datepicker/dist/react-datepicker.css";
 import fi from 'date-fns/locale/fi';
+import setMinutes from 'date-fns/setMinutes'
+import setHours from 'date-fns/setHours'
 import useField from '../../hooks/useField'
 import Notification from '../Notification'
 
@@ -21,6 +23,7 @@ class DatePickerForm extends React.Component {
 
   handleChange = (date) => {
     this.setState({ startDate: date })
+    console.log('Date now?', this.state.startDate)
   }
 
   createStretch = async (event) => {
@@ -77,9 +80,9 @@ const DashBoard = props => {
 
   return (
     <div>
-      { notification
-        ? <Notification notification={notification}/>
-        : <Notification notification={announcementNotification}/>}
+      {notification
+        ? <Notification notification={notification} />
+        : <Notification notification={announcementNotification} />}
       <form className="dashboard_form" onSubmit={changeAnnouncement}>
         <input className="dashboard_announcement"
           value={editedAnnouncement.value}

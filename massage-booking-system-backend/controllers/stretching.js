@@ -50,41 +50,41 @@ stretchingRouter.post('/', async (req, res, next) => {
     }
 })
 
-// Todo Check that double booking is not possible
 stretchingRouter.put('/:id', async (req, res, next) => {
     try {
         const body = req.body
         const join_status = body.join
         const stretching_id = req.params.id
 
-        // 1. Extract current user data
+        // Extract current user data.
+        // Need to have user model as we need to update it
         const getCurrentUser = req.user
         const user = await User.findById(getCurrentUser._id)
 
         const stretchingAppointment = await Stretching.findById(stretching_id)
 
-        // User wants to join
-        if (join_status === true) {
+        const joinCriteriaPassed =
+            join_status === true &&
+            stretchingAppointment.users.length < 10 &&
+            stretchingAppointment.users.filter(participant_id => participant_id.toString() === user._id.toString()).length === 0
 
-            // Space exists?
-            if (stretchingAppointment.users.length < 10) {
+        const exitCriteriaPassed =
+            join_status === false &&
+            stretchingAppointment.users.length > 0 &&
+            stretchingAppointment.users.filter(participant_id => participant_id.toString() === user._id.toString()).length > 0
 
-                // Should still check here if attempting to double book
-                // ACTUALLY CRITICAL
-                // ACTUALLY CRITICAL
-                // ACTUALLY CRITICAL
-                // ACTUALLY CRITICAL
-                stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
-                const saved = await stretchingAppointment.save()
-                user.stretchingSessions = user.stretchingSessions.concat(saved._id)
-                await user.save()
-                res.json(saved.toJSON())
-            }
-        }
-
-        // User wants to cancel previously joined session
-        else if (join_status === false) {
-
+        if (joinCriteriaPassed) {
+            stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
+            const saved = await stretchingAppointment.save()
+            user.stretchingSessions = user.stretchingSessions.concat(saved._id)
+            await user.save()
+            return res.status(200)
+        } else if (exitCriteriaPassed) {
+            stretchingAppointment.users = stretchingAppointment.users.filter(participant_id => participant_id.toString() !== user._id.toString())
+            await stretchingAppointment.save()
+            user.stretchingSessions = user.stretchingSessions.filter(stretch_session_id => stretch_session_id.toString() !== stretchingAppointment._id.toString())
+            await user.save()
+            return res.status(200)
         }
 
     } catch (exception) {
