@@ -5,10 +5,6 @@ const stretchingSchema = mongoose.Schema({
         type: Date,
         required: true
     },
-    time: {
-        type: String,
-
-    },
     users: [
         {
             type: mongoose.Schema.Types.ObjectId,

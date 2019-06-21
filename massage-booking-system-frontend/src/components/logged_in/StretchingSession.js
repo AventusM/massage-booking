@@ -5,13 +5,15 @@ const StretchAppointmentDisplay = () => {
   const { stretching } = useContext(StretchContext)
   const { user } = useContext(UserContext)
 
+  let loaded = null
   let nextAppointment = null
   if (stretching.length > 0) {
-    const dateData = stretching[0].date
-    nextAppointment = new Date(dateData).toDateString()
+    loaded = true
+    const dateData = new Date(stretching[0].date)
+    nextAppointment = `${dateData.toDateString()} at ${dateData.getHours()}:${dateData.getMinutes()}`
   }
 
-  return (nextAppointment &&
+  return (loaded &&
     <div>
       {nextAppointment}
       <JoinStretchAppointment />
@@ -45,8 +47,9 @@ const CancelStretchAppointment = () => {
   const cancelSession = async () => {
     try {
       await stretchingService.update(stretching[0]._id, { join: false })
+      // Add notification here for success on cancelling session
     } catch (exception) {
-
+      // Add notification here for failure on cancelling session
     }
   }
   return (

@@ -8,7 +8,6 @@ const formatStretchingSession = input => {
     return {
         _id: input._id,
         date: input.date,
-        time: input.time,
         users: input.users
     }
 }
