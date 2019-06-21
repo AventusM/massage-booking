@@ -78,13 +78,17 @@ stretchingRouter.put('/:id', async (req, res, next) => {
             const saved = await stretchingAppointment.save()
             user.stretchingSessions = user.stretchingSessions.concat(saved._id)
             await user.save()
-            return res.status(200)
+
+            // Give this as response so that state can be updated dynamically for user
+            res.json(saved.toJSON())
         } else if (exitCriteriaPassed) {
             stretchingAppointment.users = stretchingAppointment.users.filter(participant_id => participant_id.toString() !== user._id.toString())
-            await stretchingAppointment.save()
+            const saved = await stretchingAppointment.save()
             user.stretchingSessions = user.stretchingSessions.filter(stretch_session_id => stretch_session_id.toString() !== stretchingAppointment._id.toString())
             await user.save()
-            return res.status(200)
+
+            // Give this as response so that state can be updated dynamically for user
+            res.json(saved.toJSON())
         }
 
     } catch (exception) {
