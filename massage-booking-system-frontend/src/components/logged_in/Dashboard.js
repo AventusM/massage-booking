@@ -40,17 +40,12 @@ class DatePickerForm extends React.Component {
     const { startDate } = this.state
     const { stretching } = this.props
     return (
-      <Fragment>
-        {/* Tämä tulee eriyttää omaan komponenttiin tuo divi */}
-        {/* Tämä tulee eriyttää omaan komponenttiin tuo divi */}
-        {/* Tämä tulee eriyttää omaan komponenttiin tuo divi */}
-        <div>
-          Next stretching session -->
-        </div>
+      <div className="basic_helper">
         <form onSubmit={this.createStretch}>
           <DatePicker
             showTimeSelect
-            dateFormat="MMMM d, yyyy h:mm"
+            dateFormat="MMMM d, yyyy HH:mm"
+            timeFormat="HH:mm"
             timeIntervals={9001}
             minDate={new Date()}
             minTime={setHours(setMinutes(new Date(), 55), 8)}
@@ -75,7 +70,7 @@ class DatePickerForm extends React.Component {
           />
           <button type="submit">PAINA</button>
         </form >
-      </Fragment>
+      </div>
     )
   }
 }

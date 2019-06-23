@@ -1,31 +1,81 @@
-import React, { useContext, useEffect } from 'react'
-import { StretchContext, UserContext } from '../../App';
+import React, { useContext, useEffect, useState, Fragment } from 'react'
+import { StretchContext, UserContext } from '../../App'
 
 const StretchAppointmentDisplay = () => {
   const { stretching } = useContext(StretchContext)
   const { user } = useContext(UserContext)
+  const [loaded, setLoaded] = useState(false)
+  const [appointmentData, setAppointmentData] = useState(null)
 
-  let loaded = null
-  let nextAppointment = null
-  if (stretching.length > 0) {
-    loaded = true
-    const dateData = new Date(stretching[0].date)
-    nextAppointment = `${dateData.toDateString()} at ${dateData.getHours()}:${dateData.getMinutes()}`
+  useEffect(() => {
+    if (stretching.length > 0) {
+      setLoaded(true)
+      if (user.admin) {
+        setAppointmentData(stretching)
+      } else if (!user.admin) {
+        const dateData = new Date(stretching[0].date)
+        let minuteAddition = ''
+        // Fix for times such as 10:05 which output 10:5 without this
+        if (dateData.getMinutes() < 10) {
+          minuteAddition += '0'
+        }
+        setAppointmentData(`${dateData.toDateString()} at ${dateData.getHours()}:${dateData.getMinutes()}${minuteAddition}`)
+      }
+    }
+  }, [stretching])
+
+  if (!loaded) {
+    return <div>Loading...</div>
   }
-
   return (loaded &&
-    <div>
-      {nextAppointment}
-      <JoinStretchAppointment />
-      <CancelStretchAppointment />
-    </div>
+    <Fragment>
+      {!user.admin && <div className="basic_helper">{appointmentData}</div>}
+      {user.admin && <StretchingSessionList sessions={stretching} />}
+
+      {/* THIS IS ALSO FOR NON ADMIN!! */}
+      {/* THIS IS ALSO FOR NON ADMIN!! */}
+      {/* COMBINE THIS WITH UPPER !user.admin */}
+      {/* COMBINE THIS WITH UPPER !user.admin */}
+      <div className="basic_helper">
+        <JoinStretchAppointment />
+        <CancelStretchAppointment />
+      </div>
+    </Fragment>
+  )
+}
+
+const StretchingSessionList = (props) => {
+  const { sessions } = props
+  console.log('sessions', sessions)
+  return (
+    <ul className="basic_helper">
+      {sessions.map(session => {
+        return (
+          <SingleStretchingSession
+            key={session._id}
+            id={session._id}
+            date={session.date}
+            users={session.users}
+          />
+        )
+      })}
+    </ul>
+  )
+}
+
+const SingleStretchingSession = (props) => {
+  const { id, date, users } = props
+  return (
+    <li className="basic_helper">
+      <div>id: {id}</div>
+      <div>when? {date}</div>
+      <div>participants: {users.length}</div>
+    </li>
   )
 }
 
 const JoinStretchAppointment = () => {
   const { stretchingService, stretching } = useContext(StretchContext)
-  const { user } = useContext(UserContext)
-
   const slotsRemainingAmount = 10 - stretching[0].users.length
   const slotsRemainingText = `${slotsRemainingAmount} / 10 slots open`
 
