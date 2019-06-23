@@ -12,27 +12,50 @@ const formatStretchingSession = input => {
     }
 }
 
-
 // GETS latest / next / upcoming stretching session
 stretchingRouter.get('/', async (req, res, next) => {
     try {
+        const isAdmin = req.user.admin
+        if (isAdmin) {
+            // 1. Returns all stretching sessions to Admin user
+            const allSessions =
+                await Stretching
+                    .find({})
+                    .populate('users')
+                    .sort({ date: 1 })
 
-        // Returns single stretching session by sorting with days
-        const latesStretchingSession =
-            await Stretching
-                .find({})
-                .populate('users')
-                .sort({ date: -1 })
-                .limit(1)
+            res.send(allSessions.map(formatStretchingSession))
+        } else if (!isAdmin) {
+            // 2. WILL RETURN the next non-completed stretching session to normal user
 
-        res.send(latesStretchingSession.map(formatStretchingSession))
+            // TODO TODO TODO COMPLETE FUNCTIONALITY
+            // CURRENT VERSION ONLY FOR DEMONSTRATION PURPOSES FOR DEMO ETC
+            // TO SHOW DIFFERENCES BETWEEN ADMIN / NORMAL USER
+            // TODO TODO TODO COMPLETE FUNCTIONALITY
+            // CURRENT VERSION ONLY FOR DEMONSTRATION PURPOSES FOR DEMO ETC
+            // TO SHOW DIFFERENCES BETWEEN ADMIN / NORMAL USER
+            // TODO TODO TODO COMPLETE FUNCTIONALITY
+            // CURRENT VERSION ONLY FOR DEMONSTRATION PURPOSES FOR DEMO ETC
+            // TO SHOW DIFFERENCES BETWEEN ADMIN / NORMAL USER
 
+            // Returns single stretching session by sorting with days
+            const latesStretchingSession =
+                await Stretching
+                    .find({})
+                    .populate('users')
+                    .sort({ date: -1 })
+                    .limit(1)
+
+            res.send(latesStretchingSession.map(formatStretchingSession))
+        }
     } catch (exception) {
         next(exception)
     }
 
 })
 
+// Endpoint for masseusse user which gets triggered once they decide to
+// create a new stretching session for other users to join
 stretchingRouter.post('/', async (req, res, next) => {
     try {
         const body = req.body
@@ -49,6 +72,7 @@ stretchingRouter.post('/', async (req, res, next) => {
     }
 })
 
+// Endpoint for users wanting to join / cancel previously joined existing stretching session
 stretchingRouter.put('/:id', async (req, res, next) => {
     try {
         const body = req.body
@@ -96,8 +120,24 @@ stretchingRouter.put('/:id', async (req, res, next) => {
 })
 
 
-// Removes all. Created for testing purposes as one might want to spam the create
-// button at will
+
+// Removes individual stretching appointment completely. Used by masseusse type user
+stretchingRouter.delete('/:id', async (req, res, next) => {
+    try {
+
+        // TODO
+        // 1. Fetch stetching session by id
+        // 2. Update users by removing id from their own stretching session list
+        // IS STEP 2 done automatically by mongoose if JUST STEPS 1 AND 3 ARE MADE?
+        // IS STEP 2 done automatically by mongoose if JUST STEPS 1 AND 3 ARE MADE?
+        // 3. Delete stretching session
+    } catch (exception) {
+        next(exception)
+    }
+})
+
+
+// Removes all stretching sessions at once. Created for testing purposes as one might spam session creation
 stretchingRouter.delete('/', async (req, res, next) => {
     try {
         await Stretching.deleteMany({})
