@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react'
 import { StretchContext, UserContext } from '../../App'
+import useField from '../../hooks/useField';
 
 const StretchAppointmentDisplay = () => {
   const { stretching } = useContext(StretchContext)
@@ -95,11 +96,13 @@ const SingleStretchingSession = (props) => {
 
 const JoinStretchAppointment = () => {
   const { stretchingService, stretching } = useContext(StretchContext)
+  const description = useField('text')
   const slotsRemainingAmount = 10 - stretching[0].users.length
   const slotsRemainingText = `${slotsRemainingAmount} / 10 slots open`
 
   const joinSession = async () => {
     try {
+      console.log(description.value)
       await stretchingService.update(stretching[0]._id, { join: true })
       // Add notification here for success on joining session
     } catch (exception) {
@@ -109,7 +112,7 @@ const JoinStretchAppointment = () => {
   return (
     <div>
       {slotsRemainingText}
-      <Modal joinSession={joinSession} />
+      <Modal description={description} joinSession={joinSession} />
     </div>
   )
 }
@@ -130,21 +133,29 @@ const CancelStretchAppointment = () => {
 }
 
 const Modal = (props) => {
-  const { joinSession } = props
+  const { joinSession, description } = props
   const [open, setOpen] = useState(false)
+
   const handleClose = (func) => {
     func()
     setOpen(false)
   }
+
   const handleOpen = () => { setOpen(true) }
+
   console.log(open)
+
   return (
     <Fragment>
       {!open && <button onClick={handleOpen}>Join</button>}
       {open && <div className="modal_wrapper">
-        <textarea rows='3' ></textarea>
+        <div>
+          <textarea value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
+        </div>
+        <div>
         <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
         <button onClick={() => handleClose(joinSession)} className="modal_submit_button">Submit</button>
+        </div>
       </div>}
     </Fragment>
   )
