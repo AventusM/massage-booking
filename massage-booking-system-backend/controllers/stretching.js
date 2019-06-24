@@ -109,6 +109,7 @@ stretchingRouter.put('/:id', async (req, res, next) => {
 
             stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
             const saved = await stretchingAppointment.save()
+            await saved.populate('users').execPopulate()
             user.stretchingSessions = user.stretchingSessions.concat(saved._id)
             await user.save()
 
@@ -117,6 +118,7 @@ stretchingRouter.put('/:id', async (req, res, next) => {
         } else if (exitCriteriaPassed) {
             stretchingAppointment.users = stretchingAppointment.users.filter(participant_id => participant_id.toString() !== user._id.toString())
             const saved = await stretchingAppointment.save()
+            await saved.populate('users').execPopulate()
             user.stretchingSessions = user.stretchingSessions.filter(stretch_session_id => stretch_session_id.toString() !== stretchingAppointment._id.toString())
             await user.save()
 
