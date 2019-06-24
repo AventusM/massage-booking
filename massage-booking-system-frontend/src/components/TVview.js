@@ -64,8 +64,8 @@ const TVview = () => {
         <img className="logoTV"
           id="unity4" src={unity4}></img>
       </div>
-      <div><DaysAppointments dayNumber={1} lastdayWithAppointments={2} /></div>
-      <div><DaysAppointments dayNumber={2} lastdayWithAppointments={2} /></div>
+      <div className="day-view"><DaysAppointments dayNumber={1} lastdayWithAppointments={2} /></div>
+      <div className="day-view"><DaysAppointments dayNumber={2} lastdayWithAppointments={2} /></div>
 
       <div>
 

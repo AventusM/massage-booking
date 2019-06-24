@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-/* TÄMÄ OVERWRITEE ESIM HEADERIT ATM */
 ul,
 li {
   margin: 0;
@@ -15,9 +14,16 @@ body {
   background-color: #2b5876;
 }
 
-.remove {
-  width: 20px;
-  height: 20px;
+#remove {
+  width: 50px;
+  margin-left: 10px;
+  background:#f44b42;
+}
+
+#restore {
+  width: 50px;
+  margin-left: 10px;
+  background:#f44b42;
 }
 
 .appointmentListWrapper .controls button {
@@ -52,14 +58,15 @@ nav a {
   text-align: center;
 }
 
-@media screen and (max-width: 1549px) {
-  .nextappointment_wrapper {
-    
-    margin-top: 25px;
-  }
-
+@media screen and (max-width: 1161px) {
   .desktop_no_appointments_info {
   display: none;
+  }
+}
+
+@media screen and (max-width: 1161px) {
+  .nextappointment_wrapper {
+    margin-top: 25px;
   }
 }
 .desktop_no_appointments_info {
@@ -712,7 +719,7 @@ h3 {
   }
 
   .nav-link:hover {
-    color: rgba(255, 255, 255, 1);
+    color: rgb(134, 122, 122);
   }
 }
 
@@ -815,7 +822,6 @@ h3 {
 
 /*Background*/
 .appointmentListWrapperMain {
-  margin-top: 100px;
   min-height: 100vh;
   background-color: #2b5876;
   display: grid;
@@ -988,6 +994,15 @@ h3 {
   border: #3b9962;
 }
 
+#removed {
+  background: rgb(73, 42, 42);
+}
+
+#impossible {
+  background: rgb(70, 60, 60);
+  border: none;
+}
+
 /* Appointment List mobile */
 
 @media screen and (min-width: 701px) {
@@ -1025,9 +1040,19 @@ h3 {
 }
 
 /* Notification*/
+
 .notification_container {
-  top: 20%;
-  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1160px) {
+  .index_notification_container {
+      top: 20%;
+      width: 100%;
+      position: fixed;
+      z-index: 999;
+      margin: 0 auto;
+  }
 }
 
 .notification {
@@ -1150,7 +1175,7 @@ h3 {
   font-size: 5em;
   color: white;
   text-align: center;
-
+ 
 }
 
 .tv_notice p {
@@ -1163,17 +1188,16 @@ h3 {
 .clock {
   font-size: 150px;
   font-weight: 500;
+  margin-top: 70px;
   color: white;
- 
+  text-align: center
 }
 
 .logoTV {
   width: 400px;
-  margin-left: 100px;
-  margin-bottom: 50px;
   position: fixed;
-  left: 2px;
-  bottom: 2px;
+  left: 10px;
+  bottom: 10px;
 }
 
 .week {
@@ -1183,17 +1207,23 @@ h3 {
 
 .tv_view {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   justify-items: center;
 
 }
 
 .tv_view h2 {
-  color: white
+  color: white;
+  text-align: center;
+  margin-top: 40px;
 }
 
 .tv_notification{
   width: 100%;
+}
+
+.day-view {
+  margin-bottom: 15px;
 }
 
 
@@ -1233,4 +1263,28 @@ h3 {
   margin-top: 25px;
   font-size: 40px;
   color: white;
+}
+
+/* Timi's stretching session things. Overwriting some base css from imported component itself */
+/* Improves time selection list readability */
+.react-datepicker__time-box li{
+  padding: 10px 5px;
+}
+
+/* Removes the 0:00 time which was unnecessary anyway */
+.react-datepicker__time-box li:first-child{
+  display: none;
+}
+
+/* Stripes to improve readability for Timi */
+.react-datepicker__time-box li:nth-child(odd){
+  background-color: #d4d4d4;
+}
+
+/* Helper css in visualization */
+.basic_helper {
+  border: 2px solid white;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 15px;
 }

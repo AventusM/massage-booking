@@ -41,11 +41,15 @@ const AuthIndex = ({ user }) => {
         ? <Notification notification={notification} />
         : <NextAppointment user={user} appointments={appointments} />
       }
+      { isMobile
+        ? <Notification notification={announcementNotification}/>
+        : null
+      }
       {isMobile
-        ? notification
-          ? <Notification notification={notification}/>
-          : <Notification notification={announcementNotification}/>
+        ? <div className="index_notification_container"><Notification notification={notification}/></div>
         : null}
+
+
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
@@ -59,7 +63,7 @@ const AuthIndex = ({ user }) => {
             next2Label={null}
             tileClassName={({ date, view }) => {
               let dateMoment = moment(date)
-              if (dateMoment.isBefore(now) || dateMoment.day() > 2 || dateMoment.day() === 0) {
+              if (dateMoment.isBefore(now, 'days') || dateMoment.day() > 2 || dateMoment.day() === 0) {
                 return 'disabled'
               } else {
                 if (dateMoment.isSame(selectedMoment, 'days')) {

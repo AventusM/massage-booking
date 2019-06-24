@@ -77,7 +77,9 @@ const App = () => {
     console.log('REFRESH USER EFFECT TRIGGERED')
     user &&
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
-  }, [appointments])
+  }, [appointments, stretching])
+
+
 
   const announcementNotification = {
     message: announcement ? announcement.message : '',
@@ -99,7 +101,7 @@ const App = () => {
                   <Route exact path="/" render={() => <Index />} />
                   <Route exact path="/dashboard" render={() => <DashBoard />} />
                   <Route exact path="/mypage" render={() => <MyPage />} />
-                  <Route exact path="/stats" render={() => <Stats />} />
+                  <Route exact path="/stats" render={() => <Stats stats={stats}/>} />
                   <Route exact path="/tvview" render={() => <TVview />} />
                 </AppointmentContext.Provider>
               </UserContext.Provider>
