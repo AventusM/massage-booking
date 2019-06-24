@@ -3,7 +3,7 @@ import unity5 from '../pics/unity5.png'
 import unity4 from '../pics/unity4.png'
 import GoogleButton from 'react-google-button'
 
-const LoginIndex = props => {
+const LoginIndex = () => {
   // console.log('Login index props', props)
 
   const [width, setWidth] = useState(window.innerWidth)
@@ -16,7 +16,7 @@ const LoginIndex = props => {
   if (isMobile) {
     return (
       <div className="login_wrapper_mobile">
-        <img id="unity" src={unity5} />
+        <img id="unity" src={unity5} alt="" />
         <h1>Massage Booking</h1>
         <div className="login_button">
           <GoogleButton
@@ -36,7 +36,7 @@ const LoginIndex = props => {
             onClick={() => (window.location.href = '/auth/google')}
           />
         </div>
-        <img id="unity4" src={unity4} />
+        <img id="unity4" src={unity4} alt="" />
       </div>
     )
   }

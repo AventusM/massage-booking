@@ -43,10 +43,10 @@ const Appointment = props => {
             </div>
           )
         ) : null
-      ) : ( type_of_reservation === 0
+      ) : (type_of_reservation === 0
         ? <CreateAppointment id={id} start_date={start_date} />
         : user.admin
-          ? <button id="removed" onClick={() => createNotification('This appointment is not reservable') }><Display dateobject={start_date} removed={true}/></button>
+          ? <button id="removed" onClick={() => createNotification('This appointment is not reservable')}><Display dateobject={start_date} removed={true} /></button>
           : null
       )}
       {user.admin === true ? type_of_reservation === 3 ? (

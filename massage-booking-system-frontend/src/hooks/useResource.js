@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { timeout } from 'q'
 
 const useResource = baseUrl => {
   const [resources, setResources] = useState([])
@@ -21,7 +20,6 @@ const useResource = baseUrl => {
   const update = async (id, data, type = '') => {
     //console.log('UPDATE')
     const updatedResource = await axios.put(`${baseUrl}/${id}/${type}`, data)
-    console.log('updatedResource: ', updatedResource)
     if (updatedResource.data.hasOwnProperty('_id')) {
       setResources(
         resources.map(resource =>
@@ -37,9 +35,9 @@ const useResource = baseUrl => {
     const data = updatedResources.data
 
     const updatedAppointments = resources.map(app => {
-      let appUpdated = data.find(app2 => app2._id === app._id);
-      return appUpdated ? { ...app, ...appUpdated } : app;
-    });
+      let appUpdated = data.find(app2 => app2._id === app._id)
+      return appUpdated ? { ...app, ...appUpdated } : app
+    })
 
     setResources(updatedAppointments)
   }
