@@ -53,7 +53,6 @@ const StretchingSessionList = (props) => {
         return (
           <SingleStretchingSession
             key={session._id}
-            id={session._id}
             date={session.date}
             users={session.users}
           />
@@ -62,19 +61,35 @@ const StretchingSessionList = (props) => {
     </ul>
   )
 }
+const StretchingSessionUser = (props) => {
+const { name, description } = props
+return (
+        <li>
+              {name}
+              {'description'}
+            </li>
+
+)
+}
+
+
+
+
+
 
 const SingleStretchingSession = (props) => {
-  const { id, date, users } = props
+  const { date, users } = props
   return (
     <li className="basic_helper">
-      <div>id: {id}</div>
       <div>when? {date}</div>
       <ul>
         {users.map(user => {
           return(
-            <li>
-              {user.name}
-            </li>
+            <StretchingSessionUser
+            key={user._id}
+            name={user.name}
+            description={user.description}
+            />
           )
         })}
       </ul>
