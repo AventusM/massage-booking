@@ -65,6 +65,7 @@ stretchingRouter.post('/', async (req, res, next) => {
     date.setMinutes(minutes + time)
 
     await AppointmentManager.removeTwoAppointments(date)
+
     const stretchingSession = new Stretching({
       date: date,
       users: []
