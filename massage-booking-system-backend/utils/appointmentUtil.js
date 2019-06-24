@@ -8,7 +8,7 @@ const User = require('../models/user')
  */
 const removeAppointment = async (appointment) => {
   try {
-    if (appointment.user_id !== null) {
+    if (appointment.user_id !== null && appointment.user_id !== undefined) {
       const user = await User.findById({ _id: appointment.user_id })
       const appointmentsToKeep = user.appointments.filter(function (appoint) {
         if (appointment._id.stringify !== appoint.stringify) {
@@ -23,15 +23,16 @@ const removeAppointment = async (appointment) => {
 
     return await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true })
   } catch (exception) {
-    // console.log('E', exception)
+    console.log('E', exception)
   }
 }
 const removeTwoAppointments = async (date) => {
   const firstDate = new Date(date)
-  console.log('DATE', firstDate)
+  console.log('DATEk', firstDate)
   try {
     const firstAppointment = await Appointment.find({ start_date: firstDate })
-    const secondDate = generator.increaseTime(5, new Date(firstAppointment.end_date))
+    const secondDate = generator.increaseTime(35, firstDate)
+    console.log('TOINEN', secondDate)
     const secondAppointment = await Appointment.find({ start_date: secondDate })
 
     await removeAppointment(firstAppointment)
