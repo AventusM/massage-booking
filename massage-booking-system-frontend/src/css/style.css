@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-/* TÄMÄ OVERWRITEE ESIM HEADERIT ATM */
 ul,
 li {
   margin: 0;
@@ -1243,4 +1242,28 @@ h3 {
   margin-top: 25px;
   font-size: 40px;
   color: white;
+}
+
+/* Timi's stretching session things. Overwriting some base css from imported component itself */
+/* Improves time selection list readability */
+.react-datepicker__time-box li{
+  padding: 10px 5px;
+}
+
+/* Removes the 0:00 time which was unnecessary anyway */
+.react-datepicker__time-box li:first-child{
+  display: none;
+}
+
+/* Stripes to improve readability for Timi */
+.react-datepicker__time-box li:nth-child(odd){
+  background-color: #d4d4d4;
+}
+
+/* Helper css in visualization */
+.basic_helper {
+  border: 2px solid white;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 15px;
 }

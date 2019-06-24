@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Display from './Display'
 import CreateAppointment from './CreateAppointment'
 import { AppointmentContext, UserContext, NotificationContext } from '../../App'
