@@ -23,6 +23,7 @@ const StretchAppointmentDisplay = () => {
       }
     }
   }, [stretching])
+  console.log('stretching in display', stretching)
 
   if (!loaded) {
     return <div>Loading...</div>
@@ -46,7 +47,6 @@ const StretchAppointmentDisplay = () => {
 
 const StretchingSessionList = (props) => {
   const { sessions } = props
-  console.log('sessions', sessions)
   return (
     <ul className="basic_helper">
       {sessions.map(session => {
@@ -61,21 +61,16 @@ const StretchingSessionList = (props) => {
     </ul>
   )
 }
+
 const StretchingSessionUser = (props) => {
-const { name, description } = props
-return (
-        <li>
-              {name}
-              {'description'}
-            </li>
-
-)
+  const { name, description } = props
+  return (
+    <li>
+      {name}
+      {description}
+    </li>
+  )
 }
-
-
-
-
-
 
 const SingleStretchingSession = (props) => {
   const { date, users } = props
@@ -84,11 +79,11 @@ const SingleStretchingSession = (props) => {
       <div>when? {date}</div>
       <ul>
         {users.map(user => {
-          return(
+          return (
             <StretchingSessionUser
-            key={user._id}
-            name={user.name}
-            description={user.description}
+              key={user._id}
+              name={user.name}
+              description={user.description}
             />
           )
         })}

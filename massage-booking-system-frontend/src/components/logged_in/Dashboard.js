@@ -78,7 +78,6 @@ class DatePickerForm extends React.Component {
 const DashBoard = props => {
   const { announcementService, notification, announcementNotification } = useContext(NotificationContext)
   const { stretching, stretchingService } = useContext(StretchContext)
-  console.log(stretching)
   let editedAnnouncement = useField('')
 
   const changeAnnouncement = async event => {

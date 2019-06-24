@@ -7,8 +7,14 @@ const stretchingSchema = mongoose.Schema({
     },
     users: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            data: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            description: {
+                type: String,
+                required: true
+            }
         }
     ]
 })

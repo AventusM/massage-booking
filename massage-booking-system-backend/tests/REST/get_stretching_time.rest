@@ -1,5 +1,6 @@
-DELETE http://localhost:3001/api/stretching/
+GET http://localhost:3001/api/stretching/
 Content-Type: application/json
 
 {    
+  "isAdmin": false
 }

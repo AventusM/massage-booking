@@ -23,7 +23,7 @@ stretchingRouter.get('/', async (req, res, next) => {
             const allSessions =
                 await Stretching
                     .find({ date: { $gte: today } })
-                    .populate('users')
+                    .populate('data')
                     .sort({ date: 1 })
 
             res.send(allSessions.map(formatStretchingSession))
@@ -44,7 +44,7 @@ stretchingRouter.get('/', async (req, res, next) => {
             const latesStretchingSession =
                 await Stretching
                     .find({})
-                    .populate('users')
+                    .populate('data')
                     .sort({ date: -1 })
                     .limit(1)
 
@@ -93,12 +93,12 @@ stretchingRouter.put('/:id', async (req, res, next) => {
         const joinCriteriaPassed =
             join_status === true &&
             stretchingAppointment.users.length < 10 &&
-            stretchingAppointment.users.filter(participant_id => participant_id.toString() === user._id.toString()).length === 0
+            stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length === 0
 
         const exitCriteriaPassed =
             join_status === false &&
             stretchingAppointment.users.length > 0 &&
-            stretchingAppointment.users.filter(participant_id => participant_id.toString() === user._id.toString()).length > 0
+            stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length > 0
 
         if (joinCriteriaPassed) {
             // MOVE THIS TO MODAL
@@ -107,18 +107,20 @@ stretchingRouter.put('/:id', async (req, res, next) => {
             const description = `test description for ${user.name}`
             console.log(description)
 
-            stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
+            // stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
+            stretchingAppointment.users = stretchingAppointment.users.concat({ data: user._id, description })
+            console.log('stretch app users', stretchingAppointment.users)
             const saved = await stretchingAppointment.save()
-            await saved.populate('users').execPopulate()
+            await saved.populate('data').execPopulate()
             user.stretchingSessions = user.stretchingSessions.concat(saved._id)
             await user.save()
 
             // Give this as response so that state can be updated dynamically for user
             res.json(saved.toJSON())
         } else if (exitCriteriaPassed) {
-            stretchingAppointment.users = stretchingAppointment.users.filter(participant_id => participant_id.toString() !== user._id.toString())
+            stretchingAppointment.users = stretchingAppointment.users.filter(participant => participant.data._id.toString() !== user._id.toString())
             const saved = await stretchingAppointment.save()
-            await saved.populate('users').execPopulate()
+            await saved.populate('data').execPopulate()
             user.stretchingSessions = user.stretchingSessions.filter(stretch_session_id => stretch_session_id.toString() !== stretchingAppointment._id.toString())
             await user.save()
 

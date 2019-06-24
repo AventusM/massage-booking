@@ -139,7 +139,7 @@ usersRouter.delete('/:id', async (req, res, next) => {
 
 const emptyAppointmentsFromUser = async (user) => {
   const appointments = await Appointment.find({ user_id: user._id })
-  for(let appoint of appointments) {
+  for (let appoint of appointments) {
     await appointmentUtil.removeUserFromAppointment(appoint)
   }
 
