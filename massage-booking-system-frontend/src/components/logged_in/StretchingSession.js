@@ -69,7 +69,15 @@ const SingleStretchingSession = (props) => {
     <li className="basic_helper">
       <div>id: {id}</div>
       <div>when? {date}</div>
-      <div>participants: {users.length}</div>
+      <ul>
+        {users.map(user => {
+          return(
+            <li>
+              {user.name}
+            </li>
+          )
+        })}
+      </ul>
     </li>
   )
 }
