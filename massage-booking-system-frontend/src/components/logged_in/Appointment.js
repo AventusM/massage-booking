@@ -30,7 +30,7 @@ const Appointment = props => {
               <button
                 id="reservedOwn"
                 onClick={() => cancelAppointment()}>
-                <Display dateobject={start_date} ownPage={ownPage} />
+                <Display dateobject={start_date} ownPage={ownPage} date={true} cancel={true} />
               </button>
             </div>
           ) : (
