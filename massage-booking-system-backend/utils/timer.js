@@ -8,7 +8,7 @@ const Appointment = require('../models/appointment')
    * @param {*} date starting date.
    */
 const nextSixMonths = (date) => {
-  for(let i = 0; i < 168;i+=7){
+  for (let i = 0; i < 168; i += 7) {
     //console.log('index', i)
     let newDate = new Date(date)
     pickDays(new Date(newDate.setDate(date.getDate() + i)))
@@ -20,8 +20,8 @@ const nextSixMonths = (date) => {
    * @param {*} date represents the week.
    */
 const pickDays = async (date) => {
-  let monday = setDay(1 ,new Date(date))
-  let tuesday = setDay(2 ,new Date(date))
+  let monday = setDay(1, new Date(date))
+  let tuesday = setDay(2, new Date(date))
   await ifNotInDBCreateDay(new Date(monday))
   await ifNotInDBCreateDay(new Date(tuesday))
 }
@@ -31,9 +31,9 @@ const pickDays = async (date) => {
    */
 const setDay = (day, date) => {
   let today = date.getDay()
-  if(today === day){
+  if (today === day) {
     return date
-  }else if(today < day){
+  } else if (today < day) {
     day -= today
     return date.setDate(date.getDate() + day)
   }
@@ -46,14 +46,14 @@ const setDay = (day, date) => {
    * If a match is found the method doesnt do anything, else it will generate a day full of appointments by calling generator.
    * @param {*} date represents the day.
    */
-const ifNotInDBCreateDay = async(date) => {
+const ifNotInDBCreateDay = async (date) => {
   date = formatTime(new Date(date))
   let checkup = new Date(date).setMinutes(475)
   let doesDayHaveAppointments = await Appointment.find({ end_date: checkup })
-  if(doesDayHaveAppointments.length === 0 && date.toISOString().includes('08:55:00')){
+  if (doesDayHaveAppointments.length === 0 && date.toISOString().includes('08:55:00')) {
     await generator.generateAppointmentsForDay(new Date(date))
     // console.log('date has been saved into database', date)
-  }else{
+  } else {
     console.log('day has appointments in database or time is formatted wrong', date, ' checkup date: ', checkup)
   }
 }
@@ -63,7 +63,7 @@ const ifNotInDBCreateDay = async(date) => {
  * @param {*} date the date to be formatted.
  */
 const formatTime = (date) => {
-  date.setUTCHours(8,55,0,0)
+  date.setUTCHours(8, 55, 0, 0)
   return date
 }
 

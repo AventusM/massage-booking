@@ -65,12 +65,12 @@ const get_appointment = async (id) => {
   return appointment_response.body
 }
 
-const remove_appointment = async(original_appointment_id) => {
+const remove_appointment = async (original_appointment_id) => {
   await api
     .put(`${APPOINTMENTS_API_PATH}/${original_appointment_id}/remove`)
     .send({ original_appointment_id })
 }
-const remove_day_of_appointments = async(date) => {
+const remove_day_of_appointments = async (date) => {
   await api
     .put(`${APPOINTMENTS_API_PATH}/${date}/removeDate`)
     .send({ date })
