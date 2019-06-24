@@ -15,12 +15,14 @@ const formatStretchingSession = input => {
 // GETS latest / next / upcoming stretching session
 stretchingRouter.get('/', async (req, res, next) => {
     try {
+        let today = new Date()
+
         const isAdmin = req.user.admin
         if (isAdmin) {
             // 1. Returns all stretching sessions to Admin user
             const allSessions =
                 await Stretching
-                    .find({})
+                    .find({ date: { $gte: today } })
                     .populate('users')
                     .sort({ date: 1 })
 
@@ -84,6 +86,8 @@ stretchingRouter.put('/:id', async (req, res, next) => {
         const getCurrentUser = req.user
         const user = await User.findById(getCurrentUser._id)
 
+
+
         const stretchingAppointment = await Stretching.findById(stretching_id)
 
         const joinCriteriaPassed =
@@ -97,6 +101,12 @@ stretchingRouter.put('/:id', async (req, res, next) => {
             stretchingAppointment.users.filter(participant_id => participant_id.toString() === user._id.toString()).length > 0
 
         if (joinCriteriaPassed) {
+            // MOVE THIS TO MODAL
+            // MOVE THIS TO MODAL
+            // MOVE THIS TO MODAL
+            const description = `test description for ${user.name}`
+            console.log(description)
+
             stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
             const saved = await stretchingAppointment.save()
             user.stretchingSessions = user.stretchingSessions.concat(saved._id)

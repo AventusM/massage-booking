@@ -19,7 +19,7 @@ const StretchAppointmentDisplay = () => {
         if (dateData.getMinutes() < 10) {
           minuteAddition += '0'
         }
-        setAppointmentData(`${dateData.toDateString()} at ${dateData.getHours()}:${dateData.getMinutes()}${minuteAddition}`)
+        setAppointmentData(`${dateData.toDateString()} at ${dateData.getHours()}:${minuteAddition}${dateData.getMinutes()}`)
       }
     }
   }, [stretching])

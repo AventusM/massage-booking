@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { timeout } from 'q'
+// import { timeout } from 'q'
 
 const useResource = baseUrl => {
   const [resources, setResources] = useState([])
