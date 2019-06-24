@@ -63,10 +63,11 @@ const StretchingSessionList = (props) => {
 }
 
 const StretchingSessionUser = (props) => {
-  const { name, description } = props
+  const { data, description } = props
+  console.log(props)
   return (
     <li>
-      {name}
+      {data.name}
       {description}
     </li>
   )
@@ -81,8 +82,8 @@ const SingleStretchingSession = (props) => {
         {users.map(user => {
           return (
             <StretchingSessionUser
-              key={user._id}
-              name={user.name}
+              key={user.data._id}
+              data={user.data}
               description={user.description}
             />
           )
