@@ -63,7 +63,7 @@ const AuthIndex = ({ user }) => {
             next2Label={null}
             tileClassName={({ date, view }) => {
               let dateMoment = moment(date)
-              if (dateMoment.isBefore(now) || dateMoment.day() > 2 || dateMoment.day() === 0) {
+              if (dateMoment.isBefore(now, 'days') || dateMoment.day() > 2 || dateMoment.day() === 0) {
                 return 'disabled'
               } else {
                 if (dateMoment.isSame(selectedMoment, 'days')) {

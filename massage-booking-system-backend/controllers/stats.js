@@ -21,7 +21,7 @@ statsRouter.get('/', async (req, res, next) => {
     */
     let pastAppointments = appointments.filter(appointment => {
       let appointmentMoment = moment(appointment.start_date)
-      return appointmentMoment.isBefore(now)
+      return appointmentMoment.isBefore(now, 'days')
     })
     let numberOfPastAppointments = pastAppointments.length
 
