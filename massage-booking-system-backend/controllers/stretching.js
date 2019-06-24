@@ -23,7 +23,7 @@ stretchingRouter.get('/', async (req, res, next) => {
             const allSessions =
                 await Stretching
                     .find({ date: { $gte: today } })
-                    .populate('data')
+                    .populate('users.data')
                     .sort({ date: 1 })
 
             res.send(allSessions.map(formatStretchingSession))
@@ -44,7 +44,7 @@ stretchingRouter.get('/', async (req, res, next) => {
             const latesStretchingSession =
                 await Stretching
                     .find({})
-                    .populate('data')
+                    .populate('users.data')
                     .sort({ date: -1 })
                     .limit(1)
 
@@ -111,7 +111,7 @@ stretchingRouter.put('/:id', async (req, res, next) => {
             stretchingAppointment.users = stretchingAppointment.users.concat({ data: user._id, description })
             console.log('stretch app users', stretchingAppointment.users)
             const saved = await stretchingAppointment.save()
-            await saved.populate('data').execPopulate()
+            await saved.populate('users.data').execPopulate()
             user.stretchingSessions = user.stretchingSessions.concat(saved._id)
             await user.save()
 
@@ -120,7 +120,7 @@ stretchingRouter.put('/:id', async (req, res, next) => {
         } else if (exitCriteriaPassed) {
             stretchingAppointment.users = stretchingAppointment.users.filter(participant => participant.data._id.toString() !== user._id.toString())
             const saved = await stretchingAppointment.save()
-            await saved.populate('data').execPopulate()
+            await saved.populate('users.data').execPopulate()
             user.stretchingSessions = user.stretchingSessions.filter(stretch_session_id => stretch_session_id.toString() !== stretchingAppointment._id.toString())
             await user.save()
 
