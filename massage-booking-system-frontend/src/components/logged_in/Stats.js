@@ -8,6 +8,7 @@ const Stats = ({ stats }) => {
   let numberOfUsers = stats.numberOfUsers
   let totalAppointmentsUsed = stats.totalAppointmentsUsed
   let mostAppointmentsBySingleUser = stats.mostAppointmentsBySingleUser
+  let usersWhoHaveUsedMassage = stats.usersWhoHaveUsedMassage
 
   console.log(
     'past ',
@@ -25,6 +26,8 @@ const Stats = ({ stats }) => {
         ).toFixed(1)} % of possible appointments went unused`}{' '}
       </p>
       <p>{`Number of users ${numberOfUsers}`}</p>
+      <p>{`Number of users who have used massages${usersWhoHaveUsedMassage}`}</p>
+      <p>{`Number of appointments needed per week if all active users fully utilize their massages${usersWhoHaveUsedMassage / 2} (users who have made appointments are considered active)`}</p>
       <p>{`Average appointments per user ${(
         totalAppointmentsUsed / numberOfUsers
       ).toFixed(2)}`}</p>

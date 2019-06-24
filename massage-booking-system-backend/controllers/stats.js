@@ -7,64 +7,71 @@ const moment = require('moment')
 statsRouter.use(bodyParser.json())
 
 statsRouter.get('/', async (req, res, next) => {
-  const appointments = await Appointment.find({})
-  const users = await User.find({})
-  let now = moment()
+
+  try {
+    const appointments = await Appointment.find({})
+    const users = await User.find({})
+    let now = moment()
 
 
-  // appointment stats
+    // appointment stats
 
-  /**
-  * lists an array of all past appointments.
-  */
-  let pastAppointments = appointments.filter(appointment => {
-    let appointmentMoment = moment(appointment.start_date)
-    return appointmentMoment.isBefore(now)
-  })
-  console.log('past appointments', pastAppointments) // !!! MIKSI KAIKILLA VANHOILLA PPOINTMENTEILLA ON TYPE 3
-  let numberOfPastAppointments = pastAppointments.length
+    /**
+    * lists an array of all past appointments.
+    */
+    let pastAppointments = appointments.filter(appointment => {
+      let appointmentMoment = moment(appointment.start_date)
+      return appointmentMoment.isBefore(now)
+    })
+    let numberOfPastAppointments = pastAppointments.length
 
-  /**
-   * lists an array of all past unused appointments.
-   */
-  let unusedPastAppointments = pastAppointments.filter(
-    appointment => appointment.type_of_reservation === 0
-  )
-  let numberOfUnusedPastAppointments = unusedPastAppointments.length
-
-
-  // users stats
-  let numberOfUsers = users.length
-
-  /**
-   * lists an array of users by their amount of appointments in decending order.
-   */
-  let numberOfUsersAppointments = users.map(user => user.appointments.length)
-  numberOfUsersAppointments.sort((a, b) => b - a)
-
-  let mostAppointmentsBySingleUser = numberOfUsersAppointments[0]
-
-  let totalAppointmentsUsed = numberOfUsersAppointments.reduce(
-    (accumulator, currentvalue) => accumulator + currentvalue
-  )
+    /**
+    * lists an array of all past unused appointments.
+    */
+    let unusedPastAppointments = pastAppointments.filter(
+      appointment => appointment.type_of_reservation === 0
+    )
+    let numberOfUnusedPastAppointments = unusedPastAppointments.length
 
 
-  /**
-   * users who have used massage
-   */
-  let usersWhoHaveUsedMassage =  numberOfUsersAppointments.filter(count => count === 0)
+    // users stats
+    let numberOfUsers = users.length
 
-  let statisticsToSend = {
-    numberOfPastAppointments,
-    numberOfUnusedPastAppointments,
-    numberOfUsers,
-    mostAppointmentsBySingleUser,
-    totalAppointmentsUsed
+    /**
+    * lists an array of users by their amount of appointments in decending order.
+    */
+    let numberOfUsersAppointments = users.map(user => user.appointments.length)
+    numberOfUsersAppointments.sort((a, b) => b - a)
+
+    let mostAppointmentsBySingleUser = numberOfUsersAppointments[0]
+
+    let totalAppointmentsUsed = numberOfUsersAppointments.reduce(
+      (accumulator, currentvalue) => accumulator + currentvalue
+    )
+
+
+    /**
+    * users who have used massage
+    */
+    let usersWhoHaveUsedMassage =  numberOfUsersAppointments.filter(count => count === 0).length
+
+    let statisticsToSend = {
+      numberOfPastAppointments,
+      numberOfUnusedPastAppointments,
+      numberOfUsers,
+      mostAppointmentsBySingleUser,
+      totalAppointmentsUsed,
+      usersWhoHaveUsedMassage
+    }
+
+    console.log('statics to send ', statisticsToSend)
+
+    res.json(statisticsToSend)
+  } catch (exception)
+  {
+    next(exception)
   }
 
-  console.log('statics to send ', statisticsToSend)
-
-  res.json(statisticsToSend)
 
 })
 
