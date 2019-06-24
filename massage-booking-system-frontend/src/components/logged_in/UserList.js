@@ -2,15 +2,15 @@ import React, { useContext, useState } from 'react'
 import { UserContext } from '../../App'
 import User from './User'
 
-const UserList = props => {
+const UserList = () => {
   const { users } = useContext(UserContext)
   const [filter, setFilter] = useState('')
   const filteredUsers =
     filter === ''
       ? users
       : users.filter(user =>
-          user.name.toLowerCase().startsWith(filter.toLowerCase())
-        )
+        user.name.toLowerCase().startsWith(filter.toLowerCase())
+      )
 
   const filterChange = event => {
     setFilter(event.target.value)

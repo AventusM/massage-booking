@@ -30,7 +30,7 @@ const Appointment = props => {
               <button
                 id="reservedOwn"
                 onClick={() => cancelAppointment()}>
-                <Display dateobject={start_date} ownPage={ownPage} />
+                <Display dateobject={start_date} ownPage={ownPage} date={true} cancel={true} />
               </button>
             </div>
           ) : (
@@ -43,17 +43,17 @@ const Appointment = props => {
             </div>
           )
         ) : null
-      ) : (
-        <CreateAppointment id={id} start_date={start_date} />
+      ) : (type_of_reservation === 0
+        ? <CreateAppointment id={id} start_date={start_date} />
+        : user.admin
+          ? <button id="removed" onClick={() => createNotification('This appointment is not reservable')}><Display dateobject={start_date} removed={true} /></button>
+          : null
       )}
       {user.admin === true ? type_of_reservation === 3 ? (
-        <div className="remove" onClick={() => markAppAvailable()}>
-          <i className="fas fa-undo"></i>
-        </div >
+        <button onClick={() => markAppAvailable()} id="restore" className="fas fa-undo"></button>
+
       ) : (
-        <div className="remove" onClick={() => markAppUnavailable()}>
-          <i className="far fa-trash-alt" ></i>
-        </div >
+        <button onClick={() => markAppUnavailable()} id="remove" className="far fa-trash-alt" ></button>
       ) : (null)
       }
 

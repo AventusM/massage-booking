@@ -9,17 +9,16 @@ const CreateAppointment = ({ id, start_date }) => {
   const { createNotification } = useContext(NotificationContext)
   //console.log('CreateAPPOINTMENT start-date ', start_date)
   const handleAppointmentCreation = async () => {
-    const foundUser = user
-    if (reservationRuleCheck(foundUser.appointments, start_date)) {
-      await appointmentService.update(id, { type_of_reservation: 1, user_id: foundUser._id, })
+    if (reservationRuleCheck(user.appointments, start_date)) {
+      await appointmentService.update(id, { type_of_reservation: 1, user_id: user._id, })
       createNotification('Appointment reserved succesfully', 'success')
     } else {
-      createNotification('You have already booked an appointment this week')
+      createNotification('You already have an appointment within a week of this appointment')
     }
   }
 
   return (
-    <button onClick={() => handleAppointmentCreation()}>
+    <button id={reservationRuleCheck(user.appointments, start_date) ? 'available' : 'impossible'} onClick={() => handleAppointmentCreation()}>
       <Display dateobject={start_date} free={true} />
     </button>
   )
@@ -28,6 +27,9 @@ const CreateAppointment = ({ id, start_date }) => {
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
   let now = moment()
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
+  if(requestedTimeMoment.isBefore(now)) {
+    return false
+  }
   if (requestedTimeMoment.isSame(now, 'days')) {
     const usersAppointmentOnSameDay = usersAppointments.find((time) => {
       let timeMoment = moment(time.start_date)

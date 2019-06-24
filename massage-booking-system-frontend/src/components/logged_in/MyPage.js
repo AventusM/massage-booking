@@ -9,8 +9,8 @@ const MyPage = () => {
   const { user, setUser, userService } = useContext(UserContext)
   const { createNotification, notification, announcementNotification } = useContext(NotificationContext)
   let numberField = useField('text')
+
   useEffect(() => {
-    console.log('HEEEIi')
     if (!user) return
     numberField.changeValue(user.number)
   }, [user])
@@ -40,9 +40,9 @@ const MyPage = () => {
     user && (
 
       <div>
-        { notification
-          ? <Notification notification={notification}/>
-          : <Notification notification={announcementNotification}/>}
+        {notification
+          ? <Notification notification={notification} />
+          : <Notification notification={announcementNotification} />}
         <div className="mypage_wrapper">
           <div className="own_info">
             <h2>{user.name}</h2>
@@ -70,7 +70,7 @@ const MyPage = () => {
           </form>
           <div className="own_appointments">
             <h2>My Appointments</h2>
-            <AppointmentsList />
+            <AppointmentsList ownPage={true} />
           </div>
         </div>
       </div>

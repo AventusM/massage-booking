@@ -11,7 +11,6 @@ import MyPage from './components/logged_in/MyPage'
 import useResource from './hooks/useResource'
 import Stats from './components/logged_in/Stats'
 import DashBoard from './components/logged_in/Dashboard'
-import Notification from './components/Notification'
 import Header from './components/Header'
 import TVview from './components/TVview'
 import * as types from './types/types'
@@ -79,6 +78,8 @@ const App = () => {
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments, stretching])
 
+
+
   const announcementNotification = {
     message: announcement ? announcement.message : '',
     type: types.GENERAL,
@@ -99,7 +100,7 @@ const App = () => {
                   <Route exact path="/" render={() => <Index />} />
                   <Route exact path="/dashboard" render={() => <DashBoard />} />
                   <Route exact path="/mypage" render={() => <MyPage />} />
-                  <Route exact path="/stats" render={() => <Stats />} />
+                  <Route exact path="/stats" render={() => <Stats stats={stats} />} />
                   <Route exact path="/tvview" render={() => <TVview />} />
                 </AppointmentContext.Provider>
               </UserContext.Provider>

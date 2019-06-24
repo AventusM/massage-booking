@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Display = ({ dateobject, user, ownPage, free }) => {
+const Display = ({ dateobject, user, ownPage, free, removed, cancel }) => {
   let date = new Date(dateobject)
 
 
@@ -18,18 +18,21 @@ const Display = ({ dateobject, user, ownPage, free }) => {
     dateDisplay = `${day}.${month}.${date.getFullYear()}`
   }
 
+  const clickCancel = cancel ? <span id="cancel_text">Click to cancel</span> : null
+
   const userDisplay = user ? user.name : free ? <span>Free</span> : null
+  const remove = removed ? <span>Removed</span> : null
 
   if (date.getMinutes() < 10) {
     return (
       <h4>
-        {dateDisplay} {`${date.getHours()}:0${date.getMinutes()}`} {userDisplay}{' '}
+        {dateDisplay} {`${date.getHours()}:0${date.getMinutes()}`} {userDisplay} {remove} {clickCancel}
       </h4>
     )
   }
   return (
     < h4 >
-      {dateDisplay} {`${date.getHours()}:${date.getMinutes()}`} {userDisplay}
+      {dateDisplay} {`${date.getHours()}:${date.getMinutes()}`} {userDisplay} {remove} {clickCancel}
     </h4 >
   )
 }

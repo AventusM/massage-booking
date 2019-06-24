@@ -1,22 +1,22 @@
 const mongoose = require('mongoose')
 
 const stretchingSchema = mongoose.Schema({
-    date: {
-        type: Date,
+  date: {
+    type: Date,
+    required: true
+  },
+  users: [
+    {
+      data: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      description: {
+        type: String,
         required: true
-    },
-    users: [
-        {
-            data: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            },
-            description: {
-                type: String,
-                required: true
-            }
-        }
-    ]
+      }
+    }
+  ]
 })
 
 const Stretching = mongoose.model('Stretching', stretchingSchema)

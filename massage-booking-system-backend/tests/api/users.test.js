@@ -45,7 +45,7 @@ describe('Appointments and one user', () => {
     const appointments = await Appointment.find({})
     const appointment = appointments[0]
 
-    await update_appointment(appointment._id,user._id,1)
+    await update_appointment(appointment._id, user._id, 1)
 
     await delete_user(user._id)
     const freeAppointment = await Appointment.findById(appointment._id)
@@ -56,6 +56,6 @@ describe('Appointments and one user', () => {
     expect(deletedUser).toBe(null)
   })
 })
-afterAll(async() => {
+afterAll(async () => {
   await mongoose.disconnect()
 })

@@ -14,13 +14,20 @@ body {
   background-color: #2b5876;
 }
 
-.remove {
-  width: 20px;
-  height: 20px;
+#remove {
+  width: 50px;
+  margin-left: 10px;
+  background:#c0635e;
+}
+
+#restore {
+  width: 50px;
+  margin-left: 10px;
+  background:#c0635e;
 }
 
 .appointmentListWrapper .controls button {
-  background:#f44b42;
+  background:#c0635e;
   font-size: 120%;
   border-radius: 15px;
   padding: 10px 5px;
@@ -51,14 +58,15 @@ nav a {
   text-align: center;
 }
 
-@media screen and (max-width: 1549px) {
-  .nextappointment_wrapper {
-    
-    margin-top: 25px;
-  }
-
+@media screen and (max-width: 1161px) {
   .desktop_no_appointments_info {
   display: none;
+  }
+}
+
+@media screen and (max-width: 1161px) {
+  .nextappointment_wrapper {
+    margin-top: 25px;
   }
 }
 .desktop_no_appointments_info {
@@ -147,6 +155,10 @@ nav a {
 /* Dashboard styles */
 
 
+.dashboard_profile_image {
+  height: 80px;
+  border-radius: 50px;
+}
 
 .dashboard_form{
   max-width: 400px;
@@ -711,7 +723,7 @@ h3 {
   }
 
   .nav-link:hover {
-    color: rgba(255, 255, 255, 1);
+    color: rgb(134, 122, 122);
   }
 }
 
@@ -814,7 +826,6 @@ h3 {
 
 /*Background*/
 .appointmentListWrapperMain {
-  margin-top: 100px;
   min-height: 100vh;
   background-color: #2b5876;
   display: grid;
@@ -965,6 +976,11 @@ h3 {
   justify-content: center;
 }
 
+#cancel_text {
+  font-size: 15px;
+  
+}
+
 /*Colors for buttons*/
 
 #reserved {
@@ -983,8 +999,19 @@ h3 {
   border: #3b9962;
 }
 #available:hover {
-  background: #3b9962;
-  border: #3b9962;
+  background: #83b497;
+  border: #83b497;
+}
+
+#removed {
+  background: rgb(61, 48, 50);
+  border: none;
+  color: rgb(180, 166, 166);
+}
+
+#impossible {
+  background: rgb(119, 116, 116);
+  border: none;
 }
 
 /* Appointment List mobile */
@@ -1024,9 +1051,19 @@ h3 {
 }
 
 /* Notification*/
+
 .notification_container {
-  top: 20%;
-  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1160px) {
+  .index_notification_container {
+      top: 20%;
+      width: 100%;
+      position: fixed;
+      z-index: 999;
+      margin: 0 auto;
+  }
 }
 
 .notification {
@@ -1149,7 +1186,7 @@ h3 {
   font-size: 5em;
   color: white;
   text-align: center;
-
+ 
 }
 
 .tv_notice p {
@@ -1162,17 +1199,16 @@ h3 {
 .clock {
   font-size: 150px;
   font-weight: 500;
+  margin-top: 70px;
   color: white;
- 
+  text-align: center
 }
 
 .logoTV {
   width: 400px;
-  margin-left: 100px;
-  margin-bottom: 50px;
   position: fixed;
-  left: 2px;
-  bottom: 2px;
+  left: 10px;
+  bottom: 10px;
 }
 
 .week {
@@ -1182,17 +1218,23 @@ h3 {
 
 .tv_view {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   justify-items: center;
 
 }
 
 .tv_view h2 {
-  color: white
+  color: white;
+  text-align: center;
+  margin-top: 40px;
 }
 
 .tv_notification{
   width: 100%;
+}
+
+.day-view {
+  margin-bottom: 15px;
 }
 
 

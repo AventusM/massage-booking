@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react'
 import { StretchContext, UserContext } from '../../App'
-import useField from '../../hooks/useField';
+import useField from '../../hooks/useField'
 
 const StretchAppointmentDisplay = () => {
   const { stretching } = useContext(StretchContext)
@@ -153,8 +153,8 @@ const Modal = (props) => {
           <textarea value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
         </div>
         <div>
-        <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
-        <button onClick={() => handleClose(joinSession)} className="modal_submit_button">Submit</button>
+          <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
+          <button onClick={() => handleClose(joinSession)} className="modal_submit_button">Submit</button>
         </div>
       </div>}
     </Fragment>

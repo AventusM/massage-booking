@@ -4,8 +4,6 @@ import UserList from './UserList'
 import { NotificationContext, StretchContext } from '../../App'
 import StretchAppointmentDisplay from './StretchingSession'
 import "react-datepicker/dist/react-datepicker.css";
-import setMinutes from 'date-fns/setMinutes'
-import setHours from 'date-fns/setHours'
 import useField from '../../hooks/useField'
 import Notification from '../Notification'
 
@@ -15,12 +13,12 @@ class DatePickerForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: setHours(setMinutes(new Date(), 55), 8)
+      startDate: new Date().setHours(8, 55, 0, 0)
     }
   }
 
-  handleChange = (date) => {
-    this.setState({ startDate: date })
+  handleChange = async (date) => {
+    await this.setState({ startDate: date })
     console.log('Date now?', this.state.startDate)
   }
 
@@ -32,6 +30,7 @@ class DatePickerForm extends React.Component {
       await stretchingService.create({ date: startDate })
       // Luo notifikaatio tänne onnistumisesta
     } catch (exception) {
+
       // Luo notifikaatio tänne failuresta
     }
   }
@@ -48,22 +47,21 @@ class DatePickerForm extends React.Component {
             timeFormat="HH:mm"
             timeIntervals={9001}
             minDate={new Date()}
-            minTime={setHours(setMinutes(new Date(), 55), 8)}
-            maxTime={setHours(setMinutes(new Date(), 20), 16)}
+            minTime={new Date().setHours(8, 55, 0, 0)}
+            maxTime={new Date().setHours(15, 45, 0, 0)}
+            //Dont let 11:15 or 16:20 since the lunch break is at 11:45 and 16:20 is the last appointment!
             injectTimes={[
-              setHours(setMinutes(new Date(), 55), 8),
-              setHours(setMinutes(new Date(), 30), 9),
-              setHours(setMinutes(new Date(), 5), 10),
-              setHours(setMinutes(new Date(), 40), 10),
-              setHours(setMinutes(new Date(), 15), 11),
-              setHours(setMinutes(new Date(), 15), 12),
-              setHours(setMinutes(new Date(), 50), 12),
-              setHours(setMinutes(new Date(), 25), 13),
-              setHours(setMinutes(new Date(), 0), 14),
-              setHours(setMinutes(new Date(), 35), 14),
-              setHours(setMinutes(new Date(), 10), 15),
-              setHours(setMinutes(new Date(), 45), 15),
-              setHours(setMinutes(new Date(), 20), 16),
+              new Date().setHours(8, 55, 0, 0),
+              new Date().setHours(9, 30, 0, 0),
+              new Date().setHours(10, 5, 0, 0),
+              new Date().setHours(10, 40, 0, 0),
+              new Date().setHours(12, 15, 0, 0),
+              new Date().setHours(12, 50, 0, 0),
+              new Date().setHours(13, 25, 0, 0),
+              new Date().setHours(14, 0, 0, 0),
+              new Date().setHours(14, 35, 0, 0),
+              new Date().setHours(15, 10, 0, 0),
+              new Date().setHours(15, 45, 0, 0),
             ]}
             selected={startDate}
             onChange={this.handleChange}

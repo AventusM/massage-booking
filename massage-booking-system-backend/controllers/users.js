@@ -21,7 +21,7 @@ const formatUser = input => {
 }
 
 // Returns current user data depending on whether one has logged in or not
-usersRouter.get('/current_user', async (req, res, next) => {
+usersRouter.get('/current_user', async (req, res) => {
   if (req.user) {
     res.send(req.user)
   } else {
