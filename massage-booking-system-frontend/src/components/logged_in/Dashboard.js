@@ -48,8 +48,8 @@ class DatePickerForm extends React.Component {
             timeIntervals={9001}
             minDate={new Date()}
             minTime={new Date().setHours(8, 55, 0, 0)}
-            maxTime={new Date().setHours(16, 20, 0, 0)}
-            //Dont let 11:15 since the lunch break is at 11:45!
+            maxTime={new Date().setHours(15, 45, 0, 0)}
+            //Dont let 11:15 or 16:20 since the lunch break is at 11:45 and 16:20 is the last appointment!
             injectTimes={[
               new Date().setHours(8, 55, 0, 0),
               new Date().setHours(9, 30, 0, 0),
@@ -62,7 +62,6 @@ class DatePickerForm extends React.Component {
               new Date().setHours(14, 35, 0, 0),
               new Date().setHours(15, 10, 0, 0),
               new Date().setHours(15, 45, 0, 0),
-              new Date().setHours(16, 20, 0, 0),
             ]}
             selected={startDate}
             onChange={this.handleChange}

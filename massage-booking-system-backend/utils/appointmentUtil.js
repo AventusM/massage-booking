@@ -20,21 +20,18 @@ const removeAppointment = async (appointment) => {
     }
     appointment.user_id = null
     appointment.type_of_reservation = 3
-
+    console.log('MOOO', appointment)
     return await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true })
   } catch (exception) {
     console.log('E', exception)
   }
 }
 const removeTwoAppointments = async (date) => {
-  const firstDate = new Date(date)
-  console.log('DATEk', firstDate)
+  let firstDate = new Date(date)
   try {
-    const firstAppointment = await Appointment.find({ start_date: firstDate })
-    const secondDate = generator.increaseTime(35, firstDate)
-    console.log('TOINEN', secondDate)
-    const secondAppointment = await Appointment.find({ start_date: secondDate })
-
+    let firstAppointment = await Appointment.findOne({ start_date: firstDate })
+    let secondDate = generator.increaseTime(35, firstDate)
+    let secondAppointment = await Appointment.findOne({ start_date: secondDate })
     await removeAppointment(firstAppointment)
     await removeAppointment(secondAppointment)
   } catch (exception) {
@@ -46,9 +43,9 @@ const recoverTwoAppointments = async (date) => {
   const firstDate = new Date(date)
   console.log('DATE', firstDate)
   try {
-    const firstAppointment = await Appointment.find({ start_date: firstDate })
+    const firstAppointment = await Appointment.findOne({ start_date: firstDate })
     const secondDate = generator.increaseTime(5, new Date(firstAppointment.end_date))
-    const secondAppointment = await Appointment.find({ start_date: secondDate })
+    const secondAppointment = await Appointment.findOne({ start_date: secondDate })
 
     firstAppointment.type_of_reservation = 0
     secondAppointment.type_of_reservation = 0
