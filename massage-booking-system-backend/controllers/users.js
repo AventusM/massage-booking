@@ -21,7 +21,7 @@ const formatUser = input => {
 }
 
 // Returns current user data depending on whether one has logged in or not
-usersRouter.get('/current_user', async (req, res, next) => {
+usersRouter.get('/current_user', async (req, res) => {
   if (req.user) {
     res.send(req.user)
   } else {
@@ -139,7 +139,7 @@ usersRouter.delete('/:id', async (req, res, next) => {
 
 const emptyAppointmentsFromUser = async (user) => {
   const appointments = await Appointment.find({ user_id: user._id })
-  for(let appoint of appointments) {
+  for (let appoint of appointments) {
     await appointmentUtil.removeUserFromAppointment(appoint)
   }
 

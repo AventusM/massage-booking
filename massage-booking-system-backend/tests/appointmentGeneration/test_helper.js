@@ -13,10 +13,10 @@ const howManyAppointmentsAreInDB = async () => {
  * empties the database and makes sure the database is truly empty by waiting in a loop (100ms) to make sure there is no data being written to it.
  * IF TESTS FAIL INCREASE THE SLEEP TIME VALUE INSIDE THE LOOP!
  */
-const emptyTheDatabaseOfAppointments = async() =>{
+const emptyTheDatabaseOfAppointments = async () => {
   await sleep(50)
   let response = await Appointment.find()
-  while(response.length != 0) {
+  while (response.length !== 0) {
     await Appointment.deleteMany({})
     await sleep(100)
     response = await Appointment.find()
@@ -24,10 +24,10 @@ const emptyTheDatabaseOfAppointments = async() =>{
   }
 
 }
-const emptyTheDatabaseOfUsers = async() =>{
+const emptyTheDatabaseOfUsers = async () => {
   await sleep(50)
   let response = await Appointment.find()
-  while(response.length != 0) {
+  while (response.length !== 0) {
     await User.deleteMany({})
     await sleep(100)
     response = await User.find()
@@ -49,11 +49,11 @@ async function sleep(time) {
  * Waits in a loop of 50 milliseconds to see wether the data has been written to the database. if time exeeds 1 second or the data goes over the expected amount the loop will end.
  * @param {*} howMany how many appointments are expected to be in the database.
  */
-const wait = async(howMany) => {
+const wait = async (howMany) => {
   let limit = 0
   let response = await Appointment.find()
   while (
-    response.length != howMany &&
+    response.length !== howMany &&
     response.length < howMany &&
     limit < 20
   ) {
@@ -75,7 +75,7 @@ const wait = async(howMany) => {
  * @param {*} rounds how many appointments are in a row.
  * @param {*} date the starting time of the first appointment in a row.
  */
-async function loopThroughTheAppointments (rounds, date)  {
+async function loopThroughTheAppointments(rounds, date) {
   let start
   let end
   for (let i = 0; i < rounds; i++) {
