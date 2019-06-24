@@ -20,7 +20,6 @@ const removeAppointment = async (appointment) => {
     }
     appointment.user_id = null
     appointment.type_of_reservation = 3
-    console.log('MOOO', appointment)
     return await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true })
   } catch (exception) {
     console.log('E', exception)
