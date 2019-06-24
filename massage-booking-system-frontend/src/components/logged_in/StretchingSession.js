@@ -8,7 +8,7 @@ const StretchAppointmentDisplay = () => {
   const [appointmentData, setAppointmentData] = useState(null)
 
   useEffect(() => {
-    if (stretching.length > 0) {
+    if (stretching.length > 0 && user) {
       setLoaded(true)
       if (user.admin) {
         setAppointmentData(stretching)
@@ -22,7 +22,7 @@ const StretchAppointmentDisplay = () => {
         setAppointmentData(`${dateData.toDateString()} at ${dateData.getHours()}:${minuteAddition}${dateData.getMinutes()}`)
       }
     }
-  }, [stretching])
+  }, [stretching, user])
   console.log('stretching in display', stretching)
 
   if (!loaded) {
@@ -107,8 +107,11 @@ const JoinStretchAppointment = () => {
     }
   }
   return (
-    <button onClick={joinSession}>{slotsRemainingText}</button>
-  )
+    <div>
+      {slotsRemainingText}
+    <Modal joinSession = {joinSession}/>
+    </div>  
+    )
 }
 
 const CancelStretchAppointment = () => {
@@ -124,6 +127,26 @@ const CancelStretchAppointment = () => {
   return (
     <button onClick={cancelSession}>Cancel appointment</button>
   )
+}
+
+const Modal = (props) => {
+const {joinSession} = props  
+const [open, setOpen] = useState(false)
+const handleClose = (func) => { 
+  func()
+  setOpen(false)}
+const handleOpen = () => {setOpen(true)}
+console.log(open)
+return ( 
+  <Fragment>
+  {!open && <button onClick = {handleOpen}>Join</button>}
+  {open && <div className = "modal_wrapper">
+    <textarea rows = '3' ></textarea>
+    <button onClick = {()=> setOpen(false)} className= "modal_cancel_button">Cancel</button>
+    <button onClick ={()=>handleClose(joinSession)} className="modal_submit_button">Submit</button>
+  </div>}
+</Fragment>
+)
 }
 
 

@@ -1225,9 +1225,6 @@ h3 {
   margin-top: 20px;
 }
 
-
-
-
 .tv_view_headers{
   margin-top: 25px;
   font-size: 40px;
@@ -1256,4 +1253,26 @@ h3 {
   font-weight: 600;
   font-size: 20px;
   margin-bottom: 15px;
+}
+
+/* Modal */
+
+.modal_wrapper {
+  width: 350px;
+  height: 200px;
+  background: #C4C4C4;
+}
+.modal_submit_button{
+  width: 100px;
+  height: 30px;
+  background: #92DECB;
+  border-radius: 15px;
+}
+.modal_cancel_button{
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  color: #FFFFFF;
+  background: transparent;
+  border: none;
 }
