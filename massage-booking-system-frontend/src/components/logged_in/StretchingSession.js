@@ -109,9 +109,9 @@ const JoinStretchAppointment = () => {
   return (
     <div>
       {slotsRemainingText}
-    <Modal joinSession = {joinSession}/>
-    </div>  
-    )
+      <Modal joinSession={joinSession} />
+    </div>
+  )
 }
 
 const CancelStretchAppointment = () => {
@@ -130,23 +130,24 @@ const CancelStretchAppointment = () => {
 }
 
 const Modal = (props) => {
-const {joinSession} = props  
-const [open, setOpen] = useState(false)
-const handleClose = (func) => { 
-  func()
-  setOpen(false)}
-const handleOpen = () => {setOpen(true)}
-console.log(open)
-return ( 
-  <Fragment>
-  {!open && <button onClick = {handleOpen}>Join</button>}
-  {open && <div className = "modal_wrapper">
-    <textarea rows = '3' ></textarea>
-    <button onClick = {()=> setOpen(false)} className= "modal_cancel_button">Cancel</button>
-    <button onClick ={()=>handleClose(joinSession)} className="modal_submit_button">Submit</button>
-  </div>}
-</Fragment>
-)
+  const { joinSession } = props
+  const [open, setOpen] = useState(false)
+  const handleClose = (func) => {
+    func()
+    setOpen(false)
+  }
+  const handleOpen = () => { setOpen(true) }
+  console.log(open)
+  return (
+    <Fragment>
+      {!open && <button onClick={handleOpen}>Join</button>}
+      {open && <div className="modal_wrapper">
+        <textarea rows='3' ></textarea>
+        <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
+        <button onClick={() => handleClose(joinSession)} className="modal_submit_button">Submit</button>
+      </div>}
+    </Fragment>
+  )
 }
 
 
