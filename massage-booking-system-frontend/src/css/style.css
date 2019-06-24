@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-/* TÄMÄ OVERWRITEE ESIM HEADERIT ATM */
 ul,
 li {
   margin: 0;
@@ -59,14 +58,15 @@ nav a {
   text-align: center;
 }
 
-@media screen and (max-width: 1549px) {
-  .nextappointment_wrapper {
-    
-    margin-top: 25px;
-  }
-
+@media screen and (max-width: 1161px) {
   .desktop_no_appointments_info {
   display: none;
+  }
+}
+
+@media screen and (max-width: 1161px) {
+  .nextappointment_wrapper {
+    margin-top: 25px;
   }
 }
 .desktop_no_appointments_info {
@@ -822,7 +822,6 @@ h3 {
 
 /*Background*/
 .appointmentListWrapperMain {
-  margin-top: 100px;
   min-height: 100vh;
   background-color: #2b5876;
   display: grid;
@@ -1041,9 +1040,19 @@ h3 {
 }
 
 /* Notification*/
+
 .notification_container {
-  top: 20%;
-  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1160px) {
+  .index_notification_container {
+      top: 20%;
+      width: 100%;
+      position: fixed;
+      z-index: 999;
+      margin: 0 auto;
+  }
 }
 
 .notification {
@@ -1254,4 +1263,28 @@ h3 {
   margin-top: 25px;
   font-size: 40px;
   color: white;
+}
+
+/* Timi's stretching session things. Overwriting some base css from imported component itself */
+/* Improves time selection list readability */
+.react-datepicker__time-box li{
+  padding: 10px 5px;
+}
+
+/* Removes the 0:00 time which was unnecessary anyway */
+.react-datepicker__time-box li:first-child{
+  display: none;
+}
+
+/* Stripes to improve readability for Timi */
+.react-datepicker__time-box li:nth-child(odd){
+  background-color: #d4d4d4;
+}
+
+/* Helper css in visualization */
+.basic_helper {
+  border: 2px solid white;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 15px;
 }
