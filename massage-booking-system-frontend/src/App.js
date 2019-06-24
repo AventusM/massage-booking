@@ -79,6 +79,8 @@ const App = () => {
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments, stretching])
 
+
+
   const announcementNotification = {
     message: announcement ? announcement.message : '',
     type: types.GENERAL,

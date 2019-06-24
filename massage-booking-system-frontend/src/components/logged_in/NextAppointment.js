@@ -54,7 +54,7 @@ const NextAppointment = ({ user, appointments }) => {
 
   if (ownAppointments[0] === undefined) {
     return <div className="desktop_no_appointments_info">
-      <p>You currently have no appointments booked, you can reserve one by clicking on the desired date on the calendar and choosing a time.</p>
+      <p>You currently have no appointments booked, you can reserve one using the calendar below.</p>
     </div>
   }
 
