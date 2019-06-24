@@ -191,11 +191,15 @@ appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
     const day = date.getDate()
     const appointments = await Appointment.find()
     const appointmentsToRemove = appointments.filter(appoint => appoint.start_date.getDate() === day && appoint.start_date.getMonth() === month && appoint.start_date.getYear() === year)
+
+    let updatedAppointments = []
     for (let appoint of appointmentsToRemove) {
-      await appointmentUtil.removeAppointment(appoint)
+      const updatedAppointment = await appointmentUtil.removeAppointment(appoint)
+      updatedAppointments.push(updatedAppointment)
     }
-    const appointmentsChanged = await Appointment.find()
-    res.json(appointmentsChanged.map(formatAppointment))
+
+    res.json(updatedAppointments.map(formatAppointment))
+
 
   } catch (exception) {
     next(exception)

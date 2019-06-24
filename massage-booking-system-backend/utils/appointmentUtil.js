@@ -21,7 +21,7 @@ const removeAppointment = async (appointment) => {
     appointment.user_id = null
     appointment.type_of_reservation = 3
 
-    await Appointment.findByIdAndUpdate(appointment._id, appointment)
+    return await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true })
   } catch (exception) {
     // console.log('E', exception)
   }
@@ -41,7 +41,7 @@ const removeTwoAppointments = async (date) => {
   }
 }
 
-const recoverTwoAppointments = async(date) => {
+const recoverTwoAppointments = async (date) => {
   const firstDate = new Date(date)
   console.log('DATE', firstDate)
   try {
@@ -58,7 +58,7 @@ const recoverTwoAppointments = async(date) => {
     console.log('E', exception)
   }
 }
-const removeUserFromAppointment = async(appointment) => {
+const removeUserFromAppointment = async (appointment) => {
   try {
     appointment.user_id = null
     appointment.type_of_reservation = 0

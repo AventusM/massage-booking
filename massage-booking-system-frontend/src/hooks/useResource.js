@@ -35,11 +35,22 @@ const useResource = baseUrl => {
     //console.log('UPDATE')
     const updatedResources = await axios.put(`${baseUrl}/${id}/${type}`)
     console.log('updatedResource: ', updatedResources)
-    setResources(
-      resources.map(resource =>
-        resource._id !== id ? resource : updatedResources.data
-      )
-    )
+    // setResources(
+    //   resources.map(resource =>
+    //     resource._id !== id ? resource : updatedResources.data
+    //   )
+    // )
+
+    let res = updatedResources.reduce((a, b) => {
+      console.log('b: ', b);
+      console.log('a: ', a);
+
+      let tmp = resources.find(e => e._id === b._id) || {};
+      return a.concat(Object.assign(tmp, b));
+    }, []);
+
+    console.log('res: ', res);
+
   }
 
   const remove = async id => {
