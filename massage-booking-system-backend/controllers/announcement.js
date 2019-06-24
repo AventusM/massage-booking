@@ -13,7 +13,7 @@ const formatAnnouncement = (input) => {
 
 announcementsRouter.get('/', async (req, res, next) => {
   try {
-    const announcements = await Announcement.find().limit(1).sort({ $natural:-1 })
+    const announcements = await Announcement.find().limit(1).sort({ $natural: -1 })
     res.json(formatAnnouncement(announcements[0]))
   } catch (exception) {
     next(exception)

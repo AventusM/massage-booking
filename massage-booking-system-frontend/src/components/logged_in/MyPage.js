@@ -70,7 +70,7 @@ const MyPage = () => {
           </form>
           <div className="own_appointments">
             <h2>My Appointments</h2>
-            <AppointmentsList />
+            <AppointmentsList ownPage={true} />
           </div>
         </div>
       </div>
