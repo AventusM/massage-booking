@@ -1,23 +1,21 @@
 import React, { useContext, useState, Fragment } from 'react'
-import DatePicker, { setDefaultLocale } from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import UserList from './UserList'
 import { NotificationContext, StretchContext } from '../../App'
 import StretchAppointmentDisplay from './StretchingSession'
 import "react-datepicker/dist/react-datepicker.css";
-import fi from 'date-fns/locale/fi';
 import setMinutes from 'date-fns/setMinutes'
 import setHours from 'date-fns/setHours'
 import useField from '../../hooks/useField'
 import Notification from '../Notification'
 
-setDefaultLocale('fi', fi)
 
 // CHANGE THIS TO USE HOOKS ETC
 class DatePickerForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: new Date(),
+      startDate: setHours(setMinutes(new Date(), 55), 8)
     }
   }
 
@@ -42,23 +40,37 @@ class DatePickerForm extends React.Component {
     const { startDate } = this.state
     const { stretching } = this.props
     return (
-      <Fragment>
-        {/* Tämä tulee eriyttää omaan komponenttiin tuo divi */}
-        {/* Tämä tulee eriyttää omaan komponenttiin tuo divi */}
-        {/* Tämä tulee eriyttää omaan komponenttiin tuo divi */}
-        <div>
-          Next stretching session -->
-        </div>
+      <div className="basic_helper">
         <form onSubmit={this.createStretch}>
           <DatePicker
             showTimeSelect
+            dateFormat="MMMM d, yyyy HH:mm"
+            timeFormat="HH:mm"
+            timeIntervals={9001}
+            minDate={new Date()}
+            minTime={setHours(setMinutes(new Date(), 55), 8)}
+            maxTime={setHours(setMinutes(new Date(), 20), 16)}
+            injectTimes={[
+              setHours(setMinutes(new Date(), 55), 8),
+              setHours(setMinutes(new Date(), 30), 9),
+              setHours(setMinutes(new Date(), 5), 10),
+              setHours(setMinutes(new Date(), 40), 10),
+              setHours(setMinutes(new Date(), 15), 11),
+              setHours(setMinutes(new Date(), 15), 12),
+              setHours(setMinutes(new Date(), 50), 12),
+              setHours(setMinutes(new Date(), 25), 13),
+              setHours(setMinutes(new Date(), 0), 14),
+              setHours(setMinutes(new Date(), 35), 14),
+              setHours(setMinutes(new Date(), 10), 15),
+              setHours(setMinutes(new Date(), 45), 15),
+              setHours(setMinutes(new Date(), 20), 16),
+            ]}
             selected={startDate}
             onChange={this.handleChange}
-            locale={fi}
           />
           <button type="submit">PAINA</button>
         </form >
-      </Fragment>
+      </div>
     )
   }
 }
