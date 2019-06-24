@@ -17,17 +17,17 @@ body {
 #remove {
   width: 50px;
   margin-left: 10px;
-  background:#f44b42;
+  background:#c0635e;
 }
 
 #restore {
   width: 50px;
   margin-left: 10px;
-  background:#f44b42;
+  background:#c0635e;
 }
 
 .appointmentListWrapper .controls button {
-  background:#f44b42;
+  background:#c0635e;
   font-size: 120%;
   border-radius: 15px;
   padding: 10px 5px;
@@ -155,6 +155,10 @@ nav a {
 /* Dashboard styles */
 
 
+.dashboard_profile_image {
+  height: 80px;
+  border-radius: 50px;
+}
 
 .dashboard_form{
   max-width: 400px;
@@ -972,6 +976,11 @@ h3 {
   justify-content: center;
 }
 
+#cancel_text {
+  font-size: 15px;
+  
+}
+
 /*Colors for buttons*/
 
 #reserved {
@@ -990,16 +999,18 @@ h3 {
   border: #3b9962;
 }
 #available:hover {
-  background: #3b9962;
-  border: #3b9962;
+  background: #83b497;
+  border: #83b497;
 }
 
 #removed {
-  background: rgb(73, 42, 42);
+  background: rgb(61, 48, 50);
+  border: none;
+  color: rgb(180, 166, 166);
 }
 
 #impossible {
-  background: rgb(70, 60, 60);
+  background: rgb(119, 116, 116);
   border: none;
 }
 
