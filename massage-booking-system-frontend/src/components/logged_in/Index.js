@@ -17,7 +17,6 @@ const Index = () => {
 }
 
 const AuthIndex = ({ user }) => {
-  console.log('RENDERING INDEX')
   const { announcementNotification, announcement, notification } = useContext(NotificationContext)
   const { selectedDate, setSelectedDate, appointments } = useContext(AppointmentContext)
   const freeAppointments = appointments.filter(
@@ -41,12 +40,12 @@ const AuthIndex = ({ user }) => {
         ? <Notification notification={notification} />
         : <NextAppointment user={user} appointments={appointments} />
       }
-      { isMobile
-        ? <Notification notification={announcementNotification}/>
+      {isMobile
+        ? <Notification notification={announcementNotification} />
         : null
       }
       {isMobile
-        ? <div className="index_notification_container"><Notification notification={notification}/></div>
+        ? <div className="index_notification_container"><Notification notification={notification} /></div>
         : null}
 
 
@@ -61,7 +60,7 @@ const AuthIndex = ({ user }) => {
             minDetail="year"
             prev2Label={null}
             next2Label={null}
-            tileClassName={({ date, view }) => {
+            tileClassName={({ date }) => {
               let dateMoment = moment(date)
               if (dateMoment.isBefore(now, 'days') || dateMoment.day() > 2 || dateMoment.day() === 0) {
                 return 'disabled'

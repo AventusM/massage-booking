@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 
 const Stats = ({ stats }) => {
   console.log('stats', stats)

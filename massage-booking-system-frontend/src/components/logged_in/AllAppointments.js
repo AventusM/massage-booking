@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import Appointment from './Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
@@ -72,7 +72,7 @@ const AllAppointments = () => {
           (unavailable === false) ? (
             <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
           ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
-            )) : (null)}
+          )) : (null)}
       </div>
       < ul className="appointmentListWrapper">
         {todaysAppointments.map(app => {
