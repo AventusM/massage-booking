@@ -33,9 +33,13 @@ const useResource = baseUrl => {
 
   const updateExpectMany = async (id, type = '') => {
     //console.log('UPDATE')
-    const updatedResource = await axios.put(`${baseUrl}/${id}/${type}`)
-    console.log('updatedResource: ', updatedResource)
-    setResources(updatedResource.data)
+    const updatedResources = await axios.put(`${baseUrl}/${id}/${type}`)
+    console.log('updatedResource: ', updatedResources)
+    setResources(
+      resources.map(resource =>
+        resource._id !== id ? resource : updatedResources.data
+      )
+    )
   }
 
   const remove = async id => {
