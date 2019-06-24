@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 
 const Stats = ({ stats }) => {
-  console.log('stats', stats)
-
   let numberOfUnusedPastAppointments = stats.numberOfUnusedPastAppointments
   let numberOfPastAppointments = stats.numberOfPastAppointments
   let numberOfUsers = stats.numberOfUsers
@@ -10,12 +8,6 @@ const Stats = ({ stats }) => {
   let mostAppointmentsBySingleUser = stats.mostAppointmentsBySingleUser
   let usersWhoHaveUsedMassage = stats.usersWhoHaveUsedMassage
 
-  console.log(
-    'past ',
-    numberOfPastAppointments,
-    'unused ',
-    numberOfUnusedPastAppointments
-  )
   return (
     <Fragment>
       <h1>Stats</h1>

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import unity5 from '../pics/unity5.png'
-import unity4 from '../pics/unity4.png'
+import unity5 from '../../pics/unity5.png'
+import unity4 from '../../pics/unity4.png'
 import GoogleButton from 'react-google-button'
 
 const LoginIndex = () => {
-  // console.log('Login index props', props)
-
   const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {

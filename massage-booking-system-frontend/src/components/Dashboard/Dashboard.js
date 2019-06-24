@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import DatePicker from 'react-datepicker'
-import UserList from './UserList'
-import { NotificationContext, StretchContext } from '../App'
-import StretchAppointmentDisplay from './StretchingSession'
+import UserList from '../UserList/UserList'
+import { NotificationContext, StretchContext } from '../../App'
+import StretchAppointmentDisplay from '../StretchingSession/StretchingSession'
 import "react-datepicker/dist/react-datepicker.css";
-import useField from '../hooks/useField'
-import Notification from './Notification'
-
+import useField from '../../hooks/useField'
+import Notification from '../Notification/Notification'
 
 // CHANGE THIS TO USE HOOKS ETC
 class DatePickerForm extends React.Component {

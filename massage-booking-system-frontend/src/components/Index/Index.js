@@ -1,13 +1,13 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react'
 //import Calendar from 'react-calendar';
 import Calendar from 'react-calendar'
-import { AppointmentContext, UserContext, NotificationContext } from '../App'
+import { AppointmentContext, UserContext, NotificationContext } from '../../App'
 
-import AllAppointments from './AllAppointments'
-import LoginIndex from './Login_index'
+import AllAppointments from '../AllAppointments/AllAppointments'
+import LoginIndex from '../LoginIndex/Login_index'
 import moment from 'moment'
-import NextAppointment from './NextAppointment'
-import Notification from './Notification'
+import NextAppointment from '../NextAppointment/NextAppointment'
+import Notification from '../Notification/Notification'
 const Index = () => {
   const { user } = useContext(UserContext)
   if (user) {
@@ -48,13 +48,11 @@ const AuthIndex = ({ user }) => {
         ? <div className="index_notification_container"><Notification notification={notification} /></div>
         : null}
 
-
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
             locale={'en-UK'}
             onChange={value => {
-              console.log('value ', value, 'value type', typeof value)
               setSelectedDate(value)
             }}
             minDetail="year"

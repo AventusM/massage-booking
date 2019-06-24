@@ -1,16 +1,15 @@
 import React, { useContext } from 'react'
-import Appointment from './Appointment'
-import { AppointmentContext, UserContext, NotificationContext } from '../App'
-import Clock from './Clock'
-import unity4 from '../pics/unity4.png'
+import Appointment from '../Appoinment/Appointment'
+import { AppointmentContext, UserContext, NotificationContext } from '../../App'
+import Clock from '../Clock/Clock'
+import unity4 from '../../pics/unity4.png'
 import moment from 'moment'
-import formatStartDate from '../utils/formatStartDate'
-import DaysAppointments from './DaysAppointments'
+import formatStartDate from '../../utils/formatStartDate'
+import DaysAppointments from '../DaysAppointment/DaysAppointments'
 
 const TVview = () => {
   const { appointments } = useContext(AppointmentContext)
   const { announcement } = useContext(NotificationContext)
-  // console.log('appointments length', appointments.length)
   const { users } = useContext(UserContext)
   const now = moment()
 
@@ -43,7 +42,6 @@ const TVview = () => {
   })
 
   let next = comingAppointments[0]
-  // console.log('next ', next)
 
   return (
     <div className="tv_view">

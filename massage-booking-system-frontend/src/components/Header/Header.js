@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../pics/unity5.png'
+import logo from '../../pics/unity5.png'
 
 import {
   Link

@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const Notification = ({ notification }) => {
   return (
     notification && notification.message !== undefined && notification.message && (
@@ -14,7 +13,5 @@ const Notification = ({ notification }) => {
       </div>)
   )
 }
-
-
 
 export default Notification

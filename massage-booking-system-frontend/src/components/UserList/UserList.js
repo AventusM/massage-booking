@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { UserContext } from '../App'
-import User from './User'
+import { UserContext } from '../../App'
+import User from '../User/User'
 
 const UserList = () => {
   const { users } = useContext(UserContext)
