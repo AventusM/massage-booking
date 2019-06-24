@@ -46,7 +46,7 @@ const AllAppointments = () => {
     return value.type_of_reservation === 3
   }
 
-  let Unavailable = todaysAppointments.every(isUnavailable)
+  let unavailable = todaysAppointments.every(isUnavailable)
 
   const getStart_Date = (date) => {
     date = new Date(date)
@@ -69,7 +69,7 @@ const AllAppointments = () => {
     <div className="appointmentListWrapper">
       <div className="controls">
         {user.admin === true ? (
-          (Unavailable === false) ? (
+          (unavailable === false) ? (
             <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
           ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
             )) : (null)}
