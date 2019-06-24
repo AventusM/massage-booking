@@ -7,7 +7,6 @@ const AllAppointments = () => {
   const { appointments, selectedDate, appointmentService } = useContext(AppointmentContext)
   const { users, user } = useContext(UserContext)
   const givenDate = new Date(selectedDate)
-  const [show, setShow] = useState(null)
 
 
   let selectedDay = givenDate.getDate()
@@ -49,10 +48,6 @@ const AllAppointments = () => {
 
   let Unavailable = todaysAppointments.every(isUnavailable)
 
-  useEffect(() => {
-    setShow(Unavailable)
-  }, [selectedDate])
-
   const getStart_Date = (date) => {
     date = new Date(date)
     let minutes = date.getMinutes()
@@ -63,24 +58,21 @@ const AllAppointments = () => {
 
   const markDayUnavailable = async () => {
     await appointmentService.updateExpectMany(givenDate.toDateString(), 'removeDate')
-    setShow(true)
 
   }
 
   const markDayAvailable = async () => {
     await appointmentService.updateExpectMany(givenDate.toDateString(), 'addDate')
-    setShow(false)
-
   }
 
   return (
     <div className="appointmentListWrapper">
       <div className="controls">
         {user.admin === true ? (
-          (Unavailable === false || show === false) ? (
+          (Unavailable === false) ? (
             <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
           ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
-          )) : (null)}
+            )) : (null)}
       </div>
       < ul className="appointmentListWrapper">
         {todaysAppointments.map(app => {
