@@ -27,6 +27,9 @@ const CreateAppointment = ({ id, start_date }) => {
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
   let now = moment()
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
+  if(requestedTimeMoment.isBefore(now)) {
+    return false
+  }
   if (requestedTimeMoment.isSame(now, 'days')) {
     const usersAppointmentOnSameDay = usersAppointments.find((time) => {
       let timeMoment = moment(time.start_date)
