@@ -4,7 +4,7 @@ import Calendar from 'react-calendar'
 import { AppointmentContext, UserContext, NotificationContext } from '../../App'
 
 import AllAppointments from '../AllAppointments/AllAppointments'
-import LoginIndex from '../LoginIndex/Login_index'
+import LoginIndex from '../LoginIndex/LoginIndex'
 import moment from 'moment'
 import NextAppointment from '../NextAppointment/NextAppointment'
 import Notification from '../Notification/Notification'
