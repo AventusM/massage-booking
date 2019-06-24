@@ -1,11 +1,11 @@
-import React, { useContext, useState, Fragment } from 'react'
+import React, { useContext } from 'react'
 import DatePicker from 'react-datepicker'
 import UserList from './UserList'
-import { NotificationContext, StretchContext } from '../../App'
+import { NotificationContext, StretchContext } from '../App'
 import StretchAppointmentDisplay from './StretchingSession'
 import "react-datepicker/dist/react-datepicker.css";
-import useField from '../../hooks/useField'
-import Notification from '../Notification'
+import useField from '../hooks/useField'
+import Notification from './Notification'
 
 
 // CHANGE THIS TO USE HOOKS ETC

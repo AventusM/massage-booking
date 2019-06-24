@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
-import { UserContext, NotificationContext } from '../../App'
+import { UserContext, NotificationContext } from '../App'
 import AppointmentsList from './AppointmentsLists'
-import useField from '../../hooks/useField'
-import Notification from '../Notification'
+import useField from '../hooks/useField'
+import Notification from './Notification'
 
 const MyPage = () => {
   console.log('RENDERING MY PAGE')

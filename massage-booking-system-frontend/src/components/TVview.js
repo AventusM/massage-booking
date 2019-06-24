@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Appointment from './logged_in/Appointment'
+import Appointment from './Appointment'
 import { AppointmentContext, UserContext, NotificationContext } from '../App'
 import Clock from './Clock'
 import unity4 from '../pics/unity4.png'

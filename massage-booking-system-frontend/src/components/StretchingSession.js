@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react'
-import { StretchContext, UserContext } from '../../App'
-import useField from '../../hooks/useField'
+import { StretchContext, UserContext } from '../App'
+import useField from '../hooks/useField'
 
 const StretchAppointmentDisplay = () => {
   const { stretching } = useContext(StretchContext)

@@ -6,11 +6,11 @@ import {
   Route,
 } from 'react-router-dom'
 
-import Index from './components/logged_in/Index'
-import MyPage from './components/logged_in/MyPage'
+import Index from './components/Index'
+import MyPage from './components/MyPage'
 import useResource from './hooks/useResource'
-import Stats from './components/logged_in/Stats'
-import DashBoard from './components/logged_in/Dashboard'
+import Stats from './components/Stats'
+import DashBoard from './components/Dashboard'
 import Header from './components/Header'
 import TVview from './components/TVview'
 import * as types from './types/types'

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { UserContext, NotificationContext } from '../../App'
+import { UserContext, NotificationContext } from '../App'
 
 const User = props => {
   const { user, userService } = useContext(UserContext)

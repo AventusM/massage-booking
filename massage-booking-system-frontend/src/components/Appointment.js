@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Display from './Display'
 import CreateAppointment from './CreateAppointment'
-import { AppointmentContext, UserContext, NotificationContext } from '../../App'
+import { AppointmentContext, UserContext, NotificationContext } from '../App'
 
 const Appointment = props => {
   const { appointmentService } = useContext(AppointmentContext)

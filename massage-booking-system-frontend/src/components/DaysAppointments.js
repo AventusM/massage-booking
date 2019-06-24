@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import moment from 'moment'
-import Appointment from './logged_in/Appointment'
+import Appointment from './Appointment'
 import { AppointmentContext, UserContext } from '../App'
 import formatStartDate from '../utils/formatStartDate'
 
