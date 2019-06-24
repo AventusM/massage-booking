@@ -30,20 +30,28 @@ passport.use(
       // or something like that which should fail
 
       User.findOne({ googleId: profile.id }).then(foundUser => {
-
         if (foundUser) {
           // User has already been registered, continue with existing user
           done(null, foundUser)
         } else {
           // New user registration, add to database
-          new User({
-            googleId: profile.id,
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            avatarUrl: profile.photos[0].value
-          })
-            .save()
-            .then(createdUser => done(null, createdUser))
+          if (profile.emails[0].value.split('@')[1] === config.EMAIL_SUFFIX || config.EMAIL_WHITELIST.includes(profile.emails[0].value)) {
+            let admin = false
+            if (profile.emails[0].value === config.INITIAL_ADMIN) {
+              admin = true
+            }
+            new User({
+              googleId: profile.id,
+              name: profile.displayName,
+              email: profile.emails[0].value,
+              admin: admin,
+              avatarUrl: profile.photos[0].value
+            })
+              .save()
+              .then(createdUser => done(null, createdUser))
+          } else {
+            done(null, false, { message: 'email suffix not allowed' })
+          }
         }
       })
     }
