@@ -34,23 +34,14 @@ const useResource = baseUrl => {
   const updateExpectMany = async (id, type = '') => {
     //console.log('UPDATE')
     const updatedResources = await axios.put(`${baseUrl}/${id}/${type}`)
-    console.log('updatedResource: ', updatedResources)
-    // setResources(
-    //   resources.map(resource =>
-    //     resource._id !== id ? resource : updatedResources.data
-    //   )
-    // )
+    const data = updatedResources.data
 
-    let res = updatedResources.reduce((a, b) => {
-      console.log('b: ', b);
-      console.log('a: ', a);
+    const updatedAppointments = resources.map(app => {
+      let appUpdated = data.find(app2 => app2._id === app._id);
+      return appUpdated ? { ...app, ...appUpdated } : app;
+    });
 
-      let tmp = resources.find(e => e._id === b._id) || {};
-      return a.concat(Object.assign(tmp, b));
-    }, []);
-
-    console.log('res: ', res);
-
+    setResources(updatedAppointments)
   }
 
   const remove = async id => {
