@@ -12,7 +12,6 @@ const Notification = ({ notification }) => {
           </p>
         </div>
       </div>)
-
   )
 }
 

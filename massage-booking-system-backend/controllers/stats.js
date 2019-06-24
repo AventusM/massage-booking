@@ -53,7 +53,7 @@ statsRouter.get('/', async (req, res, next) => {
     /**
     * users who have used massage
     */
-    let usersWhoHaveUsedMassage =  numberOfUsersAppointments.filter(count => count === 0).length
+    let usersWhoHaveUsedMassage = numberOfUsersAppointments.filter(count => count === 0).length
 
     let statisticsToSend = {
       numberOfPastAppointments,
@@ -67,8 +67,7 @@ statsRouter.get('/', async (req, res, next) => {
     console.log('statics to send ', statisticsToSend)
 
     res.json(statisticsToSend)
-  } catch (exception)
-  {
+  } catch (exception) {
     next(exception)
   }
 

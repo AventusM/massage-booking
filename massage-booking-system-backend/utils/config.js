@@ -10,7 +10,6 @@ let COOKIE_KEY = process.env.COOKIE_KEY
 let EMAIL_SUFFIX = process.env.EMAIL_SUFFIX
 let INITIAL_ADMIN = process.env.INITIAL_ADMIN
 let EMAIL_WHITELIST = process.env.EMAIL_WHITELIST.split(',')
-console.log('EMAIL_WHITELIST : ', EMAIL_WHITELIST)
 
 
 if (process.env.NODE_ENV === 'test') {

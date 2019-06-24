@@ -38,7 +38,6 @@ appointmentsRouter.get('/:startDate/:endDate', async (req, res, next) => {
       },
     })
 
-    //console.log(appointments)
     res.json(appointments.map(formatAppointment))
   } catch (exception) {
     next(exception)
@@ -59,6 +58,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
     const body = req.body
     const appointmentID = req.params.id
 
+    // If updated appointment has reservation type 3, mark the appointment available again
     if (body.type_of_reservation === 3) {
       let appointment = await Appointment.findById(appointmentID)
 
@@ -67,7 +67,6 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
       const response = await appointment.save()
       return res.json(response)
     }
-    //console.log('appointmentRouter put called with req body ', body)
 
     let user = await User.findById(body.user_id).populate('appointments')
     // console.log('found user in router', user)
@@ -160,10 +159,9 @@ appointmentsRouter.put('/:id/remove', async (req, res, next) => {
     }
     */
     const appointment = await Appointment.findById({ _id: req.params.id })
-    await appointmentUtil.removeAppointment(appointment)
-    const newAppointment = await Appointment.findById({ _id: req.params.id })
+    const updatedAppointment = await appointmentUtil.removeAppointment(appointment)
 
-    return res.json(newAppointment)
+    return res.json(updatedAppointment)
   } catch (exception) {
     next(exception)
   }
@@ -191,12 +189,14 @@ appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
     const day = date.getDate()
     const appointments = await Appointment.find()
     const appointmentsToRemove = appointments.filter(appoint => appoint.start_date.getDate() === day && appoint.start_date.getMonth() === month && appoint.start_date.getYear() === year)
-    for (let appoint of appointmentsToRemove) {
-      await appointmentUtil.removeAppointment(appoint)
-    }
-    const appointmentsChanged = await Appointment.find()
-    res.json(appointmentsChanged.map(formatAppointment))
 
+    let updatedAppointments = []
+    for (let appoint of appointmentsToRemove) {
+      const updatedAppointment = await appointmentUtil.removeAppointment(appoint)
+      updatedAppointments.push(updatedAppointment)
+    }
+
+    res.json(updatedAppointments.map(formatAppointment))
   } catch (exception) {
     next(exception)
   }
@@ -217,15 +217,14 @@ appointmentsRouter.put('/:date/addDate', async (req, res, next) => {
       },
     })
 
+    let updatedAppointments = []
     for (let appointment of appointments) {
       appointment.type_of_reservation = 0
-      await Appointment.findByIdAndUpdate(appointment._id, appointment)
+      const updatedAppointment = await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true })
+      updatedAppointments.push(updatedAppointment)
     }
 
-    const appointmentsChanged = await Appointment.find()
-    //console.log('appointmentsChanged: ', appointmentsChanged)
-
-    res.json(appointmentsChanged.map(formatAppointment))
+    res.json(updatedAppointments.map(formatAppointment))
 
   } catch (exception) {
     next(exception)

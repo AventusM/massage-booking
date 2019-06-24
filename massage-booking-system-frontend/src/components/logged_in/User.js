@@ -4,7 +4,7 @@ import { UserContext, NotificationContext } from '../../App'
 const User = props => {
   const { user, userService } = useContext(UserContext)
   const { createNotification } = useContext(NotificationContext)
-  const { id, name, email, number, admin, banned, avatarUrl } = props
+  const { id, name, email, number, admin, avatarUrl } = props
 
   //console.log('id outside?', id)
 
@@ -35,8 +35,8 @@ const User = props => {
         {avatarUrl ? (
           <img className="dashboard_profile_image" src={avatarUrl} alt="profile pic"/>
         ) : (
-            'avatar'
-          )}
+          'avatar'
+        )}
       </td>
       <td>{name} </td>
       <td>{email}</td>

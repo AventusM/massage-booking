@@ -28,11 +28,11 @@ const userAllowedToMakeAppointment = async (
     }
 
     if (appointmentTimeMoment.isSame(now, 'days')) { // appointments can be booked by anyone on the day of the appointment proided they dont already have an appointment that day
-      const usersAppointmentOnSameDay = usersPreviousMassageTimes.find(( time ) => {
+      const usersAppointmentOnSameDay = usersPreviousMassageTimes.find((time) => {
         let timeMoment = moment(time)
         return timeMoment.isSame(appointmentTimeMoment, 'days')
       })
-      if(usersAppointmentOnSameDay) {
+      if (usersAppointmentOnSameDay) {
         //console.log('cant book samedat appointment if you already have an appointment that day')
         return false
       }
@@ -42,8 +42,8 @@ const userAllowedToMakeAppointment = async (
       //console.log('first day of the week appoint is being booked in', appointmentsFirstDayOfTheWeek)
       /*  Checks that requested appointment is no more tha six weeks away. Appointments can be made 6 weeks in advance. */
       let startOfThisWeek = now.startOf('week')
-      let sixWeeksFromNow = startOfThisWeek.add( 42, 'days')
-      if(appointmentsFirstDayOfTheWeek.isAfter(sixWeeksFromNow)) {
+      let sixWeeksFromNow = startOfThisWeek.add(42, 'days')
+      if (appointmentsFirstDayOfTheWeek.isAfter(sixWeeksFromNow)) {
         //console.log('cant book appointments more than 6 weeks away')
         return false
       }

@@ -17,7 +17,7 @@ const AuthHeader = ({ user }) => {
         />
       </span>
       <Link to="/">
-        <img src={logo} className="logo" />
+        <img src={logo} className="logo" alt="" />
       </Link>
       <ul className="main-nav" id="js-menu">
         <li>
@@ -52,7 +52,7 @@ const AuthHeader = ({ user }) => {
   )
 }
 
-const NonAuthHeader = props => {
+const NonAuthHeader = () => {
   return (
     <nav className="navbar">
       <span className="navbar-toggle" id="js-navbar-toggle">
@@ -63,7 +63,7 @@ const NonAuthHeader = props => {
           className="fas fa-bars"
         />
       </span>
-      <img src={logo} className="logo" />
+      <img src={logo} className="logo" alt="" />
       <ul className="main-nav" id="js-menu">
         <li>
           <a href="/auth/google">Log in</a>

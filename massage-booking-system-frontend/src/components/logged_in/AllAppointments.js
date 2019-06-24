@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import Appointment from './Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
@@ -7,7 +7,6 @@ const AllAppointments = () => {
   const { appointments, selectedDate, appointmentService } = useContext(AppointmentContext)
   const { users, user } = useContext(UserContext)
   const givenDate = new Date(selectedDate)
-  const [show, setShow] = useState(null)
 
 
   let selectedDay = givenDate.getDate()
@@ -47,11 +46,7 @@ const AllAppointments = () => {
     return value.type_of_reservation === 3
   }
 
-  let Unavailable = todaysAppointments.every(isUnavailable)
-
-  useEffect(() => {
-    setShow(Unavailable)
-  }, [selectedDate])
+  let unavailable = todaysAppointments.every(isUnavailable)
 
   const getStart_Date = (date) => {
     date = new Date(date)
@@ -63,21 +58,18 @@ const AllAppointments = () => {
 
   const markDayUnavailable = async () => {
     await appointmentService.updateExpectMany(givenDate.toDateString(), 'removeDate')
-    setShow(true)
 
   }
 
   const markDayAvailable = async () => {
     await appointmentService.updateExpectMany(givenDate.toDateString(), 'addDate')
-    setShow(false)
-
   }
 
   return (
     <div className="appointmentListWrapper">
       <div className="controls">
         {user.admin === true ? (
-          (Unavailable === false || show === false) ? (
+          (unavailable === false) ? (
             <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
           ) : (<button onClick={() => markDayAvailable()}>Mark this day as available</button>
           )) : (null)}
