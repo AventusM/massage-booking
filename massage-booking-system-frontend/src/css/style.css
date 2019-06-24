@@ -14,9 +14,16 @@ body {
   background-color: #2b5876;
 }
 
-.remove {
-  width: 20px;
-  height: 20px;
+#remove {
+  width: 50px;
+  margin-left: 10px;
+  background:#f44b42;
+}
+
+#restore {
+  width: 50px;
+  margin-left: 10px;
+  background:#f44b42;
 }
 
 .appointmentListWrapper .controls button {
@@ -712,7 +719,7 @@ h3 {
   }
 
   .nav-link:hover {
-    color: rgba(255, 255, 255, 1);
+    color: rgb(134, 122, 122);
   }
 }
 
@@ -987,6 +994,15 @@ h3 {
   border: #3b9962;
 }
 
+#removed {
+  background: rgb(73, 42, 42);
+}
+
+#impossible {
+  background: rgb(70, 60, 60);
+  border: none;
+}
+
 /* Appointment List mobile */
 
 @media screen and (min-width: 701px) {
@@ -1159,7 +1175,7 @@ h3 {
   font-size: 5em;
   color: white;
   text-align: center;
-
+ 
 }
 
 .tv_notice p {
@@ -1172,17 +1188,16 @@ h3 {
 .clock {
   font-size: 150px;
   font-weight: 500;
+  margin-top: 70px;
   color: white;
- 
+  text-align: center
 }
 
 .logoTV {
   width: 400px;
-  margin-left: 100px;
-  margin-bottom: 50px;
   position: fixed;
-  left: 2px;
-  bottom: 2px;
+  left: 10px;
+  bottom: 10px;
 }
 
 .week {
@@ -1192,17 +1207,23 @@ h3 {
 
 .tv_view {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   justify-items: center;
 
 }
 
 .tv_view h2 {
-  color: white
+  color: white;
+  text-align: center;
+  margin-top: 40px;
 }
 
 .tv_notification{
   width: 100%;
+}
+
+.day-view {
+  margin-bottom: 15px;
 }
 
 
