@@ -19,7 +19,7 @@ const CreateAppointment = ({ id, start_date }) => {
   }
 
   return (
-    <button id={reservationRuleCheck(user.appointments, start_date) ? 'available' : 'impossible'} onClick={() => handleAppointmentCreation()}>
+    <button id={reservationRuleCheck(user.appointments, start_date).allowed ? 'available' : 'impossible'} onClick={() => handleAppointmentCreation()}>
       <Display dateobject={start_date} free={true} />
     </button>
   )
