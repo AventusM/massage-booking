@@ -26,7 +26,7 @@ const TVview = () => {
   /* Find next appointment */
 
   const comingAppointments = appointments.filter((app) => {
-    let appStartTime = moment(app.start_date).add(moment(app.start_date).utcOffset())
+    let appStartTime = moment(app.start_date)
     return appStartTime.isAfter(now)
   })
 
@@ -46,7 +46,6 @@ const TVview = () => {
   })
 
   let next = comingAppointments[0]
-  console.log('next: ', next)
 
   return (
     <div className="tv_view">
