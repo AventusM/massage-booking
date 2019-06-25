@@ -11,6 +11,10 @@ const protectedRoute = require('./utils/protectedRoute')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
+
+const tvRouter = require('./controllers/tv')
+app.use('/api/tv', tvRouter)
+
 // Makes passport configuration run by itself. No need for app.use(passportConfig) etc
 require('./services/passport')
 
