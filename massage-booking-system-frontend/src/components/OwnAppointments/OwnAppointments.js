@@ -2,12 +2,11 @@ import React, { useContext } from 'react'
 import Appointment from '../Appoinment/Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
-const AppointmentsList = ({ ownPage }) => {
+const OwnAppointments = ({ ownPage }) => {
   const { appointments } = useContext(AppointmentContext)
-  const { user, users } = useContext(UserContext)
-  const foundUser = users.find(u => user._id === u._id)
+  const { user } = useContext(UserContext)
   const ownAppointments = appointments.filter(
-    app => app.user_id === foundUser._id
+    app => app.user_id === user._id
   )
 
   const getStart_Date = (date) => {
@@ -18,6 +17,21 @@ const AppointmentsList = ({ ownPage }) => {
     return date
   }
 
+  ownAppointments.sort((a, b) => {
+    let dateA = new Date(a.start_date)
+    let dateB = new Date(b.start_date)
+
+    if (dateA < dateB) {
+      return -1
+    }
+
+    if (dateA > dateB) {
+      return 1
+    }
+
+    return 0
+  })
+
   return (
     <ul className="appointmentListWrapper">
       {ownAppointments.map(app => {
@@ -27,7 +41,7 @@ const AppointmentsList = ({ ownPage }) => {
             id={app._id}
             start_date={getStart_Date(app.start_date)}
             type_of_reservation={app.type_of_reservation}
-            appUser={foundUser}
+            appUser={user}
             ownPage={ownPage}
           />
         )
@@ -36,4 +50,4 @@ const AppointmentsList = ({ ownPage }) => {
   )
 }
 
-export default AppointmentsList
+export default OwnAppointments

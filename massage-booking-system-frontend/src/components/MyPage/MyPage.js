@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { UserContext, NotificationContext } from '../../App'
-import AppointmentsList from '../AppointmentList/AppointmentsLists'
+import OwnAppointments from '../OwnAppointments/OwnAppointments'
 import useField from '../../hooks/useField'
 import Notification from '../Notification/Notification'
 
@@ -67,7 +67,7 @@ const MyPage = () => {
           </form>
           <div className="own_appointments">
             <h2>My Appointments</h2>
-            <AppointmentsList ownPage={true} />
+            <OwnAppointments ownPage={true} />
           </div>
         </div>
       </div>
