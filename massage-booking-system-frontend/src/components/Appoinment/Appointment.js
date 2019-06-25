@@ -25,25 +25,23 @@ const Appointment = props => {
   return (
     <div className="cont">
       {type_of_reservation === 1 ? (
-        appUser ? (
-          user._id === appUser._id ? (
-            <div>
-              <button
-                id="reservedOwn"
-                onClick={() => cancelAppointment()}>
-                <Display dateobject={start_date} ownPage={ownPage} date={true} cancel={true} />
-              </button>
-            </div>
-          ) : (
-            <div>
-              <button
-                id="reserved"
-                onClick={() => { createNotification('You cannot book this slot!') }}>
-                <Display dateobject={start_date} user={appUser} />
-              </button>
-            </div>
-          )
-        ) : null
+        user._id === appUser._id ? (
+          <div>
+            <button
+              id="reservedOwn"
+              onClick={() => cancelAppointment()}>
+              <Display dateobject={start_date} ownPage={ownPage} date={true} cancel={true} />
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button
+              id="reserved"
+              onClick={() => { createNotification('You cannot book this slot!') }}>
+              <Display dateobject={start_date} user={appUser} />
+            </button>
+          </div>
+        )
       ) : (type_of_reservation === 0
         ? <CreateAppointment id={id} start_date={start_date} />
         : user.admin

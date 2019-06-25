@@ -37,9 +37,9 @@ const User = props => {
         )}
       </td>
       <td>{name} </td>
-      <td>{email}</td>
+      <td><a id="mail_link" href={`mailto:${email}`}>{email}</a></td>
       <td>{role}</td>
-      {number ? <td>{number}</td> : <td>No number specified</td>}
+      {number ? <td><a id="phone_link" href={`tel:${number}`}>{number}</a></td> : <td>No number specified</td>}
       <td>
         <button
           className="makeAdminButton"

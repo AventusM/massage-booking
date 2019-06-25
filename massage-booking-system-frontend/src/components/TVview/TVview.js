@@ -55,10 +55,12 @@ const TVview = () => {
           type_of_reservation={next.type_of_reservation}
           appUser={users.find(u => u._id === next.user_id)}
         /> </ul> : ''}
-        <div className="tv_notice">
-          <h2>Notice</h2>
-          <p>{announcement.message}</p>
-        </div>
+        {announcement && announcement.message ?
+          <div className="tv_notice">
+            <h2>Notice</h2>
+            <p>{announcement.message}</p>
+          </div> : null
+        }
         <img className="logoTV"
           id="unity4" src={unity4} alt=""></img>
       </div>
