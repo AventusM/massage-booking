@@ -107,11 +107,17 @@ const Modal = (props) => {
 
 const prettyDateString = (dateToPretify) => {
   let date = new Date(dateToPretify)
+
+  // fix timezone offset
+  let minutes = date.getMinutes()
+  let time = date.getTimezoneOffset()
+  date.setMinutes(minutes + time)
+
   let day = date.getDate()
   let month = date.getMonth() + 1
   let year = date.getFullYear()
   let hours = date.getHours()
-  let minutes = date.getMinutes()
+  minutes = date.getMinutes()
   if (minutes < 10) {
     minutes = `0${minutes}`
   }
