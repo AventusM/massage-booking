@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import moment from 'moment'
-import Appointment from './logged_in/Appointment'
-import { AppointmentContext, UserContext } from '../App'
-import formatStartDate from '../utils/formatStartDate'
+import Appointment from '../Appoinment/Appointment'
+import { AppointmentContext, UserContext } from '../../App'
+import formatStartDate from '../../utils/formatStartDate'
 
 const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
   const { appointments } = useContext(AppointmentContext)
-  console.log('appointments length', appointments.length)
   const { users } = useContext(UserContext)
   const now = moment()
 
@@ -71,7 +70,6 @@ const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
   let firstHalf = daysAppointments.slice(0, 5)
   let secondHalf = daysAppointments.slice(5, 12)
 
-
   return (
     <div>
       <h2 className="tv_view_headers">{nameOfDay}</h2>
@@ -104,7 +102,6 @@ const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
       </ul>
     </div>
   )
-
 }
 
 export default DaysAppointments

@@ -3,7 +3,6 @@ import React from 'react'
 const Display = ({ dateobject, user, ownPage, free, removed, cancel }) => {
   let date = new Date(dateobject)
 
-
   let dateDisplay
   let day = date.getDate()
   let month = date.getMonth() + 1

@@ -6,30 +6,25 @@ import {
   Route,
 } from 'react-router-dom'
 
-import Index from './components/logged_in/Index'
-import MyPage from './components/logged_in/MyPage'
+import Index from './components/Index/Index'
+import MyPage from './components/MyPage/MyPage'
 import useResource from './hooks/useResource'
-import Stats from './components/logged_in/Stats'
-import DashBoard from './components/logged_in/Dashboard'
-import Header from './components/Header'
-import TVview from './components/TVview'
+import Stats from './components/Stats/Stats'
+import DashBoard from './components/Dashboard/Dashboard'
+import Header from './components/Header/Header'
+import TVview from './components/TVview/TVview'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
 
 const App = () => {
-  console.log('RENDERING APP')
   const [users, userService] = useResource('/api/users')
   const [appointments, appointmentService] = useResource('/api/appointments')
   const [stats, statsService] = useResource('api/stats')
   const [stretching, stretchingService] = useResource('/api/stretching')
-
   const [announcement, announcementService] = useResource('/api/announcements')
-
   const [notification, setNotification] = useState(null)
-
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
-
 
   const createNotification = (message, type) => {
     let icon
@@ -54,14 +49,12 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log('SET USER EFFEECT TRIGGERED')
     axios
       .get('/api/users/current_user')
       .then(response => setUser(response.data))
   }, [])
 
   useEffect(() => {
-    console.log('GET ALL EFFECT TRIGGERED')
     userService.getAll()
     let twoWeeksAgo = moment().subtract(15, 'days')
     let sixWeeksFromNow = moment().add(43, 'days')
@@ -73,7 +66,6 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    console.log('REFRESH USER EFFECT TRIGGERED')
     user &&
       userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser))
   }, [appointments, stretching])

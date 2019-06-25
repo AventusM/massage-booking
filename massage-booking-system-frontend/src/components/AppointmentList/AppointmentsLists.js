@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Appointment from './Appointment'
+import Appointment from '../Appoinment/Appointment'
 import { AppointmentContext, UserContext } from '../../App'
 
 const AppointmentsList = ({ ownPage }) => {

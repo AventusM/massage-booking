@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import Display from './Display'
-import CreateAppointment from './CreateAppointment'
+import Display from '../Display/Display'
+import CreateAppointment from '../CreateAppointment/CreateAppointment'
 import { AppointmentContext, UserContext, NotificationContext } from '../../App'
 
 const Appointment = props => {
@@ -13,6 +13,7 @@ const Appointment = props => {
     await appointmentService.update(id, { type_of_reservation: 0, user_id: user._id, })
     createNotification('Appointment cancelled succesfully', 'success')
   }
+
   const markAppUnavailable = async () => {
     await appointmentService.update(id, '', 'remove')
   }

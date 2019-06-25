@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import moment from 'moment'
 import { AppointmentContext, UserContext, NotificationContext } from '../../App'
-import Display from './Display'
+import Display from '../Display/Display'
 
 const CreateAppointment = ({ id, start_date }) => {
   const { user } = useContext(UserContext)
   const { appointmentService } = useContext(AppointmentContext)
   const { createNotification } = useContext(NotificationContext)
-  //console.log('CreateAPPOINTMENT start-date ', start_date)
+
   const handleAppointmentCreation = async () => {
     if (reservationRuleCheck(user.appointments, start_date)) {
       await appointmentService.update(id, { type_of_reservation: 1, user_id: user._id, })
@@ -27,7 +27,7 @@ const CreateAppointment = ({ id, start_date }) => {
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
   let now = moment()
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
-  if(requestedTimeMoment.isBefore(now)) {
+  if (requestedTimeMoment.isBefore(now)) {
     return false
   }
   if (requestedTimeMoment.isSame(now, 'days')) {
@@ -36,8 +36,6 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
       return timeMoment.isSame(now, 'day')
     })
     if (usersAppointmentOnSameDay) {
-      console.log('FOUND APPOINT ON SAME DAY ', usersAppointmentOnSameDay)
-      console.log('RESERVATION DENIED')
       return false
     }
     return true
@@ -56,7 +54,6 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
     )
     return usersAppointmentsWithinTheLastTwoWeeks.length === 0
   }
-
 }
 
 export default CreateAppointment

@@ -6,8 +6,6 @@ const User = props => {
   const { createNotification } = useContext(NotificationContext)
   const { id, name, email, number, admin, avatarUrl } = props
 
-  //console.log('id outside?', id)
-
   const role = admin ? 'admin' : 'user'
   const adminButtonToggleText = admin ? 'Remove Admin' : 'Make Admin'
 
@@ -33,7 +31,7 @@ const User = props => {
     <tr>
       <td>
         {avatarUrl ? (
-          <img className="dashboard_profile_image" src={avatarUrl} alt="profile pic"/>
+          <img className="dashboard_profile_image" src={avatarUrl} alt="profile pic" />
         ) : (
           'avatar'
         )}

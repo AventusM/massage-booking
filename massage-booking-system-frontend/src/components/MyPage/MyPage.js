@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from 'react'
 import { UserContext, NotificationContext } from '../../App'
-import AppointmentsList from './AppointmentsLists'
+import AppointmentsList from '../AppointmentList/AppointmentsLists'
 import useField from '../../hooks/useField'
-import Notification from '../Notification'
+import Notification from '../Notification/Notification'
 
 const MyPage = () => {
-  console.log('RENDERING MY PAGE')
   const { user, setUser, userService } = useContext(UserContext)
   const { createNotification, notification, announcementNotification } = useContext(NotificationContext)
   let numberField = useField('text')
@@ -22,8 +21,6 @@ const MyPage = () => {
     event.preventDefault()
     try {
       const number = numberField.value
-      console.log('number: ', number)
-
       const updatedUser = { ...user, number }
       const type = 'user'
 
