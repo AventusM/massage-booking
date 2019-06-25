@@ -1,109 +1,55 @@
-import React, { useContext, useEffect, useState, Fragment } from 'react'
-import { StretchContext, UserContext } from '../../App'
-import DatePickerForm from '../DatePickerForm/DatePickerForm'
+import React, { useContext, useState, Fragment } from 'react'
+import { StretchContext } from '../../App'
 import useField from '../../hooks/useField'
-
-const StretchAppointmentDisplay = () => {
-  const { stretching } = useContext(StretchContext)
-  const { user } = useContext(UserContext)
-  const [loaded, setLoaded] = useState(false)
-  const [appointmentData, setAppointmentData] = useState(null)
-
-  useEffect(() => {
-    if (stretching.length > 0 && user) {
-      setLoaded(true)
-      if (user.admin) {
-        setAppointmentData(stretching)
-      } else if (!user.admin) {
-        const dateData = new Date(stretching[0].date)
-        let minuteAddition = ''
-        // Fix for times such as 10:05 which output 10:5 without this
-        if (dateData.getMinutes() < 10) {
-          minuteAddition += '0'
-        }
-        setAppointmentData(`${dateData.toDateString()} at ${dateData.getHours()}:${minuteAddition}${dateData.getMinutes()}`)
-      }
-    }
-  }, [stretching, user])
-
-  return (loaded &&
-    <Fragment>
-      {!user.admin &&
-        <div className="basic_helper">
-          {appointmentData}
-          <JoinStretchAppointment />
-          <CancelStretchAppointment />
-        </div>
-      }
-
-      {user.admin &&
-        <div className="basic_helper">
-          <DatePickerForm />
-          <StretchingSessionList sessions={stretching} />
-        </div>
-      }
-
-    </Fragment>
-  )
-}
-
-const StretchingSessionList = (props) => {
-  const { sessions } = props
-  return (
-    <ul className="basic_helper">
-      {sessions.map(session => {
-        return (
-          <SingleStretchingSession
-            key={session._id}
-            date={session.date}
-            users={session.users}
-          />
-        )
-      })}
-    </ul>
-  )
-}
 
 const StretchingSessionUser = (props) => {
   const { data, description } = props
   return (
     <li>
-      {data.name}
-      {description}
+      {data.name} {description}
     </li>
   )
 }
 
 const SingleStretchingSession = (props) => {
-  const { date, users } = props
+  console.log('Single stretch session props ', props)
+  const { date, users, sessionID, currentUsersStretchAppointments } = props
+
+  const slotsUsed = users.length
+  const slotsRemainingText = `${slotsUsed} / 10 slots used`
+
   return (
     <li className="basic_helper">
-      <div>when? {date}</div>
+      <div>{prettyDateString(date)}</div>
       <ul>
         {users.map(user => {
           return (
             <StretchingSessionUser
-              key={user.data._id}
-              data={user.data}
+              key={user._id}
+              data={user.data ? user.data : ''}
               description={user.description}
             />
           )
         })}
       </ul>
+      {slotsRemainingText}
+      {currentUsersStretchAppointments.includes(sessionID) ?
+        <CancelStretchAppointment sessionID={sessionID}/>
+        :<JoinStretchAppointment sessionID={sessionID}/>
+      }
+
     </li>
   )
 }
 
-const JoinStretchAppointment = () => {
-  const { stretchingService, stretching } = useContext(StretchContext)
+const JoinStretchAppointment = (props) => {
+  const { sessionID } = props
+  const { stretchingService } = useContext(StretchContext)
   const description = useField('text')
-
-  const slotsRemainingAmount = 10 - stretching[0].users.length
-  const slotsRemainingText = `${slotsRemainingAmount} / 10 slots open`
 
   const joinSession = async () => {
     try {
-      await stretchingService.update(stretching[0]._id, { join: true, description })
+      await stretchingService.update(sessionID, { join: true, description })
       // Add notification here for success on joining session
     } catch (exception) {
       // Add notification here for failure to join session
@@ -111,17 +57,17 @@ const JoinStretchAppointment = () => {
   }
   return (
     <div>
-      {slotsRemainingText}
       <Modal description={description} joinSession={joinSession} />
     </div>
   )
 }
 
-const CancelStretchAppointment = () => {
-  const { stretchingService, stretching } = useContext(StretchContext)
+const CancelStretchAppointment = (props) => {
+  const { sessionID } = props
+  const { stretchingService } = useContext(StretchContext)
   const cancelSession = async () => {
     try {
-      await stretchingService.update(stretching[0]._id, { join: false })
+      await stretchingService.update(sessionID, { join: false })
       // Add notification here for success on cancelling session
     } catch (exception) {
       // Add notification here for failure on cancelling session
@@ -159,5 +105,18 @@ const Modal = (props) => {
   )
 }
 
+const prettyDateString = (dateToPretify) => {
+  let date = new Date(dateToPretify)
+  let day = date.getDate()
+  let month = date.getMonth() + 1
+  let year = date.getFullYear()
+  let hours = date.getHours()
+  let minutes = date.getMinutes()
+  if (minutes < 10) {
+    minutes = `0${minutes}`
+  }
 
-export default StretchAppointmentDisplay
+  return `${day}.${month}.${year} ${hours}:${minutes}`
+}
+
+export default SingleStretchingSession
