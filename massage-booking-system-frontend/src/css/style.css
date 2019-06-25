@@ -171,6 +171,7 @@ nav a {
 
 .dashboard_form{
   max-width: 400px;
+  margin: auto;
 }
 
 .dashboard_announcement{
@@ -216,7 +217,7 @@ border: none;
 .user_search {
   color: white;
   margin-top: 150px;
-  margin-left: 44%;
+  margin-left: 36%;
 }
 
 ::placeholder {
@@ -232,7 +233,7 @@ border: none;
   border-bottom: 1.5px solid #22465e;
 }
 
-table {
+.dashboard_wrapper table {
   margin: auto;
   margin-top: 10px;
   background: #366787;
@@ -271,6 +272,32 @@ table {
   background-color: red;
   border-radius: 3px;
   border: none;
+  
+}
+
+/* Mobile */
+
+.dashboard_wrapper_mobile {
+  text-align: center;
+  
+}
+
+.user_list {
+  margin: auto;
+  width: 370px;
+  margin-top: 10px;
+  background: #366787;
+  border-radius: 15px;
+  color: rgba(255, 255, 255, 0.89);
+}
+
+
+ul>div:nth-child(odd){
+  background: #3648536b;
+}​
+
+#list_header {
+  white-space:nowrap;
 }
 
 /*

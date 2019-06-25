@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { UserContext, NotificationContext } from '../../App'
 
 const User = props => {
   const { user, userService } = useContext(UserContext)
   const { createNotification } = useContext(NotificationContext)
-  const { id, name, email, number, admin, avatarUrl } = props
+  const { id, name, email, number, admin, avatarUrl, mobile } = props
+  const [visibility, setVisibility] = useState('none')
 
   const role = admin ? 'admin' : 'user'
   const adminButtonToggleText = admin ? 'Remove Admin' : 'Make Admin'
@@ -25,6 +26,38 @@ const User = props => {
     } catch (exception) {
       createNotification(`Unable to delete ${name}`)
     }
+  }
+
+  const toggleVisibility = () => {
+    const currentVisibility = visibility === 'none' ?  null : 'none'
+    console.log(visibility)
+    setVisibility(currentVisibility)
+  }
+
+  if (mobile) {
+    return (
+      <div onClick={() => toggleVisibility()}>
+        <div id="list_header">
+          <img className="dashboard_profile_image" src={avatarUrl} alt="profile pic" />
+          <h2>{name}</h2>
+        </div>
+        <div style={{ display: visibility }}>
+          Email: {email} <br/>
+          Number: {number ? <span>{number}</span> : <span>No number specified</span>} <br/>
+          Role: {role} <br />
+          <button
+            className="makeAdminButton"
+            onClick={() => toggleAdmin()}>
+            {adminButtonToggleText}
+          </button> <br />
+          <button
+            className="removeUserButton"
+            onClick={() => removeUser(id)}>
+            Remove
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
