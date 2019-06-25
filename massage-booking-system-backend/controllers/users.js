@@ -117,19 +117,10 @@ usersRouter.put('/:id', async (req, res, next) => {
 })
 
 usersRouter.delete('/:id', async (req, res, next) => {
-
   try {
-    /*
-    //verify?
-    const given_id = req.params.id
-    const found_user = await User.findById({ _id: given_id })
-    if (!found_user.admin) {
-      console.log('user not found')
-      return res.status(400).end()
-    }*/
     const user = await User.findById({ _id: req.params.id })
-
     await emptyAppointmentsFromUser(user)
+    await emptyStretchingsFromUser(user)
     await user.remove()
     res.status(204).end()
   } catch (exception) {
@@ -142,7 +133,14 @@ const emptyAppointmentsFromUser = async (user) => {
   for (let appoint of appointments) {
     await appointmentUtil.removeUserFromAppointment(appoint)
   }
+}
 
+const emptyStretchingsFromUser = async (user) => {
+  const stretchings = user.stretchingSessions
+  for (let stretch of stretchings) {
+    console.log('str', stretch)
+    await appointmentUtil.removeUserFromStretching(user._id, stretch)
+  }
 }
 
 module.exports = usersRouter
