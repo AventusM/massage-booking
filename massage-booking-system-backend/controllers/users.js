@@ -110,7 +110,7 @@ usersRouter.put('/:id', verify.verifyIfAdmin, async (req, res, next) => {
   }
 })
 
-usersRouter.delete('/:id', verify.verifyIfAdmin, async (req, res, next) => {
+usersRouter.delete('/:id', verify.verifyIfAdminOrSelf, async (req, res, next) => {
   try {
     const user = await User.findById({ _id: req.params.id })
     await emptyAppointmentsFromUser(user)
