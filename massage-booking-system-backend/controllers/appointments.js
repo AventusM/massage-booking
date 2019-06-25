@@ -154,9 +154,7 @@ appointmentsRouter.put('/:id/remove', verify.verifyIfAdmin, async (req, res, nex
  */
 appointmentsRouter.put('/:id/add', verify.verifyIfAdmin, async (req, res, next) => {
   try {
-    req.body.type_of_reservation === 3
     let appointment = await Appointment.findById(req.params.id)
-
     appointment.type_of_reservation = 0
 
     const response = await appointment.save()
