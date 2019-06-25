@@ -13,6 +13,7 @@ import Stats from './components/Stats/Stats'
 import DashBoard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header'
 import TVview from './components/TVview/TVview'
+import StretchAppointmentDisplay from './components/StretchingSession/StretchingSession'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
 
@@ -90,6 +91,7 @@ const App = () => {
               <UserContext.Provider value={{ user, setUser, users, userService }}>
                 <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
                   <Route exact path="/" render={() => <Index />} />
+                  <Route exact path="/stretching" render={() => <StretchAppointmentDisplay />} />
                   <Route exact path="/dashboard" render={() => <DashBoard />} />
                   <Route exact path="/mypage" render={() => <MyPage />} />
                   <Route exact path="/stats" render={() => <Stats stats={stats} />} />
