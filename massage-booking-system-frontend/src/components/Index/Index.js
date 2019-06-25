@@ -28,6 +28,11 @@ const AuthIndex = ({ user }) => {
     window.addEventListener('resize', () => setWidth(window.innerWidth))
   }, [])
 
+  useEffect(() => {
+    const today = new Date()
+    setSelectedDate(today)
+  }, [])
+
   const isMobile = width <= 1160
 
 
@@ -51,6 +56,8 @@ const AuthIndex = ({ user }) => {
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
+            activeStartDate={selectedDate}
+            value={selectedDate}
             locale={'en-UK'}
             onChange={value => {
               setSelectedDate(value)
