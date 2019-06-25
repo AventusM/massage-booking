@@ -13,7 +13,7 @@ import Stats from './components/Stats/Stats'
 import DashBoard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header'
 import TVview from './components/TVview/TVview'
-import StretchAppointmentDisplay from './components/StretchingSession/StretchingSession'
+import StretchAppointmentDisplay from './components/StretchingSessions/StretchingSessions'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
 
