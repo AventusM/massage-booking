@@ -154,6 +154,15 @@ nav a {
 
 /* Dashboard styles */
 
+#phone_link {
+ color: white;
+ text-decoration: underline
+}
+
+#mail_link {
+  color: white;
+  text-decoration: underline;
+}
 
 .dashboard_profile_image {
   height: 80px;
@@ -1254,6 +1263,10 @@ h3 {
   color: white;
   text-align: center;
   margin-top: 40px;
+}
+
+.tv_view h5 {
+  text-align: center
 }
 
 .tv_notification{

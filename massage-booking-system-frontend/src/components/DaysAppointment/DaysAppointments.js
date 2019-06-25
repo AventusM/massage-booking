@@ -86,7 +86,7 @@ const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
           )
         })}
       </ul>
-      <h5 className="tv_view_headers">LUNCH</h5>
+      <h5 className="tv_view_headers">Break</h5>
       <ul className="tvViewAppointmentList">
         {secondHalf.map(app => {
           return (
