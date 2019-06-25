@@ -1,6 +1,7 @@
 const generator = require('./appointmentGenerator')
 const Appointment = require('../models/appointment')
 const User = require('../models/user')
+const Stretch = require('../models/stretching')
 
 
 /**
@@ -59,10 +60,34 @@ const removeUserFromAppointment = async (appointment) => {
   try {
     appointment.user_id = null
     appointment.type_of_reservation = 0
-    appointment = await Appointment.findByIdAndUpdate(appointment._id, appointment)
+    await Appointment.findByIdAndUpdate(appointment._id, appointment)
   } catch (exception) {
     console.log('E', exception)
   }
 }
 
-module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment }
+const removeUserFromStretching = async (userId, stretchId) => {
+  try{
+    let stretch = await Stretch.findById(stretchId)
+    console.log('VENYY',stretch)
+    let list = stretch.users.filter(participant => participant.data._id.toString() !== userId.toString())
+    console.log('LISTA',list)
+    stretch.users = list
+    await Stretch.findByIdAndUpdate(stretchId, stretch)
+  } catch (exception) {
+    console.log('e', exception)
+  }
+}
+
+const removeStretchFromUser = async (userId, stretchId) => {
+  try {
+    let user = await User.findById(userId)
+    let list = user.stretchingSessions.filter(stretch => stretch !== stretchId)
+    user.stretchingSessions = list
+    await User.findByIdAndUpdate(userId, user)
+  } catch (exception) {
+    console.log('e', exception)
+  }
+}
+
+module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching }

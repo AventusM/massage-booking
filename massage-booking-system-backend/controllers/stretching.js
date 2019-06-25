@@ -135,16 +135,17 @@ stretchingRouter.put('/:id', async (req, res, next) => {
 
 
 
-// Removes individual stretching appointment completely. Used by masseusse type user
+// Removes individual stretching appointment completely. Used by admin
 stretchingRouter.delete('/:id', async (req, res, next) => {
   try {
-
-    // TODO
-    // 1. Fetch stetching session by id
-    // 2. Update users by removing id from their own stretching session list
-    // IS STEP 2 done automatically by mongoose if JUST STEPS 1 AND 3 ARE MADE?
-    // IS STEP 2 done automatically by mongoose if JUST STEPS 1 AND 3 ARE MADE?
-    // 3. Delete stretching session
+    const stretchId = req.params.id
+    let stretch = await Stretching.findById(stretchId)
+    for(let userId of stretch.users){
+      await AppointmentManager.removeStretchFromUser(userId, stretchId)
+    }
+    await AppointmentManager.recoverTwoAppointments(stretch.date)
+    await Stretching.remove()
+    res.status(204).end()
   } catch (exception) {
     next(exception)
   }

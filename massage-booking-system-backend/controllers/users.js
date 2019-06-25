@@ -113,8 +113,8 @@ usersRouter.put('/:id', verify.verifyIfAdmin, async (req, res, next) => {
 usersRouter.delete('/:id', verify.verifyIfAdmin, async (req, res, next) => {
   try {
     const user = await User.findById({ _id: req.params.id })
-
     await emptyAppointmentsFromUser(user)
+    await emptyStretchingsFromUser(user)
     await user.remove()
     res.status(204).end()
   } catch (exception) {
@@ -127,7 +127,14 @@ const emptyAppointmentsFromUser = async (user) => {
   for (let appoint of appointments) {
     await appointmentUtil.removeUserFromAppointment(appoint)
   }
+}
 
+const emptyStretchingsFromUser = async (user) => {
+  const stretchings = user.stretchingSessions
+  for (let stretch of stretchings) {
+    console.log('str', stretch)
+    await appointmentUtil.removeUserFromStretching(user._id, stretch)
+  }
 }
 
 module.exports = usersRouter
