@@ -73,7 +73,7 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
       return
     }
 
-    if (body.type_of_reservation === 0) {
+    if (appointment.type_of_reservation === 1) {
       // user wishes to cancel their appointment
 
       let userAllowedToCancel = await ruleChecker.userAllowedtoCancelAppointment(
