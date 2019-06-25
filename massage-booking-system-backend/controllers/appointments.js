@@ -6,6 +6,7 @@ appointmentsRouter.use(bodyParser.json())
 const User = require('../models/user')
 const ruleChecker = require('../utils/bookingRuleChecker')
 const appointmentUtil = require('../utils/appointmentUtil')
+const verify = require('../utils/verify')
 
 const formatAppointment = input => {
   return {
@@ -57,16 +58,6 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
     const appointmentID = req.params.id
-
-    // If updated appointment has reservation type 3, mark the appointment available again
-    if (body.type_of_reservation === 3) {
-      let appointment = await Appointment.findById(appointmentID)
-
-      appointment.type_of_reservation = 0
-
-      const response = await appointment.save()
-      return res.json(response)
-    }
 
     let user = await User.findById(body.user_id).populate('appointments')
     // console.log('found user in router', user)
@@ -147,17 +138,8 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
 /**
  * Searches appointment from database by id and then calls removeAppointment.
  */
-appointmentsRouter.put('/:id/remove', async (req, res, next) => {
-  //verify?
+appointmentsRouter.put('/:id/remove', verify.verifyIfAdmin, async (req, res, next) => {
   try {
-    /*
-    console.log('rRRRRRRr', req.user._id)
-    const found_user = await User.findById({ _id: req.user._id })
-    if (!found_user.admin) {
-      console.log('user not found')
-      return res.status(400).end()
-    }
-    */
     const appointment = await Appointment.findById({ _id: req.params.id })
     const updatedAppointment = await appointmentUtil.removeAppointment(appointment)
 
@@ -168,20 +150,26 @@ appointmentsRouter.put('/:id/remove', async (req, res, next) => {
 })
 
 /**
+ * Marks the appointment with given id as available
+ */
+appointmentsRouter.put('/:id/add', verify.verifyIfAdmin, async (req, res, next) => {
+  try {
+    let appointment = await Appointment.findById(req.params.id)
+    appointment.type_of_reservation = 0
+
+    const response = await appointment.save()
+    return res.json(response)
+
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+/**
  * Removes appointments that matches the date given as parameter.
  */
-
-appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
-  //verify?
+appointmentsRouter.put('/:date/removeDate', verify.verifyIfAdmin, async (req, res, next) => {
   try {
-    /*
-    const found_user = await User.findById({ _id: req.user._id })
-    if (!found_user.admin) {
-      console.log('user not found')
-      console.log('USER EI TOIMINYT')
-      return res.status(400).end()
-    }*/
-
     const date = new Date(req.params.date)
 
     const month = date.getMonth()
@@ -202,7 +190,10 @@ appointmentsRouter.put('/:date/removeDate', async (req, res, next) => {
   }
 })
 
-appointmentsRouter.put('/:date/addDate', async (req, res, next) => {
+/**
+ * Marks the given date as available
+ */
+appointmentsRouter.put('/:date/addDate', verify.verifyIfAdmin, async (req, res, next) => {
   try {
     let start = new Date(req.params.date)
     start.setHours(start.getHours() + 3)
