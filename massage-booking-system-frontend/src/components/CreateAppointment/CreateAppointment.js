@@ -9,11 +9,12 @@ const CreateAppointment = ({ id, start_date }) => {
   const { createNotification } = useContext(NotificationContext)
 
   const handleAppointmentCreation = async () => {
-    if (reservationRuleCheck(user.appointments, start_date)) {
+    let ruleCheckResult = reservationRuleCheck(user.appointments, start_date)
+    if (ruleCheckResult.allowed) {
       await appointmentService.update(id, { type_of_reservation: 1, user_id: user._id, })
       createNotification('Appointment reserved succesfully', 'success')
     } else {
-      createNotification('You already have an appointment within a week of this appointment')
+      createNotification(ruleCheckResult.message)
     }
   }
 
@@ -25,10 +26,15 @@ const CreateAppointment = ({ id, start_date }) => {
 }
 
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
+  let result = {
+    allowed: false,
+    message: ''
+  }
   let now = moment()
   let requestedTimeMoment = moment(requestedAppointmentStartDate)
   if (requestedTimeMoment.isBefore(now)) {
-    return false
+    result.message = 'Tried to book past appointment'
+    return result
   }
   if (requestedTimeMoment.isSame(now, 'days')) {
     const usersAppointmentOnSameDay = usersAppointments.find((time) => {
@@ -36,9 +42,11 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
       return timeMoment.isSame(now, 'day')
     })
     if (usersAppointmentOnSameDay) {
-      return false
+      result.message = 'You already have an appointment booked for today'
+      return result
     }
-    return true
+    result.allowed = true
+    return result
   } else {
     let firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week')
     let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter(
@@ -52,7 +60,14 @@ const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) 
         return Math.abs(dayDifference) < 14
       }
     )
-    return usersAppointmentsWithinTheLastTwoWeeks.length === 0
+    if (usersAppointmentsWithinTheLastTwoWeeks.length === 0) {
+      result.allowed = true
+      return result
+    } else {
+      result.message = 'You already have an appointment within a week of this appointment'
+      return result
+    }
+
   }
 }
 
