@@ -4,6 +4,7 @@ const usersRouter = require('express').Router()
 const bodyParser = require('body-parser')
 usersRouter.use(bodyParser.json())
 const appointmentUtil = require('../utils/appointmentUtil')
+const verify = require('../utils/verify')
 
 const formatUser = input => {
   return {
@@ -55,11 +56,9 @@ usersRouter.put('/:id/user', async (req, res, next) => {
     const body = req.body
 
     const given_id = req.params.id
-    console.log('given_id: ', given_id)
 
     const found_user = await User.findById({ _id: given_id })
     if (!found_user) {
-      console.log('user not found')
       return res.status(400).end()
     }
 
@@ -79,7 +78,7 @@ usersRouter.put('/:id/user', async (req, res, next) => {
 })
 
 // User data which gets updated by administrator only
-usersRouter.put('/:id', async (req, res, next) => {
+usersRouter.put('/:id', verify.verifyIfAdmin, async (req, res, next) => {
   try {
     const body = req.body
 
@@ -94,11 +93,6 @@ usersRouter.put('/:id', async (req, res, next) => {
     const updated_banned_data = body.banned === undefined
       ? updateable_user.banned
       : body.banned
-
-    // Verify that change is made by admin
-    if (!found_user.admin) {
-      return res.status(400).end()
-    }
 
     const updateUserData = {
       admin: updated_admin_data,
@@ -116,20 +110,11 @@ usersRouter.put('/:id', async (req, res, next) => {
   }
 })
 
-usersRouter.delete('/:id', async (req, res, next) => {
-
+usersRouter.delete('/:id', verify.verifyIfAdmin, async (req, res, next) => {
   try {
-    /*
-    //verify?
-    const given_id = req.params.id
-    const found_user = await User.findById({ _id: given_id })
-    if (!found_user.admin) {
-      console.log('user not found')
-      return res.status(400).end()
-    }*/
     const user = await User.findById({ _id: req.params.id })
-
     await emptyAppointmentsFromUser(user)
+    await emptyStretchingsFromUser(user)
     await user.remove()
     res.status(204).end()
   } catch (exception) {
@@ -142,7 +127,14 @@ const emptyAppointmentsFromUser = async (user) => {
   for (let appoint of appointments) {
     await appointmentUtil.removeUserFromAppointment(appoint)
   }
+}
 
+const emptyStretchingsFromUser = async (user) => {
+  const stretchings = user.stretchingSessions
+  for (let stretch of stretchings) {
+    console.log('str', stretch)
+    await appointmentUtil.removeUserFromStretching(user._id, stretch)
+  }
 }
 
 module.exports = usersRouter

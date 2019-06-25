@@ -22,10 +22,10 @@ stretchingRouter.get('/', async (req, res, next) => {
     if (isAdmin) {
       // 1. Returns all stretching sessions to Admin user
       const allSessions =
-        await Stretching
-          .find({ date: { $gte: today } })
-          .populate('users.data')
-          .sort({ date: 1 })
+                await Stretching
+                  .find({ date: { $gte: today } })
+                  .populate('users.data')
+                  .sort({ date: 1 })
 
       res.send(allSessions.map(formatStretchingSession))
     } else if (!isAdmin) {
@@ -43,11 +43,11 @@ stretchingRouter.get('/', async (req, res, next) => {
 
       // Returns single stretching session by sorting with days
       const latesStretchingSession =
-        await Stretching
-          .find({})
-          .populate('users.data')
-          .sort({ date: -1 })
-          .limit(1)
+                await Stretching
+                  .find({})
+                  .populate('users.data')
+                  .sort({ date: -1 })
+                  .limit(1)
 
       res.send(latesStretchingSession.map(formatStretchingSession))
     }
@@ -84,6 +84,7 @@ stretchingRouter.put('/:id', async (req, res, next) => {
   try {
     const body = req.body
     const join_status = body.join
+
     const stretching_id = req.params.id
 
     // Extract current user data.
@@ -94,25 +95,21 @@ stretchingRouter.put('/:id', async (req, res, next) => {
     const stretchingAppointment = await Stretching.findById(stretching_id)
 
     const joinCriteriaPassed =
-      join_status === true &&
-      stretchingAppointment.users.length < 10 &&
-      stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length === 0
+            join_status === true &&
+            stretchingAppointment.users.length < 10 &&
+            stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length === 0
 
     const exitCriteriaPassed =
-      join_status === false &&
-      stretchingAppointment.users.length > 0 &&
-      stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length > 0
+            join_status === false &&
+            stretchingAppointment.users.length > 0 &&
+            stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length > 0
 
     if (joinCriteriaPassed) {
-      // MOVE THIS TO MODAL
-      // MOVE THIS TO MODAL
-      // MOVE THIS TO MODAL
-      const description = `test description for ${user.name}`
-      console.log(description)
+      // Description is given in body only when trying to join the appointment
+      // Fallback used if description value isnt given
+      const description = body.description.value || 'No description given'
 
-      // stretchingAppointment.users = stretchingAppointment.users.concat(user._id)
       stretchingAppointment.users = stretchingAppointment.users.concat({ data: user._id, description })
-      console.log('stretch app users', stretchingAppointment.users)
       const saved = await stretchingAppointment.save()
       await saved.populate('users.data').execPopulate()
       user.stretchingSessions = user.stretchingSessions.concat(saved._id)
@@ -138,16 +135,17 @@ stretchingRouter.put('/:id', async (req, res, next) => {
 
 
 
-// Removes individual stretching appointment completely. Used by masseusse type user
+// Removes individual stretching appointment completely. Used by admin
 stretchingRouter.delete('/:id', async (req, res, next) => {
   try {
-
-    // TODO
-    // 1. Fetch stetching session by id
-    // 2. Update users by removing id from their own stretching session list
-    // IS STEP 2 done automatically by mongoose if JUST STEPS 1 AND 3 ARE MADE?
-    // IS STEP 2 done automatically by mongoose if JUST STEPS 1 AND 3 ARE MADE?
-    // 3. Delete stretching session
+    const stretchId = req.params.id
+    let stretch = await Stretching.findById(stretchId)
+    for(let userId of stretch.users){
+      await AppointmentManager.removeStretchFromUser(userId, stretchId)
+    }
+    await AppointmentManager.recoverTwoAppointments(stretch.date)
+    await Stretching.remove()
+    res.status(204).end()
   } catch (exception) {
     next(exception)
   }

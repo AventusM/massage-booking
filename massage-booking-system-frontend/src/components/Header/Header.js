@@ -1,25 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../pics/unity5.png'
 
 import {
   Link
 } from 'react-router-dom'
 
-const AuthHeader = ({ user }) => {
+const AuthHeader = (props) => {
+  const { user } = props
+  const [open, setOpen] = useState(false)
+
+  const toggleOpen = () => {
+    setOpen(!open)
+  }
+
+  const listClassName = open ? 'active' : ''
+
   return (
     <nav className="navbar">
       <span className="navbar-toggle" id="js-navbar-toggle">
-        <i
-          onClick={() =>
-            document.getElementById('js-menu').classList.toggle('active')
-          }
-          className="fas fa-bars"
-        />
+        <i onClick={toggleOpen} className="fas fa-bars" />
       </span>
       <Link to="/">
-        <img src={logo} className="logo" alt="" />
+        <img onClick={toggleOpen} src={logo} className="logo" alt="Unity logo small" />
       </Link>
-      <ul className="main-nav" id="js-menu">
+      <ul onClick={toggleOpen} className={`main-nav ${listClassName}`}>
         <li>
           <Link className="nav-link" to="/">
             Index
@@ -33,6 +37,11 @@ const AuthHeader = ({ user }) => {
         <li>
           <Link className="nav-link" to="/dashboard">
             Admin dashboard
+          </Link>
+        </li>
+        <li>
+          <Link className="nav-link" to="/stretching">
+            Stretching
           </Link>
         </li>
         <li>
@@ -52,33 +61,12 @@ const AuthHeader = ({ user }) => {
   )
 }
 
-const NonAuthHeader = () => {
-  return (
-    <nav className="navbar">
-      <span className="navbar-toggle" id="js-navbar-toggle">
-        <i
-          onClick={() =>
-            document.getElementById('js-menu').classList.toggle('active')
-          }
-          className="fas fa-bars"
-        />
-      </span>
-      <img src={logo} className="logo" alt="" />
-      <ul className="main-nav" id="js-menu">
-        <li>
-          <a href="/auth/google">Log in</a>
-        </li>
-      </ul>
-    </nav>
-  )
-}
-
 const Header = props => {
   const { user } = props
   if (user) {
     return <AuthHeader user={user} />
   }
-  return <NonAuthHeader />
+  return null
 }
 
 export default Header

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react'
 import { StretchContext, UserContext } from '../../App'
+import DatePickerForm from '../DatePickerForm/DatePickerForm'
 import useField from '../../hooks/useField'
 
 const StretchAppointmentDisplay = () => {
@@ -24,24 +25,24 @@ const StretchAppointmentDisplay = () => {
       }
     }
   }, [stretching, user])
-  console.log('stretching in display', stretching)
 
-  if (!loaded) {
-    return <div>Loading...</div>
-  }
   return (loaded &&
     <Fragment>
-      {!user.admin && <div className="basic_helper">{appointmentData}</div>}
-      {user.admin && <StretchingSessionList sessions={stretching} />}
+      {!user.admin &&
+        <div className="basic_helper">
+          {appointmentData}
+          <JoinStretchAppointment />
+          <CancelStretchAppointment />
+        </div>
+      }
 
-      {/* THIS IS ALSO FOR NON ADMIN!! */}
-      {/* THIS IS ALSO FOR NON ADMIN!! */}
-      {/* COMBINE THIS WITH UPPER !user.admin */}
-      {/* COMBINE THIS WITH UPPER !user.admin */}
-      <div className="basic_helper">
-        <JoinStretchAppointment />
-        <CancelStretchAppointment />
-      </div>
+      {user.admin &&
+        <div className="basic_helper">
+          <DatePickerForm />
+          <StretchingSessionList sessions={stretching} />
+        </div>
+      }
+
     </Fragment>
   )
 }
@@ -65,7 +66,6 @@ const StretchingSessionList = (props) => {
 
 const StretchingSessionUser = (props) => {
   const { data, description } = props
-  console.log(props)
   return (
     <li>
       {data.name}
@@ -97,13 +97,13 @@ const SingleStretchingSession = (props) => {
 const JoinStretchAppointment = () => {
   const { stretchingService, stretching } = useContext(StretchContext)
   const description = useField('text')
+
   const slotsRemainingAmount = 10 - stretching[0].users.length
   const slotsRemainingText = `${slotsRemainingAmount} / 10 slots open`
 
   const joinSession = async () => {
     try {
-      console.log(description.value)
-      await stretchingService.update(stretching[0]._id, { join: true })
+      await stretchingService.update(stretching[0]._id, { join: true, description })
       // Add notification here for success on joining session
     } catch (exception) {
       // Add notification here for failure to join session
@@ -141,22 +141,20 @@ const Modal = (props) => {
     setOpen(false)
   }
 
-  const handleOpen = () => { setOpen(true) }
-
-  console.log(open)
-
   return (
     <Fragment>
-      {!open && <button onClick={handleOpen}>Join</button>}
-      {open && <div className="modal_wrapper">
-        <div>
-          <textarea value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
-        </div>
-        <div>
-          <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
-          <button onClick={() => handleClose(joinSession)} className="modal_submit_button">Submit</button>
-        </div>
-      </div>}
+      {!open &&
+        <button onClick={() => setOpen(true)}>Join</button>}
+      {open &&
+        <div className="modal_wrapper">
+          <div>
+            <textarea value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
+          </div>
+          <div>
+            <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
+            <button onClick={() => handleClose(joinSession)} className="modal_submit_button">Submit</button>
+          </div>
+        </div>}
     </Fragment>
   )
 }

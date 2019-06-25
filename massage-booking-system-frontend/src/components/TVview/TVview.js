@@ -13,6 +13,10 @@ const TVview = () => {
   const { users } = useContext(UserContext)
   const now = moment()
 
+  if (users === null || appointments === null) {
+    return null
+  }
+
   /* every 24 minutes force page refresh to keep next appointment uptodated. */
   setInterval(() => {
     window.location.reload()
@@ -51,7 +55,7 @@ const TVview = () => {
         <h2>NEXT APPOINTMENT</h2>
         {next ? <ul className="tvViewAppointmentList"><Appointment
           id={next._id}
-          start_date={formatStartDate(next.start_date)}
+          start_date={next.start_date}
           type_of_reservation={next.type_of_reservation}
           appUser={users.find(u => u._id === next.user_id)}
         /> </ul> : ''}

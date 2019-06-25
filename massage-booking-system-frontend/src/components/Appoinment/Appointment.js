@@ -19,7 +19,7 @@ const Appointment = props => {
   }
 
   const markAppAvailable = async () => {
-    await appointmentService.update(id, { type_of_reservation: 3 })
+    await appointmentService.update(id, '', 'add')
   }
 
   return (
