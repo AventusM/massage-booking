@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react'
 import { StretchContext, UserContext } from '../../App'
+import DatePickerForm from '../DatePickerForm/DatePickerForm'
 import useField from '../../hooks/useField'
 
 const StretchAppointmentDisplay = () => {
@@ -27,17 +28,21 @@ const StretchAppointmentDisplay = () => {
 
   return (loaded &&
     <Fragment>
-      {!user.admin && <div className="basic_helper">{appointmentData}</div>}
-      {user.admin && <StretchingSessionList sessions={stretching} />}
+      {!user.admin &&
+        <div className="basic_helper">
+          {appointmentData}
+          <JoinStretchAppointment />
+          <CancelStretchAppointment />
+        </div>
+      }
 
-      {/* THIS IS ALSO FOR NON ADMIN!! */}
-      {/* THIS IS ALSO FOR NON ADMIN!! */}
-      {/* COMBINE THIS WITH UPPER !user.admin */}
-      {/* COMBINE THIS WITH UPPER !user.admin */}
-      <div className="basic_helper">
-        <JoinStretchAppointment />
-        <CancelStretchAppointment />
-      </div>
+      {user.admin &&
+        <div className="basic_helper">
+          <DatePickerForm />
+          <StretchingSessionList sessions={stretching} />
+        </div>
+      }
+
     </Fragment>
   )
 }
