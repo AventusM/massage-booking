@@ -14,6 +14,7 @@ import DashBoard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header'
 import TVview from './components/TVview/TVview'
 import StretchAppointmentDisplay from './components/StretchingSessions/StretchingSessions'
+import InfoPage from './components/InfoPage/InfoPage'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
 
@@ -23,6 +24,7 @@ const App = () => {
   const [stats, statsService] = useResource('api/stats')
   const [stretching, stretchingService] = useResource('/api/stretching')
   const [announcement, announcementService] = useResource('/api/announcements')
+  const [info, infoService] = useResource('/api/info')
   const [notification, setNotification] = useState(null)
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
@@ -64,6 +66,7 @@ const App = () => {
     statsService.getAll()
     stretchingService.getAll()
     announcementService.getAll()
+    infoService.getAll()
   }, [])
 
   useEffect(() => {
@@ -96,6 +99,7 @@ const App = () => {
                   <Route exact path="/mypage" render={() => <MyPage />} />
                   <Route exact path="/stats" render={() => <Stats stats={stats} />} />
                   <Route exact path="/tvview" render={() => <TVview />} />
+                  <Route exact path="/info" render={() => <InfoPage info={info} infoService={infoService}/>} />
                 </AppointmentContext.Provider>
               </UserContext.Provider>
             </StretchContext.Provider>

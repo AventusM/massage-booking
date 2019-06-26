@@ -1399,3 +1399,17 @@ margin-bottom: 15px;
   background: transparent;
   border: none;
 }
+
+/* Info page */
+
+.infoPage {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  text-align: center;
+}
+
+.infoPage h2{
+  font-weight: bold
+}
