@@ -4,6 +4,8 @@ import moment from 'moment'
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
+  Switch
 } from 'react-router-dom'
 
 import Index from './components/Index/Index'
@@ -81,7 +83,13 @@ const App = () => {
   }
   if (user === null) {
     return (
-      <LoginIndex />
+      <Router>
+        <Switch>
+          <Route exact path="/" render={() => <LoginIndex />} />
+          <Route exact path="/tv" render={() => <TVview />} />
+          <Route render={() => <Redirect to={{ pathname: '/' }} />} />
+        </Switch>
+      </Router>
     )
   } else {
     return (
