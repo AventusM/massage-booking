@@ -29,6 +29,9 @@ const StretchAppointmentDisplay = () => {
 const StretchingSessionList = (props) => {
   const { sessions, currentUsersStretchAppointments, userIsAdmin } = props
   return (
+    <div className ="stretching_header">
+      <h1>Stretching appointments</h1>
+      <h2>Click to reserve</h2>
     <ul className="stretchingPage">
       {sessions.map(session => {
         return (
@@ -42,7 +45,7 @@ const StretchingSessionList = (props) => {
           />
         )
       })}
-    </ul>
+    </ul></div>
   )
 }
 

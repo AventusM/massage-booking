@@ -6,7 +6,9 @@ const StretchingSessionUser = (props) => {
   const { data, description } = props
   return (
     <li>
-      {data.name} {description}
+     <b>{data.name}:</b> 
+      <br/>
+      <i id = "description">{description}</i>
     </li>
   )
 }
@@ -26,12 +28,15 @@ const SingleStretchingSession = (props) => {
   const slotsRemainingText = `${slotsUsed} / 10 slots used `
 
   return (
-    <li  className="stretchingList">
-    <div className="stretching_time">{prettyDateString(date)}</div>
-      <h2 onClick={() => toggleVisibility()}>Attendees:</h2>
-      <div style={{ display: visibility }}>
+  
+    <li  className="stretchingList"> 
+    {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
+    <div className="stretching_time">{prettyDateString(date)} </div>   
+      <h2 onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" class="fas fa-chevron-up"></i> : <i id="down_arrow" class="fas fa-chevron-down"></i>}</h2>
+      
+      <div className="attendees_list" style={{ display: visibility }}>
 
-        <ul className="stretchingAttendeeList">
+        <ul>
           {users.map(user => {
             return (
               <StretchingSessionUser
@@ -48,9 +53,10 @@ const SingleStretchingSession = (props) => {
         <CancelStretchAppointment sessionID={sessionID}/>
         :<JoinStretchAppointment sessionID={sessionID}/>
       }
-      {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
-    </li>
-  )
+
+    </li>  
+    
+  )    
 }
 
 const JoinStretchAppointment = (props) => {
@@ -85,7 +91,8 @@ const CancelStretchAppointment = (props) => {
     }
   }
   return (
-    <button className="cancel_button" onClick={cancelSession}>Cancel</button>
+    <div>
+    <button className="cancel_button" onClick={cancelSession}>Cancel</button></div>
   )
 }
 
@@ -104,8 +111,10 @@ const DeleteStretchSession = (props) => {
 
   }
 
-  return (
-    <button onClick={deleteSession}>Delete session</button>
+  return ( 
+    <div className="delete_stretching">
+    <button className="far fa-trash-alt" onClick={deleteSession}></button> 
+    </div>
   )
 }
 
