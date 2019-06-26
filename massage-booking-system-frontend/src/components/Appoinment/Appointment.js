@@ -48,7 +48,7 @@ const Appointment = props => {
           ? <button id="removed" onClick={() => createNotification('This appointment is not reservable')}><Display dateobject={start_date} removed={true} /></button>
           : null
       )}
-      {user.admin === true ? type_of_reservation === 3 ? (
+      {(user.admin === true && ownPage !== true) ? type_of_reservation === 3 ? (
         <button onClick={() => markAppAvailable()} id="restore" className="fas fa-undo"></button>
 
       ) : (

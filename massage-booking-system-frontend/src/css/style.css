@@ -308,7 +308,7 @@ border: none;
 }
 
 
-ul>div:nth-child(odd){
+.user_list ul>div:nth-child(odd){
   background: #3648536b;
 }​
 
@@ -434,15 +434,6 @@ ul>div:nth-child(odd){
   color: white;
 }
 
-/*.timelist {
-  padding: 5px;
-  list-style-type: none;
-  border-style: solid;
-  border-width: 1px;
-  align-content: center;
-  margin: 2px;
-}*/
-
 .login_wrapper_mobile h1,
 h3 {
   text-align: center;
@@ -566,68 +557,7 @@ h3 {
   width: 100%;
 }
 
-/* Tästä alkaa Homepage Desktop*/
 
-/*Background*/
-/*
-.userHomepageWrapper_desktop{
-  background-color: #2b5876;
-  min-height: 100%;
-  min-width: 100%;
-  height: auto;
-  position: fixed;
-
-  
-}
-/*Form*/
-/*
-.userHomepageWrapper_desktop form {
-  display: flex;
-  flex-direction: column;
-  width: 270px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-@media screen and (max-width: 700px) {
-  .userHomepageWrapper_desktop form {
-    width: 220px;
-  }
-  
-/*Input*/
-/*
-.userHomepageWrapper_desktop input {
-  text-align: center;
-  border: 0px;
-  background: white;
-  opacity: 0.2;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  height: 50px;
-  width: 100%;
-}
-
-/*Headers*/
-/*
-.userHomepageWrapper_desktop h3 {
-
-  text-align: center;
-  font-family: Roboto, sans-serif;
-  font-size: 200%;
-  margin-top: 3%;
-  margin-bottom: 20px;
-  color: white;
-} 
-
-.userHomepageWrapper_desktop h2 {
-  text-align: center;
-  font-family: Roboto, sans-serif;
-  font-size: 200%;
-  color: white;
-  margin-top: 2%;
-}
-}
-*/
 @media screen and (max-width: 700px) {
   .userHomepageWrapper_desktop h3 {
     margin-top: 5%;
@@ -643,29 +573,6 @@ h3 {
   }
 }
 
-/*Buttons*/
-
-/*
-.userHomepageWrapper_desktop button {
-  border: 3px solid #537895;
-  background: #537895;
-  font-size: 120%;
-  border-radius: 15px;
-  color: white;
-  padding: 10px 5px;
-  height: 50px;
-  width: 100%;
-}
-
-/*Label*/
-/*
-.userHomepageWrapper_desktop label{
-  margin-bottom: 5px;
-  font-size: 120%;
-  color: white;
-
-  
-}
 
 /*Alert*/
 
