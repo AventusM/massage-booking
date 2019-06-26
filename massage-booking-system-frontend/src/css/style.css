@@ -1158,7 +1158,8 @@ h3 {
 .clock {
   font-size: 150px;
   font-weight: 500;
-  margin-top: 70px;
+  margin-top: 110px;
+  padding-top: 110px;
   color: white;
   text-align: center
 }
@@ -1236,6 +1237,13 @@ h3 {
   color: white;
 }
 
+.tv_view_day {
+  margin-top: 100px;
+  padding-top: 7git stat0px;
+  font-size: 40px;
+  color: white;
+}
+
 /* Timi's stretching session things. Overwriting some base css from imported component itself */
 /* Improves time selection list readability */
 .react-datepicker__time-box li{
@@ -1252,12 +1260,169 @@ h3 {
   background-color: #d4d4d4;
 }
 
-/* Helper css in visualization */
-.basic_helper {
-  border: 2px solid white;
-  font-weight: 600;
+/* Stretching Page styles*/
+
+.stretchingPage_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stretchingList {
+  border: 2px;
   font-size: 20px;
-  margin-bottom: 15px;
+  
+  margin-bottom: 20px;
+  max-width: 900px;
+  text-align: center;
+  background-color: #366787;
+  border-radius: 5px;
+  color: white;
+  padding-bottom: 20px ;
+  
+}
+
+.stretchingList h2{
+  color: white;
+  font-size: 22px;
+
+}
+
+.stretching_time{
+  font-weight: bold;
+  font-size:25px;
+  margin-top: 20px;
+}
+
+.basic_helper h1{
+  margin-top: 20px;
+  color: #FFFFFF;
+  text-align: center;
+}
+.basic_helper h2{
+font-size: 30px;
+line-height: 35px;
+color: #FFFFFF;
+text-align: center;
+}
+
+
+.stretching_submit_button {
+width: 150px;
+height: 50px;
+background: #92DECB;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+border: none;
+font-size: 22px;
+line-height: 35px;
+color: #22465E;
+
+}
+
+.stretchingAttendeeList {
+  width: 450px;
+  height: 100px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+
+
+}
+
+.react-datepicker__input-container input{
+width: 320px;
+height: 80px;
+background: #0b3450;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+color: white;
+font-size: 25px;
+text-align: center;
+margin-bottom: 15px;
+border:none;
+
+}
+
+
+.datepicker_wrapper{
+
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*Stretching buttons*/
+
+.join_button{
+  width: 100px;
+  height: 40px;
+  background: #92DECB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border:none;
+
+  font-size: 20px;
+  line-height: 29px;
+  text-align: center;
+  color: #22465E;
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+}
+
+.cancel_button{
+  width: 100px;
+  height: 40px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border:none;
+
+  font-size: 20px;
+  line-height: 29px;
+  text-align: center;
+  background: #F6DCDC;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #984242;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.stretching_header h1{
+  color: white;
+  margin-top: 20px; 
+}
+.stretching_header h2{
+  color: white;
+  margin-top: 20px; 
+  text-align: center;
+}
+
+
+.delete_session button{
+  width: 150px;
+  height: 40px;
+  color: #984242;
+  background: #F6DCDC;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border:none;
+}
+
+.delete_stretching button{ 
+  background: #c0635e;
+  border-radius:8px; 
+  width: 40px;
+  height: 40px;
+  color: #411512;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-color: #411512;
+  margin-left: 80%;
+  margin-top: 10px;
+
+  
+  
 }
 
 /* Modal */
@@ -1269,14 +1434,37 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
+  z-index: 999;
+  background: #22465E;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 10px;
 
 }
+
+.modal_wrapper textarea{
+  width: 80%;
+  border-radius: 15px;
+  border:none;
+  
+}
+
+.attendees_list {
+  background: #22465e;
+  width: 80%;
+  margin: auto;
+  border-radius: 5px;
+  
+}​
+
+
 .modal_submit_button{
   width: 100px;
   height: 30px;
   background: #92DECB;
-  border-radius: 15px;
+  border-radius: 10px;
+  color: #22465E;
+  border: none;
 }
 .modal_cancel_button{
   font-size: 20px;
@@ -1286,3 +1474,26 @@ h3 {
   background: transparent;
   border: none;
 }
+
+
+#up_arrow {
+  background: #0b3450;
+  width: 30px;
+  height: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+ 
+}
+
+#down_arrow {
+  background: #0b3450;
+  width: 30px;
+  height: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#description{
+  font-weight: 100;
+}
+

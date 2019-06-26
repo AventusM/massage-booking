@@ -33,7 +33,10 @@ const DatePickerForm = () => {
 
   return (
     <div className="basic_helper">
-      <form onSubmit={createStretch}>
+      <h1>Create a stretching appointment</h1>
+      <h2>Select a date below</h2>
+
+      <form className="datepicker_wrapper"onSubmit={createStretch}>
         <DatePicker
           showTimeSelect
           dateFormat="MMMM d, yyyy HH:mm"
@@ -60,7 +63,7 @@ const DatePickerForm = () => {
           onChange={handleChange}
           filterDate={isMondayOrTuesday}
         />
-        <button type="submit">PRESS THIS TO CREATE</button>
+        <button className = "stretching_submit_button" type="submit">Create</button>
       </form>
     </div>
   )

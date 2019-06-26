@@ -6,40 +6,57 @@ const StretchingSessionUser = (props) => {
   const { data, description } = props
   return (
     <li>
-      {data.name} {description}
+     <b>{data.name}:</b> 
+      <br/>
+      <i id = "description">{description}</i>
     </li>
   )
 }
 
 const SingleStretchingSession = (props) => {
   console.log('Single stretch session props ', props)
-  const { date, users, sessionID, currentUsersStretchAppointments } = props
+  const { date, users, sessionID, currentUsersStretchAppointments, userIsAdmin } = props
+  const [visibility, setVisibility] = useState('none')
+
+  const toggleVisibility = () => {
+    const currentVisibility = visibility === 'none' ?  null : 'none'
+    console.log(visibility)
+    setVisibility(currentVisibility)
+  }
 
   const slotsUsed = users.length
-  const slotsRemainingText = `${slotsUsed} / 10 slots used`
+  const slotsRemainingText = `${slotsUsed} / 10 slots used `
 
   return (
-    <li className="basic_helper">
-      <div>{prettyDateString(date)}</div>
-      <ul>
-        {users.map(user => {
-          return (
-            <StretchingSessionUser
-              key={user._id}
-              data={user.data ? user.data : ''}
-              description={user.description}
-            />
-          )
-        })}
-      </ul>
+  
+    <li  className="stretchingList"> 
+    {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
+    <div className="stretching_time">{prettyDateString(date)} </div>   
+      <h2 onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" class="fas fa-chevron-up"></i> : <i id="down_arrow" class="fas fa-chevron-down"></i>}</h2>
+      
+      <div className="attendees_list" style={{ display: visibility }}>
+
+        <ul>
+          {users.map(user => {
+            return (
+              <StretchingSessionUser
+                key={user._id}
+                data={user.data ? user.data : ''}
+                description={user.description}
+              />
+            )
+          })}
+        </ul>
+      </div>
       {slotsRemainingText}
       {currentUsersStretchAppointments.includes(sessionID) ?
         <CancelStretchAppointment sessionID={sessionID}/>
         :<JoinStretchAppointment sessionID={sessionID}/>
       }
 
-    </li>
-  )
+    </li>  
+    
+  )    
 }
 
 const JoinStretchAppointment = (props) => {
@@ -74,7 +91,30 @@ const CancelStretchAppointment = (props) => {
     }
   }
   return (
-    <button onClick={cancelSession}>Cancel appointment</button>
+    <div>
+    <button className="cancel_button" onClick={cancelSession}>Cancel</button></div>
+  )
+}
+
+const DeleteStretchSession = (props) => {
+  const { sessionID } = props
+  const { stretchingService } = useContext(StretchContext)
+
+  const deleteSession = async () => {
+    try {
+      await stretchingService.remove(sessionID)
+      // Add notification here for sdeleting session, note that 2 appointmebnts are restored
+    } catch (exception) {
+      // Add notification here?
+    }
+
+
+  }
+
+  return ( 
+    <div className="delete_stretching">
+    <button className="far fa-trash-alt" onClick={deleteSession}></button> 
+    </div>
   )
 }
 
@@ -90,7 +130,7 @@ const Modal = (props) => {
   return (
     <Fragment>
       {!open &&
-        <button onClick={() => setOpen(true)}>Join</button>}
+        <button className="join_button"onClick={() => setOpen(true)}>Join</button>}
       {open &&
         <div className="modal_wrapper">
           <div>

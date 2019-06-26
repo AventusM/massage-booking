@@ -15,7 +15,7 @@ import Stats from './components/Stats/Stats'
 import DashBoard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header'
 import LoginIndex from './components/LoginIndex/LoginIndex'
-import TVview from './components/TVview/TVview'
+import TV from './components/TV/TV'
 import StretchAppointmentDisplay from './components/StretchingSessions/StretchingSessions'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
@@ -86,7 +86,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/" render={() => <LoginIndex />} />
-          <Route exact path="/tv" render={() => <TVview />} />
+          <Route exact path="/tv" render={() => <TV />} />
           <Route render={() => <Redirect to={{ pathname: '/' }} />} />
         </Switch>
       </Router>
@@ -108,7 +108,7 @@ const App = () => {
                     <Route exact path="/dashboard" render={() => <DashBoard />} />
                     <Route exact path="/mypage" render={() => <MyPage />} />
                     <Route exact path="/stats" render={() => <Stats stats={stats} />} />
-                    <Route exact path="/tvview" render={() => <TVview />} />
+                    <Route exact path="/tv" render={() => <TV />} />
                   </AppointmentContext.Provider>
                 </UserContext.Provider>
               </StretchContext.Provider>

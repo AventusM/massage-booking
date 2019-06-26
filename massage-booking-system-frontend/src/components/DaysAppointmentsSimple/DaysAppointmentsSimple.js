@@ -1,11 +1,13 @@
 import React from 'react'
 import moment from 'moment'
-import Display from '../Display/Display'
 import formatStartDate from '../../utils/formatStartDate'
+import SimpleAppointment from '../SimpleAppointment/SimpleAppointment'
 
 
 const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointments }) => {
   const now = moment()
+
+  console.log(appointments)
 
   let day = null
   if (now.day() <= lastdayWithAppointments) {
@@ -40,34 +42,51 @@ const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointmen
   }
 
   // NOTE: THIS ASSUMES 13 APPOINTMETS PER DAY; IF APPOINTMETS ARE EVER ADDED OR REMOVED THIS WILL BREAK
-  let firstHalf = daysAppointments.slice(0, 5)
-  let secondHalf = daysAppointments.slice(5, 12)
+
+
+  let firstHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() < 15)
+  let secondHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() > 14)
+
+  console.log(daysAppointments.length)
 
   return (
     <div>
-      <h2 className="tv_view_headers">{weekdays[dayNumber]}</h2>
-      <ul className="tvViewAppointmentList">
-        {firstHalf.map(app => {
-          return (
-            <div className="cont_tv" key={app._id}>
-              <Display dateobject={formatStartDate(app.start_date)} user={app.user} ownPage={true} date={true} cancel={false} />
-            </div>
-
-          )
-        })}
-      </ul>
-      <h5 className="tv_view_headers">Break</h5>
-      <ul className="tvViewAppointmentList">
-        {secondHalf.map(app => {
-          return (
-            <div className="cont_tv" key={app._id}>
-              <Display dateobject={formatStartDate(app.start_date)} user={app.user} ownPage={true} date={true} cancel={false} />
-            </div>
-          )
-        })}
-      </ul>
+      <h2 className="tv_view_day">{weekdays[dayNumber]}</h2>
+      {daysAppointments.filter(app => app.type_of_reservation !== 3).length === 0 ?
+        <div className="tv_view_header"><h2>No massages on this day</h2></div> :
+        <div>
+          <ul className="tvViewAppointmentList">
+            {firstHalf.map(app => {
+              return (
+                <SimpleAppointment
+                  key={app._id}
+                  id={app._id}
+                  start_date={formatStartDate(app.start_date)}
+                  type_of_reservation={app.type_of_reservation}
+                  appUser={app.user}
+                />
+              )
+            })}
+          </ul>
+          <h5 className="tv_view_headers">Break</h5>
+          <ul className="tvViewAppointmentList">
+            {secondHalf.map(app => {
+              return (
+                <SimpleAppointment
+                  key={app._id}
+                  id={app._id}
+                  start_date={formatStartDate(app.start_date)}
+                  type_of_reservation={app.type_of_reservation}
+                  appUser={app.user}
+                />
+              )
+            })}
+          </ul>
+        </div>
+      }
     </div>
   )
+
 }
 
 export default DaysAppointmentsSimple
