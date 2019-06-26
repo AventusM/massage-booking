@@ -140,8 +140,8 @@ stretchingRouter.delete('/:id', async (req, res, next) => {
   try {
     const stretchId = req.params.id
     let stretch = await Stretching.findById(stretchId)
-    for(let userId of stretch.users){
-      await AppointmentManager.removeStretchFromUser(userId, stretchId)
+    for(let user of stretch.users){
+      await AppointmentManager.removeStretchFromUser(user.data, stretchId)
     }
     await AppointmentManager.recoverTwoAppointments(stretch.date)
     await Stretching.remove()
