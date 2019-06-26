@@ -37,6 +37,22 @@ body {
 
 }
 
+.cont_tv {
+  display: flex;
+  background: #2b5876;
+  color: white;  font-size: 120%;
+  border-radius: 15px;
+  padding: 10px 5px;
+  height: 50px;
+  width: 400px;
+  margin-top: 20px;
+}
+
+.cont {
+  display: flex
+}
+/* T
+
 .cont {
   display: flex
 }

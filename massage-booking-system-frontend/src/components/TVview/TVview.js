@@ -1,48 +1,42 @@
-import React, { useContext } from 'react'
-import Appointment from '../Appoinment/Appointment'
-import { AppointmentContext, UserContext, NotificationContext } from '../../App'
+import React, { useEffect } from 'react'
+import Display from '../Display/Display'
 import Clock from '../Clock/Clock'
 import unity4 from '../../pics/unity4.png'
 import moment from 'moment'
 import formatStartDate from '../../utils/formatStartDate'
-import DaysAppointments from '../DaysAppointment/DaysAppointments'
+import DaysAppointmentsSimple from '../DaysAppointmentsSimple/DaysAppointmentsSimple'
+import useResource from '../../hooks/useResource'
+
 
 const TVview = () => {
-  const { appointments } = useContext(AppointmentContext)
-  const { announcement } = useContext(NotificationContext)
-  const { users } = useContext(UserContext)
+  const [tv, tvService] = useResource('/api/tv')
   const now = moment()
 
-  if (users === null || appointments === null) {
-    return null
-  }
+  useEffect(() => {
+    tvService.getAll()
+  }, [])
 
-  /* every 24 minutes force page refresh to keep next appointment uptodated. */
+  /* every 24 minutes force page refresh to keep next appointment up to date. */
   setInterval(() => {
     window.location.reload()
   }, 1440000)
 
+  const announcement = tv.pop()
+
+  if (announcement === undefined) {
+    return null
+  }
 
   /* Find next appointment */
-
-  const comingAppointments = appointments.filter((app) => {
+  const comingAppointments = tv.filter((app) => {
     let appStartTime = moment(app.start_date)
     return appStartTime.isAfter(now)
   })
 
-  comingAppointments.sort((a, b) => {
-    let dateA = new Date(a.start_date)
-    let dateB = new Date(b.start_date)
-
-    if (dateA < dateB) {
-      return -1
-    }
-
-    if (dateA > dateB) {
-      return 1
-    }
-
-    return 0
+  comingAppointments.sort(function (a, b) {
+    let dateA = new Date(a.start_date),
+      dateB = new Date(b.start_date)
+    return dateA - dateB
   })
 
   let next = comingAppointments[0]
@@ -53,12 +47,8 @@ const TVview = () => {
         <Clock />
 
         <h2>NEXT APPOINTMENT</h2>
-        {next ? <ul className="tvViewAppointmentList"><Appointment
-          id={next._id}
-          start_date={next.start_date}
-          type_of_reservation={next.type_of_reservation}
-          appUser={users.find(u => u._id === next.user_id)}
-        /> </ul> : ''}
+        {next ? <ul className="tvViewAppointmentList"><div className="cont_tv"><Display dateobject={formatStartDate(next.start_date)} key={next._id} user={next.user} ownPage={true} date={true} cancel={false} /></div>
+        </ul> : ''}
         {announcement && announcement.message ?
           <div className="tv_notice">
             <h2>Notice</h2>
@@ -68,8 +58,8 @@ const TVview = () => {
         <img className="logoTV"
           id="unity4" src={unity4} alt=""></img>
       </div>
-      <div className="day-view"><DaysAppointments dayNumber={1} lastdayWithAppointments={2} /></div>
-      <div className="day-view"><DaysAppointments dayNumber={2} lastdayWithAppointments={2} /></div>
+      <div className="day-view"><DaysAppointmentsSimple dayNumber={1} lastdayWithAppointments={0} appointments={tv} /></div>
+      <div className="day-view"><DaysAppointmentsSimple dayNumber={2} lastdayWithAppointments={0} appointments={tv} /></div>
 
       <div>
 
