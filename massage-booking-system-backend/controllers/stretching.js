@@ -65,15 +65,19 @@ stretchingRouter.post('/', async (req, res, next) => {
     let time = date.getTimezoneOffset() * -1
     date.setMinutes(minutes + time)
 
-    await AppointmentManager.removeTwoAppointments(date)
+    // check if there is a stretch already
+    let another = await Stretching.find({ date: date })
+    if(another.length === 0){
+      await AppointmentManager.removeTwoAppointments(date)
 
-    const stretchingSession = new Stretching({
-      date: date,
-      users: []
-    })
+      const stretchingSession = new Stretching({
+        date: date,
+        users: []
+      })
 
-    const savedStretchingSession = await stretchingSession.save()
-    res.json(savedStretchingSession.toJSON())
+      const savedStretchingSession = await stretchingSession.save()
+      res.json(savedStretchingSession.toJSON())
+    }
   } catch (exception) {
     next(exception)
   }
