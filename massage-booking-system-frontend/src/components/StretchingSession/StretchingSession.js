@@ -13,31 +13,42 @@ const StretchingSessionUser = (props) => {
 
 const SingleStretchingSession = (props) => {
   console.log('Single stretch session props ', props)
-  const { date, users, sessionID, currentUsersStretchAppointments } = props
+  const { date, users, sessionID, currentUsersStretchAppointments, userIsAdmin } = props
+  const [visibility, setVisibility] = useState('none')
+
+  const toggleVisibility = () => {
+    const currentVisibility = visibility === 'none' ?  null : 'none'
+    console.log(visibility)
+    setVisibility(currentVisibility)
+  }
 
   const slotsUsed = users.length
   const slotsRemainingText = `${slotsUsed} / 10 slots used `
 
   return (
-    <li className="stretchingList">
-      <div className="stretching_time">{prettyDateString(date)}</div>
-      <h2>Attendees:</h2>
-      <ul className="stretchingAttendeeList">
-        {users.map(user => {
-          return (
-            <StretchingSessionUser
-              key={user._id}
-              data={user.data ? user.data : ''}
-              description={user.description}
-            />
-          )
-        })}
+    <li  className="stretchingList">
+    <div className="stretching_time">{prettyDateString(date)}</div>
+      <h2 onClick={() => toggleVisibility()}>Attendees:</h2>
+      <div style={{ display: visibility }}>
+
+        <ul className="stretchingAttendeeList">
+          {users.map(user => {
+            return (
+              <StretchingSessionUser
+                key={user._id}
+                data={user.data ? user.data : ''}
+                description={user.description}
+              />
+            )
+          })}
+        </ul>
+      </div>
       {slotsRemainingText}
       {currentUsersStretchAppointments.includes(sessionID) ?
         <CancelStretchAppointment sessionID={sessionID}/>
         :<JoinStretchAppointment sessionID={sessionID}/>
       }
-  </ul>
+      {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
     </li>
   )
 }
@@ -75,6 +86,26 @@ const CancelStretchAppointment = (props) => {
   }
   return (
     <button className="cancel_button" onClick={cancelSession}>Cancel</button>
+  )
+}
+
+const DeleteStretchSession = (props) => {
+  const { sessionID } = props
+  const { stretchingService } = useContext(StretchContext)
+
+  const deleteSession = async () => {
+    try {
+      await stretchingService.remove(sessionID)
+      // Add notification here for sdeleting session, note that 2 appointmebnts are restored
+    } catch (exception) {
+      // Add notification here?
+    }
+
+
+  }
+
+  return (
+    <button onClick={deleteSession}>Delete session</button>
   )
 }
 
