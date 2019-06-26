@@ -31,10 +31,12 @@ const SimpleAppointment = ({ app }) => {
     11: 'December',
   }
 
+  const getDateSuffix = (date) => { return date < 11 || date > 13 ? ['st ', 'nd ', 'rd ', 'th '][Math.min((date - 1) % 10, 3)] : 'th ' }
+
   return (
     <div className="nextappointment_wrapper">
       <p>
-        Your next appointment is on {weekdays[date.getDay()]} {date.getDate()}th
+        Your next appointment is on {weekdays[date.getDay()]} {date.getDate()}{getDateSuffix(date.getDate())}
         of {months[date.getMonth()]} {date.getHours()}:{date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}
       </p>
     </div>
