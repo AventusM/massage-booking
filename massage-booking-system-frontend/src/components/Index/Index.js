@@ -28,6 +28,18 @@ const AuthIndex = ({ user }) => {
     window.addEventListener('resize', () => setWidth(window.innerWidth))
   }, [])
 
+  useEffect(() => {
+    let startDate = new Date()
+    const MONDAY_DATE_KEY = 1
+    // If today not monday or tuesday
+    // https://stackoverflow.com/a/27336600
+    if (!(startDate.getDay() === 1 || startDate.getDay() === 2)) {
+      const updatedDate = startDate.getDate() + (MONDAY_DATE_KEY + (7 - startDate.getDay())) % 7
+      startDate.setDate(updatedDate)
+    }
+    setSelectedDate(startDate)
+  }, [])
+
   const isMobile = width <= 1160
 
 
@@ -51,6 +63,8 @@ const AuthIndex = ({ user }) => {
       <div className="appointmentListWrapperMain">
         <div className="appointmentListWrapperCalendar">
           <Calendar
+            activeStartDate={selectedDate}
+            value={selectedDate}
             locale={'en-UK'}
             onChange={value => {
               setSelectedDate(value)

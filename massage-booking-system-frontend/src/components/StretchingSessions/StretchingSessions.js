@@ -13,23 +13,26 @@ const StretchAppointmentDisplay = () => {
       setLoaded(true)
     }
   }, [stretching, user])
-
+  console.log('user, ', user)
   return (loaded &&
-    <Fragment>
+    <div className="stretchingPage_wrapper">
       {user.admin &&
-        <div className="basic_helper">
+        <div className="stretchingPage">
           <DatePickerForm />
         </div>
       }
-      <div><StretchingSessionList sessions={stretching} currentUsersStretchAppointments={user.stretchingSessions}/></div>
-    </Fragment>
+      <div><StretchingSessionList sessions={stretching} currentUsersStretchAppointments={user.stretchingSessions} userIsAdmin={user.admin}/></div>
+    </div>
   )
 }
 
 const StretchingSessionList = (props) => {
-  const { sessions, currentUsersStretchAppointments } = props
+  const { sessions, currentUsersStretchAppointments, userIsAdmin } = props
   return (
-    <ul className="basic_helper">
+    <div className ="stretching_header">
+      <h1>Stretching appointments</h1>
+      <h2>Click to reserve</h2>
+    <ul className="stretchingPage">
       {sessions.map(session => {
         return (
           <SingleStretchingSession
@@ -38,10 +41,11 @@ const StretchingSessionList = (props) => {
             date={session.date}
             users={session.users}
             currentUsersStretchAppointments={currentUsersStretchAppointments}
+            userIsAdmin={userIsAdmin}
           />
         )
       })}
-    </ul>
+    </ul></div>
   )
 }
 

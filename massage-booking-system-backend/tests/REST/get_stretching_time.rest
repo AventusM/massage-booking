@@ -1,4 +1,4 @@
-DELETE http://localhost:3001/api/stretching/
+DELETE http://localhost:3001/api/stretching/5d120cb7302ebc1c6c8803c1
 Content-Type: application/json
 
 {    

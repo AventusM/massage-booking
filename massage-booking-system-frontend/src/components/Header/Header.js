@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import logo from '../../pics/unity5.png'
 
 import {
   Link
 } from 'react-router-dom'
 
-const AuthHeader = (props) => {
-  const { user } = props
+const AuthHeader = ({ user }) => {
   const [open, setOpen] = useState(false)
 
   const toggleOpen = () => {
@@ -35,21 +34,26 @@ const AuthHeader = (props) => {
           </Link>
         </li>
         <li>
-          <Link className="nav-link" to="/dashboard">
-            Admin dashboard
-          </Link>
-        </li>
-        <li>
           <Link className="nav-link" to="/stretching">
             Stretching
           </Link>
         </li>
-        <li>
-          <Link className="nav-link" to="/stats">
-            Stats
-          </Link>
-        </li>
-        <li>
+        {user.admin === true ? (
+          <Fragment>
+            <li>
+              <Link className="nav-link" to="/dashboard">
+                Admin dashboard
+              </Link>
+            </li>
+
+            <li>
+              <Link className="nav-link" to="/stats">
+                Stats
+              </Link>
+            </li>
+          </Fragment>
+        ) : (null)}
+        < li >
           <i
             onClick={() => (window.location.href = '/auth/logout')}
             id="logout"
@@ -61,8 +65,7 @@ const AuthHeader = (props) => {
   )
 }
 
-const Header = props => {
-  const { user } = props
+const Header = ({ user }) => {
   if (user) {
     return <AuthHeader user={user} />
   }
