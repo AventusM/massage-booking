@@ -25,9 +25,11 @@ const MyPage = () => {
       const type = 'user'
 
       setUser(updatedUser)
-      await userService.update(user._id, updatedUser, type)
+      const response = await userService.update(user._id, updatedUser, type)
       createNotification('Succesfully changed number', 'success')
     } catch (exception) {
+      console.log('response: ', exception)
+
       createNotification('Unable to change number')
     }
   }
