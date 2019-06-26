@@ -45,7 +45,10 @@ const InFoPage = (props) => {
         <ul>
           {info.map(item => {
             return (
+                <>
               <InfoItem key={item._id} header={item.header} content={item.content}/>
+              <DeleteInfoItem id={item._id} infoService={infoService}/>
+              </>
             )
           })}
         </ul>
@@ -62,6 +65,25 @@ const InfoItem = (props) => {
       <h2>{header}</h2>
       <div>{content}</div>
     </li>
+  )
+}
+
+const DeleteInfoItem= (props) => {
+  const { id, infoService } = props
+
+  const deleteItem = async () => {
+    try {
+      console.log('tried to delete')
+      console.log('delete props ', props)
+      await infoService.remove(id)
+      // Add notification here for deleting item
+    } catch (exception) {
+      console.log('ERROR in DeleteInfoItem ', exception)
+    }
+  }
+
+  return (
+    <button onClick={deleteItem}>Delete</button>
   )
 }
 

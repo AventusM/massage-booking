@@ -28,5 +28,16 @@ infoItemRouter.post('/', async (req, res, next) => {
   }
 })
 
+infoItemRouter.delete('/:id',  async (req, res, next) => {
+  try {
+    const item = await InfoItem.findById({ _id: req.params.id })
+    await item.remove()
+    res.status(204).end()
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+
 
 module.exports = infoItemRouter

@@ -27,7 +27,7 @@ const SingleStretchingSession = (props) => {
 
   return (
     <li  className="stretchingList">
-    <div className="stretching_time">{prettyDateString(date)}</div>
+      <div className="stretching_time">{prettyDateString(date)}</div>
       <h2 onClick={() => toggleVisibility()}>Attendees:</h2>
       <div style={{ display: visibility }}>
 

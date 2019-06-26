@@ -13,7 +13,7 @@ const StretchAppointmentDisplay = () => {
       setLoaded(true)
     }
   }, [stretching, user])
-  console.log('user, ', user)
+
   return (loaded &&
     <div className="stretchingPage_wrapper">
       {user.admin &&
