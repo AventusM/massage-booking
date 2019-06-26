@@ -1329,13 +1329,48 @@ h3 {
   background-color: #d4d4d4;
 }
 
-/* Helper css in visualization */
-.basic_helper {
+/* Stretching Page styles*/
+
+.stretchingPage_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stretchingList {
+  border: 2px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  max-width: 900px;
+  text-align: center;
+  background-color: #366787;
+  border-radius: 5px;
+  color: white;
+  
+}
+
+.stretchingList h2{
+  color: white;
+  background:#c0635e;
+  
+}
+
+.stretching_Cancel_button {
+  
+}
+
+.stretchingAttendeeList {
+  color: rgb(175, 175, 175);
+}
+
+/* .stretchingPage li{
   border: 2px solid white;
   font-weight: 600;
   font-size: 20px;
   margin-bottom: 15px;
-}
+  color:white
+} */
 
 /* Modal */
 
@@ -1346,8 +1381,6 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
-
 }
 .modal_submit_button{
   width: 100px;

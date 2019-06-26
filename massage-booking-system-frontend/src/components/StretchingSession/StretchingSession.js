@@ -16,12 +16,13 @@ const SingleStretchingSession = (props) => {
   const { date, users, sessionID, currentUsersStretchAppointments } = props
 
   const slotsUsed = users.length
-  const slotsRemainingText = `${slotsUsed} / 10 slots used`
+  const slotsRemainingText = `${slotsUsed} / 10 slots used `
 
   return (
-    <li className="basic_helper">
+    <li className="stretchingList">
       <div>{prettyDateString(date)}</div>
-      <ul>
+      <h2>Attendees:</h2>
+      <ul className="stretchingAttendeeList">
         {users.map(user => {
           return (
             <StretchingSessionUser

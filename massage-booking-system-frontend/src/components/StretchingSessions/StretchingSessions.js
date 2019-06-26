@@ -15,21 +15,21 @@ const StretchAppointmentDisplay = () => {
   }, [stretching, user])
 
   return (loaded &&
-    <Fragment>
+    <div className="stretchingPage_wrapper">
       {user.admin &&
-        <div className="basic_helper">
+        <div className="stretchingPage">
           <DatePickerForm />
         </div>
       }
       <div><StretchingSessionList sessions={stretching} currentUsersStretchAppointments={user.stretchingSessions}/></div>
-    </Fragment>
+    </div>
   )
 }
 
 const StretchingSessionList = (props) => {
   const { sessions, currentUsersStretchAppointments } = props
   return (
-    <ul className="basic_helper">
+    <ul className="stretchingPage">
       {sessions.map(session => {
         return (
           <SingleStretchingSession
