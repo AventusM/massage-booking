@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { StretchContext } from '../../App'
 import 'react-datepicker/dist/react-datepicker.css'
+import getDay from 'date-fns/getDay'
 
 // TODO  -- MAKE USE OF THIS NOTIFICATION
 import Notification from '../Notification/Notification'
@@ -11,17 +12,18 @@ const DatePickerForm = () => {
   const { stretchingService } = useContext(StretchContext)
 
   const handleChange = async (date) => {
-    try {
-      await setStartDate(date)
-      console.log('Date now?', startDate)
-    } catch (exception) {
-      console.log('failed')
-    }
+    await setStartDate(date)
+  }
+
+  const isMondayOrTuesday = (date) => {
+    const day = getDay(date)
+    return !(day !== 1 && day !== 2)
   }
 
   const createStretch = async (event) => {
     event.preventDefault()
     try {
+      if (!isMondayOrTuesday(startDate)) return
       await stretchingService.create({ date: startDate })
       // Notification here of success
     } catch (exception) {
@@ -56,6 +58,7 @@ const DatePickerForm = () => {
           ]}
           selected={startDate}
           onChange={handleChange}
+          filterDate={isMondayOrTuesday}
         />
         <button type="submit">PRESS THIS TO CREATE</button>
       </form>
