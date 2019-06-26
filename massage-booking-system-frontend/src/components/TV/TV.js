@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
-import Display from '../Display/Display'
 import Clock from '../Clock/Clock'
 import unity4 from '../../pics/unity4.png'
 import moment from 'moment'
 import formatStartDate from '../../utils/formatStartDate'
 import DaysAppointmentsSimple from '../DaysAppointmentsSimple/DaysAppointmentsSimple'
 import useResource from '../../hooks/useResource'
+import SimpleAppointment from '../SimpleAppointment/SimpleAppointment'
 
 
-const TVview = () => {
+const TV = () => {
   const [tv, tvService] = useResource('/api/tv')
   const now = moment()
 
@@ -39,7 +39,8 @@ const TVview = () => {
     return dateA - dateB
   })
 
-  let next = comingAppointments[0]
+  const next = comingAppointments.filter(app => app.type_of_reservation !== 3)[0] ?  comingAppointments.filter(app => app.type_of_reservation !== 3)[0] : null
+
 
   return (
     <div className="tv_view">
@@ -47,7 +48,13 @@ const TVview = () => {
         <Clock />
 
         <h2>NEXT APPOINTMENT</h2>
-        {next ? <ul className="tvViewAppointmentList"><div className="cont_tv"><Display dateobject={formatStartDate(next.start_date)} key={next._id} user={next.user} ownPage={true} date={true} cancel={false} /></div>
+        {next ? <ul className="tvViewAppointmentList"><div className="cont_tv"><SimpleAppointment
+          key={next._id}
+          id={next._id}
+          start_date={formatStartDate(next.start_date)}
+          type_of_reservation={next.type_of_reservation}
+          appUser={next.user}
+        /></div>
         </ul> : ''}
         {announcement && announcement.message ?
           <div className="tv_notice">
@@ -69,4 +76,4 @@ const TVview = () => {
   )
 }
 
-export default TVview
+export default TV

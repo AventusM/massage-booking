@@ -12,7 +12,7 @@ import useResource from './hooks/useResource'
 import Stats from './components/Stats/Stats'
 import DashBoard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header'
-import TVview from './components/TVview/TVview'
+import TV from './components/TV/TV'
 import StretchAppointmentDisplay from './components/StretchingSessions/StretchingSessions'
 import * as types from './types/types'
 import * as icons from './types/fa-icons'
@@ -95,7 +95,7 @@ const App = () => {
                   <Route exact path="/dashboard" render={() => <DashBoard />} />
                   <Route exact path="/mypage" render={() => <MyPage />} />
                   <Route exact path="/stats" render={() => <Stats stats={stats} />} />
-                  <Route exact path="/tvview" render={() => <TVview />} />
+                  <Route exact path="/TV" render={() => <TV />} />
                 </AppointmentContext.Provider>
               </UserContext.Provider>
             </StretchContext.Provider>
