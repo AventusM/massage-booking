@@ -20,7 +20,7 @@ const SingleStretchingSession = (props) => {
 
   return (
     <li className="stretchingList">
-      <div>{prettyDateString(date)}</div>
+      <div className="stretching_time">{prettyDateString(date)}</div>
       <h2>Attendees:</h2>
       <ul className="stretchingAttendeeList">
         {users.map(user => {
@@ -32,13 +32,12 @@ const SingleStretchingSession = (props) => {
             />
           )
         })}
-      </ul>
       {slotsRemainingText}
       {currentUsersStretchAppointments.includes(sessionID) ?
         <CancelStretchAppointment sessionID={sessionID}/>
         :<JoinStretchAppointment sessionID={sessionID}/>
       }
-
+  </ul>
     </li>
   )
 }
@@ -75,7 +74,7 @@ const CancelStretchAppointment = (props) => {
     }
   }
   return (
-    <button onClick={cancelSession}>Cancel appointment</button>
+    <button className="cancel_button" onClick={cancelSession}>Cancel</button>
   )
 }
 
@@ -91,7 +90,7 @@ const Modal = (props) => {
   return (
     <Fragment>
       {!open &&
-        <button onClick={() => setOpen(true)}>Join</button>}
+        <button className="join_button"onClick={() => setOpen(true)}>Join</button>}
       {open &&
         <div className="modal_wrapper">
           <div>

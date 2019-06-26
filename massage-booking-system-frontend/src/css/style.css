@@ -1347,30 +1347,109 @@ h3 {
   background-color: #366787;
   border-radius: 5px;
   color: white;
-  
 }
 
 .stretchingList h2{
   color: white;
-  background:#c0635e;
-  
+  font-size: 22px; 
 }
 
-.stretching_Cancel_button {
-  
+.stretching_time{
+  font-weight: bold;
+  font-size:25px;
+}
+
+.basic_helper h1{
+  margin-top: 20px;
+  color: #FFFFFF;
+  text-align: center;
+}
+.basic_helper h2{
+font-size: 30px;
+line-height: 35px;
+color: #FFFFFF;
+text-align: center;
+}
+
+
+.stretching_submit_button {
+width: 150px;
+height: 50px;
+background: #92DECB;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+border: none;
+font-size: 22px;
+line-height: 35px;
+color: #22465E;
+
 }
 
 .stretchingAttendeeList {
-  color: rgb(175, 175, 175);
+  width: 450px;
+  height: 100px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
 }
 
-/* .stretchingPage li{
-  border: 2px solid white;
-  font-weight: 600;
+.react-datepicker__input-container input{
+width: 320px;
+height: 80px;
+background: #22465E;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+color: white;
+font-size: 25px;
+text-align: center;
+border: none;
+margin-bottom: 15px;
+
+}
+
+.datepicker_wrapper{
+
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*Stretching buttons*/
+
+.join_button{
+  width: 100px;
+  height: 40px;
+  background: #92DECB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border:none;
+
   font-size: 20px;
-  margin-bottom: 15px;
-  color:white
-} */
+  line-height: 29px;
+  text-align: center;
+  color: rgb(18, 75, 61);
+
+}
+
+.cancel_button{
+  width: 100px;
+  height: 40px;
+  background: #92DECB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border:none;
+
+  font-size: 20px;
+  line-height: 29px;
+  text-align: center;
+  background: #F6DCDC;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #984242;
+}
+
+
+
+
 
 /* Modal */
 
@@ -1381,6 +1460,7 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  z-index: 999;
 }
 .modal_submit_button{
   width: 100px;
