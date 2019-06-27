@@ -42,7 +42,8 @@ const Appointment = props => {
             </button>
           </div>
         )
-      ) : (type_of_reservation === 0
+
+      ) : (type_of_reservation === 0 
         ? <CreateAppointment id={id} start_date={start_date} />
         : user.admin
           ? <button id="removed" onClick={() => createNotification('This appointment is not reservable')}><Display dateobject={start_date} removed={true} /></button>
@@ -54,9 +55,9 @@ const Appointment = props => {
       ) : (
         <button onClick={() => markAppUnavailable()} id="remove" className="far fa-trash-alt" ></button>
       ) : (null)
-      }
+      }</div>
 
-    </div >
+   
   )
 }
 

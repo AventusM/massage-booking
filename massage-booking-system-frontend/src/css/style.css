@@ -18,6 +18,9 @@ body {
   width: 50px;
   margin-left: 10px;
   background:#c0635e;
+  
+  
+
 }
 
 #restore {
@@ -94,9 +97,6 @@ nav a {
     color: white;
   }
 
-
-
-
 .nextappointment_wrapper p {
   font-size: 25px;
   color: white;
@@ -141,21 +141,28 @@ nav a {
 .mypage_wrapper form {
   margin-top: 10px;
   display: flex;
-  background-color: #fff9e2;
-  color: black;
+  background-color: #ffffff;
+  color: #071a33;
   padding: 5px;
   border-radius: 15px;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+  margin-bottom: 15px;
 }
 
-.mypage_wrapper form > button {
-  background-color: transparent;
+.mypage_wrapper form button {
+  background-color: #0b3450;
+  border-radius: 10px;
+  color:white;
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 1px;  
   border: none;
 }
 
 .mypage_wrapper p {
   font-size: 30px;
   color: white;
+
 }
 
 .mypage_wrapper input {
@@ -165,8 +172,23 @@ nav a {
 }
 
 .own_appointments {
-  margin-top: 10px;
+  margin-top: 20px;
+
 }
+
+@media screen and (max-width: 700px) {
+.own_appointments span{
+  font-size: 20px;  
+ 
+
+}
+.own_appointments  {
+  font-size: 20px;
+
+ 
+  }
+}
+
 
 /* Dashboard styles */
 
@@ -938,6 +960,8 @@ h3 {
 #cancel_text {
   font-size: 15px;
   
+
+   
 }
 
 /*Colors for buttons*/
@@ -956,7 +980,11 @@ h3 {
   background: #3b9962;
   color: white;
   border: #3b9962;
+  height: 50px;
+  margin-top: 20px;
 }
+
+
 #available:hover {
   background: #83b497;
   border: #83b497;

@@ -24,13 +24,15 @@ const Display = ({ dateobject, user, ownPage, free, removed, cancel }) => {
 
   if (date.getMinutes() < 10) {
     return (
-      <h4>
+      <h4 className="own_appointment" >
         {dateDisplay} {`${date.getHours()}:0${date.getMinutes()}`} {userDisplay} {remove} {clickCancel}
       </h4>
+      
+  
     )
-  }
+  }    
   return (
-    < h4 >
+    < h4 className="own_appointment" >
       {dateDisplay} {`${date.getHours()}:${date.getMinutes()}`} {userDisplay} {remove} {clickCancel}
     </h4 >
   )
