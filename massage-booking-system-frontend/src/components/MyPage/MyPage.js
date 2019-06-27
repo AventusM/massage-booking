@@ -3,6 +3,8 @@ import { UserContext, NotificationContext } from '../../App'
 import OwnAppointments from '../OwnAppointments/OwnAppointments'
 import useField from '../../hooks/useField'
 import Notification from '../Notification/Notification'
+import { confirmAlert } from 'react-confirm-alert' // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 const MyPage = () => {
   const { user, setUser, userService } = useContext(UserContext)
@@ -14,9 +16,6 @@ const MyPage = () => {
     numberField.changeValue(user.number)
   }, [user])
 
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
   const handleNumberUpdate = async event => {
     event.preventDefault()
     try {
@@ -40,12 +39,24 @@ const MyPage = () => {
   }
 
   const handleRemoveUser = async (id) => {
-    try {
-      await userService.remove(id)
-      createNotification(`User ${user.name} has been deleted`, 'success')
-    } catch (exception) {
-      createNotification(`Unable to delete ${user.name}`)
-    }
+    confirmAlert({
+      message: 'Are you sure you want to remove your profile?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              await userService.remove(id)
+            } catch (exception) {
+              window.location.reload()
+            }
+          }
+        },
+        {
+          label: 'No',
+        }
+      ]
+    })
   }
 
   // NOTICE -- user && rest rendered. Otherwise nothing gets rendered

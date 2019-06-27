@@ -29,7 +29,6 @@ const User = ({ id, name, email, number, admin, avatarUrl, mobile }) => {
 
   const toggleVisibility = () => {
     const currentVisibility = visibility === 'none' ? null : 'none'
-    console.log(visibility)
     setVisibility(currentVisibility)
   }
 

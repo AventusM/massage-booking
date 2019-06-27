@@ -155,9 +155,7 @@ describe('PUT appointments', () => {
     // TEE SANITY CHECK
     // const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
     const one_month_after_original_appointment = appointment_list[SECOND_DAY_LAST_INDEX]
-    // console.log('app list', appointment_list)
 
-    //console.log('TÄMÄ', one_month_after_original_appointment)
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(one_month_after_original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
 
@@ -183,22 +181,18 @@ describe('PUT appointments', () => {
   it('when appointment is removed, remove user from the appointment and set the appointments reservation as 3', async () => {
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     const updated_original_appointment = await get_appointment(original_appointment._id)
-    // console.log('start', updated_original_appointment)
     await remove_appointment(updated_original_appointment._id)
-    // console.log('DURING', updated_original_appointment)
     const removed_original_appointment = await get_appointment(original_appointment._id)
-    // console.log('REMOVEd', removed_original_appointment)
     expect(removed_original_appointment.type_of_reservation).toBe(3)
     expect(removed_original_appointment.user_id).toBe(null)
 
 
-  })//TESTAA ETTEI POISTU MUUT APPOINTMENTIT JNE!!!
+  })
 
   it('when a day is removed, remove users from the appointments and set the appointments reservations as 3', async () => {
     const appoint1 = await Appointment.findOne({ start_date: '2019-07-15T12:15:00.000Z' })
     const appoint2 = await Appointment.findOne({ start_date: '2019-07-15T15:45:00.000Z' })
 
-    //ERIYTÄ
     const user2 = new User({
       googleId: '1234567891',
       name: 'Test account1',

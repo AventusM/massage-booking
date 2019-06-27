@@ -63,9 +63,6 @@ statsRouter.get('/', async (req, res, next) => {
       totalAppointmentsUsed,
       usersWhoHaveUsedMassage
     }
-
-    console.log('statics to send ', statisticsToSend)
-
     res.json(statisticsToSend)
   } catch (exception) {
     next(exception)

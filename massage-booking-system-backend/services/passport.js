@@ -4,8 +4,6 @@ const config = require('../utils/config')
 const User = require('../models/user')
 
 passport.serializeUser((user, done) => {
-  console.log('user.id', user.id)
-  console.log('user._id', user._id)
   // Could use profile.id by using it from user model. This method allows multiple ways for various social logins
   done(null, user._id)
 })
