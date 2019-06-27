@@ -82,7 +82,7 @@ const MyPage = () => {
             )}
             <label>Phone number</label>
           </div>
-          <form onSubmit={handleNumberUpdate}>
+          <form className= "mypage_form" onSubmit={handleNumberUpdate}>
             <input
               type={numberField.type}
               id="number"
