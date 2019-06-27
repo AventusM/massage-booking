@@ -61,7 +61,7 @@ const AuthIndex = ({ user }) => {
         : null}
 
       <div className="appointmentListWrapperMain">
-        <>
+        <div>
           <Calendar
             activeStartDate={selectedDate}
             value={selectedDate}
@@ -124,7 +124,7 @@ const AuthIndex = ({ user }) => {
               <p>{announcement.message}</p>
             </div>
             : null}
-        </>
+        </div>
 
         <div>
 

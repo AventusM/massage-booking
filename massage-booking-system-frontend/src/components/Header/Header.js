@@ -20,7 +20,7 @@ const AuthHeader = ({ user }) => {
         <i onClick={toggleOpen} className="fas fa-bars" />
       </span>
       <Link to="/">
-        <img onClick={toggleOpen} src={logo} className="logo" alt="Unity logo small" />
+        <img src={logo} className="logo" alt="Unity logo small" />
       </Link>
       <ul onClick={toggleOpen} className={`main-nav ${listClassName}`}>
         <li>
