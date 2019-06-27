@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import DatePicker from 'react-datepicker'
-import { StretchContext } from '../../App'
+import { StretchContext, NotificationContext } from '../../App'
 import 'react-datepicker/dist/react-datepicker.css'
 import getDay from 'date-fns/getDay'
 import addDays from 'date-fns/addDays'
@@ -8,6 +8,7 @@ import addDays from 'date-fns/addDays'
 const DatePickerForm = () => {
   const [startDate, setStartDate] = useState(undefined)
   const { stretchingService } = useContext(StretchContext)
+  const { createNotification } = useContext(NotificationContext)
 
   const handleChange = (date) => {
     if (date.getHours() === 0 && date.getMinutes() === 0) {
@@ -26,9 +27,15 @@ const DatePickerForm = () => {
     try {
       if (!isMondayOrTuesday(startDate)) return
       await stretchingService.create({ date: startDate })
-      // Notification here of success
+
+      let minuteAddition = ''
+      // Fix situations like 10:05 where notification would display 10:5
+      if (startDate.getMinutes() < 10) {
+        minuteAddition += '0'
+      }
+      createNotification(`Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginnining from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accomodate`, 'success', 8)
     } catch (exception) {
-      // Notification here of failure
+      createNotification('Unable to create session')
     }
   }
 
