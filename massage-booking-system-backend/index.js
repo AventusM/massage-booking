@@ -8,7 +8,6 @@ const timer = require('./utils/timer')
 const generateAppointments = async () => {
   try {
     await timer.nextSixMonths(new Date)
-    console.log('Appointments have been created for the next six months')
   } catch (exception) {
     console.log('exception: ', exception)
   }

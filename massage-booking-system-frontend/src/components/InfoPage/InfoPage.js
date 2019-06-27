@@ -8,7 +8,6 @@ const InFoPage = (props) => {
   const { user } = useContext(UserContext)
   const [loaded, setLoaded] = useState(false)
   const { announcement, notification, createNotification } = useContext(NotificationContext)
-  console.log('info props ', props)
 
   useEffect(() => {
     if (user) {
@@ -108,12 +107,9 @@ const DeleteInfoItem= (props) => {
 
   const deleteItem = async () => {
     try {
-      console.log('tried to delete')
-      console.log('delete props ', props)
       await infoService.remove(id)
       createNotification('item deleted', 'success')
     } catch (exception) {
-      console.log('ERROR in DeleteInfoItem ', exception)
       createNotification('Failed to delete item')
     }
   }

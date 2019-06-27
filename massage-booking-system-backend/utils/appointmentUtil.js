@@ -41,7 +41,6 @@ const removeTwoAppointments = async (date) => {
 
 const recoverTwoAppointments = async (date) => {
   const firstDate = new Date(date)
-  console.log('DATE', firstDate)
   try {
     const firstAppointment = await Appointment.findOne({ start_date: firstDate })
     const secondDate = generator.increaseTime(5, new Date(firstAppointment.end_date))

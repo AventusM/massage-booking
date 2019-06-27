@@ -14,13 +14,11 @@ const StretchingSessionUser = (props) => {
 }
 
 const SingleStretchingSession = (props) => {
-  //console.log('Single stretch session props ', props)
   const { date, users, sessionID, currentUsersStretchAppointments, userIsAdmin } = props
   const [visibility, setVisibility] = useState('none')
 
   const toggleVisibility = () => {
     const currentVisibility = visibility === 'none' ?  null : 'none'
-    console.log(visibility)
     setVisibility(currentVisibility)
   }
 

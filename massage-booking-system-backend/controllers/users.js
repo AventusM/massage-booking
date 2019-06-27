@@ -140,7 +140,6 @@ const emptyAppointmentsFromUser = async (user) => {
 const emptyStretchingsFromUser = async (user) => {
   const stretchings = user.stretchingSessions
   for (let stretch of stretchings) {
-    console.log('str', stretch)
     await appointmentUtil.removeUserFromStretching(user._id, stretch)
   }
 }
