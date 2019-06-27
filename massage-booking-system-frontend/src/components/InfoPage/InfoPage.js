@@ -1,59 +1,75 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import useField from '../../hooks/useField'
+import { UserContext } from '../../App'
 
 const InFoPage = (props) => {
   const { info, infoService } = props
-  let contentField = useField('')
-  let headerField = useField('')
+  const { user } = useContext(UserContext)
+  const [loaded, setLoaded] = useState(false)
   console.log('info props ', props)
 
-  const changeAnnouncement = async event => {
-    event.preventDefault()
-    console.log('changeAnnouncement', contentField.value)
-    const announcement = {
-      header: headerField.value,
-      content: contentField.value
+  useEffect(() => {
+    if (user) {
+      setLoaded(true)
     }
-    infoService.create(announcement)
-    contentField.reset()
-    headerField.reset()
-  }
+  }, [user])
 
-  return (
+  return (loaded &&
     <div className="infoPage">
-      <form className="dashboard_form" onSubmit={changeAnnouncement}>
-        <div>
-        Header
-          <input
-            value={headerField.value}
-            onChange={headerField.handleFieldChange}
-          />
-        </div>
-        <div>
-            Content
-          <input className="dashboard_announcement"
-            value={contentField.value}
-            onChange={contentField.handleFieldChange}
-          />
-        </div>
 
-
-        <button className="dashboard_announcement_button" type="submit">Update</button>
-      </form>
-
+      {user.admin && <CreateInfoItem infoService={infoService} />}
       <div>
         <ul>
           {info.map(item => {
             return (
                 <>
               <InfoItem key={item._id} header={item.header} content={item.content}/>
-              <DeleteInfoItem id={item._id} infoService={infoService}/>
+              {user.admin && <DeleteInfoItem id={item._id} infoService={infoService}/>}
               </>
             )
           })}
         </ul>
       </div>
     </div>
+  )
+}
+
+const CreateInfoItem = (props) => {
+  const { infoService } = props
+  let contentField = useField('')
+  let headerField = useField('')
+
+  const createInfoItem = async event => {
+    event.preventDefault()
+    const infoItem = {
+      header: headerField.value,
+      content: contentField.value
+    }
+    infoService.create(infoItem)
+    contentField.reset()
+    headerField.reset()
+  }
+
+  return (
+    <form className="dashboard_form" onSubmit={createInfoItem}>
+      <div>
+        Header
+        <input
+          value={headerField.value}
+          onChange={headerField.handleFieldChange}
+        />
+      </div>
+      <div>
+            Content
+        <input className="dashboard_announcement"
+          value={contentField.value}
+          onChange={contentField.handleFieldChange}
+        />
+      </div>
+
+
+      <button className="dashboard_announcement_button" type="submit">Add info</button>
+    </form>
   )
 }
 
