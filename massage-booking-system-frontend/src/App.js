@@ -32,7 +32,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
 
-  const createNotification = (message, type) => {
+  const createNotification = (message, type, length) => {
     let icon
     let messageType
     if (type === types.SUCCESS) {
@@ -51,7 +51,7 @@ const App = () => {
 
     setTimeout(() => {
       setNotification(null)
-    }, 3500)
+    }, (length * 1000) || 3500)
   }
 
   useEffect(() => {

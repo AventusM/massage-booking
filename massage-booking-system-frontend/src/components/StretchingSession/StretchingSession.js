@@ -1,5 +1,5 @@
 import React, { useContext, useState, Fragment } from 'react'
-import { StretchContext } from '../../App'
+import { StretchContext, NotificationContext } from '../../App'
 import useField from '../../hooks/useField'
 
 const StretchingSessionUser = (props) => {
@@ -7,8 +7,8 @@ const StretchingSessionUser = (props) => {
   return (
     <li>
       <b>{data.name}:</b>
-      <br/>
-      <i id = "description">{description}</i>
+      <br />
+      <i id="description">{description}</i>
     </li>
   )
 }
@@ -19,7 +19,7 @@ const SingleStretchingSession = (props) => {
   const [visibility, setVisibility] = useState('none')
 
   const toggleVisibility = () => {
-    const currentVisibility = visibility === 'none' ?  null : 'none'
+    const currentVisibility = visibility === 'none' ? null : 'none'
     console.log(visibility)
     setVisibility(currentVisibility)
   }
@@ -29,8 +29,8 @@ const SingleStretchingSession = (props) => {
 
   return (
 
-    <li  className="stretchingList">
-      {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
+    <li className="stretchingList">
+      {userIsAdmin && <DeleteStretchSession date={date} sessionID={sessionID} />}
       <div className="stretching_time">{prettyDateString(date)} </div>
       <h2 className="stretching_header_time" onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" className="fas fa-chevron-up"></i> : <i id="down_arrow" className="fas fa-chevron-down"></i>}</h2>
 
@@ -49,8 +49,8 @@ const SingleStretchingSession = (props) => {
       </div>
       {slotsRemainingText}
       {currentUsersStretchAppointments.includes(sessionID) ?
-        <CancelStretchAppointment sessionID={sessionID}/>
-        :<JoinStretchAppointment sessionID={sessionID}/>
+        <CancelStretchAppointment sessionID={sessionID} />
+        : <JoinStretchAppointment sessionID={sessionID} />
       }
 
     </li>
@@ -61,20 +61,20 @@ const SingleStretchingSession = (props) => {
 const JoinStretchAppointment = (props) => {
   const { sessionID } = props
   const { stretchingService } = useContext(StretchContext)
+  const { createNotification } = useContext(NotificationContext)
   const description = useField('text')
 
   const joinSession = async () => {
     try {
       await stretchingService.update(sessionID, { join: true, description })
-      // Add notification here for success on joining session
+      createNotification('Joined succesfully', 'success')
     } catch (exception) {
-      // Add notification here for failure to join session
+      createNotification('Unable to join')
     }
   }
   return (
     <div>
       <Modal description={description} joinSession={joinSession} />
-
     </div>
   )
 }
@@ -82,12 +82,14 @@ const JoinStretchAppointment = (props) => {
 const CancelStretchAppointment = (props) => {
   const { sessionID } = props
   const { stretchingService } = useContext(StretchContext)
+  const { createNotification } = useContext(NotificationContext)
+
   const cancelSession = async () => {
     try {
       await stretchingService.update(sessionID, { join: false })
-      // Add notification here for success on cancelling session
+      createNotification('Reservation cancelled succesfully', 'success')
     } catch (exception) {
-      // Add notification here for failure on cancelling session
+      createNotification('Unable to cancel')
     }
   }
   return (
@@ -97,18 +99,24 @@ const CancelStretchAppointment = (props) => {
 }
 
 const DeleteStretchSession = (props) => {
-  const { sessionID } = props
+  const { date, sessionID } = props
   const { stretchingService } = useContext(StretchContext)
+  const { createNotification } = useContext(NotificationContext)
 
   const deleteSession = async () => {
     try {
       await stretchingService.remove(sessionID)
-      // Add notification here for sdeleting session, note that 2 appointmebnts are restored
+
+      let dateData = new Date(date)
+      let minuteAddition = ''
+      // Fix situations like 10:05 where notification would display 10:5
+      if (dateData.getMinutes() < 10) {
+        minuteAddition += '0'
+      }
+      createNotification(`Reservation on ${dateData.toDateString()} has been removed successfully! Two appointments beginning from ${dateData.getUTCHours()}:${minuteAddition}${dateData.getMinutes()} have been restored!`, 'success', 8)
     } catch (exception) {
-      // Add notification here?
+      createNotification(`${exception}`)
     }
-
-
   }
 
   return (
@@ -130,11 +138,11 @@ const Modal = (props) => {
   return (
     <Fragment>
       {!open &&
-        <button className="join_button"onClick={() => setOpen(true)}>Join</button>}
+        <button className="join_button" onClick={() => setOpen(true)}>Join</button>}
       {open &&
         <div className="modal_wrapper">
           <div>
-            <textarea placeholder = "Describe problem areas" value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
+            <textarea placeholder="Describe problem areas" value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
           </div>
           <div>
             <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
