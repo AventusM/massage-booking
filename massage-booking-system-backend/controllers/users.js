@@ -59,7 +59,15 @@ usersRouter.put('/:id/user', async (req, res, next) => {
 
     const found_user = await User.findById({ _id: given_id })
     if (!found_user) {
-      return res.status(400).end()
+      return res.status(400).json({ error: 'Requested user was not found' }).end()
+    }
+
+    if (body.number.length > 10) {
+      return res.json({ error: 'The entered phone number is too long' }).end()
+    }
+
+    if (body.number.length < 7) {
+      return res.json({ error: 'The entered phone number is too short' }).end()
     }
 
     const updateUserData = {

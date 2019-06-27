@@ -23,7 +23,10 @@ const useResource = baseUrl => {
           resource._id !== id ? resource : updatedResource.data
         )
       )
+    } else {
+      return updatedResource
     }
+
   }
 
   const updateExpectMany = async (id, type = '') => {

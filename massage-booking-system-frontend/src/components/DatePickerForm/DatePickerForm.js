@@ -4,9 +4,6 @@ import { StretchContext } from '../../App'
 import 'react-datepicker/dist/react-datepicker.css'
 import getDay from 'date-fns/getDay'
 
-// TODO  -- MAKE USE OF THIS NOTIFICATION
-import Notification from '../Notification/Notification'
-
 const DatePickerForm = () => {
   const [startDate, setStartDate] = useState(undefined)
   const { stretchingService } = useContext(StretchContext)

@@ -11,7 +11,7 @@ const UserList = () => {
     filter === ''
       ? users
       : users.filter(user =>
-        user.name.toLowerCase().startsWith(filter.toLowerCase())
+        user.name.toLowerCase().includes(filter.toLowerCase())
       )
 
   const filterChange = event => {
