@@ -69,17 +69,18 @@ const CreateInfoItem = (props) => {
   }
 
   return (
-    <form className="dashboard_form" onSubmit={createInfoItem}>
+    <form className="create_info_item_form" onSubmit={createInfoItem}>
       <div>
         Header (optional)
-        <input
+        <br/>
+        <input className="info_header_input"
           value={headerField.value}
           onChange={headerField.handleFieldChange}
         />
       </div>
       <div>
             Content (required)
-        <input className="dashboard_announcement"
+        <input className="info_content_input"
           value={contentField.value}
           onChange={contentField.handleFieldChange}
         />
@@ -87,6 +88,7 @@ const CreateInfoItem = (props) => {
 
 
       <button className="dashboard_announcement_button" type="submit">Add info</button>
+      <hr />
     </form>
   )
 }
@@ -115,7 +117,7 @@ const DeleteInfoItem= (props) => {
   }
 
   return (
-    <button onClick={deleteItem}>Delete</button>
+    <button onClick={deleteItem} className="delete_info_button">Delete</button>
   )
 }
 
