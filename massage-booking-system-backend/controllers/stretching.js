@@ -110,8 +110,6 @@ stretchingRouter.put('/:id', async (req, res, next) => {
   }
 })
 
-
-
 // Removes individual stretching appointment completely. Used by admin
 stretchingRouter.delete('/:id', async (req, res, next) => {
   try {
