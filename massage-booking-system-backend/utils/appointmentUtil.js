@@ -87,12 +87,20 @@ const removeStretchFromUser = async (userId, stretchId) => {
   }
 }
 
-const isDateMondayOrTuesday = (date) => {
-  const day = date.getDay()
-  if(day === 1 || day === 2){
-    return true
+const isDateValid = async(date) => {
+  let appointments = await Appointment.find({ start_date: date })
+  let stretchings = await Stretch.find({ date: date })
+  if(appointments.length === 0 || stretchings.length !== 0 || !areTimesValid(date)){
+    return false
   }
-  return false
+  return true
+}
+const areTimesValid = (date) => {
+  let compare = date.toISOString()
+  if(compare.includes('11:15') || compare.includes('16:20')){
+    return false
+  }
+  return true
 }
 
-module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching, isDateMondayOrTuesday }
+module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching, isDateValid }
