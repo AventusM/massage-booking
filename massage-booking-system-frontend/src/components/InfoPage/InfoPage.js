@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import useField from '../../hooks/useField'
-import { UserContext } from '../../App'
+import { UserContext, NotificationContext } from '../../App'
+import Notification from '../Notification/Notification'
 
 const InFoPage = (props) => {
   const { info, infoService } = props
   const { user } = useContext(UserContext)
   const [loaded, setLoaded] = useState(false)
+  const { announcement, notification, createNotification } = useContext(NotificationContext)
   console.log('info props ', props)
 
   useEffect(() => {
@@ -16,51 +18,68 @@ const InFoPage = (props) => {
 
   return (loaded &&
     <div className="infoPage">
-
-      {user.admin && <CreateInfoItem infoService={infoService} />}
+      {notification && <Notification notification={notification} />
+      }
+      {user.admin && <CreateInfoItem infoService={infoService} createNotification={createNotification}/>}
       <div>
         <ul>
           {info.map(item => {
             return (
                 <>
               <InfoItem key={item._id} header={item.header} content={item.content}/>
-              {user.admin && <DeleteInfoItem id={item._id} infoService={infoService}/>}
+              {user.admin && <DeleteInfoItem id={item._id} infoService={infoService} createNotification={createNotification}/>}
               </>
             )
           })}
         </ul>
+      </div>
+      <div>
+        {announcement && announcement.message
+          ? <div className="index_notice">
+            <h2>Notice</h2>
+            <p>{announcement.message}</p>
+          </div>
+          : null}
       </div>
     </div>
   )
 }
 
 const CreateInfoItem = (props) => {
-  const { infoService } = props
+  const { infoService, createNotification } = props
   let contentField = useField('')
   let headerField = useField('')
 
   const createInfoItem = async event => {
-    event.preventDefault()
-    const infoItem = {
-      header: headerField.value,
-      content: contentField.value
+    if (contentField.value === '') {
+      createNotification('Cant create info item without content ')
+    } else {
+      event.preventDefault()
+
+      const infoItem = {
+        header: headerField.value,
+        content: contentField.value
+      }
+
+      infoService.create(infoItem)
+      contentField.reset()
+      headerField.reset()
+      createNotification('Info item created', 'success')
     }
-    infoService.create(infoItem)
-    contentField.reset()
-    headerField.reset()
+
   }
 
   return (
     <form className="dashboard_form" onSubmit={createInfoItem}>
       <div>
-        Header
+        Header (optional)
         <input
           value={headerField.value}
           onChange={headerField.handleFieldChange}
         />
       </div>
       <div>
-            Content
+            Content (required)
         <input className="dashboard_announcement"
           value={contentField.value}
           onChange={contentField.handleFieldChange}
@@ -85,16 +104,17 @@ const InfoItem = (props) => {
 }
 
 const DeleteInfoItem= (props) => {
-  const { id, infoService } = props
+  const { id, infoService, createNotification } = props
 
   const deleteItem = async () => {
     try {
       console.log('tried to delete')
       console.log('delete props ', props)
       await infoService.remove(id)
-      // Add notification here for deleting item
+      createNotification('item deleted', 'success')
     } catch (exception) {
       console.log('ERROR in DeleteInfoItem ', exception)
+      createNotification('Failed to delete item')
     }
   }
 

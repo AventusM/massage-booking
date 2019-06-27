@@ -32,7 +32,7 @@ const SingleStretchingSession = (props) => {
     <li  className="stretchingList">
       {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
       <div className="stretching_time">{prettyDateString(date)} </div>
-      <h2 onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" className="fas fa-chevron-up"></i> : <i id="down_arrow" className="fas fa-chevron-down"></i>}</h2>
+      <h2 className="stretching_header_time" onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" className="fas fa-chevron-up"></i> : <i id="down_arrow" className="fas fa-chevron-down"></i>}</h2>
 
       <div className="attendees_list" style={{ display: visibility }}>
         <ul>
@@ -134,7 +134,7 @@ const Modal = (props) => {
       {open &&
         <div className="modal_wrapper">
           <div>
-            <textarea placeholder = "Type here your problem areas" value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
+            <textarea placeholder = "Describe problem areas" value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
           </div>
           <div>
             <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>

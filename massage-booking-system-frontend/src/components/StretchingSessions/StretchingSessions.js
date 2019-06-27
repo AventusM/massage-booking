@@ -39,7 +39,7 @@ const StretchingSessionList = (props) => {
   return (
     <div className ="stretching_header">
       <h1>Stretching appointments</h1>
-      <h2>Click to reserve</h2>
+      <h2 className="stretching_header_title">Click to reserve</h2>
       <ul className="stretchingPage">
         {sessions.map(session => {
           return (
