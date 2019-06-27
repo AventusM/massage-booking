@@ -72,6 +72,7 @@ const CreateInfoItem = (props) => {
     <form className="create_info_item_form" onSubmit={createInfoItem}>
       <div>
         Header (optional)
+        <br/>
         <input className="info_header_input"
           value={headerField.value}
           onChange={headerField.handleFieldChange}

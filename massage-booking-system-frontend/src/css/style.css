@@ -1454,18 +1454,71 @@ hr{
 
 /* Info page */
 
+
+@media screen and (min-width: 700px) {
+
 .infoPage {
   color: white;
   display: flex;
   flex-direction: column;
-  text-align: center;
   max-width: 40%;
   margin-left: auto;
   margin-right: auto;
+  line-height: 30px;
+  
 }
- 
+}
+@media screen and (max-width: 700px) {
+  .infoPage {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    line-height: 30px;
+    margin-left: 10%;
+    margin-right: 5%;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    
+  }
+
+  .infoPage h2{
+    font-weight: bold;
+    text-align: center;
+    
+  }
+  .create_info_item_form {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 7px;
+    margin-top: 20px;
+  }
+  .info_content_input{
+    max-width: 300px;
+    height: 100px;
+    border-radius: 15px;
+    border: none;
+    margin-bottom: 20px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+  }
+
+  .delete_info_button {
+    margin-top: 10px;
+    background-color: #c0635e;
+    font-weight: 500;
+    color: black;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+    height: 53px;
+
+  }
+
+
+}
+
 .infoPage h2{
-  font-weight: bold
+  font-weight: bold;
+  text-align: center;
 }
 
 .create_info_item_form {
@@ -1473,6 +1526,9 @@ hr{
   margin: auto;
   text-align: center;
   margin-bottom: 7px;
+  margin-top: 20px;
+
+
 }
 
 .info_content_input{
@@ -1482,6 +1538,7 @@ hr{
   border: none;
   margin-bottom: 20px;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+  
 }
 
 .info_header_input{
@@ -1491,11 +1548,12 @@ hr{
   border: none;
   margin-bottom: 20px;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+  
 }
 
 .delete_info_button {
   margin-top: 10px;
-  background-color: #812508;
+  background-color: #c0635e;
   font-weight: 500;
   color: black;
   padding: 5px;
@@ -1503,8 +1561,11 @@ hr{
   border: none;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
   width: 15%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: center;
+  margin-left: 42%;
+ 
+
+  
 }
 .create_info_item_form button{
   height: 63px;
@@ -1519,6 +1580,7 @@ hr{
   margin-top: 60px;
   margin: auto;
   text-align: center;
+
 }
 
 
