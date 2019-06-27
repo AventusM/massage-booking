@@ -63,7 +63,11 @@ usersRouter.put('/:id/user', async (req, res, next) => {
     }
 
     if (body.number.length > 10) {
-      return res.json({ error: 'Entered phone number is too long' }).end()
+      return res.json({ error: 'The entered phone number is too long' }).end()
+    }
+
+    if (body.number.length < 7) {
+      return res.json({ error: 'The entered phone number is too short' }).end()
     }
 
     const updateUserData = {
