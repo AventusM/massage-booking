@@ -6,7 +6,7 @@ const StretchingSessionUser = (props) => {
   const { data, description } = props
   return (
     <li>
-     <b>{data.name}:</b> 
+      <b>{data.name}:</b>
       <br/>
       <i id = "description">{description}</i>
     </li>
@@ -28,12 +28,12 @@ const SingleStretchingSession = (props) => {
   const slotsRemainingText = `${slotsUsed} / 10 slots used `
 
   return (
-  
-    <li  className="stretchingList"> 
-    {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
-    <div className="stretching_time">{prettyDateString(date)} </div>  
-    
-      <h2 onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" class="fas fa-chevron-up"></i> : <i id="down_arrow" class="fas fa-chevron-down"></i>}</h2>
+
+    <li  className="stretchingList">
+      {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
+      <div className="stretching_time">{prettyDateString(date)} </div>
+      <h2 onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" className="fas fa-chevron-up"></i> : <i id="down_arrow" className="fas fa-chevron-down"></i>}</h2>
+
       <div className="attendees_list" style={{ display: visibility }}>
         <ul>
           {users.map(user => {
@@ -53,9 +53,9 @@ const SingleStretchingSession = (props) => {
         :<JoinStretchAppointment sessionID={sessionID}/>
       }
 
-    </li>  
-    
-  )    
+    </li>
+
+  )
 }
 
 const JoinStretchAppointment = (props) => {
@@ -74,7 +74,7 @@ const JoinStretchAppointment = (props) => {
   return (
     <div>
       <Modal description={description} joinSession={joinSession} />
-      
+
     </div>
   )
 }
@@ -92,7 +92,7 @@ const CancelStretchAppointment = (props) => {
   }
   return (
     <div>
-    <button className="cancel_button" onClick={cancelSession}>Cancel</button></div>
+      <button className="cancel_button" onClick={cancelSession}>Cancel</button></div>
   )
 }
 
@@ -111,9 +111,9 @@ const DeleteStretchSession = (props) => {
 
   }
 
-  return ( 
+  return (
     <div className="delete_stretching">
-    <button className="far fa-trash-alt" onClick={deleteSession}></button> 
+      <button className="far fa-trash-alt" onClick={deleteSession}></button>
     </div>
   )
 }

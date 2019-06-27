@@ -50,6 +50,7 @@ const statsRouter = require('./controllers/stats')
 const authRouter = require('./controllers/auth_routes')
 const stretchingRouter = require('./controllers/stretching')
 const announcementsRouter = require('./controllers/announcement')
+const infoItemsRouter = require('./controllers/infoItems')
 
 app.use('/auth', authRouter)
 app.use('/api', router)
@@ -58,6 +59,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/stats', statsRouter)
 app.use('/api/stretching', stretchingRouter)
 app.use('/api/announcements', announcementsRouter)
+app.use('/api/info', infoItemsRouter)
 
 // ROUTE PROTECTION -- DISABLE FOR OWN TESTING IN REST CLIENT ETC.
 router.use(protectedRoute.routeProtector)

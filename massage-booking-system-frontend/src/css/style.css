@@ -1158,7 +1158,8 @@ h3 {
 .clock {
   font-size: 150px;
   font-weight: 500;
-  margin-top: 70px;
+  margin-top: 110px;
+  padding-top: 110px;
   color: white;
   text-align: center
 }
@@ -1232,6 +1233,13 @@ h3 {
 
 .tv_view_headers{
   margin-top: 25px;
+  font-size: 40px;
+  color: white;
+}
+
+.tv_view_day {
+  margin-top: 100px;
+  padding-top: 7git stat0px;
   font-size: 40px;
   color: white;
 }
@@ -1476,8 +1484,7 @@ textarea::placeholder{
   margin: auto;
   border-radius: 5px;
   
-}​
-
+}
 
 
 
@@ -1506,3 +1513,17 @@ hr{
   background: white;
 }
 
+
+/* Info page */
+
+.infoPage {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  text-align: center;
+}
+
+.infoPage h2{
+  font-weight: bold
+}
