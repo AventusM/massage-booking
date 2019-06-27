@@ -22,6 +22,7 @@ const StretchAppointmentDisplay = () => {
       {user.admin &&
         <div className="stretchingPage">
           <DatePickerForm />
+          <hr />
         </div>
       }
       {stretching.length !== 0 ?
