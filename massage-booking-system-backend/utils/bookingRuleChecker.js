@@ -56,12 +56,11 @@ const userAllowedToMakeAppointment = async (
     }
 
   } catch (error) {
-    //console.log('error in rule checker', error)
+    console.log('error in rule checker', error)
   }
 }
 
 const userAllowedtoCancelAppointment = async (userID, appointment) => {
-  //const appointment = await Appointment.findById(appointmentID)
   return String(userID) === String(appointment.user_id)
 }
 

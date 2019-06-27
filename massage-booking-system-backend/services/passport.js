@@ -22,16 +22,12 @@ passport.use(
       callbackURL: '/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
-      // CHECK IF UNITY EMAIL ADDRESS INCLUDED
-      // IF NO UNITY ADDRESS --> done(null, false)
-      // or something like that which should fail
-
       User.findOne({ googleId: profile.id }).then(foundUser => {
         if (foundUser) {
           // User has already been registered, continue with existing user
           done(null, foundUser)
         } else {
-          // New user registration, add to database
+          // New user registration, add to database if email is whitelisted or has the whitelisted email suffix
           if (profile.emails[0].value.split('@')[1] === config.EMAIL_SUFFIX || config.EMAIL_WHITELIST.includes(profile.emails[0].value)) {
             let admin = false
             if (profile.emails[0].value === config.INITIAL_ADMIN) {

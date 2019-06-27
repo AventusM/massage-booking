@@ -12,7 +12,6 @@ authRouter.get(
   '/google/callback',
   passport.authenticate('google'),
   (req, res) => {
-    // res.json(res.req.user)
     res.redirect('/')
   }
 )
