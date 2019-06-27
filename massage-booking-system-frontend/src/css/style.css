@@ -1257,8 +1257,12 @@ h3 {
 .stretchingPage_wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  margin: 0 auto;
   align-items: center;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .stretchingList {
@@ -1275,12 +1279,6 @@ h3 {
   
 }
 
-.stretchingList h2{
-  color: white;
-  font-size: 22px;
-
-}
-
 .stretching_time{
   font-weight: bold;
   font-size:25px;
@@ -1291,12 +1289,15 @@ h3 {
   margin-top: 20px;
   color: #FFFFFF;
   text-align: center;
+  font-size: 2em;
+  
 }
 .basic_helper h2{
 font-size: 30px;
 line-height: 35px;
 color: #FFFFFF;
 text-align: center;
+font-size: 1.5em;
 }
 
 
@@ -1384,11 +1385,22 @@ border:none;
 .stretching_header h1{
   color: white;
   margin-top: 20px; 
+  font-size: 2em;
 }
+
 .stretching_header h2{
   color: white;
   margin-top: 20px; 
   text-align: center;
+  font-size: 1.5em;
+}
+
+.attendees_header{
+  font-size: 0.8em;
+}
+
+textarea::placeholder{
+  color: #8d9094;
 }
 
 
@@ -1434,11 +1446,28 @@ border:none;
 
 }
 
+.modal_submit_button{
+  width: 100px;
+  height: 30px;
+  background: #92DECB;
+  border-radius: 10px;
+  color: #22465E;
+  border: none;
+}
+
+.modal_cancel_button{
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  color: #FFFFFF;
+  background: transparent;
+  border: none;
+}
+
 .modal_wrapper textarea{
   width: 80%;
   border-radius: 15px;
   border:none;
-  
 }
 
 .attendees_list {
@@ -1450,22 +1479,6 @@ border:none;
 }​
 
 
-.modal_submit_button{
-  width: 100px;
-  height: 30px;
-  background: #92DECB;
-  border-radius: 10px;
-  color: #22465E;
-  border: none;
-}
-.modal_cancel_button{
-  font-size: 20px;
-  line-height: 23px;
-  text-align: center;
-  color: #FFFFFF;
-  background: transparent;
-  border: none;
-}
 
 
 #up_arrow {
@@ -1487,5 +1500,9 @@ border:none;
 
 #description{
   font-weight: 100;
+}
+
+hr{
+  background: white;
 }
 

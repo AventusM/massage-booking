@@ -19,6 +19,7 @@ const StretchAppointmentDisplay = () => {
       {user.admin &&
         <div className="stretchingPage">
           <DatePickerForm />
+          <hr />
         </div>
       }
       <div><StretchingSessionList sessions={stretching} currentUsersStretchAppointments={user.stretchingSessions} userIsAdmin={user.admin}/></div>
