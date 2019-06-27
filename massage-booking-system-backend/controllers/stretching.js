@@ -148,24 +148,11 @@ stretchingRouter.delete('/:id', async (req, res, next) => {
       await AppointmentManager.removeStretchFromUser(user.data, stretchId)
     }
     await AppointmentManager.recoverTwoAppointments(stretch.date)
-    await Stretching.remove()
+    await Stretching.remove({ _id: stretchId })
     res.status(204).end()
   } catch (exception) {
     next(exception)
   }
 })
-
-
-// Removes all stretching sessions at once. Created for testing purposes as one might spam session creation
-stretchingRouter.delete('/', async (req, res, next) => {
-  try {
-    await Stretching.deleteMany({})
-  } catch (exception) {
-    next(exception)
-  }
-})
-
-
-
 
 module.exports = stretchingRouter
