@@ -15,7 +15,6 @@ appointmentsRouter.use(bodyParser.json())
 const generateAppointmentsForDay = date => {
   let firstShiftEnd = createAppointmentsInRow(new Date(date), 5)
   let secondShiftStart = increaseTime(30, new Date(firstShiftEnd))
-  //console.log('BREAK')
   createAppointmentsInRow(secondShiftStart, 8)
 }
 
@@ -55,9 +54,6 @@ const increaseTime = (minutes, currentTime) => {
  * Checks if appointment exists
  */
 const createEmptyAppointment = async (start_date, end_date) => {
-  /* console.log('start date', start_date)
-    console.log('end date  ', end_date)
-    */
   if (await doesAppointmentExist(new Date(start_date))) {
     const appointment = new Appointment({
       start_date: start_date.getTime(),

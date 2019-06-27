@@ -3,6 +3,8 @@ import { UserContext, NotificationContext } from '../../App'
 import OwnAppointments from '../OwnAppointments/OwnAppointments'
 import useField from '../../hooks/useField'
 import Notification from '../Notification/Notification'
+import { confirmAlert } from 'react-confirm-alert' // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 const MyPage = () => {
   const { user, setUser, userService } = useContext(UserContext)
@@ -14,9 +16,6 @@ const MyPage = () => {
     numberField.changeValue(user.number)
   }, [user])
 
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
   const handleNumberUpdate = async event => {
     event.preventDefault()
     try {
@@ -25,11 +24,39 @@ const MyPage = () => {
       const type = 'user'
 
       setUser(updatedUser)
-      await userService.update(user._id, updatedUser, type)
-      createNotification('Succesfully changed number', 'success')
+      const response = await userService.update(user._id, updatedUser, type)
+
+      if (response !== undefined) {
+        createNotification(response.data.error)
+      } else {
+        createNotification('Succesfully changed number', 'success')
+      }
     } catch (exception) {
+      console.log('response: ', exception)
+
       createNotification('Unable to change number')
     }
+  }
+
+  const handleRemoveUser = async (id) => {
+    confirmAlert({
+      message: 'Are you sure you want to remove your profile?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              await userService.remove(id)
+            } catch (exception) {
+              window.location.reload()
+            }
+          }
+        },
+        {
+          label: 'No',
+        }
+      ]
+    })
   }
 
   // NOTICE -- user && rest rendered. Otherwise nothing gets rendered
@@ -65,7 +92,11 @@ const MyPage = () => {
             />
             <button type="submit">Update</button>
           </form>
-          
+          <button
+            className="delete_user"
+            onClick={() => handleRemoveUser(user._id)}>
+            Remove user
+          </button>
           <div className="own_appointments">
             <h2>My Appointments</h2>
             <OwnAppointments ownPage={true} />

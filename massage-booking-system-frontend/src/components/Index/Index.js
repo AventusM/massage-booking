@@ -61,7 +61,7 @@ const AuthIndex = ({ user }) => {
         : null}
 
       <div className="appointmentListWrapperMain">
-        <div className="appointmentListWrapperCalendar">
+        <div>
           <Calendar
             activeStartDate={selectedDate}
             value={selectedDate}
@@ -126,7 +126,7 @@ const AuthIndex = ({ user }) => {
             : null}
         </div>
 
-        <div className="all_apps_div">
+        <div>
 
           <h1>All appointments</h1>
           <h5>Click on a Free appointment to reserve it</h5>

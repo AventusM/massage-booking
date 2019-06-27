@@ -12,7 +12,7 @@ const User = ({ id, name, email, number, admin, avatarUrl, mobile }) => {
   const toggleAdmin = async () => {
     try {
       await userService.update(id, { admin: !admin, auth_id: user._id })
-      createNotification(`Users ${name} role has been changed`, 'success')
+      createNotification(`User's ${name} role has been changed`, 'success')
     } catch (exception) {
       createNotification(`Unable to change role for ${name}`)
     }
@@ -29,7 +29,6 @@ const User = ({ id, name, email, number, admin, avatarUrl, mobile }) => {
 
   const toggleVisibility = () => {
     const currentVisibility = visibility === 'none' ? null : 'none'
-    console.log(visibility)
     setVisibility(currentVisibility)
   }
 

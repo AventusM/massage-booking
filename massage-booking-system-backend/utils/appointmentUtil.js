@@ -41,7 +41,6 @@ const removeTwoAppointments = async (date) => {
 
 const recoverTwoAppointments = async (date) => {
   const firstDate = new Date(date)
-  console.log('DATE', firstDate)
   try {
     const firstAppointment = await Appointment.findOne({ start_date: firstDate })
     const secondDate = generator.increaseTime(5, new Date(firstAppointment.end_date))
@@ -88,4 +87,20 @@ const removeStretchFromUser = async (userId, stretchId) => {
   }
 }
 
-module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching }
+const isDateValid = async(date) => {
+  let appointments = await Appointment.find({ start_date: date })
+  let stretchings = await Stretch.find({ date: date })
+  if(appointments.length === 0 || stretchings.length !== 0 || !areTimesValid(date)){
+    return false
+  }
+  return true
+}
+const areTimesValid = (date) => {
+  let compare = date.toISOString()
+  if(compare.includes('11:15') || compare.includes('16:20')){
+    return false
+  }
+  return true
+}
+
+module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching, isDateValid }

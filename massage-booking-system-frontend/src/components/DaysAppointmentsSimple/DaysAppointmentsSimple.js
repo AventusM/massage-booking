@@ -6,9 +6,6 @@ import SimpleAppointment from '../SimpleAppointment/SimpleAppointment'
 
 const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointments }) => {
   const now = moment()
-
-  console.log(appointments)
-
   let day = null
   if (now.day() <= lastdayWithAppointments) {
     day = moment().startOf('week').add(dayNumber, 'days') // day on this week
@@ -46,8 +43,6 @@ const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointmen
 
   let firstHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() < 15)
   let secondHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() > 14)
-
-  console.log(daysAppointments.length)
 
   return (
     <div>

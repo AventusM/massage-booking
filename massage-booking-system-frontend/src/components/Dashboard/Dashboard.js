@@ -11,7 +11,6 @@ const DashBoard = () => {
 
   const changeAnnouncement = async event => {
     event.preventDefault()
-    console.log('changeAnnouncement', editedAnnouncement.value)
     const announcement = {
       message: editedAnnouncement.value
     }
@@ -21,14 +20,18 @@ const DashBoard = () => {
   return (
     <div>
       {notification
-        ? <Notification notification={notification} />
-        : <Notification notification={announcementNotification} />}
+        ? <div className="dashboard_notification_container"><Notification  notification={notification} /></div>
+        : null}
+      <Notification notification={announcementNotification} />
+      <h2 className="dashboard_announcement_labels">Set Announcement</h2>
+      <p className="dashboard_announcement_labels">Making an empty announcement clears the announcement</p>
       <form className="dashboard_form" onSubmit={changeAnnouncement}>
         <input className="dashboard_announcement"
           value={editedAnnouncement.value}
           onChange={editedAnnouncement.handleFieldChange}
         />
-        <button className="dashboard_announcement_button" type="submit">Update</button>
+        < br/>
+        <button type="submit">Change</button>
       </form>
       <UserList />
     </div>
