@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker'
 import { StretchContext } from '../../App'
 import 'react-datepicker/dist/react-datepicker.css'
 import getDay from 'date-fns/getDay'
+import addDays from 'date-fns/addDays'
 
 const DatePickerForm = () => {
   const [startDate, setStartDate] = useState(undefined)
@@ -44,6 +45,7 @@ const DatePickerForm = () => {
           timeFormat="HH:mm"
           timeIntervals={9001}
           minDate={new Date()}
+          maxDate={addDays(new Date(), 120)}
           minTime={new Date().setHours(8, 55, 0, 0)}
           maxTime={new Date().setHours(15, 45, 0, 0)}
           //Dont let 11:15 or 16:20 since the lunch break is at 11:45 and 16:20 is the last appointment!
