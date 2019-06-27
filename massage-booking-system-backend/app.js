@@ -12,6 +12,7 @@ const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 
+// This route is available without authentication
 const tvRouter = require('./controllers/tv')
 app.use('/api/tv', tvRouter)
 
