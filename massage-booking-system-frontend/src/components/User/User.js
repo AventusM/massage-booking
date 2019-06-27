@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { UserContext, NotificationContext } from '../../App'
 
-const User = props => {
+const User = ({ id, name, email, number, admin, avatarUrl, mobile }) => {
   const { user, userService } = useContext(UserContext)
   const { createNotification } = useContext(NotificationContext)
-  const { id, name, email, number, admin, avatarUrl, mobile } = props
   const [visibility, setVisibility] = useState('none')
 
   const role = admin ? 'admin' : 'user'
@@ -13,7 +12,7 @@ const User = props => {
   const toggleAdmin = async () => {
     try {
       await userService.update(id, { admin: !admin, auth_id: user._id })
-      createNotification(`Users ${name} role has been changed`, 'success')
+      createNotification(`User's ${name} role has been changed`, 'success')
     } catch (exception) {
       createNotification(`Unable to change role for ${name}`)
     }
@@ -29,7 +28,7 @@ const User = props => {
   }
 
   const toggleVisibility = () => {
-    const currentVisibility = visibility === 'none' ?  null : 'none'
+    const currentVisibility = visibility === 'none' ? null : 'none'
     console.log(visibility)
     setVisibility(currentVisibility)
   }
@@ -42,8 +41,8 @@ const User = props => {
           <h2>{name}</h2>
         </div>
         <div style={{ display: visibility }}>
-          Email: {email} <br/>
-          Number: {number ? <span>{number}</span> : <span>No number specified</span>} <br/>
+          Email: {email} <br />
+          Number: {number ? <span>{number}</span> : <span>No number specified</span>} <br />
           Role: {role} <br />
           <button
             className="makeAdminButton"

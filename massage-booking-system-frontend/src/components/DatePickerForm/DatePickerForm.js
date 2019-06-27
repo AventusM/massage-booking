@@ -4,11 +4,8 @@ import { StretchContext } from '../../App'
 import 'react-datepicker/dist/react-datepicker.css'
 import getDay from 'date-fns/getDay'
 
-// TODO  -- MAKE USE OF THIS NOTIFICATION
-import Notification from '../Notification/Notification'
-
 const DatePickerForm = () => {
-  const [startDate, setStartDate] = useState(new Date().setHours(8, 55, 0, 0))
+  const [startDate, setStartDate] = useState(undefined)
   const { stretchingService } = useContext(StretchContext)
 
   const handleChange = async (date) => {
@@ -36,8 +33,9 @@ const DatePickerForm = () => {
       <h1>Create a stretching appointment</h1>
       <h2>Select a date below</h2>
 
-      <form className="datepicker_wrapper"onSubmit={createStretch}>
+      <form className="datepicker_wrapper" onSubmit={createStretch}>
         <DatePicker
+          placeholderText="Click to select"
           showTimeSelect
           dateFormat="MMMM d, yyyy HH:mm"
           timeFormat="HH:mm"
@@ -63,7 +61,10 @@ const DatePickerForm = () => {
           onChange={handleChange}
           filterDate={isMondayOrTuesday}
         />
-        <button className = "stretching_submit_button" type="submit">Create</button>
+        {startDate === undefined
+          ? <button disabled className="disabled_submit_button" type="submit">Create</button>
+          : <button className="stretching_submit_button" type="submit">Create</button>
+        }
       </form>
     </div>
   )

@@ -32,7 +32,7 @@ body {
   border-radius: 15px;
   padding: 10px 5px;
   height: 50px;
-  width: 400px;
+  width: 300px;
   margin-top: 20px;
 
 }
@@ -47,11 +47,6 @@ body {
   width: 400px;
   margin-top: 20px;
 }
-
-.cont {
-  display: flex
-}
-/* T
 
 .cont {
   display: flex
@@ -180,6 +175,12 @@ nav a {
   text-decoration: underline;
 }
 
+.dashboard_announcement_labels {
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+}
+
 .dashboard_profile_image {
   height: 80px;
   border-radius: 50px;
@@ -188,23 +189,26 @@ nav a {
 .dashboard_form{
   max-width: 400px;
   margin: auto;
+  text-align: center;
 }
 
 .dashboard_announcement{
-width: 400px;
-height: 100px;
-left: 70px;
-top: 29px;
-border-radius: 15px;
-border: none;
+  width: 400px;
+  height: 100px;
+  border-radius: 15px;
+  border: none;
+  margin-bottom: 20px;
+}
 
+@media screen and (max-width: 700px) {
+  .dashboard_announcement {
+    width: 270px;
+  }
 }
 
 .dashboard_form button{
-  width: 138px;
   height: 63px;
-  left: 183px;
-  top: 148px; 
+  width: 120px;
   background: #22465E;
   color: white;
   border-radius: 15px;
@@ -212,8 +216,9 @@ border: none;
   font-size: 20px;
   line-height: 23px;
   border: none;
-  margin-left: 130px;
-  margin-top: 20px;
+  margin-top: 60px;
+  margin: auto;
+  text-align: center;
 }
 
 .dashboard_wrapper {
@@ -232,7 +237,7 @@ border: none;
 
 .user_search {
   color: white;
-  margin-top: 150px;
+  margin-top: 60px;
   margin-left: 36%;
 }
 
@@ -291,6 +296,16 @@ border: none;
   
 }
 
+
+.dashboard_notification_container {
+  top: 20%;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  margin: 0;
+}
+
+
 /* Mobile */
 
 .dashboard_wrapper_mobile {
@@ -305,6 +320,12 @@ border: none;
   background: #366787;
   border-radius: 15px;
   color: rgba(255, 255, 255, 0.89);
+}
+
+@media screen and (max-width: 700px) {
+  .user_list {
+    width: 300px;
+  }
 }
 
 
@@ -792,7 +813,7 @@ h3 {
 }
 
 .react-calendar {
-  min-width: 350px;
+  min-width: 100px;
   width: auto;
   background: white;
   border-radius: 15px;
@@ -803,7 +824,7 @@ h3 {
 
 @media screen and (min-width: 1161px) {
   .react-calendar {
-    min-height: 550px;
+    height: 560px;
     width: auto;
     line-height: 1.5em;
     font-size: 1.75em;
@@ -855,17 +876,17 @@ h3 {
   }
 
   .react-calendar {
-    width: 50%;
+    width: 90%;
     margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 900px) {
   .react-calendar {
-    padding: 10px 5px;
     line-height: 1.15em;
     font-size: 1.35em;
   }
+  
 
 }
 
@@ -1158,7 +1179,8 @@ h3 {
 .clock {
   font-size: 150px;
   font-weight: 500;
-  margin-top: 70px;
+  margin-top: 110px;
+  padding-top: 110px;
   color: white;
   text-align: center
 }
@@ -1236,6 +1258,13 @@ h3 {
   color: white;
 }
 
+.tv_view_day {
+  margin-top: 100px;
+  padding-top: 7git stat0px;
+  font-size: 40px;
+  color: white;
+}
+
 /* Timi's stretching session things. Overwriting some base css from imported component itself */
 /* Improves time selection list readability */
 .react-datepicker__time-box li{
@@ -1257,43 +1286,66 @@ h3 {
 .stretchingPage_wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  margin: 0 auto;
   align-items: center;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#no_upcoming_stretchings {
+  color: white;
+  margin-top: 100px;
+
 }
 
 .stretchingList {
   border: 2px;
   font-size: 20px;
+  
   margin-bottom: 20px;
   max-width: 900px;
   text-align: center;
   background-color: #366787;
   border-radius: 5px;
   color: white;
-}
-
-.stretchingList h2{
-  color: white;
-  font-size: 22px; 
+  padding-bottom: 20px ;
+  
 }
 
 .stretching_time{
   font-weight: bold;
   font-size:25px;
+  margin-top: 20px;
 }
 
 .basic_helper h1{
   margin-top: 20px;
   color: #FFFFFF;
   text-align: center;
+  font-size: 2em;
+  
 }
 .basic_helper h2{
 font-size: 30px;
 line-height: 35px;
 color: #FFFFFF;
 text-align: center;
+font-size: 1.5em;
 }
 
+.disabled_submit_button {
+  width: 150px;
+  height: 50px;
+  background: rgb(209, 209, 209);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border: none;
+  font-size: 22px;
+  line-height: 35px;
+  color: rgb(100, 102, 104);
+}
 
 .stretching_submit_button {
 width: 150px;
@@ -1313,21 +1365,24 @@ color: #22465E;
   height: 100px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
+
+
 }
 
 .react-datepicker__input-container input{
 width: 320px;
 height: 80px;
-background: #22465E;
+background: #0b3450;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 border-radius: 15px;
 color: white;
 font-size: 25px;
 text-align: center;
-border: none;
 margin-bottom: 15px;
+border:none;
 
 }
+
 
 .datepicker_wrapper{
 
@@ -1350,14 +1405,15 @@ margin-bottom: 15px;
   font-size: 20px;
   line-height: 29px;
   text-align: center;
-  color: rgb(18, 75, 61);
+  color: #22465E;
+  margin-top: 10px;
+  margin-bottom: 20px;
 
 }
 
 .cancel_button{
   width: 100px;
   height: 40px;
-  background: #92DECB;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   border:none;
@@ -1368,11 +1424,56 @@ margin-bottom: 15px;
   background: #F6DCDC;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #984242;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.stretching_header h1{
+  color: white;
+  margin-top: 20px; 
+  font-size: 2em;
+}
+
+.stretching_header h2{
+  color: white;
+  margin-top: 20px; 
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.attendees_header{
+  font-size: 0.8em;
+}
+
+textarea::placeholder{
+  color: #8d9094;
 }
 
 
+.delete_session button{
+  width: 150px;
+  height: 40px;
+  color: #984242;
+  background: #F6DCDC;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border:none;
+}
 
+.delete_stretching button{ 
+  background: #c0635e;
+  border-radius:8px; 
+  width: 40px;
+  height: 40px;
+  color: #411512;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-color: #411512;
+  margin-left: 80%;
+  margin-top: 10px;
 
+  
+  
+}
 
 /* Modal */
 
@@ -1384,13 +1485,22 @@ margin-bottom: 15px;
   flex-direction: column;
   justify-content: space-evenly;
   z-index: 999;
+  background: #22465E;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 10px;
+
 }
+
 .modal_submit_button{
   width: 100px;
   height: 30px;
   background: #92DECB;
-  border-radius: 15px;
+  border-radius: 10px;
+  color: #22465E;
+  border: none;
 }
+
 .modal_cancel_button{
   font-size: 20px;
   line-height: 23px;
@@ -1398,4 +1508,60 @@ margin-bottom: 15px;
   color: #FFFFFF;
   background: transparent;
   border: none;
+}
+
+.modal_wrapper textarea{
+  width: 80%;
+  border-radius: 15px;
+  border:none;
+}
+
+.attendees_list {
+  background: #22465e;
+  width: 80%;
+  margin: auto;
+  border-radius: 5px;
+  
+}
+
+
+
+#up_arrow {
+  background: #0b3450;
+  width: 30px;
+  height: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+ 
+}
+
+#down_arrow {
+  background: #0b3450;
+  width: 30px;
+  height: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#description{
+  font-weight: 100;
+}
+
+hr{
+  background: white;
+}
+
+
+/* Info page */
+
+.infoPage {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  text-align: center;
+}
+
+.infoPage h2{
+  font-weight: bold
 }

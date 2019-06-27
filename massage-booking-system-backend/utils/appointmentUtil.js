@@ -69,9 +69,7 @@ const removeUserFromAppointment = async (appointment) => {
 const removeUserFromStretching = async (userId, stretchId) => {
   try{
     let stretch = await Stretch.findById(stretchId)
-    console.log('VENYY',stretch)
     let list = stretch.users.filter(participant => participant.data._id.toString() !== userId.toString())
-    console.log('LISTA',list)
     stretch.users = list
     await Stretch.findByIdAndUpdate(stretchId, stretch)
   } catch (exception) {
@@ -82,7 +80,7 @@ const removeUserFromStretching = async (userId, stretchId) => {
 const removeStretchFromUser = async (userId, stretchId) => {
   try {
     let user = await User.findById(userId)
-    let list = user.stretchingSessions.filter(stretch => stretch !== stretchId)
+    let list = user.stretchingSessions.filter(stretch => stretch.stringify !== stretchId.stringify)
     user.stretchingSessions = list
     await User.findByIdAndUpdate(userId, user)
   } catch (exception) {
@@ -90,4 +88,12 @@ const removeStretchFromUser = async (userId, stretchId) => {
   }
 }
 
-module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching }
+const isDateMondayOrTuesday = (date) => {
+  const day = date.getDay()
+  if(day === 1 || day === 2){
+    return true
+  }
+  return false
+}
+
+module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching, isDateMondayOrTuesday }

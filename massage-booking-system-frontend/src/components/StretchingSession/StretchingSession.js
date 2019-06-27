@@ -6,13 +6,15 @@ const StretchingSessionUser = (props) => {
   const { data, description } = props
   return (
     <li>
-      {data.name} {description}
+      <b>{data.name}:</b>
+      <br/>
+      <i id = "description">{description}</i>
     </li>
   )
 }
 
 const SingleStretchingSession = (props) => {
-  console.log('Single stretch session props ', props)
+  //console.log('Single stretch session props ', props)
   const { date, users, sessionID, currentUsersStretchAppointments, userIsAdmin } = props
   const [visibility, setVisibility] = useState('none')
 
@@ -26,12 +28,14 @@ const SingleStretchingSession = (props) => {
   const slotsRemainingText = `${slotsUsed} / 10 slots used `
 
   return (
-    <li  className="stretchingList">
-    <div className="stretching_time">{prettyDateString(date)}</div>
-      <h2 onClick={() => toggleVisibility()}>Attendees:</h2>
-      <div style={{ display: visibility }}>
 
-        <ul className="stretchingAttendeeList">
+    <li  className="stretchingList">
+      {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
+      <div className="stretching_time">{prettyDateString(date)} </div>
+      <h2 onClick={() => toggleVisibility()}>Attendees &nbsp; {visibility === null ? <i id="up_arrow" className="fas fa-chevron-up"></i> : <i id="down_arrow" className="fas fa-chevron-down"></i>}</h2>
+
+      <div className="attendees_list" style={{ display: visibility }}>
+        <ul>
           {users.map(user => {
             return (
               <StretchingSessionUser
@@ -48,8 +52,9 @@ const SingleStretchingSession = (props) => {
         <CancelStretchAppointment sessionID={sessionID}/>
         :<JoinStretchAppointment sessionID={sessionID}/>
       }
-      {userIsAdmin && <DeleteStretchSession sessionID={sessionID}/>}
+
     </li>
+
   )
 }
 
@@ -69,6 +74,7 @@ const JoinStretchAppointment = (props) => {
   return (
     <div>
       <Modal description={description} joinSession={joinSession} />
+
     </div>
   )
 }
@@ -85,7 +91,8 @@ const CancelStretchAppointment = (props) => {
     }
   }
   return (
-    <button className="cancel_button" onClick={cancelSession}>Cancel</button>
+    <div>
+      <button className="cancel_button" onClick={cancelSession}>Cancel</button></div>
   )
 }
 
@@ -105,7 +112,9 @@ const DeleteStretchSession = (props) => {
   }
 
   return (
-    <button onClick={deleteSession}>Delete session</button>
+    <div className="delete_stretching">
+      <button className="far fa-trash-alt" onClick={deleteSession}></button>
+    </div>
   )
 }
 
@@ -125,7 +134,7 @@ const Modal = (props) => {
       {open &&
         <div className="modal_wrapper">
           <div>
-            <textarea value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
+            <textarea placeholder = "Type here your problem areas" value={description.value} onChange={description.handleFieldChange} rows='3' ></textarea>
           </div>
           <div>
             <button onClick={() => setOpen(false)} className="modal_cancel_button">Cancel</button>
