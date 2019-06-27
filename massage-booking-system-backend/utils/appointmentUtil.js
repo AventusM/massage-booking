@@ -88,4 +88,12 @@ const removeStretchFromUser = async (userId, stretchId) => {
   }
 }
 
-module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching }
+const isDateMondayOrTuesday = (date) => {
+  const day = date.getDay()
+  if(day === 1 || day === 2){
+    return true
+  }
+  return false
+}
+
+module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching, isDateMondayOrTuesday }

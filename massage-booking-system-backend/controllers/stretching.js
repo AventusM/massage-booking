@@ -40,7 +40,7 @@ stretchingRouter.post('/', async (req, res, next) => {
 
     // check if there is a stretch already
     let another = await Stretching.find({ date: date })
-    if (another.length === 0) {
+    if (another.length === 0 && AppointmentManager.isDateMondayOrTuesday(date)) {
       await AppointmentManager.removeTwoAppointments(date)
 
       const stretchingSession = new Stretching({

@@ -32,7 +32,7 @@ body {
   border-radius: 15px;
   padding: 10px 5px;
   height: 50px;
-  width: 400px;
+  width: 300px;
   margin-top: 20px;
 
 }
@@ -47,11 +47,6 @@ body {
   width: 400px;
   margin-top: 20px;
 }
-
-.cont {
-  display: flex
-}
-/* T
 
 .cont {
   display: flex
@@ -180,6 +175,12 @@ nav a {
   text-decoration: underline;
 }
 
+.dashboard_announcement_labels {
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+}
+
 .dashboard_profile_image {
   height: 80px;
   border-radius: 50px;
@@ -188,23 +189,26 @@ nav a {
 .dashboard_form{
   max-width: 400px;
   margin: auto;
+  text-align: center;
 }
 
 .dashboard_announcement{
-width: 400px;
-height: 100px;
-left: 70px;
-top: 29px;
-border-radius: 15px;
-border: none;
+  width: 400px;
+  height: 100px;
+  border-radius: 15px;
+  border: none;
+  margin-bottom: 20px;
+}
 
+@media screen and (max-width: 700px) {
+  .dashboard_announcement {
+    width: 270px;
+  }
 }
 
 .dashboard_form button{
-  width: 138px;
   height: 63px;
-  left: 183px;
-  top: 148px; 
+  width: 120px;
   background: #22465E;
   color: white;
   border-radius: 15px;
@@ -212,8 +216,9 @@ border: none;
   font-size: 20px;
   line-height: 23px;
   border: none;
-  margin-left: 130px;
-  margin-top: 20px;
+  margin-top: 60px;
+  margin: auto;
+  text-align: center;
 }
 
 .dashboard_wrapper {
@@ -232,7 +237,7 @@ border: none;
 
 .user_search {
   color: white;
-  margin-top: 150px;
+  margin-top: 60px;
   margin-left: 36%;
 }
 
@@ -291,6 +296,16 @@ border: none;
   
 }
 
+
+.dashboard_notification_container {
+  top: 20%;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  margin: 0;
+}
+
+
 /* Mobile */
 
 .dashboard_wrapper_mobile {
@@ -305,6 +320,12 @@ border: none;
   background: #366787;
   border-radius: 15px;
   color: rgba(255, 255, 255, 0.89);
+}
+
+@media screen and (max-width: 700px) {
+  .user_list {
+    width: 300px;
+  }
 }
 
 
@@ -792,7 +813,7 @@ h3 {
 }
 
 .react-calendar {
-  min-width: 350px;
+  min-width: 100px;
   width: auto;
   background: white;
   border-radius: 15px;
@@ -803,7 +824,7 @@ h3 {
 
 @media screen and (min-width: 1161px) {
   .react-calendar {
-    min-height: 550px;
+    height: 560px;
     width: auto;
     line-height: 1.5em;
     font-size: 1.75em;
@@ -855,17 +876,17 @@ h3 {
   }
 
   .react-calendar {
-    width: 50%;
+    width: 90%;
     margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 900px) {
   .react-calendar {
-    padding: 10px 5px;
     line-height: 1.15em;
     font-size: 1.35em;
   }
+  
 
 }
 
@@ -1273,6 +1294,12 @@ h3 {
   margin-top: 20px;
 }
 
+#no_upcoming_stretchings {
+  color: white;
+  margin-top: 100px;
+
+}
+
 .stretchingList {
   border: 2px;
   font-size: 20px;
@@ -1308,6 +1335,17 @@ text-align: center;
 font-size: 1.5em;
 }
 
+.disabled_submit_button {
+  width: 150px;
+  height: 50px;
+  background: rgb(209, 209, 209);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border: none;
+  font-size: 22px;
+  line-height: 35px;
+  color: rgb(100, 102, 104);
+}
 
 .stretching_submit_button {
 width: 150px;
