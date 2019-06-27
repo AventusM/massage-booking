@@ -26,7 +26,7 @@ const StretchAppointmentDisplay = () => {
         </div>
       }
       {stretching.length !== 0 ?
-        <div><StretchingSessionList sessions={stretching} currentUsersStretchAppointments={user.stretchingSessions} userIsAdmin={user.admin}/></div> : 
+        <div><StretchingSessionList sessions={stretching} currentUsersStretchAppointments={user.stretchingSessions} userIsAdmin={user.admin}/></div> :
         <h1 id="no_upcoming_stretchings">No upcoming stretching sessions</h1>}
     </div>
   )
@@ -35,7 +35,6 @@ const StretchAppointmentDisplay = () => {
 
 const StretchingSessionList = (props) => {
   const { sessions, currentUsersStretchAppointments, userIsAdmin } = props
-  console.log(sessions)
   return (
     <div className ="stretching_header">
       <h1>Stretching appointments</h1>

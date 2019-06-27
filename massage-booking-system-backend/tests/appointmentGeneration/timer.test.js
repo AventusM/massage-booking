@@ -9,8 +9,6 @@ const helper = require('./test_helper')
 let monday = timer.formatTime(new Date('July 15, 2019 12:00:00'))
 let tuesday = timer.formatTime(new Date('July 16, 2019 12:00:00'))
 let wednesday = timer.formatTime(new Date('July 17, 2019 12:00:00'))
-// let thursday = timer.formatTime(new Date('July 18, 2019 12:00:00'))
-// let friday = timer.formatTime(new Date('July 19, 2019 12:00:00'))
 let saturday = timer.formatTime(new Date('July 20, 2019 12:00:00'))
 let sunday = timer.formatTime(new Date('July 21, 2019 12:00:00'))
 
@@ -22,19 +20,14 @@ describe('with any date given', () => {
   beforeEach(async () => {
     jest.setTimeout(1000000)
     await helper.emptyTheDatabaseOfAppointments()
-    //const response = await Appointment.find()
-    //console.log('appointments in database (should be empty)', response)
 
     monday = timer.formatTime(new Date('July 15, 2019 12:00:00'))
     tuesday = timer.formatTime(new Date('July 16, 2019 12:00:00'))
     wednesday = timer.formatTime(new Date('July 17, 2019 12:00:00'))
-    // thursday = timer.formatTime(new Date('July 18, 2019 12:00:00'))
-    // friday = timer.formatTime(new Date('July 19, 2019 12:00:00'))
     saturday = timer.formatTime(new Date('July 20, 2019 12:00:00'))
     sunday = timer.formatTime(new Date('July 21, 2019 12:00:00'))
   })
-  /*it('everyWeek rule works', async () => {
-})*/
+
   it('setDay finds the correct day from the date (representing the week) given', async () => {
 
     expect(new Date(timer.setDay(1, new Date(saturday))).toISOString()).toBe('2019-07-15T08:55:00.000Z')

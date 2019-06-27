@@ -11,7 +11,6 @@ const DashBoard = () => {
 
   const changeAnnouncement = async event => {
     event.preventDefault()
-    console.log('changeAnnouncement', editedAnnouncement.value)
     const announcement = {
       message: editedAnnouncement.value
     }

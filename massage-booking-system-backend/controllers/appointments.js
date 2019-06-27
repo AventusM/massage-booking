@@ -60,14 +60,12 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
     const appointmentID = req.params.id
 
     let user = await User.findById(body.user_id).populate('appointments')
-    // console.log('found user in router', user)
     if (!user) {
       res.status(400).end()
       return
     }
 
     let appointment = await Appointment.findById(appointmentID)
-    //console.log('appointment ', appointment, typeof(appointment))
     if (!appointment) {
       res.status(400).end()
       return
@@ -89,29 +87,17 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
       appointment.type_of_reservation = body.type_of_reservation
       appointment = await appointment.save()
 
-      /*console.log(
-        'users appointments before cancelation',
-        user.appointments,
-        ' length ',
-        user.appointments.length
-      )*/
       //remove appointment from users appointments
       user.appointments = user.appointments.filter(app => {
         return JSON.stringify(app._id) !== JSON.stringify(appointment._id)
       })
       user = await user.save()
-      /*console.log(
-        'users appointments after cancelation',
-        ' length ',
-        user.appointments.length
-      )*/
     } else {
       // user wishes to make an appointment
       let ruleCheckResult = await ruleChecker.userAllowedToMakeAppointment(
         user.appointments,
         appointment
       )
-      //console.log('rule check result', ruleCheckResult )
       if (ruleCheckResult) {
         //user is allowed to make reservation, proceed with reservation
 
@@ -122,13 +108,10 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
         //adds appointment to users appointments
         user.appointments = user.appointments.concat(appointment._id)
         await user.save()
-        //  console.log('user after new appointment', user)
       } else {
         // user is not allowed to make this appointment
-        //  console.log('NOT ALLOWED')
       }
     }
-    //console.log('user after appointment added', user)
     res.json(appointment)
   } catch (exception) {
     next(exception)

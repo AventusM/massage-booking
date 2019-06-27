@@ -24,8 +24,7 @@ describe('with any date', () => {
   beforeEach(async () => {
     jest.setTimeout(1000000)
     await helper.emptyTheDatabaseOfAppointments()
-    //const response = await Appointment.find()
-    //console.log('appointments in database (should be empty)', response)
+
     monday = timer.formatTime(new Date('July 15, 2019 12:00:00'))
     tuesday = timer.formatTime(new Date('July 16, 2019 12:00:00'))
     wednesday = timer.formatTime(new Date('July 17, 2019 12:00:00'))
