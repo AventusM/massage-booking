@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment, createContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Redirect,
   Switch
