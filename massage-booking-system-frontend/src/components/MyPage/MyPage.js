@@ -32,6 +32,15 @@ const MyPage = () => {
     }
   }
 
+  const handleRemoveUser = async (id) => {
+    try {
+      await userService.remove(id)
+      createNotification(`User ${user.name} has been deleted`, 'success')
+    } catch (exception) {
+      createNotification(`Unable to delete ${user.name}`)
+    }
+  }
+
   // NOTICE -- user && rest rendered. Otherwise nothing gets rendered
   return (
     user && (
@@ -65,6 +74,11 @@ const MyPage = () => {
             />
             <button type="submit">Update</button>
           </form>
+          <button
+            className="delete_user"
+            onClick={() => handleRemoveUser(user._id)}>
+            Remove user
+          </button>
           <div className="own_appointments">
             <h2>My Appointments</h2>
             <OwnAppointments ownPage={true} />
