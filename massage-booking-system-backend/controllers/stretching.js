@@ -39,8 +39,7 @@ stretchingRouter.post('/', async (req, res, next) => {
     date.setMinutes(minutes + time)
 
     // check if there is a stretch already
-    let another = await Stretching.find({ date: date })
-    if (another.length === 0 && AppointmentManager.isDateMondayOrTuesday(date)) {
+    if (await AppointmentManager.isDateValid(date)) {
       await AppointmentManager.removeTwoAppointments(date)
 
       const stretchingSession = new Stretching({
@@ -91,7 +90,6 @@ stretchingRouter.put('/:id', async (req, res, next) => {
       await saved.populate('users.data').execPopulate()
       user.stretchingSessions = user.stretchingSessions.concat(saved._id)
       await user.save()
-
       // Give this as response so that state can be updated dynamically for user
       res.json(saved.toJSON())
     } else if (exitCriteriaPassed) {
