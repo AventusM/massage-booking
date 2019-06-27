@@ -1396,10 +1396,17 @@ border:none;
   font-size: 2em;
 }
 
-.stretching_header h2{
+.stretching_header h2 {
   color: white;
-  margin-top: 20px; 
+  margin-top: 10px; 
   text-align: center;
+}
+
+.stretching_header_time {
+  font-size: 1em;
+}
+
+.stretching_header_title {
   font-size: 1.5em;
 }
 
