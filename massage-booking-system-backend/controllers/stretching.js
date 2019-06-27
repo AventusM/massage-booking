@@ -17,40 +17,13 @@ const formatStretchingSession = input => {
 stretchingRouter.get('/', async (req, res, next) => {
   try {
     let today = new Date()
+    const allSessions =
+      await Stretching
+        .find({ date: { $gte: today } })
+        .populate('users.data')
+        .sort({ date: 1 })
 
-    const isAdmin = req.user.admin
-    if (isAdmin) {
-      // 1. Returns all stretching sessions to Admin user
-      const allSessions =
-                await Stretching
-                  .find({ date: { $gte: today } })
-                  .populate('users.data')
-                  .sort({ date: 1 })
-
-      res.send(allSessions.map(formatStretchingSession))
-    } else if (!isAdmin) {
-      // 2. WILL RETURN the next non-completed stretching session to normal user
-
-      // TODO TODO TODO COMPLETE FUNCTIONALITY
-      // CURRENT VERSION ONLY FOR DEMONSTRATION PURPOSES FOR DEMO ETC
-      // TO SHOW DIFFERENCES BETWEEN ADMIN / NORMAL USER
-      // TODO TODO TODO COMPLETE FUNCTIONALITY
-      // CURRENT VERSION ONLY FOR DEMONSTRATION PURPOSES FOR DEMO ETC
-      // TO SHOW DIFFERENCES BETWEEN ADMIN / NORMAL USER
-      // TODO TODO TODO COMPLETE FUNCTIONALITY
-      // CURRENT VERSION ONLY FOR DEMONSTRATION PURPOSES FOR DEMO ETC
-      // TO SHOW DIFFERENCES BETWEEN ADMIN / NORMAL USER
-
-      // Returns single stretching session by sorting with days
-      const latesStretchingSession =
-                await Stretching
-                  .find({})
-                  .populate('users.data')
-                  .sort({ date: -1 })
-                  .limit(1)
-
-      res.send(latesStretchingSession.map(formatStretchingSession))
-    }
+    res.send(allSessions.map(formatStretchingSession))
   } catch (exception) {
     next(exception)
   }
@@ -67,7 +40,7 @@ stretchingRouter.post('/', async (req, res, next) => {
 
     // check if there is a stretch already
     let another = await Stretching.find({ date: date })
-    if(another.length === 0){
+    if (another.length === 0) {
       await AppointmentManager.removeTwoAppointments(date)
 
       const stretchingSession = new Stretching({
@@ -99,14 +72,14 @@ stretchingRouter.put('/:id', async (req, res, next) => {
     const stretchingAppointment = await Stretching.findById(stretching_id)
 
     const joinCriteriaPassed =
-            join_status === true &&
-            stretchingAppointment.users.length < 10 &&
-            stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length === 0
+      join_status === true &&
+      stretchingAppointment.users.length < 10 &&
+      stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length === 0
 
     const exitCriteriaPassed =
-            join_status === false &&
-            stretchingAppointment.users.length > 0 &&
-            stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length > 0
+      join_status === false &&
+      stretchingAppointment.users.length > 0 &&
+      stretchingAppointment.users.filter(participant => participant.data._id.toString() === user._id.toString()).length > 0
 
     if (joinCriteriaPassed) {
       // Description is given in body only when trying to join the appointment
@@ -144,7 +117,7 @@ stretchingRouter.delete('/:id', async (req, res, next) => {
   try {
     const stretchId = req.params.id
     let stretch = await Stretching.findById(stretchId)
-    for(let user of stretch.users){
+    for (let user of stretch.users) {
       await AppointmentManager.removeStretchFromUser(user.data, stretchId)
     }
     await AppointmentManager.recoverTwoAppointments(stretch.date)
