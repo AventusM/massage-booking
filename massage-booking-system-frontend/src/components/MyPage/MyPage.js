@@ -14,9 +14,6 @@ const MyPage = () => {
     numberField.changeValue(user.number)
   }, [user])
 
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
-  // TODO TODO TODO -- RESET NUMBER ON FORM SUBMIT?
   const handleNumberUpdate = async event => {
     event.preventDefault()
     try {
@@ -42,9 +39,8 @@ const MyPage = () => {
   const handleRemoveUser = async (id) => {
     try {
       await userService.remove(id)
-      createNotification(`User ${user.name} has been deleted`, 'success')
     } catch (exception) {
-      createNotification(`Unable to delete ${user.name}`)
+      window.location.reload()
     }
   }
 
