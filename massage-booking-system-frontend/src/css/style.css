@@ -18,6 +18,9 @@ body {
   width: 50px;
   margin-left: 10px;
   background:#c0635e;
+  
+  
+
 }
 
 #restore {
@@ -51,13 +54,6 @@ body {
 .cont {
   display: flex
 }
-
-/* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */
-/* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */
-/* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */
-/* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */
-/* TEMPORARY CSS CHANGE DUE TO COLOR LIKENESS IN BACKGROUND AND LINKS IN NAVBAR */
-
 nav a {
   color: white;
 }
@@ -88,9 +84,6 @@ nav a {
     font-size: 25px;
     color: white;
   }
-
-
-
 
 .nextappointment_wrapper p {
   font-size: 25px;
@@ -147,21 +140,28 @@ nav a {
 .mypage_wrapper form {
   margin-top: 10px;
   display: flex;
-  background-color: #fff9e2;
-  color: black;
+  background-color: #ffffff;
+  color: #071a33;
   padding: 5px;
   border-radius: 15px;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+  margin-bottom: 15px;
 }
 
-.mypage_wrapper form > button {
-  background-color: transparent;
+.mypage_wrapper form button {
+  background-color: #0b3450;
+  border-radius: 10px;
+  color:white;
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 1px;  
   border: none;
 }
 
 .mypage_wrapper p {
   font-size: 30px;
   color: white;
+
 }
 
 .mypage_wrapper input {
@@ -171,8 +171,23 @@ nav a {
 }
 
 .own_appointments {
-  margin-top: 10px;
+  margin-top: 20px;
+
 }
+
+@media screen and (max-width: 700px) {
+.own_appointments span{
+  font-size: 20px;  
+ 
+
+}
+.own_appointments  {
+  font-size: 20px;
+
+ 
+  }
+}
+
 
 /* Dashboard styles */
 
@@ -347,64 +362,6 @@ nav a {
 #list_header {
   white-space:nowrap;
 }
-
-/*
-.dashboard_user_list {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 50px;
-}
-
-.dashboard_user_item {
-  align-items: center;
-  border-radius: 15px;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.18);
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-  margin: 5px;
-  min-width: 360px;
-  padding: 15px 10px;
-}
-
-.dashboard_user_item_name {
-  font-size: 1.4em;
-  font-weight: 600;
-}
-
-.dashboard_user_item_email {
-  /* TODO  */
-/*}
-
-.dashboard_user_item_number {
-  /* TODO  */
-/*}
-/*
-
-.dashboard_user_item_actions {
-  border-top: 1px solid black;
-  width: 100%;
-  /* border: 1px solid green; */
-/*}
-/*
-.dashboard_user_item_actions p {
-  margin: 0;
-  padding: 0;
-}
-
-.dashboard_user_item_actions button {
-  border: 0;
-  margin-right: 5px;
-}
-
-/* SHOULD MOVE THIS TO OWN FILE -- media queries here get overridden later on */
-/* @media screen and(max-width: 825px){
-  .dashboard_user_list {
-    justify-content: center;
-  }
-} */
 
 .main_wrapper {
   background-color: #e4e4e1;
@@ -718,80 +675,6 @@ h3 {
   }
 }
 
-/*Tästä alkaa Homepage Mobile*/
-
-/*
-@media screen
-  and (max-width: 700px) {
-.userHomepageWrapper_mobile{
-  background-color: #E4E4E1;
-  background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
- background-blend-mode: normal, multiply;
-  min-height: 100%;
-  min-width: 100%;
-  width: 100%;
-  height: auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  
-}
-.userHomepageWrapper_mobile form {
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  margin-top: -25%;
-  
-}
-.userHomepageWrapper_mobile input{
-  text-align: center;
-   display: inline-block;
-   width: 100%;
-   background: white;
-   opacity: 0.2;
-   border-radius: 15px;
-   padding: 10px 5px;
-   margin-bottom: 15px;
-   border: 0px;
-    }
-    .userHomepageWrapper_mobile h3 {
-      text-align: center;
-      font-family: Sans-serif, "Roboto";
-      color: white;
-      font-size: 200%;
-      
-      
-      
-    }
-    .userHomepageWrapper_mobile h2 {
-      text-align: center;
-      font-family: Sans-serif, "Roboto";
-      color: white;
-      
-      
-    }
-    .userHomepageWrapper_mobile label{
-      margin-bottom: 5px;
-      color: #334e63;
-      opacity: 0.9;
-      margin: auto;
-     
-    }
-    .userHomepageWrapper_mobile button{
-      border: 3px solid #537895;
-      background: #537895;
-      font-size: 120%;
-      border-radius: 15px;
-      color: white;
-      padding: 10px 5px;
-      height: 50px;
-      width: 110%;
-    }
-  }
-*/
-/**/
 
 /*Appointment List desktop*/
 
@@ -901,19 +784,6 @@ h3 {
 
 }
 
-/*Logo*/
-/* .appointmentListWrapperMain img{
-  width: 20%;
-  display: block;
-  float: right;
-  margin-right: 2%;
-  margin-top: 20%;
-  margin-bottom: 2%; 
-  position: fixed;
-  bottom: 0;
-  right: 0;
-}  */
-
 /*Headers*/
 .appointmentListWrapperMain h1 {
   text-align: center;
@@ -970,6 +840,8 @@ h3 {
 #cancel_text {
   font-size: 15px;
   
+
+   
 }
 
 /*Colors for buttons*/
@@ -988,7 +860,11 @@ h3 {
   background: #3b9962;
   color: white;
   border: #3b9962;
+  height: 50px;
+  margin-top: 20px;
 }
+
+
 #available:hover {
   background: #83b497;
   border: #83b497;
@@ -1018,7 +894,7 @@ h3 {
     background: #dddddd;
     border-radius: 15px;
     height: 50px;
-    width: 300px;
+    width: 310px;
     border: white;
     border-style: solid;
     border-width: 2px;

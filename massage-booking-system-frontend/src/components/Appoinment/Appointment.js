@@ -56,9 +56,9 @@ const Appointment = props => {
       ) : (
         <button onClick={() => markAppUnavailable()} id="remove" className="far fa-trash-alt" ></button>
       ) : (null)
-      }
+      }</div>
 
-    </div >
+
   )
 }
 
