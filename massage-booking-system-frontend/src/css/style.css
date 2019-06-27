@@ -1475,6 +1475,19 @@ border:none;
   border: none;
 }
 
+/* Info page */
+
+.infoPage {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  text-align: center;
+}
+
+.infoPage h2{
+  font-weight: bold
+}
 
 #up_arrow {
   background: #0b3450;

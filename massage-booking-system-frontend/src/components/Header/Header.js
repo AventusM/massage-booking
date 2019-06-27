@@ -34,6 +34,11 @@ const AuthHeader = ({ user }) => {
           </Link>
         </li>
         <li>
+          <Link className="nav-link" to="/info">
+            Info
+          </Link>
+        </li>
+        <li>
           <Link className="nav-link" to="/stretching">
             Stretching
           </Link>
