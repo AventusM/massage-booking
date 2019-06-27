@@ -8,8 +8,11 @@ const DatePickerForm = () => {
   const [startDate, setStartDate] = useState(undefined)
   const { stretchingService } = useContext(StretchContext)
 
-  const handleChange = async (date) => {
-    await setStartDate(date)
+  const handleChange = (date) => {
+    if (date.getHours() === 0 && date.getMinutes() === 0) {
+      date.setHours(8, 55, 0, 0)
+    }
+    setStartDate(date)
   }
 
   const isMondayOrTuesday = (date) => {
