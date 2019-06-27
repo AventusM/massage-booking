@@ -4,7 +4,6 @@ const app = require('../../app')
 const api = supertest(app)
 
 const timer = require('../../utils/timer')
-//const generator = require('../../utils/appointmentGenerator')
 const appointment_helper = require('../../tests/appointmentGeneration/test_helper')
 
 const User = require('../../models/user')
@@ -31,7 +30,6 @@ const APPOINTMENT_RESERVATION_KEY = 1
 const APPOINTMENT_CANCELLATION_KEY = 0
 const ACCEPTED_APPOINTMENT = 1
 const FREE_APPOINTMENT = 0
-//const FIRST_DAY_FIRST_INDEX = 0
 const FIRST_DAY_SECOND_INDEX = 1
 const SECOND_DAY_LAST_INDEX = 25
 
@@ -129,10 +127,6 @@ describe('PUT appointments', () => {
   })
 
   it('appointment type should not change if user attempts to create consecutive appointments in too small intervals', async () => {
-
-    // TEE SANITY CHECK
-    // TEE SANITY CHECK
-    // const second_app_same_day = await get_random_appointment(FIRST_DAY_SECOND_INDEX)
     const second_app_same_day = appointment_list[FIRST_DAY_SECOND_INDEX]
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
     await update_appointment(second_app_same_day._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
@@ -145,15 +139,6 @@ describe('PUT appointments', () => {
   })
 
   it('when user wants to create an appointment when having one, the appointment SHOULD change its type if enough time has passed after previous user appointment', async () => {
-    // MOVED TO beforeEach
-    // MOVED TO beforeEach
-    // MOVED TO beforeEach
-    // // Generate appointments 1 month from original
-    // await generate_apps_to_db_for_date('August 15, 2019 12:00:00', 26)
-
-    // TEE SANITY CHECK
-    // TEE SANITY CHECK
-    // const one_month_after_original_appointment = await get_random_appointment(SECOND_DAY_LAST_INDEX)
     const one_month_after_original_appointment = appointment_list[SECOND_DAY_LAST_INDEX]
 
     await update_appointment(original_appointment._id, original_user._id, APPOINTMENT_RESERVATION_KEY)
@@ -222,11 +207,8 @@ describe('PUT appointments', () => {
     expect(removed_appoint3.user_id).toBe(null)
 
 
-  }) //TESTAA ETTEI MUUT PÄIVÄT KATOA
+  })
 
-  /*it.skip('when user wants to cancel someone elses appointments, appointment should not be canceled', async () => {
-    expect(true).toBe(false)
-  })*/
 })
 afterAll(async () => {
   await mongoose.disconnect()

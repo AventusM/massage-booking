@@ -9,7 +9,6 @@ const verify = require('../utils/verify')
 const formatUser = input => {
   return {
     _id: input._id,
-    // googleId: input.googleId,
     name: input.name,
     number: input.number,
     email: input.email,
@@ -54,10 +53,9 @@ usersRouter.get('/:id', async (req, res, next) => {
 usersRouter.put('/:id/user', async (req, res, next) => {
   try {
     const body = req.body
-
     const given_id = req.params.id
-
     const found_user = await User.findById({ _id: given_id })
+
     if (!found_user) {
       return res.status(400).json({ error: 'Requested user was not found' }).end()
     }
@@ -89,9 +87,6 @@ usersRouter.put('/:id/user', async (req, res, next) => {
 usersRouter.put('/:id', verify.verifyIfAdmin, async (req, res, next) => {
   try {
     const body = req.body
-
-    const given_id = body.auth_id
-    const found_user = await User.findById({ _id: given_id })
     const updateable_user = await User.findById({ _id: req.params.id })
 
     const updated_admin_data = body.admin === undefined

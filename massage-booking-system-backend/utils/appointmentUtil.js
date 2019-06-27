@@ -23,7 +23,7 @@ const removeAppointment = async (appointment) => {
     appointment.type_of_reservation = 3
     return await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true })
   } catch (exception) {
-    console.log('E', exception)
+    console.log('removeAppointment exception', exception)
   }
 }
 const removeTwoAppointments = async (date) => {
@@ -35,7 +35,7 @@ const removeTwoAppointments = async (date) => {
     await removeAppointment(firstAppointment)
     await removeAppointment(secondAppointment)
   } catch (exception) {
-    console.log('E', exception)
+    console.log('removeTwoAppointments exception', exception)
   }
 }
 
@@ -52,7 +52,7 @@ const recoverTwoAppointments = async (date) => {
     await Appointment.findByIdAndUpdate(firstAppointment._id, firstAppointment)
     await Appointment.findByIdAndUpdate(secondAppointment._id, secondAppointment)
   } catch (exception) {
-    console.log('E', exception)
+    console.log('recoverTwoAppointments exception', exception)
   }
 }
 const removeUserFromAppointment = async (appointment) => {
@@ -61,18 +61,18 @@ const removeUserFromAppointment = async (appointment) => {
     appointment.type_of_reservation = 0
     await Appointment.findByIdAndUpdate(appointment._id, appointment)
   } catch (exception) {
-    console.log('E', exception)
+    console.log('removeUserFromAppointment exception', exception)
   }
 }
 
 const removeUserFromStretching = async (userId, stretchId) => {
-  try{
+  try {
     let stretch = await Stretch.findById(stretchId)
     let list = stretch.users.filter(participant => participant.data._id.toString() !== userId.toString())
     stretch.users = list
     await Stretch.findByIdAndUpdate(stretchId, stretch)
   } catch (exception) {
-    console.log('e', exception)
+    console.log('removeUserFromStretching exception', exception)
   }
 }
 
@@ -83,21 +83,21 @@ const removeStretchFromUser = async (userId, stretchId) => {
     user.stretchingSessions = list
     await User.findByIdAndUpdate(userId, user)
   } catch (exception) {
-    console.log('e', exception)
+    console.log('removeStretchFromUser exception', exception)
   }
 }
 
-const isDateValid = async(date) => {
+const isDateValid = async (date) => {
   let appointments = await Appointment.find({ start_date: date })
   let stretchings = await Stretch.find({ date: date })
-  if(appointments.length === 0 || stretchings.length !== 0 || !areTimesValid(date)){
+  if (appointments.length === 0 || stretchings.length !== 0 || !areTimesValid(date)) {
     return false
   }
   return true
 }
 const areTimesValid = (date) => {
   let compare = date.toISOString()
-  if(compare.includes('11:15') || compare.includes('16:20')){
+  if (compare.includes('11:15') || compare.includes('16:20')) {
     return false
   }
   return true

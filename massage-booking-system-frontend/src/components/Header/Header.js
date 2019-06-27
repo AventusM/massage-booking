@@ -25,7 +25,7 @@ const AuthHeader = ({ user }) => {
       <ul onClick={toggleOpen} className={`main-nav ${listClassName}`}>
         <li>
           <Link className="nav-link" to="/">
-            Index
+            Massage
           </Link>
         </li>
         <li>
@@ -53,7 +53,7 @@ const AuthHeader = ({ user }) => {
 
             <li>
               <Link className="nav-link" to="/stats">
-                Stats
+                Statistics
               </Link>
             </li>
           </Fragment>

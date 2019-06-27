@@ -4,8 +4,6 @@ const appointmentsRouter = express.Router()
 const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
 
-
-
 /**
  * Create appointments for the day given, starting from 8:55:00 .
  * firstShiftEnd = after the first 5 appointments in a row there is a break.
@@ -65,8 +63,6 @@ const createEmptyAppointment = async (start_date, end_date) => {
     } catch (exception) {
       console.log(exception)
     }
-  } else {
-    //   console.log('appointment already exists!', start_date)
   }
 }
 

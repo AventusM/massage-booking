@@ -18,9 +18,8 @@ body {
   width: 50px;
   margin-left: 10px;
   background:#c0635e;
-  
-  
-
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border:none;
 }
 
 #restore {
@@ -37,6 +36,8 @@ body {
   height: 50px;
   width: 300px;
   margin-top: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border:none;
 
 }
 
@@ -116,13 +117,16 @@ nav a {
 
 .delete_user {
   margin-top: 10px;
-  display: flex;
-  background-color: #812508;
-  color: black;
   padding: 5px;
   border-radius: 15px;
   border: none;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+  font-weight: 400;
+  background-color: #c0635e;
+  width: 120px;
+  height: 40px;
+  text-align: center;
+  
 }
 
 .own_info {
@@ -313,12 +317,16 @@ nav a {
   background-color: rgb(96, 233, 169);
   border-radius: 3px;
   border: none;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
+  color: #071a33;
 }
 
 .removeUserButton {
-  background-color: red;
+  background-color: #c0635e;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
   border-radius: 3px;
   border: none;
+  color:#411512;
   
 }
 
@@ -1072,7 +1080,7 @@ h3 {
 .clock {
   font-size: 150px;
   font-weight: 500;
-  margin-top: 110px;
+  margin-top: 60px;
   padding-top: 110px;
   color: white;
   text-align: center
@@ -1153,7 +1161,7 @@ h3 {
 
 .tv_view_day {
   margin-top: 100px;
-  padding-top: 7git stat0px;
+  padding-top: 60px;
   font-size: 40px;
   color: white;
 }
@@ -1586,3 +1594,88 @@ hr{
 
 
 
+/*Statistics*/
+
+@media screen and (max-width: 700px) {
+.statsWrapper {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  justify-content: center;
+  margin: 0 auto;
+  margin-left: 20px;
+  margin-top: 30px;
+  margin-right: 20px;
+}
+
+.statsWrapper h1 {
+  text-align: center;
+}
+
+}
+
+
+@media screen and (min-width: 700px) {
+.statsWrapper {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: 20px;
+  line-height: 50px;
+}
+
+.statsWrapper h1{
+text-align: center;
+}}
+
+.statsWrapper ol{
+  counter-reset: li;
+  list-style: none;
+  list-style: decimal;
+}
+
+.statsWrapper ol ol {
+  margin: 0 0 0 2em;
+}
+
+.statsWrapper a{
+  position: relative;
+  display: block;
+  padding: .42em .4em .4em 2em;
+
+  margin: .5em 0;
+  background: #366787;;
+  color: #444;
+  -moz-border-radius: .3em;
+  -webkit-border-radius: .3em;
+  border-radius: .3em;
+  
+}
+
+  
+.statsWrapper a:before{
+  content: counter(li);
+ counter-increment: li;
+ position: absolute;
+left: -1.3em;
+top: 50%;
+margin-top: -1em;
+background: white;
+height: 2em;
+width: 2em;
+line-height: 1.5em;
+ border: .3em solid #366787;;
+ text-align: center;
+font-weight: bold;
+-moz-border-radius: 2em;
+-webkit-border-radius: 2em;
+border-radius: 2em;
+color: #0b3450;
+
+
+}

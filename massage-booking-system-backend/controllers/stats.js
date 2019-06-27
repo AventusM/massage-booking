@@ -7,12 +7,10 @@ const moment = require('moment')
 statsRouter.use(bodyParser.json())
 
 statsRouter.get('/', async (req, res, next) => {
-
   try {
     const appointments = await Appointment.find({})
     const users = await User.find({})
     let now = moment()
-
 
     // appointment stats
 
@@ -33,7 +31,6 @@ statsRouter.get('/', async (req, res, next) => {
     )
     let numberOfUnusedPastAppointments = unusedPastAppointments.length
 
-
     // users stats
     let numberOfUsers = users.length
 
@@ -48,7 +45,6 @@ statsRouter.get('/', async (req, res, next) => {
     let totalAppointmentsUsed = numberOfUsersAppointments.reduce(
       (accumulator, currentvalue) => accumulator + currentvalue
     )
-
 
     /**
     * users who have used massage
@@ -67,7 +63,6 @@ statsRouter.get('/', async (req, res, next) => {
   } catch (exception) {
     next(exception)
   }
-
 
 })
 
