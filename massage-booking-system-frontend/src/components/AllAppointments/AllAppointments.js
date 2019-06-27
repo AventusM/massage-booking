@@ -63,7 +63,7 @@ const AllAppointments = () => {
     await appointmentService.updateExpectMany(givenDate.toDateString(), 'addDate')
   }
 
-  return (
+  return (todaysAppointments &&
     <div className="appointmentListWrapper">
       <div className="controls">
         {user.admin === true ? (

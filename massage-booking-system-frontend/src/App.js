@@ -4,6 +4,8 @@ import moment from 'moment'
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
+  Switch
 } from 'react-router-dom'
 
 import Index from './components/Index/Index'
@@ -12,7 +14,8 @@ import useResource from './hooks/useResource'
 import Stats from './components/Stats/Stats'
 import DashBoard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header'
-import TVview from './components/TVview/TVview'
+import LoginIndex from './components/LoginIndex/LoginIndex'
+import TV from './components/TV/TV'
 import StretchAppointmentDisplay from './components/StretchingSessions/StretchingSessions'
 import InfoPage from './components/InfoPage/InfoPage'
 import * as types from './types/types'
@@ -81,33 +84,44 @@ const App = () => {
     type: types.GENERAL,
     icon: icons.GENERAL
   }
-
-  return (
-    <Fragment>
+  if (user === null) {
+    return (
       <Router>
-        <Header user={user} />
-        {/* <Notification notification={announcementNotification} />
-        <Notification notification={notification} /> */}
-        <div>
-          <NotificationContext.Provider value={{ createNotification, announcementService, announcement, announcementNotification, notification }}>
-            <StretchContext.Provider value={{ stretching, stretchingService }}>
-              <UserContext.Provider value={{ user, setUser, users, userService }}>
-                <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
-                  <Route exact path="/" render={() => <Index />} />
-                  <Route exact path="/stretching" render={() => <StretchAppointmentDisplay />} />
-                  <Route exact path="/dashboard" render={() => <DashBoard />} />
-                  <Route exact path="/mypage" render={() => <MyPage />} />
-                  <Route exact path="/stats" render={() => <Stats stats={stats} />} />
-                  <Route exact path="/tvview" render={() => <TVview />} />
-                  <Route exact path="/info" render={() => <InfoPage info={info} infoService={infoService}/>} />
-                </AppointmentContext.Provider>
-              </UserContext.Provider>
-            </StretchContext.Provider>
-          </NotificationContext.Provider>
-        </div>
+        <Switch>
+          <Route exact path="/" render={() => <LoginIndex />} />
+          <Route exact path="/tv" render={() => <TV />} />
+          <Route render={() => <Redirect to={{ pathname: '/' }} />} />
+        </Switch>
       </Router>
-    </Fragment >
-  )
+    )
+  } else {
+    return (
+      <Fragment>
+        <Router>
+          <Header user={user} />
+          {/* <Notification notification={announcementNotification} />
+        <Notification notification={notification} /> */}
+          <div>
+            <NotificationContext.Provider value={{ createNotification, announcementService, announcement, announcementNotification, notification }}>
+              <StretchContext.Provider value={{ stretching, stretchingService }}>
+                <UserContext.Provider value={{ user, setUser, users, userService }}>
+                  <AppointmentContext.Provider value={{ appointments, appointmentService, selectedDate, setSelectedDate, stats }}>
+                    <Route exact path="/" render={() => <Index />} />
+                    <Route exact path="/stretching" render={() => <StretchAppointmentDisplay />} />
+                    <Route exact path="/dashboard" render={() => <DashBoard />} />
+                    <Route exact path="/mypage" render={() => <MyPage />} />
+                    <Route exact path="/stats" render={() => <Stats stats={stats} />} />
+                    <Route exact path="/tv" render={() => <TV />} />
+                    <Route exact path="/info" render={() => <InfoPage info={info} infoService={infoService}/>} />
+                  </AppointmentContext.Provider>
+                </UserContext.Provider>
+              </StretchContext.Provider>
+            </NotificationContext.Provider>
+          </div>
+        </Router>
+      </Fragment >
+    )
+  }
 }
 
 export const NotificationContext = createContext(null)
