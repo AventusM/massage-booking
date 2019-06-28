@@ -49,7 +49,7 @@ statsRouter.get('/', async (req, res, next) => {
     /**
     * users who have used massage
     */
-    let usersWhoHaveUsedMassage = numberOfUsersAppointments.filter(count => count === 0).length
+    let usersWhoHaveUsedMassage = numberOfUsersAppointments.filter(count => count > 0).length
 
     let statisticsToSend = {
       numberOfPastAppointments,
