@@ -6,7 +6,7 @@ import getDay from 'date-fns/getDay'
 import addDays from 'date-fns/addDays'
 
 const DatePickerForm = () => {
-  const [startDate, setStartDate] = useState(new Date().setHours(8, 55, 0, 0))
+  const [startDate, setStartDate] = useState(null)
   const { stretchingService } = useContext(StretchContext)
   const { createNotification } = useContext(NotificationContext)
 
