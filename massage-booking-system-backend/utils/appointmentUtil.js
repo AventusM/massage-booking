@@ -90,7 +90,7 @@ const removeStretchFromUser = async (userId, stretchId) => {
 const isDateValid = async (date) => {
   let appointments = await Appointment.find({ start_date: date })
   let stretchings = await Stretch.find({ date: date })
-  if (appointments.length === 0 || stretchings.length !== 0 || !areTimesValid(date)) {
+  if (appointments.length === 0 || stretchings.length !== 0 || !areTimesValid(date) || await thereIsAStretchBeforeThisOne(date)) {
     return false
   }
   return true
@@ -102,5 +102,21 @@ const areTimesValid = (date) => {
   }
   return true
 }
+
+const thereIsAStretchBeforeThisOne = async (date) => {
+  let oneBefore = decreaseTime(35, new Date(date))
+  let beforeStretch = await Stretch.find({ date: oneBefore })
+  if(beforeStretch.length === 0){
+    return false
+  }
+  return true
+}
+
+const decreaseTime = (minutes, currentTime) => {
+  let overflowMinutes = currentTime.getMinutes()
+  currentTime.setMinutes(overflowMinutes - minutes)
+  return currentTime
+}
+
 
 module.exports = { recoverTwoAppointments, removeTwoAppointments, removeAppointment, removeUserFromAppointment, removeStretchFromUser, removeUserFromStretching, isDateValid }
