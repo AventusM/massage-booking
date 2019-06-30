@@ -4,6 +4,8 @@ import { StretchContext, NotificationContext } from '../../App'
 import 'react-datepicker/dist/react-datepicker.css'
 import getDay from 'date-fns/getDay'
 import addDays from 'date-fns/addDays'
+import { confirmAlert } from 'react-confirm-alert' // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 const DatePickerForm = () => {
   const [startDate, setStartDate] = useState(null)
@@ -24,19 +26,35 @@ const DatePickerForm = () => {
 
   const createStretch = async (event) => {
     event.preventDefault()
-    try {
-      if (!isMondayOrTuesday(startDate)) return
-      await stretchingService.create({ date: startDate })
+    if (!isMondayOrTuesday(startDate)) return
 
-      let minuteAddition = ''
-      // Fix situations like 10:05 where notification would display 10:5
-      if (startDate.getMinutes() < 10) {
-        minuteAddition += '0'
-      }
-      createNotification(`Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginnining from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accomodate`, 'success', 8)
-    } catch (exception) {
-      createNotification('Unable to create session')
+    let minuteAddition = ''
+    // Fix situations like 10:05 where notification would display 10:5
+    if (startDate.getMinutes() < 10) {
+      minuteAddition += '0'
     }
+
+    confirmAlert({
+      message: `Are you sure you want to disable two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()}? `,
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              await stretchingService.create({ date: startDate })
+
+              createNotification(`Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accomodate`, 'success', 8)
+            } catch (exception) {
+              createNotification('Unable to create session')
+            }
+          }
+        },
+        {
+          label: 'No',
+        }
+      ]
+    })
+
   }
 
   return (
