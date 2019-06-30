@@ -35,7 +35,7 @@ const DatePickerForm = () => {
     }
 
     confirmAlert({
-      message: `Are you sure you want to disable two appointments beginning on ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()} to create a stretching session? `,
+      message: `Are you sure you want to disable two appointments beginning on ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()} to accommodate for the stretching session? `,
       buttons: [
         {
           label: 'Yes',
@@ -43,7 +43,7 @@ const DatePickerForm = () => {
             try {
               await stretchingService.create({ date: startDate })
 
-              createNotification(`Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accomodate`, 'success', 8)
+              createNotification(`Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accommodate`, 'success', 8)
             } catch (exception) {
               createNotification('Unable to create session')
             }
