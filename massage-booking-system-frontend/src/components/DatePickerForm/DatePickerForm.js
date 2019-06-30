@@ -8,7 +8,7 @@ import { confirmAlert } from 'react-confirm-alert' // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 const DatePickerForm = () => {
-  const [startDate, setStartDate] = useState(null)
+  const [startDate, setStartDate] = useState(new Date().setHours(8, 55, 0, 0))
   const { stretchingService } = useContext(StretchContext)
   const { createNotification } = useContext(NotificationContext)
 
@@ -35,7 +35,7 @@ const DatePickerForm = () => {
     }
 
     confirmAlert({
-      message: `Are you sure you want to disable two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()}? `,
+      message: `Are you sure you want to disable two appointments beginning on ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()} to accommodate for the stretching session? `,
       buttons: [
         {
           label: 'Yes',
@@ -43,7 +43,7 @@ const DatePickerForm = () => {
             try {
               await stretchingService.create({ date: startDate })
 
-              createNotification(`Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accomodate`, 'success', 8)
+              createNotification(`Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accommodate`, 'success', 8)
             } catch (exception) {
               createNotification('Unable to create session')
             }
