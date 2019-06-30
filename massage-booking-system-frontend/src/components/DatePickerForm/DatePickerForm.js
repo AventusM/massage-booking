@@ -35,7 +35,7 @@ const DatePickerForm = () => {
     }
 
     confirmAlert({
-      message: `Are you sure you want to disable two appointments beginning on ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()}? `,
+      message: `Are you sure you want to disable two appointments beginning on ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()} to create a stretching session? `,
       buttons: [
         {
           label: 'Yes',
