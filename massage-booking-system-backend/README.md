@@ -1,5 +1,13 @@
-### List of environment variables
+## Available Scripts
 
+| Env  | Function |      
+| ------| -------------|
+| npm run watch | Runs the app in the development mode and reloads on changes.| 
+| npm start | Runs the app in the production mode.| 
+| npm start init | Runs the app in the production mode and generates appointments for the next six months| 
+| npm test | Runs the tests suite| 
+
+### List of environment variables
 
 | Env  | Function |      
 | ------| -------------|
