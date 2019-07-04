@@ -1,24 +1,36 @@
-# Massage Booking System
+![Massage Booking](https://fontmeme.com/permalink/190704/9556a11517af165e53fc4e33c5b421dd.png)
 
+Application made for Unity Technologies Finland during a software development project at the University of Helsinki for making massage reservations at Unity's Helsinki Office. This app was tailored for their use case and therefore makes assumptions about the massage hours and rules relating to the reservations.
 
-## Links
+## Technology Stack
+
+The application was written using React/JavaScript in the frontend and Node.js/JavaScript in the backend while using REST APIs for communication between the app and the server. MongoDB was used as a database and Passport.js for authentication with Google.
+
+## Key Features
+
+* Google login
+    * Avatar, name and email is fetched from Google account
+    * Backend supports limiting the allowed emails by email suffix.
+* User management
+    * User can remove their own account
+    * User can setup their own phone number
+* Intuitive interface for finding available appointment
+* Managing reservations during preset hours
+    * User can join or cancel massage or stretching sessions
+* Admin console
+    * User management
+    * Setting up streching sessions
+    * Manage contents of the info page
+    * Set up announcement
+    * Statistics
+    * Appointment control
+        * Disable/enable days
+        * Account management
+        * Cancelling appointments
+* Info page
+* TV view
+* Appointments are generated automatically
+* Optimized for both mobile and desktop
 
 #### Current release
 [Live on Heroku!](https://glacial-lowlands-81447.herokuapp.com/)
-#### Code
-* Front end
-  * [Code on github](https://github.com/karoliinaemilia/massage-booking-system/tree/master/massage-booking-system-frontend)
-* Back end
-  * [Code on github](https://github.com/karoliinaemilia/massage-booking-system/tree/master/massage-booking-system-backend)
----
-#### Documentation
-* [Työaikakirjanpito](https://docs.google.com/spreadsheets/d/1fjP2D151ztWsJjcSJaEmJoBS2PO8vtVpgMbC6XzBtG8/edit?usp=sharing)
-* [Definition of Done](https://docs.google.com/document/d/1GWJ4O4cwQlEctThPPWPhKNrtAo130FBovdOwL5_kU4o/edit?usp=sharing)
-* [Google Drive](https://drive.google.com/drive/folders/1_SwrSQs1FtOPYT5ovSs91bb5sp6tQM-Y?usp=sharing)
-* [Our process](https://github.com/karoliinaemilia/massage-booking-system/blob/staging/process/PALAVERIT.md)
----
-#### Communication
-* [Slack](https://massage-booking.slack.com/messages)
----
-#### Programming help
-* [The Net Ninja tutorials](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg)
