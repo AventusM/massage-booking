@@ -31,6 +31,3 @@ The application was written using React/JavaScript in the frontend and Node.js/J
 * TV view
 * Appointments are generated automatically
 * Optimized for both mobile and desktop
-
-#### Current release
-[Live on Heroku!](https://glacial-lowlands-81447.herokuapp.com/)
