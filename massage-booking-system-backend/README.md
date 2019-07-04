@@ -1,6 +1,6 @@
 ## Available Scripts
 
-| Env  | Function |      
+| Script  | Function |      
 | ------| -------------|
 | npm run watch | Runs the app in the development mode and reloads on changes.| 
 | npm start | Runs the app in the production mode.| 
