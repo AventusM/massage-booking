@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const router = express.Router()
 const cookieSession = require('cookie-session')
 const passport = require('passport')
+const { MongoMemoryServer } = require('mongodb-memory-server')
 
 const protectedRoute = require('./utils/protectedRoute')
 const config = require('./utils/config')
@@ -36,14 +37,42 @@ app.use(passport.session())
 logger.info('connecting to', config.MONGODB_URI)
 app.use(cors())
 
-mongoose
-  .connect(config.MONGODB_URI, { useNewUrlParser: true })
-  .then(() => {
-    logger.info('connected to MongoDB')
+if (process.env.NODE_ENV === 'test') {
+  const mongoServer = new MongoMemoryServer()
+
+  mongoose.Promise = Promise
+  mongoServer.getConnectionString().then(mongoUri => {
+    const mongooseOpts = {
+      autoReconnect: true,
+      reconnectTries: Number.MAX_VALUE,
+      reconnectInterval: 1000,
+      useNewUrlParser: true
+    }
+
+    mongoose.connect(mongoUri, mongooseOpts)
+
+    mongoose.connection.on('error', e => {
+      if (e.message.code === 'ETIMEDOUT') {
+        console.log(e)
+        mongoose.connect(mongoUri, mongooseOpts)
+      }
+      console.log(e)
+    })
+
+    mongoose.connection.once('open', () => {
+      console.log(`MongoDB successfully connected to ${mongoUri}`)
+    })
   })
-  .catch(error => {
-    logger.error('error connection to MongoDB:', error.message)
-  })
+} else {
+  mongoose
+    .connect(config.MONGODB_URI, { useNewUrlParser: true })
+    .then(() => {
+      logger.info('connected to MongoDB')
+    })
+    .catch(error => {
+      logger.error('error connection to MongoDB:', error.message)
+    })
+}
 
 const appointmentsRouter = require('./controllers/appointments')
 const usersRouter = require('./controllers/users')

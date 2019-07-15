@@ -34,6 +34,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "eslint": "^6.0.0",
     "jest": "^24.8.0",
+    "mongodb-memory-server": "^5.1.5",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0"
